@@ -22,12 +22,12 @@
   figure img{width:100%;height:100%;object-fit:cover;display:block}
   figure.crop img{transform:scale(1.08)}
   figcaption{position:absolute;left:12px;bottom:12px;right:12px;color:#fff;font-size:13px;font-weight:600;text-shadow:0 1px 8px rgba(0,0,0,.5)}
-  .grid{grid-template-areas:"a a a a a b b b b c c c" "a a a a a b b b b c c c" "a a a a a q q q q c c c" "a a a a a q q q q c c c" "d d d d e e e t t t t t" "d d d d e e e t t t t t" "s s s s e e e f f f f f" "s s s s e e e f f f f f"}
-  .a{grid-area:a}.b{grid-area:b}.c{grid-area:c}.d{grid-area:d}.e{grid-area:e}.f{grid-area:f}.quote{grid-area:q}.songket{grid-area:s}.trust{grid-area:t}
+  .grid{grid-template-areas:"a a a a b b b b c c c c" "a a a a b b b b c c c c" "a a a a q q q q c c c c" "a a a a q q q q c c c c" "d d d d d e e e t t t t" "d d d d d e e e t t t t" "f f f f f e e e p p p p" "f f f f f e e e p p p p"}
+  .a{grid-area:a}.b{grid-area:b}.c{grid-area:c}.d{grid-area:d}.e{grid-area:e}.f{grid-area:f}.p{grid-area:p}.quote{grid-area:q}.trust{grid-area:t}
   .quote{background:var(--malam);color:#fff;border-radius:16px;padding:28px;display:flex;flex-direction:column;justify-content:space-between}
   .quote p{font-family:Fraunces,serif;font-size:clamp(22px,2.4vw,30px);line-height:1.2}
   .quote small{color:var(--p200);font-size:13px}
-  .songket{border-radius:16px;background-color:var(--emas50);
+  .songket{height:72px;margin:-32px 0 48px;border-radius:16px;background-color:var(--emas50);
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cpath d='M20 4 36 20 20 36 4 20Z' fill='none' stroke='%23B98A2E' stroke-width='1.2'/%3E%3Cpath d='M20 13 27 20 20 27 13 20Z' fill='%23B98A2E' fill-opacity='.35'/%3E%3C/svg%3E")}
   .trust{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:10px;justify-content:center}
   .pill{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;padding:4px 10px;border-radius:999px;background:var(--p100);color:var(--hijau);font-size:12px;font-weight:600}
@@ -43,7 +43,7 @@
   .credits{margin-top:48px;font-size:12px;color:var(--muted)}
   .credits a{color:var(--muted)}
   @media (max-width:860px){
-    .grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:140px;grid-template-areas:"a a" "a a" "b c" "b c" "q q" "d e" "d e" "t t" "f f" "s s"}
+    .grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:140px;grid-template-areas:"a a" "a a" "a a" "b b" "q q" "c e" "c e" "d d" "t t" "f f" "p p"}
     .notes{grid-template-columns:1fr}
     .wrap{padding:32px 16px 48px}
   }
@@ -62,20 +62,21 @@
   </div>
 
   <div class="grid">
-    <figure class="a"><img loading="eager" src="img/celebration.jpg" alt="White and gold pelamin with flowers and lanterns at a Malay wedding"><figcaption>Decor &amp; Pelamin: soft, real, a little imperfect</figcaption></figure>
-    <figure class="b"><img loading="eager" src="img/gedung-kuning.jpg" alt="Outdoor wedding arch and dressed chairs in front of a yellow heritage building"><figcaption>Venue: daylight, open air</figcaption></figure>
-    <figure class="c crop"><img loading="eager" src="img/jetty.jpg" alt="Malay bride and groom in gold traditional dress on a wooden jetty"><figcaption>Photographer's work leads the profile</figcaption></figure>
+    <figure class="a"><img loading="eager" src="img/gen/couple.jpg" alt="Malay bride and groom in emerald and cream songket laughing on a garden path"><figcaption>The feeling: joyful, and in safe hands</figcaption></figure>
+    <figure class="b"><img loading="eager" src="img/gen/venue.jpg" alt="Glasshouse wedding venue with white round tables, emerald napkins and gold cutlery"><figcaption>Venue: daylight, calm, ready</figcaption></figure>
+    <figure class="c"><img loading="eager" src="img/gen/pelamin.jpg" alt="Modern cream pelamin with white and green florals and gold songket cushions"><figcaption>Decor &amp; Pelamin: cream, green, a touch of gold</figcaption></figure>
     <div class="quote"><p>"Pilih vendor yang disahkan, baca ulasan sebenar, dan tempah dengan tenang."</p><small>Voice: calm, specific, never over-promising</small></div>
-    <div class="songket" role="img" aria-label="Songket-inspired diamond motif in gold on cream"></div>
-    <figure class="d"><img loading="eager" src="img/nasi-minyak.jpg" alt="Nasi minyak with ayam and acar, wrapped kenduri-style"><figcaption>Catering: food as it's really served</figcaption></figure>
-    <figure class="e"><img loading="eager" src="img/pelamin.jpg" alt="Ornate red, green and gold songket pelamin"><figcaption>Tradition = colour + gold, used as accent</figcaption></figure>
+    <figure class="d"><img loading="eager" src="img/gen/catering.jpg" alt="Caterer serving ayam masak merah from a kenduri buffet line"><figcaption>Catering: generous, clean, appetising</figcaption></figure>
+    <figure class="e"><img loading="eager" src="img/gen/makeup.jpg" alt="Mak andam applying makeup to a smiling bride in a lace hijab and veil"><figcaption>Makeup: the quiet, personal moments</figcaption></figure>
     <div class="trust">
       <span class="pill">✓ Disahkan oleh Majlis Hub</span>
       <b>4.9</b>
       <span class="meta">★★★★★ · 128 ulasan sebenar<br>Semua daripada tempahan melalui Majlis Hub</span>
     </div>
-    <figure class="f"><img loading="eager" src="img/sg-wedding.jpg" alt="Black and white photo of an akad nikah, groom seated with the officiant holding a microphone"><figcaption>MC &amp; akad: the human moments</figcaption></figure>
+    <figure class="f"><img loading="eager" src="img/gen/photographer.jpg" alt="Wedding photographer shooting the couple on the pelamin at a kenduri"><figcaption>Photo &amp; Video: their work leads the profile</figcaption></figure>
+    <figure class="p"><img loading="eager" src="img/gen/planning.jpg" alt="Young Malay couple planning their wedding on a phone at a cafe"><figcaption>Planning together: everything in one place</figcaption></figure>
   </div>
+  <div class="songket" role="img" aria-label="Songket-inspired diamond motif in gold on cream"></div>
 
   <h2>Colour washes (direction, not final tokens)</h2>
   <div class="washes" aria-label="Colour direction from deep green through mint to paper and gold">
@@ -88,14 +89,7 @@
     <div class="note"><h3>Photos do the shouting</h3><p>Vendors' real work is the hero. The interface stays white and paper so the pelamin, food and couples can shine.</p></div>
   </div>
 
-  <p class="credits">Photos via Wikimedia Commons, used under their licences:
-    <a href="https://commons.wikimedia.org/wiki/File:Celebration_-_Malay_wedding_-_Flickr_-_GeorgeTan%5E1.jpg">Pelamin</a>: Walk around the RED DOT from Singapore, CC0 ·
-    <a href="https://commons.wikimedia.org/wiki/File:Malay_Wedding_at_Gedung_Kuning.jpg">Venue</a>: Eclectique F&amp;B Concepts, CC BY-SA 4.0 ·
-    <a href="https://commons.wikimedia.org/wiki/File:Penang_Malaysia_-_Bride_and_Groom_on_fishing_jetty-1and_(4455364419).jpg">Couple</a>: Sheba_Also, CC BY-SA 2.0 ·
-    <a href="https://commons.wikimedia.org/wiki/File:Nasi_minyak_with_ayam_goreng_20240228_110047.jpg">Nasi minyak</a>: Wiki Farazi, CC0 ·
-    <a href="https://commons.wikimedia.org/wiki/File:Pelamin_Melayu_Riau.jpg">Songket pelamin</a>: The Bangsawan, CC BY-SA 4.0 ·
-    <a href="https://commons.wikimedia.org/wiki/File:Singaporean_Malay_Muslim_Wedding.jpg">Akad</a>: Muhammad Ashiq, CC BY-SA 2.0.
-    Placeholder imagery for direction only. The songket motif is drawn in CSS.</p>
+  <p class="credits">All photos are AI-generated placeholders made for this mood board (Gemini via Antigravity). No real people, vendors or brands. The songket motif is drawn in CSS. The MC shot is pending (image quota).</p>
 </div>
 </body>
 </html>
