@@ -1,7 +1,7 @@
 # MODULE & FEATURE SPECIFICATION MATRIX
 
 **Project Name:** Majlis Hub
-**Document Version:** 1.0 (Draft for Gate 1)
+**Document Version:** 1.0 (Gate 1 approved 2026-11-06, all Open Decision recommendations accepted)
 **Target Platform:** Mobile-first responsive web app (Customer on phone; Vendor & Admin dashboards optimised for desktop, usable on phone)
 **Languages:** Bahasa Melayu + English (toggle, BM default)
 **Dynamic Role Scoping:** Guest · Customer · Vendor · Admin
