@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Majlis Hub Mood Board</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
+<style>
+  :root{--hijau:#0E5E4B;--malam:#062E25;--p50:#EFF7F3;--p100:#DDF0E7;--p200:#B9DFCD;--emas:#B98A2E;--emas50:#F7F0E1;--kertas:#FBFAF7;--ink:#1B2420;--body:#3C4743;--muted:#67716D;--line:#E4E2DC}
+  *{box-sizing:border-box;margin:0}
+  body{background:var(--kertas);color:var(--ink);font-family:Figtree,system-ui,sans-serif;line-height:1.5}
+  .wrap{max-width:1280px;margin:0 auto;padding:48px 24px 64px}
+  .eyebrow{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--hijau)}
+  h1{font-family:Fraunces,serif;font-weight:600;font-size:clamp(36px,6vw,64px);line-height:1.05;letter-spacing:-.02em;margin:12px 0 16px;max-width:14ch}
+  .lead{font-size:18px;color:var(--body);max-width:60ch}
+  .words{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+  .words span{padding:8px 16px;border-radius:999px;background:#fff;border:1px solid var(--line);font-weight:600}
+  .words span em{font-style:normal;color:var(--muted);font-weight:500;margin-left:6px}
+  .grid{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:120px;gap:12px;margin:48px 0}
+  figure{position:relative;border-radius:16px;overflow:hidden;background:var(--p50)}
+  figure img{width:100%;height:100%;object-fit:cover;display:block}
+  figure.crop img{transform:scale(1.08)}
+  figcaption{position:absolute;left:12px;bottom:12px;right:12px;color:#fff;font-size:13px;font-weight:600;text-shadow:0 1px 8px rgba(0,0,0,.5)}
+  .grid{grid-template-areas:"a a a a a b b b b c c c" "a a a a a b b b b c c c" "a a a a a q q q q c c c" "a a a a a q q q q c c c" "d d d d e e e t t t t t" "d d d d e e e t t t t t" "s s s s e e e f f f f f" "s s s s e e e f f f f f"}
+  .a{grid-area:a}.b{grid-area:b}.c{grid-area:c}.d{grid-area:d}.e{grid-area:e}.f{grid-area:f}.quote{grid-area:q}.songket{grid-area:s}.trust{grid-area:t}
+  .quote{background:var(--malam);color:#fff;border-radius:16px;padding:28px;display:flex;flex-direction:column;justify-content:space-between}
+  .quote p{font-family:Fraunces,serif;font-size:clamp(22px,2.4vw,30px);line-height:1.2}
+  .quote small{color:var(--p200);font-size:13px}
+  .songket{border-radius:16px;background-color:var(--emas50);
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cpath d='M20 4 36 20 20 36 4 20Z' fill='none' stroke='%23B98A2E' stroke-width='1.2'/%3E%3Cpath d='M20 13 27 20 20 27 13 20Z' fill='%23B98A2E' fill-opacity='.35'/%3E%3C/svg%3E")}
+  .trust{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:10px;justify-content:center}
+  .pill{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;padding:4px 10px;border-radius:999px;background:var(--p100);color:var(--hijau);font-size:12px;font-weight:600}
+  .trust b{font-family:Fraunces,serif;font-size:44px;font-weight:600;line-height:1}
+  .trust .meta{color:var(--muted);font-size:14px}
+  h2{font-size:20px;font-weight:600;margin-bottom:16px}
+  .washes{display:flex;gap:0;height:96px;border-radius:16px;overflow:hidden;border:1px solid var(--line)}
+  .washes div{flex:1}
+  .notes{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px}
+  .note{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px}
+  .note h3{font-size:16px;font-weight:600;margin-bottom:6px}
+  .note p{color:var(--body);font-size:15px}
+  .credits{margin-top:48px;font-size:12px;color:var(--muted)}
+  .credits a{color:var(--muted)}
+  @media (max-width:860px){
+    .grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:140px;grid-template-areas:"a a" "a a" "b c" "b c" "q q" "d e" "d e" "t t" "f f" "s s"}
+    .notes{grid-template-columns:1fr}
+    .wrap{padding:32px 16px 48px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Majlis Hub · Mood Board · Arah visual</div>
+  <h1>Semua untuk majlis anda, di satu tempat.</h1>
+  <p class="lead">The feeling we're after: walking into a well-run kenduri. It's warm and full of colour, but someone clearly has it all under control. The photos bring the celebration. The app stays calm, green and steady, so families feel they're in safe hands.</p>
+  <div class="words">
+    <span>Dipercayai<em>Trusted</em></span>
+    <span>Hangat<em>Warm</em></span>
+    <span>Teratur<em>Organised</em></span>
+    <span>Meraikan<em>Celebratory, sparingly</em></span>
+  </div>
+
+  <div class="grid">
+    <figure class="a"><img loading="eager" src="img/celebration.jpg" alt="White and gold pelamin with flowers and lanterns at a Malay wedding"><figcaption>Decor &amp; Pelamin: soft, real, a little imperfect</figcaption></figure>
+    <figure class="b"><img loading="eager" src="img/gedung-kuning.jpg" alt="Outdoor wedding arch and dressed chairs in front of a yellow heritage building"><figcaption>Venue: daylight, open air</figcaption></figure>
+    <figure class="c crop"><img loading="eager" src="img/jetty.jpg" alt="Malay bride and groom in gold traditional dress on a wooden jetty"><figcaption>Photographer's work leads the profile</figcaption></figure>
+    <div class="quote"><p>"Pilih vendor yang disahkan, baca ulasan sebenar, dan tempah dengan tenang."</p><small>Voice: calm, specific, never over-promising</small></div>
+    <div class="songket" role="img" aria-label="Songket-inspired diamond motif in gold on cream"></div>
+    <figure class="d"><img loading="eager" src="img/nasi-minyak.jpg" alt="Nasi minyak with ayam and acar, wrapped kenduri-style"><figcaption>Catering: food as it's really served</figcaption></figure>
+    <figure class="e"><img loading="eager" src="img/pelamin.jpg" alt="Ornate red, green and gold songket pelamin"><figcaption>Tradition = colour + gold, used as accent</figcaption></figure>
+    <div class="trust">
+      <span class="pill">✓ Disahkan oleh Majlis Hub</span>
+      <b>4.9</b>
+      <span class="meta">★★★★★ · 128 ulasan sebenar<br>Semua daripada tempahan melalui Majlis Hub</span>
+    </div>
+    <figure class="f"><img loading="eager" src="img/sg-wedding.jpg" alt="Black and white photo of an akad nikah, groom seated with the officiant holding a microphone"><figcaption>MC &amp; akad: the human moments</figcaption></figure>
+  </div>
+
+  <h2>Colour washes (direction, not final tokens)</h2>
+  <div class="washes" aria-label="Colour direction from deep green through mint to paper and gold">
+    <div style="background:#062E25"></div><div style="background:#0E5E4B"></div><div style="background:#B9DFCD"></div><div style="background:#DDF0E7"></div><div style="background:#EFF7F3"></div><div style="background:#FBFAF7"></div><div style="background:#F7F0E1"></div><div style="background:#B98A2E"></div>
+  </div>
+
+  <div class="notes">
+    <div class="note"><h3>Green = safe hands</h3><p>One deep green for actions and trust marks. It feels steady and halal-friendly, and it isn't flashy.</p></div>
+    <div class="note"><h3>Gold = celebration</h3><p>Borrowed from songket and pelamin. Only for joyful moments like the countdown and "Top rated". Never for buttons.</p></div>
+    <div class="note"><h3>Photos do the shouting</h3><p>Vendors' real work is the hero. The interface stays white and paper so the pelamin, food and couples can shine.</p></div>
+  </div>
+
+  <p class="credits">Photos via Wikimedia Commons, used under their licences:
+    <a href="https://commons.wikimedia.org/wiki/File:Celebration_-_Malay_wedding_-_Flickr_-_GeorgeTan%5E1.jpg">Pelamin</a>: Walk around the RED DOT from Singapore, CC0 ·
+    <a href="https://commons.wikimedia.org/wiki/File:Malay_Wedding_at_Gedung_Kuning.jpg">Venue</a>: Eclectique F&amp;B Concepts, CC BY-SA 4.0 ·
+    <a href="https://commons.wikimedia.org/wiki/File:Penang_Malaysia_-_Bride_and_Groom_on_fishing_jetty-1and_(4455364419).jpg">Couple</a>: Sheba_Also, CC BY-SA 2.0 ·
+    <a href="https://commons.wikimedia.org/wiki/File:Nasi_minyak_with_ayam_goreng_20240228_110047.jpg">Nasi minyak</a>: Wiki Farazi, CC0 ·
+    <a href="https://commons.wikimedia.org/wiki/File:Pelamin_Melayu_Riau.jpg">Songket pelamin</a>: The Bangsawan, CC BY-SA 4.0 ·
+    <a href="https://commons.wikimedia.org/wiki/File:Singaporean_Malay_Muslim_Wedding.jpg">Akad</a>: Muhammad Ashiq, CC BY-SA 2.0.
+    Placeholder imagery for direction only. The songket motif is drawn in CSS.</p>
+</div>
+</body>
+</html>
