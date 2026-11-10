@@ -37,7 +37,7 @@
 | `pucuk-100` | `#DDF0E7` | Selected filter pill fill, icon tiles |
 | `pucuk-200` | `#B9DFCD` | Focus halo, progress track |
 | `emas` | `#B98A2E` | **Celebration accent only.** Countdown ring, "Top rated" laurel, wedding ornaments. Never on body text |
-| `emas-teks` | `#8A6420` | Gold text where needed (5.0:1 on white) |
+| `emas-teks` | `#8A6420` | Gold text where needed (5.35:1 on white) |
 | `emas-50` | `#F7F0E1` | Soft gold wash behind celebration moments |
 | `kertas` (canvas) | `#FBFAF7` | App background: warm paper white, not clinical |
 | `putih` (surface) | `#FFFFFF` | Cards, sheets, inputs |
