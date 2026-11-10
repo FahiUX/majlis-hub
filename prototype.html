@@ -28,12 +28,12 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.75;str
 svg.i.s16{width:16px;height:16px}svg.i.s14{width:14px;height:14px}svg.i.s24{width:24px;height:24px}
 
 /* stage */
-.stage{min-height:100%;display:flex;gap:40px;align-items:center;justify-content:center;padding:32px 24px}
+.stage{height:100vh;display:flex;gap:40px;align-items:center;justify-content:center;padding:24px}
 .phone{position:relative;width:390px;height:844px;background:var(--kertas);border-radius:44px;box-shadow:0 0 0 10px #1B2420,0 30px 80px rgba(0,0,0,.25);overflow:hidden;display:flex;flex-direction:column}
 .screen{flex:1;overflow-y:auto;overflow-x:hidden;padding-bottom:96px;scroll-behavior:smooth}
 .screen.nonav{padding-bottom:104px}
 .statusbar{height:44px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 28px;font-size:14px;font-weight:600;background:var(--kertas)}
-.panel{width:300px;display:flex;flex-direction:column;gap:16px}
+.panel{width:300px;display:flex;flex-direction:column;gap:16px;max-height:calc(100vh - 48px);overflow-y:auto;scrollbar-width:thin;padding-right:4px}
 .panel h1{font-family:var(--serif);font-size:30px;line-height:1.1;font-weight:600}
 .panel p{color:var(--body);font-size:14px}
 .ctrl{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px}
@@ -293,6 +293,7 @@ input[type=range]{width:100%;accent-color:var(--hijau);height:32px}
 .send{width:44px;height:44px;border-radius:50%;background:var(--hijau);color:#fff;display:grid;place-items:center;flex:none}
 .chat-head{display:flex;align-items:center;gap:8px;padding:8px 12px;background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
 .guest-card{margin:16px 16px 0;border-radius:16px;background:var(--p50);padding:16px;display:flex;flex-direction:column;gap:12px}
+.phone.immersive .statusbar{position:absolute;top:0;left:0;right:0;z-index:11;background:transparent;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.45)}
 .screen.reels{padding:0;background:#000;scroll-snap-type:y mandatory;scrollbar-width:none;scroll-behavior:auto}
 .screen.reels::-webkit-scrollbar{display:none}
 .reel{position:relative;height:100%;scroll-snap-align:start;scroll-snap-stop:always;overflow:hidden;color:#fff;background:#000}
@@ -831,7 +832,7 @@ function burst(sec){const b=document.createElement('span');b.className='burst';b
 function toggleLike(id,force){const on=force||!S.liked.has(id);on?S.liked.add(id):S.liked.delete(id);const r=REELS.find(x=>x.id===id);
   document.querySelectorAll(`[data-like="${id}"]`).forEach(b=>b.setAttribute('aria-pressed',on));document.querySelectorAll(`[data-likes="${id}"]`).forEach(x=>x.textContent=fmtN(r.likes+(on?1:0)))}
 function footer(){
-  if(S.screen==='inspirasi')return `<div class="reel-tabs" style="top:${screen.offsetTop}px" role="group" aria-label="Kategori video">${[['all',t('inspAll')],...CATS.map(c=>[c.id,c[lang]])].map(([k,l])=>`<button class="chip dark" data-reelcat="${k}" aria-pressed="${S.reelCat===k}">${l}</button>`).join('')}</div>`;
+  if(S.screen==='inspirasi')return `<div class="reel-tabs" style="top:${$('.statusbar').offsetHeight}px" role="group" aria-label="Kategori video">${[['all',t('inspAll')],...CATS.map(c=>[c.id,c[lang]])].map(([k,l])=>`<button class="chip dark" data-reelcat="${k}" aria-pressed="${S.reelCat===k}">${l}</button>`).join('')}</div>`;
   if(S.screen==='vendor')return vendorCta();
   if(S.screen==='chat')return `<div class="composer"><button class="icon-btn" data-photo aria-label="Hantar foto">${ic('image')}</button><label class="sr" for="msgIn">${t('typeMsg')}</label><input id="msgIn" placeholder="${t('typeMsg')}" autocomplete="off"><button class="send" data-sendmsg aria-label="Hantar">${ic('send','s16')}</button></div>`;
   if(S.screen==='wizard')return `<div class="foot">${S.wz.step?`<button class="btn btn-secondary" data-wzback>${t('back')}</button>`:''}<button class="btn btn-primary" data-wznext>${S.wz.step===3?t('create'):t('next')}</button></div>`;
@@ -892,7 +893,7 @@ function render(){
   screen.innerHTML=map[S.screen]();
   const own=['vendor','chat','wizard','login','otp'].includes(S.screen);
   screen.classList.toggle('nonav',own);
-  screen.classList.toggle('reels',S.screen==='inspirasi');screen.onscroll=null;if(reelObs&&S.screen!=='inspirasi'){reelObs.disconnect();reelObs=null}
+  screen.classList.toggle('reels',S.screen==='inspirasi');$('#phone').classList.toggle('immersive',S.screen==='inspirasi');screen.onscroll=null;if(reelObs&&S.screen!=='inspirasi'){reelObs.disconnect();reelObs=null}
   const tabOf={inspirasi:'inspirasi',home:'home',search:'search',vendor:'search',success:'planner',planner:'planner',booking:'planner',messages:'messages'}[S.screen];
   $('#nav').style.display=own?'none':'flex';
   $('#nav').innerHTML=[['home','home','nHome'],['search','search','nSearch'],['inspirasi','clapperboard','nInsp'],['planner','calendar-heart','nPlan'],['messages','message-circle','nMsg']].map(([k,i,l])=>`<button data-go="${k}" ${tabOf===k?'aria-current="page"':''}><span class="${k==='messages'&&S.authed?'dot':''}">${ic(i)}</span>${t(l)}</button>`).join('');
@@ -1019,6 +1020,9 @@ $('#demoJump').onclick=e=>{const b=e.target.closest('button');if(!b)return;const
   go(j,j==='vendor'?{vendor:1,tab:'pkg'}:j==='chat'?{chat:7}:j==='booking'?{bkCat:'photo'}:{});};
 $('#demoAuth').onclick=e=>{const b=e.target.closest('button');if(!b)return;S.authed=b.dataset.a==='in';setSeg('#demoAuth','a',b.dataset.a);closeSheet();render()};
 $('#demoNet').onclick=e=>{const b=e.target.closest('button');if(!b)return;S.net=b.dataset.n;setSeg('#demoNet','n',S.net)};
+// fit the phone frame to short desktop windows
+function fitPhone(){const ph=$('#phone');ph.style.zoom=innerWidth>760?Math.min(1,(innerHeight-48)/864):1}
+addEventListener('resize',fitPhone);fitPhone();
 $('#fab').onclick=()=>{const p=$('#panel'),o=p.classList.toggle('open');$('#fab').setAttribute('aria-expanded',o);$('#fab').textContent=o?'Tutup':'Demo'};
 
 // deep links: #home #search #loading #error #empty #compare #vendor #guest #verify #book #success #planner #booking #cancel #messages #chat #chat-empty #login #otp #otp-error #wizard
