@@ -1,7 +1,7 @@
 # MODULE & FEATURE SPECIFICATION MATRIX
 
 **Project Name:** Majlis Hub
-**Document Version:** 1.0 (Gate 1 approved 2026-11-06, all Open Decision recommendations accepted)
+**Document Version:** 1.1 (v1.0 Gate 1 approved 2026-11-06 · v1.1 adds **Inspirasi short-video feed**, requested 2026-11-10, pending stakeholder review)
 **Target Platform:** Mobile-first responsive web app (Customer on phone; Vendor & Admin dashboards optimised for desktop, usable on phone)
 **Languages:** Bahasa Melayu + English (toggle, BM default)
 **Dynamic Role Scoping:** Guest · Customer · Vendor · Admin
@@ -45,6 +45,7 @@
 │   M11 Availability Calendar Manager (Vendor)                                 │
 │   M12 Verification Review Split Screen (Admin): docs left, decision right    │
 │   M13 Auth: login / register / OTP                                           │
+│   M14 Inspirasi feed: full-screen vertical video + right action rail         │
 └──────────────────────────────────────────────────────────────────────────────┘
                                      │
                                      ▼
@@ -58,6 +59,8 @@
 │     clone M10, swap columns + row actions                                   │
 │   • Booking Detail: Customer sees Cancel/Review; Vendor sees Accept/Decline │
 │   • Guest view of M3: same screen, CTA becomes "Log in to request"          │
+│   • Vendor profile "Video" tab: clone M14 as a 3-column thumbnail grid      │
+│   • Comments: reuse bottom sheet (M4 pattern) + chat composer (M7)          │
 └──────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -96,6 +99,13 @@
 | **C-4.2** | **Booking** | Cancel request | Cancel before the event with a reason (dropdown + text). Confirmation modal. | Modal | **Edge:** Cancelling less than 7 days before the event shows a warning | | Refund rules N/A (no payment) |
 | **C-4.3** | **Booking** | Chat with vendor | Thread per booking. Text + photo. Phone number is shared only after Accepted. | Chat (M7) | **Empty:** Prompt "Say hi"<br>**Loading:** Message sending tick<br>**Error:** Failed → tap to retry | | Keeps the conversation in-app |
 | **C-5.0** | **Review** | Leave review | Unlocked only when a booking is **Completed** (vendor marks done, or auto 2 days after the event date). Stars, text, up to 5 photos. Editable for 7 days. | Review form | **Ideal:** Posted with "Booked via Majlis Hub" tag<br>**Error:** Text too short (<20 chars)<br>**Edge:** Customer disputes "not completed" → report link | | Core trust rule |
+| **C-7.0** | **Inspirasi** | Video feed | New bottom tab "Inspirasi". Full-screen vertical feed, swipe up/down (scroll-snap), autoplay muted, loop, tap to pause/play, progress bar. Only videos from **verified vendors**. Ranked by distance to My Majlis location + freshness. Category filter chips at top (Semua, Katering, Pelamin…). | Feed (M14) | **Ideal:** Video plays, rail visible<br>**Empty:** No videos in area → "Luaskan kawasan"<br>**Loading:** Dark skeleton<br>**Error:** Offline → retry<br>**Edge:** End of feed → "Anda dah tengok semua" + browse vendors | | Discovery + trust |
+| **C-7.1** | **Inspirasi** | Video details | Bottom-left overlay: vendor avatar + name + Verified badge, **title** (bold, max 2 lines), **location** (pin + area, distance), **description** (2 lines + "lagi" expand), hashtags, category chip. | Text overlay on scrim gradient | **Edge:** Long BM text expands over video, scrollable | | Text over dark scrim, AA contrast |
+| **C-7.2** | **Inspirasi** | Like | Heart on right rail with count; **double-tap video** to like (heart burst). Liked videos saved in Account → "Video disukai". | Icon button + count | **Edge:** Guest → login prompt, then like applied | | |
+| **C-7.3** | **Inspirasi** | Comments | Comment icon + count opens bottom sheet: list (avatar, name, time, text, like comment), vendor replies tagged **Vendor**, composer at bottom. Report comment (⋯). | Sheet + composer | **Empty:** "Jadi yang pertama komen"<br>**Loading:** Skeleton rows<br>**Error:** Failed send → retry<br>**Edge:** Guest → login; profanity filter blocks + explains | | Logged-in users only |
+| **C-7.4** | **Inspirasi** | Share | Share sheet: WhatsApp, copy link, more (native share). Link opens the video page with vendor CTA (works for guests). | Share sheet | **Edge:** No native share → copy link fallback | | WhatsApp first (MY habit) |
+| **C-7.5** | **Inspirasi** | Video → booking | Sticky CTA on each video: "Lihat pakej · dari RM X" → Vendor Profile (M3). Save (bookmark) to shortlist. Follow vendor (+ on avatar). | CTA pill | **Edge:** Vendor suspended → video hidden from feed | | Conversion point |
+| **C-7.6** | **Inspirasi** | Report video | ⋯ menu → Report (Misleading, Not a real vendor work, Inappropriate, Other) → admin queue. | Sheet | | | Trust |
 | **C-6.0** | **Account** | Profile & notifications | Name, phone, email, avatar, language, notification prefs (WhatsApp/SMS/email/push). | Settings list | | | |
 
 ### Tab 3: Vendor (business owner)
@@ -112,6 +122,8 @@
 | **V-4.0** | **Calendar** | Manage availability | Month view. Tap dates to block or unblock. Set daily capacity (default 1). Confirmed bookings show automatically. | Calendar manager (M11) | **Ideal:** Booked, blocked and free are distinct<br>**Edge:** Blocking a date with a pending request → prompt to decline it | | |
 | **V-5.0** | **Profile** | Edit listing & packages | Edit gallery, about, packages. Edits to name, category or documents send the listing back for re-verification. Other edits go live instantly. | Form + drawer for package add/edit | **Edge:** Re-verification keeps the old listing live meanwhile | | Protects the badge |
 | **V-6.0** | **Reviews** | Reply to reviews | List of reviews. One public reply per review. Report review (to admin) with reason. | Review list + reply drawer | **Empty:** "No reviews yet"<br>**Edge:** Reply locked after posting (edit within 24h) | | Vendor cannot delete reviews |
+| **V-8.0** | **Videos** | Upload video | Upload MP4/MOV, **max 60s, 100 MB**, vertical 9:16 preferred (auto-crop preview). Fields: **title** (≤80), **location** (defaults to business base, editable), **description** (≤300), category, hashtags, link to a package (optional), cover frame picker. Submit → **Processing** → **Live** (auto-check) or **In review** (flagged). | Uploader + form | **Loading:** Upload % + processing<br>**Error:** Too long / too large / wrong format<br>**Edge:** Unverified vendor → upload locked with "Complete verification first" | | Only verified vendors post |
+| **V-8.1** | **Videos** | Manage & insights | Grid of own videos with status (Live / In review / Removed with reason), views, likes, comments, profile taps, enquiries from video. Edit text, delete, pin to profile. Reply to comments (tagged Vendor). | Data table / grid | **Empty:** "Video pertama anda boleh tarik 3× lebih permintaan" | | |
 | **V-7.0** | **Inbox** | Chat with customers | Same as C-4.3, vendor side. Quick-reply templates. | Chat (M7) | | | |
 
 ### Tab 4: Admin (Majlis Hub team)
@@ -123,6 +135,7 @@
 | **A-3.0** | **Vendors** | Manage vendors | Search, filters (category, state, status, rating). Actions: View, Suspend (reason), Reinstate. Export CSV. | Data table (M10) | **Edge:** Suspending a vendor with upcoming Accepted bookings → warning + notify customers | | |
 | **A-4.0** | **Bookings** | Monitor bookings | Read-only table of all bookings with status filters + audit timeline per booking. | Data table + drawer | **Edge:** Many cancellations from one vendor → flag | | Admin does not edit bookings |
 | **A-5.0** | **Reviews** | Moderate reports | Reported reviews queue. Actions: Keep, Hide (reason required, logged). Hidden reviews are kept in the database. | Queue + drawer | **Empty:** "No reports" | | Transparency rule |
+| **A-7.0** | **Content** | Video & comment moderation | Queue of flagged/reported videos and comments with reason counts. Actions: Approve, Remove (reason, logged, vendor notified), Warn vendor. Auto-flag rules (banned words, repeated reports ≥3). | Queue + video preview drawer | **Empty:** "Tiada laporan" | | Audit-logged |
 | **A-6.0** | **Settings** | Categories & content | Manage category list, package field templates per category, featured vendors on Home. | Settings forms | | | |
 
 ---
@@ -146,6 +159,10 @@
 | Send booking request | — | ✅ | — | — |
 | Accept / decline / complete booking | — | — | ✅ (own) | — |
 | Write review | — | ✅ (Completed only) | — | — |
+| Watch / share Inspirasi videos | ✅ | ✅ | ✅ | ✅ |
+| Like / comment / save / report video | — | ✅ | ✅ | — |
+| Upload video | — | — | ✅ (Verified only) | — |
+| Remove video / comment | — | — | ✅ (own video) | ✅ (logged) |
 | Reply to review | — | — | ✅ (own, 1×) | — |
 | View vendor documents | — | — | ✅ (own) | ✅ |
 | Verify / suspend vendors, hide reviews | — | — | — | ✅ (logged) |
@@ -163,6 +180,9 @@
 | **Event (My Majlis)** | id, customer_id, type, dates[], location, pax, budget_rm, checklist_items[] |
 | **Booking Request** | id, event_id, vendor_id, package_id, date, pax, est_total_rm, note, status, reply_deadline, status_reason |
 | **Review** | id, booking_id (must be Completed), rating 1–5, text, photos[], vendor_reply, hidden flag, hidden_reason |
+| **Video** | id, vendor_id, title, description, location (lat/lng + label), category, hashtags[], package_id?, duration_s, url, cover_url, status (processing/live/in_review/removed), views, likes_count, comments_count, created_at |
+| **Video Comment** | id, video_id, user_id, text, is_vendor_reply, likes_count, hidden flag, created_at |
+| **Video Like / Save** | user_id, video_id, created_at (unique pair) |
 | **Audit Entry** | id, entity_type, entity_id, actor_id, from_status, to_status, reason, timestamp |
 
 ---
@@ -201,6 +221,7 @@ Scenario: Vendor edits verified details
 - Vendor subscription plans or ads/boosted listings
 - Multi-staff vendor accounts
 - Guest RSVP / digital wedding card tools
+- Customer-uploaded videos, live streaming, duets/remix, in-app video editor (v1 Inspirasi is vendor-posted only)
 
 ---
 
@@ -213,3 +234,6 @@ Scenario: Vendor edits verified details
 | 3 | Daily capacity | A) Always 1 per date · B) Vendor sets capacity | **B**. Caterers and makeup artists often do 2+ events a day |
 | 4 | Freelancers without SSM | A) Block · B) Allow with IC verification, labelled "Verified Freelancer" | **B**. Most MCs and many photographers are freelancers |
 | 5 | Phone number sharing | A) Visible on profile · B) Shared only after Accepted | **B**. Keeps the deal in-app so reviews stay real |
+| 6 | Who can post Inspirasi videos? | A) Verified vendors only · B) Anyone | **A**. Keeps the feed trustworthy and every video leads to a bookable vendor |
+| 7 | Comment moderation | A) Pre-approve every comment · B) Auto-filter + report + admin queue | **B**. Real-time feels alive; filter and reports catch abuse |
+| 8 | Max video length | A) 30s · B) 60s · C) 3 min | **B 60s**. Enough for a pelamin walkthrough or a buffet tour |
