@@ -294,6 +294,23 @@ input[type=range]{width:100%;accent-color:var(--hijau);height:32px}
 .chat-head{display:flex;align-items:center;gap:8px;padding:8px 12px;background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
 .guest-card{margin:16px 16px 0;border-radius:16px;background:var(--p50);padding:16px;display:flex;flex-direction:column;gap:12px}
 .phone.immersive .statusbar{position:absolute;top:0;left:0;right:0;z-index:11;background:transparent;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.45)}
+/* mobile: no visible scrollbars anywhere inside the phone (still scrollable) */
+.phone *{scrollbar-width:none}
+.phone *::-webkit-scrollbar{display:none}
+.home-hero{position:relative;color:#fff;padding-bottom:24px;border-radius:0 0 24px 24px;overflow:hidden;background:radial-gradient(120% 80% at 100% 0%,rgba(185,138,46,.22) 0%,rgba(185,138,46,0) 55%),linear-gradient(170deg,#062E25 0%,#0A4A3B 55%,#0E5E4B 100%)}
+.home-hero::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.16;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cpath d='M20 4 36 20 20 36 4 20Z' fill='none' stroke='%23B9DFCD' stroke-width='1'/%3E%3Cpath d='M20 14 26 20 20 26 14 20Z' fill='%23B98A2E'/%3E%3C/svg%3E");-webkit-mask-image:linear-gradient(180deg,#000 30%,transparent 100%);mask-image:linear-gradient(180deg,#000 30%,transparent 100%)}
+.home-hero>*{position:relative}
+.home-hero .search{color:var(--ink)}
+.home-hero .logo{color:#fff}.home-hero .logo i{background:#fff;color:var(--hijau)}
+.home-hero .hello .muted{color:var(--p200)}
+.home-hero .lang{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.25)}
+.home-hero .lang button{color:rgba(255,255,255,.75)}.home-hero .lang button[aria-pressed="true"]{background:#fff;color:var(--ink)}
+.home-hero .event-card{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.home-hero .ring b{background:#0B4F3F}
+.home-hero .guest-card{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2)}
+.home-hero .guest-card .body{color:var(--p200)}
+.home-hero .guest-card .btn-primary{background:#fff;color:var(--hijau)}
+.phone.darkbar .statusbar{background:#062E25;color:#fff}
 .screen.reels{padding:0;background:#000;scroll-snap-type:y mandatory;scrollbar-width:none;scroll-behavior:auto}
 .screen.reels::-webkit-scrollbar{display:none}
 .reel{position:relative;height:100%;scroll-snap-align:start;scroll-snap-stop:always;overflow:hidden;color:#fff;background:#000}
@@ -520,7 +537,7 @@ let S={screen:'home',cat:'catering',radius:70,filters:{verified:true,date:false,
 const $=s=>document.querySelector(s);
 const screen=$('#screen');
 
-function go(name,opts={}){Object.assign(S,opts);S.screen=name;render();screen.scrollTop=0;screen.focus({preventScroll:true})}
+function go(name,opts={}){if(name==='vendor'&&S.screen!=='vendor')S.vendorFrom=S.screen;Object.assign(S,opts);S.screen=name;render();screen.scrollTop=0;screen.focus({preventScroll:true})}
 function toast(msg){const el=$('#toast');el.innerHTML=ic('circle-check-big','s16')+`<span>${msg}</span>`;el.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove('on'),2200)}
 const img=(v)=>`<img src="${v.img}" alt="${v.name}" loading="lazy" style="object-position:${v.pos||'center'}" onerror="this.onerror=null;this.src='${v.fallback||'img/gen/catering.jpg'}'">`;
 const badge=v=>v.freelancer?`<span class="pill pill-verified">${ic('badge-check','s14')}${t('freelancer')}</span>`:`<span class="pill pill-verified">${ic('shield-check','s14')}${t('verified')}</span>`;
@@ -531,7 +548,7 @@ function home(){
   const accN=Object.values(plan).filter(p=>p.st==='acc').length, total=Object.keys(plan).length;
   const near=V.filter(v=>v.cat!=='catering'||v.id<=2).filter(v=>v.km<=70).sort((a,b)=>b.rating-a.rating).slice(0,6);
   return `
-  <div class="topbar"><div class="logo"><i>M</i>Majlis Hub</div>${langToggle()}</div>
+  <div class="home-hero"><div class="topbar"><div class="logo"><i>M</i>Majlis Hub</div>${langToggle()}</div>
   <div class="hello"><p class="sm muted">${S.authed?t('hi'):t('hiGuest')}</p><h1 class="display" style="margin-top:2px">${t('sub')}</h1></div>
   <button class="search" data-go="search">${ic('search')}<span>${t('search')}</span><span class="orb" aria-hidden="true">${ic('sliders-horizontal','s16')}</span></button>
   ${!S.authed?`<div class="guest-card"><p class="h3">${t('guestT')}</p><p class="sm body">${t('guestS')}</p><button class="btn btn-primary" data-login="planner">${ic('log-in','s16')}${t('guestBtn')}</button></div>`:`<button class="event-card" data-go="planner" aria-label="${EVENT.name}, ${daysLeft()} ${t('daysLeft')}">
@@ -541,6 +558,7 @@ function home(){
       <span class="bar"><i style="width:${accN/total*100}%"></i></span></span>
     ${ic('chevron-right')}
   </button>`}
+  </div>
   <div class="sec"><div class="sec-head"><h2 class="h2">${t('cats')}</h2></div>
     <div class="cats">${CATS.map(c=>`<button class="cat" data-cat="${c.id}"><span class="ic">${ic(c.icon,'s24')}</span>${c[lang]}</button>`).join('')}</div></div>
   <div class="sec"><div class="sec-head"><h2 class="h2">${t('watch')}</h2><button class="link" data-go="inspirasi">${t('seeAll')}</button></div>
@@ -622,7 +640,7 @@ function vendor(){
   }
   return `
   <div class="gallery">${img(v)}<div class="top"><button class="icon-btn solid" data-back aria-label="Kembali">${ic('chevron-left')}</button>
-    <span style="display:flex;gap:8px"><button class="icon-btn solid" data-share aria-label="Kongsi">${ic('share-2','s16')}</button><button class="icon-btn solid heart" style="position:static" data-save="${v.id}" aria-pressed="${S.saved.has(v.id)}" aria-label="Simpan">${ic('heart','s16')}</button></span></div>
+    <span style="display:flex;gap:8px"><button class="icon-btn solid" data-share aria-label="Kongsi">${ic('share-2','s16')}</button><button class="icon-btn solid heart" style="position:relative;top:auto;right:auto" data-save="${v.id}" aria-pressed="${S.saved.has(v.id)}" aria-label="Simpan">${ic('heart','s16')}</button></span></div>
     <span class="count-p">1 / 24</span></div>
   <div class="pf-head">
     <button data-verify style="align-self:flex-start" aria-label="${t('checked')}">${badge(v)}</button>
@@ -893,7 +911,7 @@ function render(){
   screen.innerHTML=map[S.screen]();
   const own=['vendor','chat','wizard','login','otp'].includes(S.screen);
   screen.classList.toggle('nonav',own);
-  screen.classList.toggle('reels',S.screen==='inspirasi');$('#phone').classList.toggle('immersive',S.screen==='inspirasi');screen.onscroll=null;if(reelObs&&S.screen!=='inspirasi'){reelObs.disconnect();reelObs=null}
+  screen.classList.toggle('reels',S.screen==='inspirasi');$('#phone').classList.toggle('immersive',S.screen==='inspirasi');$('#phone').classList.toggle('darkbar',S.screen==='home');screen.onscroll=null;if(reelObs&&S.screen!=='inspirasi'){reelObs.disconnect();reelObs=null}
   const tabOf={inspirasi:'inspirasi',home:'home',search:'search',vendor:'search',success:'planner',planner:'planner',booking:'planner',messages:'messages'}[S.screen];
   $('#nav').style.display=own?'none':'flex';
   $('#nav').innerHTML=[['home','home','nHome'],['search','search','nSearch'],['inspirasi','clapperboard','nInsp'],['planner','calendar-heart','nPlan'],['messages','message-circle','nMsg']].map(([k,i,l])=>`<button data-go="${k}" ${tabOf===k?'aria-current="page"':''}><span class="${k==='messages'&&S.authed?'dot':''}">${ic(i)}</span>${t(l)}</button>`).join('');
@@ -970,7 +988,7 @@ document.addEventListener('click',e=>{
   if(d.go){closeSheet();go(d.go,d.go==='search'&&!S.cat?{cat:'catering'}:{});return}
   if(d.cat){closeSheet();S.cmp.clear();go('search',{cat:d.cat});refreshSearch();return}
   if(d.vendor){closeSheet();go('vendor',{vendor:+d.vendor,tab:'pkg'});return}
-  if('back' in d){go('search');return}
+  if('back' in d){go(S.vendorFrom&&S.vendorFrom!=='vendor'?S.vendorFrom:'search');return}
   if(d.save&&!S.authed){needLogin({save:+d.save});return}
   if(d.save){const id=+d.save;S.saved.has(id)?S.saved.delete(id):(S.saved.add(id),toast(t('savedT')));el.setAttribute('aria-pressed',S.saved.has(id));return}
   if(d.cmp){const id=+d.cmp;if(S.cmp.has(id))S.cmp.delete(id);else if(S.cmp.size>=3){toast(t('maxCmp'));return}else S.cmp.add(id);render();return}
