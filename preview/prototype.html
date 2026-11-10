@@ -543,7 +543,7 @@ function home(){
   <div class="sec"><div class="sec-head"><h2 class="h2">${t('cats')}</h2></div>
     <div class="cats">${CATS.map(c=>`<button class="cat" data-cat="${c.id}"><span class="ic">${ic(c.icon,'s24')}</span>${c[lang]}</button>`).join('')}</div></div>
   <div class="sec"><div class="sec-head"><h2 class="h2">${t('watch')}</h2><button class="link" data-go="inspirasi">${t('seeAll')}</button></div>
-    <div class="hscroll">${REELS.map(r=>`<button class="rthumb" data-reel-open="${r.id}"><img src="${r.img}" alt=""><span class="pl">${ic('play')}${r.views}</span><span class="ov"><b>${r.title}</b><span class="cap" style="opacity:.85">${vById(r.v).name}</span></span></button>`).join('')}</div></div>
+    <div class="hscroll">${REELS.map(r=>`<button class="rthumb" data-reel-open="${r.id}"><img src="${r.poster}" alt=""><span class="pl">${ic('play')}${r.views}</span><span class="ov"><b>${r.title}</b><span class="cap" style="opacity:.85">${vById(r.v).name}</span></span></button>`).join('')}</div></div>
   <div class="sec"><div class="sec-head"><h2 class="h2">${t('near')}</h2><button class="link" data-cat="catering">${t('seeAll')}</button></div>
     <div class="hscroll">${near.map(v=>`<div class="mini">${vcard(v,false)}</div>`).join('')}</div></div>
   <div class="trust-band" aria-label="Kenapa Majlis Hub">
@@ -610,7 +610,7 @@ function vendor(){
     ['SH','#EFF7F3','Siti Hajar','Perkahwinan · Mac 2026',4,'Secara keseluruhan bagus. Lauk ayam habis awal sikit, tapi vendor cepat tambah.','Maaf atas kesulitan, kami sudah tambah 10% lebihan untuk setiap majlis sekarang.']]
     .map(([a,c,n,e,r,txt,rep])=>`<div class="review"><div class="who"><span class="av" style="background:${c}">${a}</span><div><p class="h3">${n}</p><p class="booked">${ic('calendar-check','s14')}${t('bookedVia')} · ${e}</p></div></div>
       ${stars(r)}<p class="body">${txt}</p>${rep?`<div class="reply"><b>${t('vendorReply')}:</b> ${rep}</div>`:''}</div>`).join('');
-  if(S.tab==='vid') content=`<div class="vgrid">${REELS.filter(r=>r.v===v.id).map(r=>`<button class="rthumb" style="width:auto" data-reel-open="${r.id}"><img src="${r.img}" alt="${r.title}"><span class="pl">${ic('play')}${r.views}</span></button>`).join('')}</div>`;
+  if(S.tab==='vid') content=`<div class="vgrid">${REELS.filter(r=>r.v===v.id).map(r=>`<button class="rthumb" style="width:auto" data-reel-open="${r.id}"><img src="${r.poster}" alt="${r.title}"><span class="pl">${ic('play')}${r.views}</span></button>`).join('')}</div>`;
   if(S.tab==='cal'){
     const bookedD=[1,6,7,8,13,20,21,22,27,28], lim=[15,29];
     const days=Array.from({length:28},(_,i)=>i+1);
@@ -768,7 +768,7 @@ function cancelSheet(){
 function reelHTML(r,k){
   const v=vById(r.v),liked=S.liked.has(r.id),open=S.openDesc.has(r.id);
   return `<section class="reel" data-reel="${r.id}" data-k="${k}" aria-label="${r.title}">
-    <div class="reel-media" data-reeltap><img src="${r.img}" alt=""><video muted playsinline loop preload="metadata" poster="${r.img}" src="${r.video}" aria-label="${r.title}"></video></div>
+    <div class="reel-media" data-reeltap><img src="${r.poster}" alt=""><video muted playsinline loop preload="metadata" poster="${r.poster}" src="${r.video}" aria-label="${r.title}"></video></div>
     <div class="reel-scrim"></div><span class="reel-pause">${ic('play')}</span>
     <div class="reel-progress"><i></i></div>
     <div class="reel-rail">
