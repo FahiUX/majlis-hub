@@ -30,7 +30,7 @@ svg.i.s16{width:16px;height:16px}svg.i.s14{width:14px;height:14px}svg.i.s24{widt
 /* stage */
 .stage{height:100vh;display:flex;gap:40px;align-items:center;justify-content:center;padding:24px}
 .phone{position:relative;width:390px;height:844px;background:var(--kertas);border-radius:44px;box-shadow:0 0 0 10px #1B2420,0 30px 80px rgba(0,0,0,.25);overflow:hidden;display:flex;flex-direction:column}
-.screen{flex:1;overflow-y:auto;overflow-x:hidden;padding-bottom:96px;scroll-behavior:smooth}
+.screen{flex:1;overflow-y:auto;overflow-x:hidden;background:var(--kertas);padding-bottom:96px;scroll-behavior:smooth}
 .screen.nonav{padding-bottom:104px}
 .statusbar{height:44px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 28px;font-size:14px;font-weight:600;background:var(--kertas)}
 .panel{width:300px;display:flex;flex-direction:column;gap:16px;max-height:calc(100vh - 48px);overflow-y:auto;scrollbar-width:thin;padding-right:4px}
@@ -297,7 +297,7 @@ input[type=range]{width:100%;accent-color:var(--hijau);height:32px}
 /* mobile: no visible scrollbars anywhere inside the phone (still scrollable) */
 .phone *{scrollbar-width:none}
 .phone *::-webkit-scrollbar{display:none}
-.home-hero{position:relative;color:#fff;padding-bottom:24px;border-radius:0 0 24px 24px;overflow:hidden;background:radial-gradient(120% 80% at 100% 0%,rgba(185,138,46,.22) 0%,rgba(185,138,46,0) 55%),linear-gradient(170deg,#062E25 0%,#0A4A3B 55%,#0E5E4B 100%)}
+.home-hero{position:relative;color:#fff;padding-bottom:24px;overflow:hidden;background:radial-gradient(120% 80% at 100% 0%,rgba(185,138,46,.22) 0%,rgba(185,138,46,0) 55%),linear-gradient(170deg,#062E25 0%,#0A4A3B 55%,#0E5E4B 100%)}
 .home-hero::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.16;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cpath d='M20 4 36 20 20 36 4 20Z' fill='none' stroke='%23B9DFCD' stroke-width='1'/%3E%3Cpath d='M20 14 26 20 20 26 14 20Z' fill='%23B98A2E'/%3E%3C/svg%3E");-webkit-mask-image:linear-gradient(180deg,#000 30%,transparent 100%);mask-image:linear-gradient(180deg,#000 30%,transparent 100%)}
 .home-hero>*{position:relative}
 .home-hero .search{color:var(--ink)}
@@ -305,12 +305,14 @@ input[type=range]{width:100%;accent-color:var(--hijau);height:32px}
 .home-hero .hello .muted{color:var(--p200)}
 .home-hero .lang{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.25)}
 .home-hero .lang button{color:rgba(255,255,255,.75)}.home-hero .lang button[aria-pressed="true"]{background:#fff;color:var(--ink)}
-.home-hero .event-card{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
-.home-hero .ring b{background:#0B4F3F}
-.home-hero .guest-card{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2)}
+.home-hero .event-card{background:rgba(255,255,255,.06);border:0}
+.home-hero .ring{position:relative;background:none}
+.home-hero .ring::before{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(var(--emas) calc(var(--p)*1%),rgba(255,255,255,.16) 0);-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 6px),#000 calc(100% - 5px));mask:radial-gradient(farthest-side,transparent calc(100% - 6px),#000 calc(100% - 5px))}
+.home-hero .ring b{background:transparent;position:relative}
+.home-hero .guest-card{background:rgba(255,255,255,.06)}
 .home-hero .guest-card .body{color:var(--p200)}
 .home-hero .guest-card .btn-primary{background:#fff;color:var(--hijau)}
-.phone.darkbar .statusbar{background:#062E25;color:#fff}
+.phone.darkbar{background:linear-gradient(#062E25 0 50%,var(--kertas) 50%)}
 .screen.reels{padding:0;background:#000;scroll-snap-type:y mandatory;scrollbar-width:none;scroll-behavior:auto}
 .screen.reels::-webkit-scrollbar{display:none}
 .reel{position:relative;height:100%;scroll-snap-align:start;scroll-snap-stop:always;overflow:hidden;color:#fff;background:#000}
@@ -911,7 +913,7 @@ function render(){
   screen.innerHTML=map[S.screen]();
   const own=['vendor','chat','wizard','login','otp'].includes(S.screen);
   screen.classList.toggle('nonav',own);
-  screen.classList.toggle('reels',S.screen==='inspirasi');$('#phone').classList.toggle('immersive',S.screen==='inspirasi');$('#phone').classList.toggle('darkbar',S.screen==='home');screen.onscroll=null;if(reelObs&&S.screen!=='inspirasi'){reelObs.disconnect();reelObs=null}
+  screen.classList.toggle('reels',S.screen==='inspirasi');$('#phone').classList.toggle('immersive',S.screen==='inspirasi'||S.screen==='home');$('#phone').classList.toggle('darkbar',S.screen==='home');screen.onscroll=null;if(reelObs&&S.screen!=='inspirasi'){reelObs.disconnect();reelObs=null}
   const tabOf={inspirasi:'inspirasi',home:'home',search:'search',vendor:'search',success:'planner',planner:'planner',booking:'planner',messages:'messages'}[S.screen];
   $('#nav').style.display=own?'none':'flex';
   $('#nav').innerHTML=[['home','home','nHome'],['search','search','nSearch'],['inspirasi','clapperboard','nInsp'],['planner','calendar-heart','nPlan'],['messages','message-circle','nMsg']].map(([k,i,l])=>`<button data-go="${k}" ${tabOf===k?'aria-current="page"':''}><span class="${k==='messages'&&S.authed?'dot':''}">${ic(i)}</span>${t(l)}</button>`).join('');
@@ -920,6 +922,7 @@ function render(){
   const f=footer();if(f)$('#phone').insertAdjacentHTML('beforeend',f);
   if(S.screen==='chat'){const b=screen;b.scrollTop=b.scrollHeight}
   if(S.screen==='inspirasi')setupReels();
+  const hh=screen.querySelector('.home-hero');if(hh)hh.style.paddingTop=$('.statusbar').offsetHeight+'px';
 }
 function needLogin(after){S.after=after;S.otpErr=false;S.phoneErr=false;go('login')}
 function afterLogin(){S.authed=true;setSeg('#demoAuth','a','in');const a=S.after;S.after=null;toast(t('welcome'));
