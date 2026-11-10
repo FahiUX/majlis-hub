@@ -124,8 +124,8 @@ svg.i.s16{width:16px;height:16px}svg.i.s14{width:14px;height:14px}svg.i.s24{widt
 .bar{height:6px;border-radius:999px;background:rgba(255,255,255,.16);margin-top:10px;overflow:hidden}
 .bar i{display:block;height:100%;background:var(--p200);border-radius:inherit}
 .cats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:0 16px}
-.cat{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 8px 12px;display:flex;flex-direction:column;align-items:center;gap:8px;font-size:13px;font-weight:600;text-align:center;line-height:1.2;min-height:96px}
-.cat .ic{width:44px;height:44px;border-radius:50%;background:var(--p100);color:var(--hijau);display:grid;place-items:center}
+.cat{background:#fff;border:1px solid var(--line);border-radius:16px;padding:10px 8px 12px;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:13px;font-weight:600;text-align:center;line-height:1.2;min-height:96px}
+.cat .art{width:64px;height:64px;object-fit:contain}
 .hscroll{display:flex;gap:12px;overflow-x:auto;padding:0 16px 4px;scroll-snap-type:x mandatory;scrollbar-width:none}
 .hscroll::-webkit-scrollbar{display:none}
 .mini{flex:none;width:220px;scroll-snap-align:start;text-align:left}
@@ -496,12 +496,12 @@ const t=(k,v={})=>(T[lang][k]||k).replace(/\{(\w+)\}/g,(_,x)=>v[x]);
 
 /* ---------- data ---------- */
 const CATS=[
- {id:'catering',ms:'Katering',en:'Catering',icon:'utensils-crossed'},
- {id:'photo',ms:'Foto & Video',en:'Photo & Video',icon:'camera'},
- {id:'mc',ms:'MC',en:'MC',icon:'mic'},
- {id:'venue',ms:'Dewan',en:'Venue',icon:'building-2'},
- {id:'decor',ms:'Pelamin & Dekor',en:'Decor & Pelamin',icon:'flower-2'},
- {id:'makeup',ms:'Mak Andam',en:'Makeup',icon:'sparkles'}];
+ {id:'catering',ms:'Katering',en:'Catering',icon:'utensils-crossed',art:'katering'},
+ {id:'photo',ms:'Foto & Video',en:'Photo & Video',icon:'camera',art:'foto'},
+ {id:'mc',ms:'MC',en:'MC',icon:'mic',art:'mc'},
+ {id:'venue',ms:'Dewan',en:'Venue',icon:'building-2',art:'dewan'},
+ {id:'decor',ms:'Pelamin & Dekor',en:'Decor & Pelamin',icon:'flower-2',art:'pelamin'},
+ {id:'makeup',ms:'Mak Andam',en:'Makeup',icon:'sparkles',art:'makeup'}];
 const catName=id=>CATS.find(c=>c.id===id)[lang];
 const V=[
  {id:1,cat:'catering',name:'Dapur Kenduri Haji Salleh',area:'Klang',km:18,rating:4.9,n:128,price:28,unit:'pax',min:300,halal:true,reply:'2 jam',img:'img/gen/catering.jpg',free:true,since:'12 Okt 2026'},
@@ -564,7 +564,7 @@ function home(){
   </button>`}
   </div>
   <div class="sec"><div class="sec-head"><h2 class="h2">${t('cats')}</h2></div>
-    <div class="cats">${CATS.map(c=>`<button class="cat" data-cat="${c.id}"><span class="ic">${ic(c.icon,'s24')}</span>${c[lang]}</button>`).join('')}</div></div>
+    <div class="cats">${CATS.map(c=>`<button class="cat" data-cat="${c.id}"><img class="art" src="img/cat/cat-${c.art}.png" alt="">${c[lang]}</button>`).join('')}</div></div>
   <div class="sec"><div class="sec-head"><h2 class="h2">${t('watch')}</h2><button class="link" data-go="inspirasi">${t('seeAll')}</button></div>
     <div class="hscroll">${REELS.map(r=>`<button class="rthumb" data-reel-open="${r.id}"><img src="${r.poster}" alt=""><span class="pl">${ic('play')}${r.views}</span><span class="ov"><b>${r.title}</b><span class="cap" style="opacity:.85">${vById(r.v).name}</span></span></button>`).join('')}</div></div>
   <div class="sec"><div class="sec-head"><h2 class="h2">${t('near')}</h2><button class="link" data-cat="catering">${t('seeAll')}</button></div>
