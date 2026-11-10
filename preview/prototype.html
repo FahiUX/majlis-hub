@@ -19,6 +19,7 @@
 html,body{height:100%}
 body{font-family:Figtree,system-ui,sans-serif;color:var(--ink);background:#EDEBE5;font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+a{color:inherit;text-decoration:none}
 input,textarea,select{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--hijau);outline-offset:2px;border-radius:6px}
 .screen:focus,.sheet:focus{outline:none}
@@ -80,7 +81,7 @@ svg.i.s16{width:16px;height:16px}svg.i.s14{width:14px;height:14px}svg.i.s24{widt
 .cap{font-size:12px;font-weight:500;line-height:16px}
 .muted{color:var(--muted)}.body{color:var(--body)}
 .pad{padding:0 16px}
-.sec{margin-top:28px}
+.sec{margin-top:32px}
 .sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:0 16px;margin-bottom:12px}
 .link{color:var(--hijau);font-weight:600;font-size:14px;white-space:nowrap}
 
@@ -107,7 +108,8 @@ svg.i.s16{width:16px;height:16px}svg.i.s14{width:14px;height:14px}svg.i.s24{widt
 .st-requested{border:1px solid var(--ink);color:var(--ink);background:#fff}
 .st-accepted{background:var(--hijau);color:#fff}
 .st-completed{background:var(--p100);color:var(--hijau)}
-.st-none{background:var(--kertas);color:var(--muted);border:1px dashed var(--line2)}
+.st-none{background:var(--kertas);color:var(--muted);border:1px solid var(--line)}
+.st-cancel{background:var(--line);color:var(--muted)}
 .st-expired{border:1px solid var(--amaran);color:var(--amaran);background:#fff}
 
 /* home */
@@ -136,7 +138,8 @@ svg.i.s16{width:16px;height:16px}svg.i.s14{width:14px;height:14px}svg.i.s24{widt
 .photo{position:relative;border-radius:12px;overflow:hidden;aspect-ratio:4/3;background:var(--p50)}
 .photo img{width:100%;height:100%;object-fit:cover;display:block}
 .photo .pill{position:absolute;top:10px;left:10px;background:rgba(255,255,255,.95);box-shadow:var(--shadow)}
-.heart{position:absolute;top:6px;right:6px;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.95);box-shadow:var(--shadow)}
+.heart::after{content:"";position:absolute;inset:-4px}
+.heart{position:absolute;top:8px;right:8px;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.95);box-shadow:var(--shadow)}
 .heart[aria-pressed="true"] svg{fill:var(--hijau);stroke:var(--hijau)}
 .vmeta{padding:10px 2px 0;display:flex;flex-direction:column;gap:2px}
 .vrow{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
@@ -146,17 +149,17 @@ svg.i.s16{width:16px;height:16px}svg.i.s14{width:14px;height:14px}svg.i.s24{widt
 .cmp{position:absolute;right:2px;bottom:2px;display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--body);height:32px;padding:0 4px}
 .box{width:20px;height:20px;border-radius:6px;border:1.5px solid var(--line2);display:grid;place-items:center;background:#fff}
 .cmp[aria-pressed="true"] .box{background:var(--hijau);border-color:var(--hijau);color:#fff}
-.list{display:flex;flex-direction:column;gap:24px;padding:0 16px}
-.locbar{margin:4px 16px 12px;display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px 12px;width:calc(100% - 32px);text-align:left}
+.list{display:flex;flex-direction:column;gap:16px;padding:0 16px}
+.locbar{margin:4px 16px 12px;display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:10px 12px;width:calc(100% - 32px);text-align:left}
 .locbar .t{flex:1;min-width:0}
 .count{padding:14px 16px 12px;display:flex;justify-content:space-between;align-items:center}
 .sortsel{height:36px;border:1px solid var(--line);border-radius:999px;padding:0 12px;background:#fff;font-size:13px;font-weight:600}
-.skel{border-radius:12px;background:linear-gradient(90deg,#EFEDE8 25%,#F7F6F2 37%,#EFEDE8 63%);background-size:400% 100%;animation:sh 1.2s ease infinite}
+.skel{border-radius:12px;background:linear-gradient(90deg,#EFEDE8 25%,#FBFAF7 37%,#EFEDE8 63%);background-size:400% 100%;animation:sh 1.2s ease infinite}
 @keyframes sh{0%{background-position:100% 0}100%{background-position:0 0}}
 .state{margin:32px 16px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px}
 .state .ic{width:56px;height:56px;border-radius:50%;background:var(--p50);color:var(--hijau);display:grid;place-items:center}
-.state.err .ic{background:#FDECEA;color:var(--bahaya)}
-.tray{position:absolute;left:12px;right:12px;bottom:92px;z-index:9;background:var(--ink);color:#fff;border-radius:14px;padding:10px 10px 10px 16px;display:flex;align-items:center;gap:10px;box-shadow:var(--shadow)}
+.state.err .ic{background:#FEF3F2;color:var(--bahaya)}
+.tray{position:absolute;left:12px;right:12px;bottom:92px;z-index:9;background:var(--ink);color:#fff;border-radius:16px;padding:10px 10px 10px 16px;display:flex;align-items:center;gap:10px;box-shadow:var(--shadow)}
 .tray .btn{height:40px;background:#fff;color:var(--ink);padding:0 14px;font-size:14px}
 
 /* profile */
@@ -170,7 +173,7 @@ svg.i.s16{width:16px;height:16px}svg.i.s14{width:14px;height:14px}svg.i.s24{widt
 .rating-block{margin:16px;padding:16px;border:1px solid var(--line);border-radius:16px;background:#fff;display:flex;align-items:center;gap:16px}
 .rating-block .big{font-family:var(--serif);font-size:48px;font-weight:600;line-height:1;letter-spacing:-.02em}
 .stars{display:flex;gap:2px}.stars svg{fill:var(--ink);stroke:var(--ink)}
-.tabs{display:flex;gap:4px;padding:0 16px;border-bottom:1px solid var(--line);position:sticky;top:60px;background:var(--kertas);z-index:4}
+.tabs{display:flex;gap:4px;padding:0 16px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--kertas);z-index:4}
 .tabs button{height:44px;padding:0 12px;font-size:15px;font-weight:600;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px}
 .tabs button[aria-selected="true"]{color:var(--ink);border-color:var(--ink)}
 .pkg{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:8px}
@@ -182,7 +185,7 @@ svg.i.s16{width:16px;height:16px}svg.i.s14{width:14px;height:14px}svg.i.s24{widt
 .av{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:14px;flex:none}
 .booked{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--muted)}
 .booked svg{color:var(--hijau)}
-.reply{margin-top:4px;background:var(--kertas);border-left:3px solid var(--p200);padding:8px 12px;border-radius:0 8px 8px 0;font-size:14px;color:var(--body)}
+.reply{margin-top:4px;background:var(--kertas);background:var(--p50);padding:8px 12px;border-radius:12px;font-size:14px;color:var(--body)}
 .cal{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px}
 .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center;margin-top:12px}
 .cal-grid .dw{font-size:11px;font-weight:600;color:var(--muted);padding-bottom:4px}
@@ -224,9 +227,9 @@ textarea.input{height:84px;padding:12px 14px;resize:none}
 .sum .r{display:flex;justify-content:space-between;gap:12px}
 .sum .tot{border-top:1px solid var(--line);padding-top:8px;font-weight:700;font-size:16px}
 .alert{display:flex;gap:10px;padding:12px 14px;border-radius:12px;font-size:14px}
-.alert.err{background:#FDECEA;color:#7A1A10}
+.alert.err{background:#FEF3F2;color:var(--ink)}.alert.err>svg{color:var(--bahaya)}
 .alert.info{background:var(--p50);color:var(--malam)}
-.alert.warn{background:#FDF3E6;color:#6B3D04}
+.alert.warn{background:#FEF6E7;color:var(--ink)}
 .checked{list-style:none;display:flex;flex-direction:column;gap:10px}
 .checked li{display:flex;gap:10px;font-size:15px}
 .checked li svg{color:var(--hijau);margin-top:2px}
@@ -269,6 +272,27 @@ input[type=range]{width:100%;accent-color:var(--hijau);height:32px}
 .toast.on{transform:none;visibility:visible}
 .spin{width:18px;height:18px;border-radius:50%;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;animation:rot .8s linear infinite}
 @keyframes rot{to{transform:rotate(360deg)}}
+.otp{display:flex;gap:8px}
+.otp input{flex:1;min-width:0;text-align:center;font-size:22px;font-weight:700;padding:12px 0;border:1px solid var(--line2);border-radius:10px;background:#fff}
+.otp input:focus{outline:none;border-color:var(--hijau);box-shadow:0 0 0 4px rgba(185,223,205,.6)}
+.otp.err input{border-color:var(--bahaya)}
+.steps{display:flex;gap:4px}.steps i{flex:1;height:4px;border-radius:999px;background:var(--line)}.steps i.on{background:var(--hijau)}
+.foot{position:absolute;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);padding:12px 16px 24px;display:flex;gap:12px;z-index:10}
+.foot .btn{flex:1}
+.bubbles{display:flex;flex-direction:column;gap:8px;padding:16px}
+.bub{max-width:80%;padding:10px 14px;border-radius:16px;font-size:15px;line-height:1.4}
+.bub.me{align-self:flex-end;background:var(--hijau);color:#fff;border-bottom-right-radius:4px}
+.bub.them{align-self:flex-start;background:#fff;border:1px solid var(--line);border-bottom-left-radius:4px}
+.bub .tm{display:flex;gap:4px;justify-content:flex-end;align-items:center;font-size:11px;opacity:.85;margin-top:4px}
+.bub.fail{background:#fff;color:var(--ink);border:1px solid var(--bahaya)}
+.bub.fail .tm{color:var(--bahaya);opacity:1;font-weight:600}
+.bub.photo{padding:4px}.bub.photo img{display:block;width:200px;border-radius:12px}
+.day-sep{align-self:center;font-size:12px;color:var(--muted);background:var(--line);padding:4px 10px;border-radius:999px}
+.composer{position:absolute;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);padding:8px 8px 24px;display:flex;gap:8px;align-items:center;z-index:10}
+.composer input{flex:1;min-width:0;padding:12px 16px;border:1px solid var(--line2);border-radius:999px;background:var(--kertas)}
+.send{width:44px;height:44px;border-radius:50%;background:var(--hijau);color:#fff;display:grid;place-items:center;flex:none}
+.chat-head{display:flex;align-items:center;gap:8px;padding:8px 12px;background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.guest-card{margin:16px 16px 0;border-radius:16px;background:var(--p50);padding:16px;display:flex;flex-direction:column;gap:12px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 </style>
 </head>
@@ -285,6 +309,8 @@ input[type=range]{width:100%;accent-color:var(--hijau);height:32px}
         <li><span>Tick 2–3 vendors → <b>Bandingkan</b></span></li>
         <li><span>Open a vendor → tap the <b>Disahkan</b> badge</span></li>
         <li><span><b>Hantar permintaan</b> → My Majlis</span></li>
+        <li><span>My Majlis → tap a booked vendor → chat or cancel</span></li>
+        <li><span>Switch to <b>Guest</b> → tap Book or ♡ to see login + OTP</span></li>
       </ol>
     </div>
     <div class="ctrl">
@@ -297,6 +323,20 @@ input[type=range]{width:100%;accent-color:var(--hijau);height:32px}
       </div>
     </div>
     <div class="ctrl">
+      <h3>Account</h3>
+      <div class="seg" id="demoAuth">
+        <button data-a="in" aria-pressed="true">Logged in</button>
+        <button data-a="guest" aria-pressed="false">Guest</button>
+      </div>
+    </div>
+    <div class="ctrl">
+      <h3>Chat network</h3>
+      <div class="seg" id="demoNet">
+        <button data-n="ok" aria-pressed="true">Online</button>
+        <button data-n="fail" aria-pressed="false">Send fails</button>
+      </div>
+    </div>
+    <div class="ctrl">
       <h3>Booking edge case</h3>
       <div class="seg" id="demoBook">
         <button data-b="ok" aria-pressed="true">Normal</button>
@@ -306,7 +346,7 @@ input[type=range]{width:100%;accent-color:var(--hijau);height:32px}
     <div class="ctrl">
       <h3>Jump to</h3>
       <div class="seg" id="demoJump">
-        <button data-j="home">Home</button><button data-j="search">Search</button><button data-j="vendor">Vendor</button><button data-j="planner">My Majlis</button><button data-j="reset">Reset</button>
+        <button data-j="home">Home</button><button data-j="search">Search</button><button data-j="vendor">Vendor</button><button data-j="planner">My Majlis</button><button data-j="login">Login</button><button data-j="wizard">Event wizard</button><button data-j="chat">Chat</button><button data-j="booking">Booking detail</button><button data-j="reset">Reset</button>
       </div>
     </div>
   </aside>
@@ -323,7 +363,7 @@ input[type=range]{width:100%;accent-color:var(--hijau);height:32px}
 <button class="demo-fab" id="fab" aria-expanded="false" aria-controls="panel">Demo</button>
 
 <script>
-const ICONS={"utensils-crossed":"<path d=\"m16 2-2.3 2.3a3 3 0 0 0 0 4.2l1.8 1.8a3 3 0 0 0 4.2 0L22 8\" /> <path d=\"M15 15 3.3 3.3a4.2 4.2 0 0 0 0 6l7.3 7.3c.7.7 2 .7 2.8 0L15 15Zm0 0 7 7\" /> <path d=\"m2.1 21.8 6.4-6.3\" /> <path d=\"m19 5-7 7\" />","camera":"<path d=\"M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z\" /> <circle cx=\"12\" cy=\"13\" r=\"3\" />","mic":"<path d=\"M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z\" /> <path d=\"M19 10v2a7 7 0 0 1-14 0v-2\" /> <line x1=\"12\" x2=\"12\" y1=\"19\" y2=\"22\" />","building-2":"<path d=\"M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z\" /> <path d=\"M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2\" /> <path d=\"M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2\" /> <path d=\"M10 6h4\" /> <path d=\"M10 10h4\" /> <path d=\"M10 14h4\" /> <path d=\"M10 18h4\" />","flower-2":"<path d=\"M12 5a3 3 0 1 1 3 3m-3-3a3 3 0 1 0-3 3m3-3v1M9 8a3 3 0 1 0 3 3M9 8h1m5 0a3 3 0 1 1-3 3m3-3h-1m-2 3v-1\" /> <circle cx=\"12\" cy=\"8\" r=\"2\" /> <path d=\"M12 10v12\" /> <path d=\"M12 22c4.2 0 7-1.667 7-5-4.2 0-7 1.667-7 5Z\" /> <path d=\"M12 22c-4.2 0-7-1.667-7-5 4.2 0 7 1.667 7 5Z\" />","sparkles":"<path d=\"M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z\" /> <path d=\"M20 3v4\" /> <path d=\"M22 5h-4\" /> <path d=\"M4 17v2\" /> <path d=\"M5 18H3\" />","shield-check":"<path d=\"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z\" /> <path d=\"m9 12 2 2 4-4\" />","badge-check":"<path d=\"M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z\" /> <path d=\"m9 12 2 2 4-4\" />","calendar-check":"<path d=\"M8 2v4\" /> <path d=\"M16 2v4\" /> <rect width=\"18\" height=\"18\" x=\"3\" y=\"4\" rx=\"2\" /> <path d=\"M3 10h18\" /> <path d=\"m9 16 2 2 4-4\" />","star":"<path d=\"M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z\" />","map-pin":"<path d=\"M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0\" /> <circle cx=\"12\" cy=\"10\" r=\"3\" />","clock":"<circle cx=\"12\" cy=\"12\" r=\"10\" /> <polyline points=\"12 6 12 12 16 14\" />","award":"<path d=\"m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526\" /> <circle cx=\"12\" cy=\"8\" r=\"6\" />","heart":"<path d=\"M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z\" />","scale":"<path d=\"m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z\" /> <path d=\"m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z\" /> <path d=\"M7 21h10\" /> <path d=\"M12 3v18\" /> <path d=\"M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2\" />","message-circle":"<path d=\"M7.9 20A9 9 0 1 0 4 16.1L2 22Z\" />","wallet":"<path d=\"M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1\" /> <path d=\"M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4\" />","list-checks":"<path d=\"m3 17 2 2 4-4\" /> <path d=\"m3 7 2 2 4-4\" /> <path d=\"M13 6h8\" /> <path d=\"M13 12h8\" /> <path d=\"M13 18h8\" />","search":"<circle cx=\"11\" cy=\"11\" r=\"8\" /> <path d=\"m21 21-4.3-4.3\" />","x":"<path d=\"M18 6 6 18\" /> <path d=\"m6 6 12 12\" />","check":"<path d=\"M20 6 9 17l-5-5\" />","chevron-left":"<path d=\"m15 18-6-6 6-6\" />","chevron-right":"<path d=\"m9 18 6-6-6-6\" />","sliders-horizontal":"<line x1=\"21\" x2=\"14\" y1=\"4\" y2=\"4\" /> <line x1=\"10\" x2=\"3\" y1=\"4\" y2=\"4\" /> <line x1=\"21\" x2=\"12\" y1=\"12\" y2=\"12\" /> <line x1=\"8\" x2=\"3\" y1=\"12\" y2=\"12\" /> <line x1=\"21\" x2=\"16\" y1=\"20\" y2=\"20\" /> <line x1=\"12\" x2=\"3\" y1=\"20\" y2=\"20\" /> <line x1=\"14\" x2=\"14\" y1=\"2\" y2=\"6\" /> <line x1=\"8\" x2=\"8\" y1=\"10\" y2=\"14\" /> <line x1=\"16\" x2=\"16\" y1=\"18\" y2=\"22\" />","calendar-heart":"<path d=\"M3 10h18V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h7\" /> <path d=\"M8 2v4\" /> <path d=\"M16 2v4\" /> <path d=\"M21.29 14.7a2.43 2.43 0 0 0-2.65-.52c-.3.12-.57.3-.8.53l-.34.34-.35-.34a2.43 2.43 0 0 0-2.65-.53c-.3.12-.56.3-.79.53-.95.94-1 2.53.2 3.74L17.5 22l3.6-3.55c1.2-1.21 1.14-2.8.19-3.74Z\" />","user":"<path d=\"M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2\" /> <circle cx=\"12\" cy=\"7\" r=\"4\" />","users":"<path d=\"M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2\" /> <circle cx=\"9\" cy=\"7\" r=\"4\" /> <path d=\"M22 21v-2a4 4 0 0 0-3-3.87\" /> <path d=\"M16 3.13a4 4 0 0 1 0 7.75\" />","minus":"<path d=\"M5 12h14\" />","plus":"<path d=\"M5 12h14\" /> <path d=\"M12 5v14\" />","send":"<path d=\"M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z\" /> <path d=\"m21.854 2.147-10.94 10.939\" />","info":"<circle cx=\"12\" cy=\"12\" r=\"10\" /> <path d=\"M12 16v-4\" /> <path d=\"M12 8h.01\" />","circle-check-big":"<path d=\"M21.801 10A10 10 0 1 1 17 3.335\" /> <path d=\"m9 11 3 3L22 4\" />","hourglass":"<path d=\"M5 22h14\" /> <path d=\"M5 2h14\" /> <path d=\"M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22\" /> <path d=\"M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2\" />","share-2":"<circle cx=\"18\" cy=\"5\" r=\"3\" /> <circle cx=\"6\" cy=\"12\" r=\"3\" /> <circle cx=\"18\" cy=\"19\" r=\"3\" /> <line x1=\"8.59\" x2=\"15.42\" y1=\"13.51\" y2=\"17.49\" /> <line x1=\"15.41\" x2=\"8.59\" y1=\"6.51\" y2=\"10.49\" />","globe":"<circle cx=\"12\" cy=\"12\" r=\"10\" /> <path d=\"M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20\" /> <path d=\"M2 12h20\" />","alert-circle":"<circle cx=\"12\" cy=\"12\" r=\"10\" /> <line x1=\"12\" x2=\"12\" y1=\"8\" y2=\"12\" /> <line x1=\"12\" x2=\"12.01\" y1=\"16\" y2=\"16\" />","home":"<path d=\"M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8\" /> <path d=\"M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\" />"};
+const ICONS={"utensils-crossed":"<path d=\"m16 2-2.3 2.3a3 3 0 0 0 0 4.2l1.8 1.8a3 3 0 0 0 4.2 0L22 8\" /> <path d=\"M15 15 3.3 3.3a4.2 4.2 0 0 0 0 6l7.3 7.3c.7.7 2 .7 2.8 0L15 15Zm0 0 7 7\" /> <path d=\"m2.1 21.8 6.4-6.3\" /> <path d=\"m19 5-7 7\" />","camera":"<path d=\"M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z\" /> <circle cx=\"12\" cy=\"13\" r=\"3\" />","mic":"<path d=\"M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z\" /> <path d=\"M19 10v2a7 7 0 0 1-14 0v-2\" /> <line x1=\"12\" x2=\"12\" y1=\"19\" y2=\"22\" />","building-2":"<path d=\"M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z\" /> <path d=\"M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2\" /> <path d=\"M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2\" /> <path d=\"M10 6h4\" /> <path d=\"M10 10h4\" /> <path d=\"M10 14h4\" /> <path d=\"M10 18h4\" />","flower-2":"<path d=\"M12 5a3 3 0 1 1 3 3m-3-3a3 3 0 1 0-3 3m3-3v1M9 8a3 3 0 1 0 3 3M9 8h1m5 0a3 3 0 1 1-3 3m3-3h-1m-2 3v-1\" /> <circle cx=\"12\" cy=\"8\" r=\"2\" /> <path d=\"M12 10v12\" /> <path d=\"M12 22c4.2 0 7-1.667 7-5-4.2 0-7 1.667-7 5Z\" /> <path d=\"M12 22c-4.2 0-7-1.667-7-5 4.2 0 7 1.667 7 5Z\" />","sparkles":"<path d=\"M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z\" /> <path d=\"M20 3v4\" /> <path d=\"M22 5h-4\" /> <path d=\"M4 17v2\" /> <path d=\"M5 18H3\" />","shield-check":"<path d=\"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z\" /> <path d=\"m9 12 2 2 4-4\" />","badge-check":"<path d=\"M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z\" /> <path d=\"m9 12 2 2 4-4\" />","calendar-check":"<path d=\"M8 2v4\" /> <path d=\"M16 2v4\" /> <rect width=\"18\" height=\"18\" x=\"3\" y=\"4\" rx=\"2\" /> <path d=\"M3 10h18\" /> <path d=\"m9 16 2 2 4-4\" />","star":"<path d=\"M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z\" />","map-pin":"<path d=\"M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0\" /> <circle cx=\"12\" cy=\"10\" r=\"3\" />","clock":"<circle cx=\"12\" cy=\"12\" r=\"10\" /> <polyline points=\"12 6 12 12 16 14\" />","award":"<path d=\"m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526\" /> <circle cx=\"12\" cy=\"8\" r=\"6\" />","heart":"<path d=\"M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z\" />","scale":"<path d=\"m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z\" /> <path d=\"m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z\" /> <path d=\"M7 21h10\" /> <path d=\"M12 3v18\" /> <path d=\"M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2\" />","message-circle":"<path d=\"M7.9 20A9 9 0 1 0 4 16.1L2 22Z\" />","wallet":"<path d=\"M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1\" /> <path d=\"M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4\" />","list-checks":"<path d=\"m3 17 2 2 4-4\" /> <path d=\"m3 7 2 2 4-4\" /> <path d=\"M13 6h8\" /> <path d=\"M13 12h8\" /> <path d=\"M13 18h8\" />","search":"<circle cx=\"11\" cy=\"11\" r=\"8\" /> <path d=\"m21 21-4.3-4.3\" />","x":"<path d=\"M18 6 6 18\" /> <path d=\"m6 6 12 12\" />","check":"<path d=\"M20 6 9 17l-5-5\" />","chevron-left":"<path d=\"m15 18-6-6 6-6\" />","chevron-right":"<path d=\"m9 18 6-6-6-6\" />","sliders-horizontal":"<line x1=\"21\" x2=\"14\" y1=\"4\" y2=\"4\" /> <line x1=\"10\" x2=\"3\" y1=\"4\" y2=\"4\" /> <line x1=\"21\" x2=\"12\" y1=\"12\" y2=\"12\" /> <line x1=\"8\" x2=\"3\" y1=\"12\" y2=\"12\" /> <line x1=\"21\" x2=\"16\" y1=\"20\" y2=\"20\" /> <line x1=\"12\" x2=\"3\" y1=\"20\" y2=\"20\" /> <line x1=\"14\" x2=\"14\" y1=\"2\" y2=\"6\" /> <line x1=\"8\" x2=\"8\" y1=\"10\" y2=\"14\" /> <line x1=\"16\" x2=\"16\" y1=\"18\" y2=\"22\" />","calendar-heart":"<path d=\"M3 10h18V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h7\" /> <path d=\"M8 2v4\" /> <path d=\"M16 2v4\" /> <path d=\"M21.29 14.7a2.43 2.43 0 0 0-2.65-.52c-.3.12-.57.3-.8.53l-.34.34-.35-.34a2.43 2.43 0 0 0-2.65-.53c-.3.12-.56.3-.79.53-.95.94-1 2.53.2 3.74L17.5 22l3.6-3.55c1.2-1.21 1.14-2.8.19-3.74Z\" />","user":"<path d=\"M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2\" /> <circle cx=\"12\" cy=\"7\" r=\"4\" />","users":"<path d=\"M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2\" /> <circle cx=\"9\" cy=\"7\" r=\"4\" /> <path d=\"M22 21v-2a4 4 0 0 0-3-3.87\" /> <path d=\"M16 3.13a4 4 0 0 1 0 7.75\" />","minus":"<path d=\"M5 12h14\" />","plus":"<path d=\"M5 12h14\" /> <path d=\"M12 5v14\" />","send":"<path d=\"M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z\" /> <path d=\"m21.854 2.147-10.94 10.939\" />","info":"<circle cx=\"12\" cy=\"12\" r=\"10\" /> <path d=\"M12 16v-4\" /> <path d=\"M12 8h.01\" />","circle-check-big":"<path d=\"M21.801 10A10 10 0 1 1 17 3.335\" /> <path d=\"m9 11 3 3L22 4\" />","hourglass":"<path d=\"M5 22h14\" /> <path d=\"M5 2h14\" /> <path d=\"M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22\" /> <path d=\"M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2\" />","share-2":"<circle cx=\"18\" cy=\"5\" r=\"3\" /> <circle cx=\"6\" cy=\"12\" r=\"3\" /> <circle cx=\"18\" cy=\"19\" r=\"3\" /> <line x1=\"8.59\" x2=\"15.42\" y1=\"13.51\" y2=\"17.49\" /> <line x1=\"15.41\" x2=\"8.59\" y1=\"6.51\" y2=\"10.49\" />","globe":"<circle cx=\"12\" cy=\"12\" r=\"10\" /> <path d=\"M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20\" /> <path d=\"M2 12h20\" />","alert-circle":"<circle cx=\"12\" cy=\"12\" r=\"10\" /> <line x1=\"12\" x2=\"12\" y1=\"8\" y2=\"12\" /> <line x1=\"12\" x2=\"12.01\" y1=\"16\" y2=\"16\" />","home":"<path d=\"M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8\" /> <path d=\"M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\" />","image":"<rect width=\"18\" height=\"18\" x=\"3\" y=\"3\" rx=\"2\" ry=\"2\" /> <circle cx=\"9\" cy=\"9\" r=\"2\" /> <path d=\"m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21\" />","phone":"<path d=\"M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z\" />","lock":"<rect width=\"18\" height=\"11\" x=\"3\" y=\"11\" rx=\"2\" ry=\"2\" /> <path d=\"M7 11V7a5 5 0 0 1 10 0v4\" />","log-in":"<path d=\"M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4\" /> <polyline points=\"10 17 15 12 10 7\" /> <line x1=\"15\" x2=\"3\" y1=\"12\" y2=\"12\" />","check-check":"<path d=\"M18 6 7 17l-5-5\" /> <path d=\"m22 10-7.5 7.5L13 16\" />","rotate-ccw":"<path d=\"M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8\" /> <path d=\"M3 3v5h5\" />","mail":"<rect width=\"20\" height=\"16\" x=\"2\" y=\"4\" rx=\"2\" /> <path d=\"m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7\" />","store":"<path d=\"m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7\" /> <path d=\"M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8\" /> <path d=\"M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4\" /> <path d=\"M2 7h20\" /> <path d=\"M22 7v3a2 2 0 0 1-2 2a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12a2 2 0 0 1-2-2V7\" />","party-popper":"<path d=\"M5.8 11.3 2 22l10.7-3.79\" /> <path d=\"M4 3h.01\" /> <path d=\"M22 8h.01\" /> <path d=\"M15 2h.01\" /> <path d=\"M22 20h.01\" /> <path d=\"m22 2-2.24.75a2.9 2.9 0 0 0-1.96 3.12c.1.86-.57 1.63-1.45 1.63h-.38c-.86 0-1.6.6-1.76 1.44L14 10\" /> <path d=\"m22 13-.82-.33c-.86-.34-1.82.2-1.98 1.11c-.11.7-.72 1.22-1.43 1.22H17\" /> <path d=\"m11 2 .33.82c.34.86-.2 1.82-1.11 1.98C9.52 4.9 9 5.52 9 6.23V7\" /> <path d=\"M11 13c1.93 1.93 2.83 4.17 2 5-.83.83-3.07-.07-5-2-1.93-1.93-2.83-4.17-2-5 .83-.83 3.07.07 5 2Z\" />","cake":"<path d=\"M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8\" /> <path d=\"M4 16s.5-1 2-1 2.5 2 4 2 2.5-2 4-2 2.5 2 4 2 2-1 2-1\" /> <path d=\"M2 21h20\" /> <path d=\"M7 8v3\" /> <path d=\"M12 8v3\" /> <path d=\"M17 8v3\" /> <path d=\"M7 4h.01\" /> <path d=\"M12 4h.01\" /> <path d=\"M17 4h.01\" />","briefcase":"<path d=\"M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16\" /> <rect width=\"20\" height=\"14\" x=\"2\" y=\"6\" rx=\"2\" />","heart-handshake":"<path d=\"M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z\" /> <path d=\"M12 5 9.04 7.96a2.17 2.17 0 0 0 0 3.08c.82.82 2.13.85 3 .07l2.07-1.9a2.82 2.82 0 0 1 3.79 0l2.96 2.66\" /> <path d=\"m18 15-2-2\" /> <path d=\"m15 18-2-2\" />","calendar":"<path d=\"M8 2v4\" /> <path d=\"M16 2v4\" /> <rect width=\"18\" height=\"18\" x=\"3\" y=\"4\" rx=\"2\" /> <path d=\"M3 10h18\" />","ban":"<circle cx=\"12\" cy=\"12\" r=\"10\" /> <path d=\"m4.9 4.9 14.2 14.2\" />","eye":"<path d=\"M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0\" /> <circle cx=\"12\" cy=\"12\" r=\"3\" />","eye-off":"<path d=\"M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49\" /> <path d=\"M14.084 14.158a3 3 0 0 1-4.242-4.242\" /> <path d=\"M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143\" /> <path d=\"m2 2 20 20\" />"};
 const ic=(n,c='')=>`<svg class="i ${c}" viewBox="0 0 24 24" aria-hidden="true">${ICONS[n]||''}</svg>`;
 
 /* ---------- copy (BM / EN) ---------- */
@@ -347,7 +387,7 @@ toPlanner:'Lihat Majlis Saya',keepLooking:'Terus cari vendor lain',
 planTitle:'Majlis Saya',budget:'Bajet',spent:'Disahkan',left:'Baki',checklist:'Senarai semak',done:'selesai',
 stNone:'Belum mula',stReq:'Diminta',stAcc:'Diterima',find:'Cari',msgTitle:'Mesej',cmpTitle:'Bandingkan vendor',
 cPrice:'Harga',cRate:'Rating',cDist:'Jarak',cReply:'Balas',cDate:'14 Feb',cMin:'Min pax',choose:'Pilih',
-savedT:'Disimpan ke senarai pendek',maxCmp:'Maksimum 3 vendor untuk dibandingkan',locT:'Kawasan carian',locS:'Lokasi majlis',radius:'Jejari',apply:'Tunjuk {n} vendor',byState:'Ikut negeri',byRadius:'Ikut jarak'},
+savedT:'Disimpan ke senarai pendek',maxCmp:'Maksimum 3 vendor untuk dibandingkan',locT:'Kawasan carian',locS:'Lokasi majlis',radius:'Jejari',apply:'Tunjuk {n} vendor',byState:'Ikut negeri',byRadius:'Ikut jarak',lgT:'Log masuk atau daftar',lgS:'Simpan vendor, rancang majlis dan hantar permintaan tempahan.',lgRole:'Saya mahu…',roleC:'Merancang majlis',roleV:'Mendaftar sebagai vendor',lgPhone:'Nombor telefon',lgPhoneHint:'Kami hantar kod 6 digit melalui SMS.',lgPhoneErr:'Masukkan nombor Malaysia yang sah (9–10 digit).',lgSend:'Hantar kod',or:'atau',lgEmail:'Guna e-mel',lgEmailL:'E-mel',lgPass:'Kata laluan',lgShow:'Tunjuk kata laluan',lgIn:'Log masuk',lgTerms:'Dengan meneruskan, anda bersetuju dengan Terma & Dasar Privasi Majlis Hub.',otpT:'Masukkan kod',otpS:'Kod 6 digit dihantar ke {p}.',otpErr:'Kod salah. Cuba lagi atau minta kod baharu.',otpWait:'Hantar semula dalam {s}s',otpResend:'Hantar semula kod',otpVerify:'Sahkan',otpDemo:'Demo: kosongkan untuk auto-isi, 000000 untuk ralat.',welcome:'Selamat datang, Aina!',loginToBook:'Log masuk untuk tempah',guestT:'Rancang majlis anda di sini',guestS:'Senarai semak, bajet dan semua vendor di satu tempat.',guestBtn:'Log masuk / Daftar',hiGuest:'Selamat datang',newEv:'Majlis baru',wzT:'Cipta majlis',wz1:'Jenis majlis',wz2:'Tarikh',wz3:'Lokasi & tetamu',wz4:'Bajet',wzName:'Nama majlis',wzDate:'Tarikh majlis',wzDay2:'Majlis 2 hari (cth: akad & sanding)',wzPast:'Tarikh mesti selepas hari ini.',wzLoc:'Lokasi majlis',wzLocErr:'Masukkan lokasi supaya kami boleh cari vendor berdekatan.',wzBudget:'Jumlah bajet (RM)',wzBudgetHint:'Anggaran sahaja. Anda boleh ubah bila-bila masa.',back:'Kembali',next:'Seterusnya',create:'Cipta majlis',created:'Majlis dicipta!',step:'Langkah {n} daripada 4',evWed:'Perkahwinan',evKen:'Kenduri / Aqiqah',evCorp:'Korporat',evBday:'Hari jadi',evOther:'Lain-lain',sayHi:'Mulakan perbualan',sayHiS:'Tanya soalan tentang menu, tarikh atau pakej.',phoneLocked:'Nombor telefon dikongsi selepas tempahan diterima.',phoneOpen:'Tempahan diterima. Nombor telefon vendor:',typeMsg:'Tulis mesej…',failed:'Gagal dihantar · Ketik untuk cuba lagi',sent:'Dihantar',bkDetail:'Butiran tempahan',viewProfile:'Lihat profil vendor',msgVendor:'Mesej vendor',cancelReq:'Batal permintaan',cancelT:'Batal permintaan ini?',cancelS:'Vendor akan dimaklumkan. Anda boleh tempah vendor lain selepas ini.',cancelWhy:'Sebab pembatalan',cr1:'Jumpa vendor lain',cr2:'Tarikh majlis berubah',cr3:'Bajet tidak cukup',cr4:'Lain-lain',keep:'Simpan tempahan',confirmCancel:'Ya, batalkan',cancelled:'Dibatalkan',cancelledToast:'Permintaan dibatalkan',linkCopied:'Pautan disalin',dateChanged:'Tarikh ditukar ke {d}',state:'Negeri',district:'Daerah'},
 en:{hi:'Hello, Aina',sub:'What does your majlis need?',search:'Search catering, photographers, MCs…',daysLeft:'days to go',dShort:'days',booked:'booked',ofBudget:'of budget',cats:'Categories',near:'Verified vendors near you',seeAll:'See all',
 trust1:'Every vendor is checked',trust1s:'Our team checks SSM, IC and halal certificates.',trust2:'Real reviews only',trust2s:'Only customers who booked can leave a review.',trust3:'Clear prices',trust3s:'Packages with real RM prices. No "PM for price".',
 nHome:'Home',nSearch:'Search',nPlan:'My Majlis',nMsg:'Messages',
@@ -367,7 +407,7 @@ toPlanner:'View My Majlis',keepLooking:'Keep browsing vendors',
 planTitle:'My Majlis',budget:'Budget',spent:'Confirmed',left:'Left',checklist:'Checklist',done:'done',
 stNone:'Not started',stReq:'Requested',stAcc:'Accepted',find:'Find',msgTitle:'Messages',cmpTitle:'Compare vendors',
 cPrice:'Price',cRate:'Rating',cDist:'Distance',cReply:'Replies',cDate:'14 Feb',cMin:'Min pax',choose:'Choose',
-savedT:'Saved to your shortlist',maxCmp:'You can compare up to 3 vendors',locT:'Search area',locS:'Majlis location',radius:'Radius',apply:'Show {n} vendors',byState:'By state',byRadius:'By distance'}
+savedT:'Saved to your shortlist',maxCmp:'You can compare up to 3 vendors',locT:'Search area',locS:'Majlis location',radius:'Radius',apply:'Show {n} vendors',byState:'By state',byRadius:'By distance',lgT:'Log in or sign up',lgS:'Save vendors, plan your majlis and send booking requests.',lgRole:'I want to…',roleC:'Plan a majlis',roleV:'Register as a vendor',lgPhone:'Phone number',lgPhoneHint:"We'll send a 6-digit code by SMS.",lgPhoneErr:'Enter a valid Malaysian number (9–10 digits).',lgSend:'Send code',or:'or',lgEmail:'Use email',lgEmailL:'Email',lgPass:'Password',lgShow:'Show password',lgIn:'Log in',lgTerms:'By continuing you agree to the Majlis Hub Terms & Privacy Policy.',otpT:'Enter the code',otpS:'A 6-digit code was sent to {p}.',otpErr:'Wrong code. Try again or request a new one.',otpWait:'Resend in {s}s',otpResend:'Resend code',otpVerify:'Verify',otpDemo:'Demo: leave empty to auto-fill, 000000 for the error.',welcome:'Welcome, Aina!',loginToBook:'Log in to book',guestT:'Plan your majlis here',guestS:'Checklist, budget and every vendor in one place.',guestBtn:'Log in / Sign up',hiGuest:'Welcome',newEv:'New event',wzT:'Create your majlis',wz1:'Event type',wz2:'Date',wz3:'Location & guests',wz4:'Budget',wzName:'Event name',wzDate:'Event date',wzDay2:'2-day event (e.g. akad & sanding)',wzPast:'The date must be after today.',wzLoc:'Event location',wzLocErr:'Add a location so we can find vendors near you.',wzBudget:'Total budget (RM)',wzBudgetHint:'Just an estimate. You can change it any time.',back:'Back',next:'Next',create:'Create event',created:'Event created!',step:'Step {n} of 4',evWed:'Wedding',evKen:'Kenduri / Aqiqah',evCorp:'Corporate',evBday:'Birthday',evOther:'Other',sayHi:'Start the conversation',sayHiS:'Ask about the menu, dates or packages.',phoneLocked:'Phone number is shared once the booking is accepted.',phoneOpen:'Booking accepted. Vendor phone:',typeMsg:'Write a message…',failed:'Not sent · Tap to retry',sent:'Sent',bkDetail:'Booking details',viewProfile:'View vendor profile',msgVendor:'Message vendor',cancelReq:'Cancel request',cancelT:'Cancel this request?',cancelS:"The vendor will be notified. You can book another vendor afterwards.",cancelWhy:'Reason for cancelling',cr1:'Found another vendor',cr2:'Event date changed',cr3:'Over budget',cr4:'Other',keep:'Keep booking',confirmCancel:'Yes, cancel',cancelled:'Cancelled',cancelledToast:'Request cancelled',linkCopied:'Link copied',dateChanged:'Date changed to {d}',state:'State',district:'District'}
 };
 let lang='ms';
 const t=(k,v={})=>(T[lang][k]||k).replace(/\{(\w+)\}/g,(_,x)=>v[x]);
@@ -397,12 +437,18 @@ const vById=id=>V.find(v=>v.id===id);
 const RM=n=>'RM '+n.toLocaleString('en-MY');
 const priceLine=v=>v.unit==='pax'?`${RM(v.price)} ${t('perPax')} · ${t('minPax',{n:v.min})}`:`${t('from')} ${RM(v.price)}`;
 
-const EVENT={name:'Majlis Aina & Hakim',date:'Sab, 14 Feb 2027',days:96,place:'Dewan Seri Kenanga, Shah Alam',pax:500,budget:45000};
+let EVENT={name:'Majlis Aina & Hakim',type:'evWed',iso:'2027-02-14',date:'Sab, 14 Feb 2027',place:'Dewan Seri Kenanga, Shah Alam',pax:500,budget:45000};
+const daysLeft=()=>Math.max(0,Math.ceil((new Date(EVENT.iso)-new Date(new Date().toDateString()))/864e5));
+const fmtDate=iso=>new Date(iso).toLocaleDateString('ms-MY',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+const CHATS={7:[{me:0,t:'Assalamualaikum Aina! Tahniah atas majlis nanti.',tm:'09:02'},{me:1,t:'Waalaikumsalam. Boleh buat sesi pre-wedding sekali?',tm:'09:05'},{me:0,t:'Boleh. Gambar pre-wedding boleh buat di Taman Botani?',tm:'09:12'}],
+ 11:[{me:1,t:'Salam kak, untuk akad 14 Feb pukul 9 pagi, boleh?',tm:'Semalam'},{me:0,t:'Saya ada slot kosong pukul 6 pagi untuk solekan akad.',tm:'Semalam'}],
+ 10:[{me:0,t:'Warna pelamin sudah dikemaskini, sila semak.',tm:'Isnin'},{me:0,photo:'img/gen/pelamin.jpg',tm:'Isnin'}]};
+const PHONES={7:'012-334 8810',9:'03-5512 0090',10:'017-662 4401'};
 let plan={catering:{st:'none'},photo:{st:'acc',v:7,amt:4800},venue:{st:'acc',v:9,amt:12000},decor:{st:'acc',v:10,amt:6500},mc:{st:'none'},makeup:{st:'req',v:11,amt:1800}};
 const fresh=JSON.stringify(plan);
 
 /* ---------- state ---------- */
-let S={screen:'home',cat:'catering',radius:70,filters:{verified:true,date:false,rate:false,halal:false},sort:'near',saved:new Set(),cmp:new Set(),vendor:1,tab:'pkg',demo:'ideal',book:'ok',bk:null,lastReq:null,loading:false};
+let S={screen:'home',cat:'catering',radius:70,filters:{verified:true,date:false,rate:false,halal:false},sort:'near',saved:new Set(),cmp:new Set(),vendor:1,tab:'pkg',demo:'ideal',book:'ok',bk:null,lastReq:null,loading:false,authed:true,after:null,role:'customer',phone:'',cd:0,otpErr:false,phoneErr:false,emailMode:false,showPw:false,wz:null,wzErr:null,chat:null,net:'ok',bkCat:null,bkDate:null,locMode:'radius',cancelWhy:0};
 const $=s=>document.querySelector(s);
 const screen=$('#screen');
 
@@ -418,15 +464,15 @@ function home(){
   const near=V.filter(v=>v.cat!=='catering'||v.id<=2).filter(v=>v.km<=70).sort((a,b)=>b.rating-a.rating).slice(0,6);
   return `
   <div class="topbar"><div class="logo"><i>M</i>Majlis Hub</div>${langToggle()}</div>
-  <div class="hello"><p class="sm muted">${t('hi')}</p><h1 class="display" style="margin-top:2px">${t('sub')}</h1></div>
+  <div class="hello"><p class="sm muted">${S.authed?t('hi'):t('hiGuest')}</p><h1 class="display" style="margin-top:2px">${t('sub')}</h1></div>
   <button class="search" data-go="search">${ic('search')}<span>${t('search')}</span><span class="orb" aria-hidden="true">${ic('sliders-horizontal','s16')}</span></button>
-  <button class="event-card" data-go="planner" aria-label="${EVENT.name}, ${EVENT.days} ${t('daysLeft')}">
-    <span class="ring" style="--p:${Math.round(accN/total*100)}"><b class="num">${EVENT.days}<small>${t('dShort')}</small></b></span>
+  ${!S.authed?`<div class="guest-card"><p class="h3">${t('guestT')}</p><p class="sm body">${t('guestS')}</p><button class="btn btn-primary" data-login="planner">${ic('log-in','s16')}${t('guestBtn')}</button></div>`:`<button class="event-card" data-go="planner" aria-label="${EVENT.name}, ${daysLeft()} ${t('daysLeft')}">
+    <span class="ring" style="--p:${Math.round(accN/total*100)}"><b class="num">${daysLeft()}<small>${t('dShort')}</small></b></span>
     <span class="meta"><span class="t">${EVENT.name}</span><span class="s" style="display:block">${EVENT.date} · ${EVENT.pax} pax</span>
       <span class="s" style="display:block">${accN}/${total} vendor ${t('booked')}</span>
       <span class="bar"><i style="width:${accN/total*100}%"></i></span></span>
     ${ic('chevron-right')}
-  </button>
+  </button>`}
   <div class="sec"><div class="sec-head"><h2 class="h2">${t('cats')}</h2></div>
     <div class="cats">${CATS.map(c=>`<button class="cat" data-cat="${c.id}"><span class="ic">${ic(c.icon,'s24')}</span>${c[lang]}</button>`).join('')}</div></div>
   <div class="sec"><div class="sec-head"><h2 class="h2">${t('near')}</h2><button class="link" data-cat="catering">${t('seeAll')}</button></div>
@@ -467,7 +513,7 @@ function search(){
   const n=st==='ideal'?r.length:showEmpty?0:'–';
   return `
   <div class="backbar">${S.cat?`<button class="icon-btn" data-go="home" aria-label="Kembali">${ic('chevron-left')}</button>`:''}<h2>${catName(S.cat)}</h2>
-    <button class="icon-btn" aria-label="${t('search')}">${ic('search')}</button></div>
+    </div>
   <button class="locbar" data-loc>${ic('map-pin')}<span class="t"><span class="lbl" style="display:block">Shah Alam, Selangor</span><span class="cap muted">${t('within')} <b class="num" style="color:var(--ink)">${S.radius} km</b> · ${EVENT.date}</span></span><span class="link">${t('change')}</span></button>
   <div class="chips" role="group" aria-label="Penapis">${chip('verified',t('fVerified'))}${chip('date',t('fDate'))}${chip('rate',t('fRate'))}${chip('halal',t('fHalal'))}</div>
   <div class="count"><span class="sm" aria-live="polite"><b class="num">${n}</b> ${t('vendors')}</span>
@@ -505,7 +551,7 @@ function vendor(){
   }
   return `
   <div class="gallery">${img(v)}<div class="top"><button class="icon-btn solid" data-back aria-label="Kembali">${ic('chevron-left')}</button>
-    <span style="display:flex;gap:8px"><button class="icon-btn solid" aria-label="Kongsi">${ic('share-2','s16')}</button><button class="icon-btn solid heart" style="position:static" data-save="${v.id}" aria-pressed="${S.saved.has(v.id)}" aria-label="Simpan">${ic('heart','s16')}</button></span></div>
+    <span style="display:flex;gap:8px"><button class="icon-btn solid" data-share aria-label="Kongsi">${ic('share-2','s16')}</button><button class="icon-btn solid heart" style="position:static" data-save="${v.id}" aria-pressed="${S.saved.has(v.id)}" aria-label="Simpan">${ic('heart','s16')}</button></span></div>
     <span class="count-p">1 / 24</span></div>
   <div class="pf-head">
     <button data-verify style="align-self:flex-start" aria-label="${t('checked')}">${badge(v)}</button>
@@ -516,14 +562,14 @@ function vendor(){
   <div class="tabs" role="tablist">${tabs.map(k=>`<button role="tab" aria-selected="${S.tab===k}" data-tab="${k}">${t('t'+k[0].toUpperCase()+k.slice(1))}${k==='rev'?` (${v.n})`:''}</button>`).join('')}</div>
   <div class="pad" style="padding-top:16px">${content}</div>`;
 }
-function vendorCta(){const v=vById(S.vendor);return `<div class="sticky-cta"><div class="p"><p class="price num">${v.unit==='pax'?`${RM(v.price)} <span class="sm muted" style="font-weight:400">${t('perPax')}</span>`:`${t('from')} ${RM(v.price)}`}</p><p class="cap muted">${t('noPay')}</p></div><button class="btn btn-primary" data-book>${t('request')}</button></div>`}
+function vendorCta(){const v=vById(S.vendor);return `<div class="sticky-cta"><div class="p"><p class="price num">${v.unit==='pax'?`${RM(v.price)} <span class="sm muted" style="font-weight:400">${t('perPax')}</span>`:`${t('from')} ${RM(v.price)}`}</p><p class="cap muted">${t('noPay')}</p></div>${S.authed?`<button class="btn btn-primary" data-book>${t('request')}</button>`:`<button class="btn btn-primary" data-login="book">${ic('log-in','s16')}${t('loginToBook')}</button>`}</div>`}
 function success(){
   const r=S.lastReq,v=vById(r.v);
   return `<div class="success">
     <span class="badge">${ic('circle-check-big','s24')}</span>
     <div><h1 class="display">${t('okT')}</h1><p class="body" style="margin-top:6px">${t('okS',{v:v.name})}</p></div>
     <div class="sum"><div class="r"><span class="muted">${v.name}</span><span class="st st-requested">${ic('send','s14')}${t('stReq')}</span></div>
-      <div class="r"><span>${r.pkg} · <span class="num">${r.pax}</span> pax</span><b class="num">${RM(r.total)}</b></div><div class="r"><span class="muted">${EVENT.date}</span></div></div>
+      <div class="r"><span>${r.pkg} · <span class="num">${r.pax}</span> pax</span><b class="num">${RM(r.total)}</b></div><div class="r"><span class="muted">${r.date}</span></div></div>
     <ol class="timeline">
       <li class="done"><span class="dotc">${ic('check','s14')}</span><div><p class="h3">${t('s1')}</p><p class="cap muted">Baru sahaja</p></div></li>
       <li class="now"><span class="dotc">${ic('hourglass','s14')}</span><div><p class="h3">${t('s2')}</p><p class="cap muted">${t('s2s')}</p></div></li>
@@ -536,27 +582,124 @@ function success(){
 function planner(){
   const vals=Object.entries(plan), accN=vals.filter(([,p])=>p.st==='acc').length;
   const spent=vals.filter(([,p])=>p.st==='acc').reduce((s,[,p])=>s+p.amt,0);
-  const stChip=p=>p.st==='acc'?`<span class="st st-accepted">${ic('check','s14')}${t('stAcc')}</span>`:p.st==='req'?`<span class="st st-requested">${ic('hourglass','s14')}${t('stReq')}</span>`:'';
+  const stChip=p=>p.st==='can'?`<span class="st st-cancel">${ic('ban','s14')}${t('cancelled')}</span>`:p.st==='acc'?`<span class="st st-accepted">${ic('check','s14')}${t('stAcc')}</span>`:p.st==='req'?`<span class="st st-requested">${ic('hourglass','s14')}${t('stReq')}</span>`:'';
   return `
-  <div class="topbar"><h1 class="h2">${t('planTitle')}</h1>${langToggle()}</div>
+  <div class="topbar"><h1 class="h2">${t('planTitle')}</h1><span style="display:flex;gap:8px;align-items:center"><button class="btn btn-secondary" style="padding:8px 12px;font-size:14px" data-wizard>${ic('plus','s16')}${t('newEv')}</button>${langToggle()}</span></div>
   <div class="ev-head">
-    <div class="row"><span class="ring" style="--p:${Math.round(accN/vals.length*100)}"><b class="num">${EVENT.days}<small>${t('dShort')}</small></b></span>
-      <div style="min-width:0"><p class="display" style="font-size:22px">${EVENT.name}</p><p class="sm body">${EVENT.date}</p><p class="sm body" style="display:flex;gap:4px;align-items:center">${ic('map-pin','s14')}${EVENT.place}</p><p class="sm body num">${EVENT.pax} pax · Perkahwinan</p></div></div>
+    <div class="row"><span class="ring" style="--p:${Math.round(accN/vals.length*100)}"><b class="num">${daysLeft()}<small>${t('dShort')}</small></b></span>
+      <div style="min-width:0"><p class="display" style="font-size:22px">${EVENT.name}</p><p class="sm body">${EVENT.date}</p><p class="sm body" style="display:flex;gap:4px;align-items:center">${ic('map-pin','s14')}${EVENT.place}</p><p class="sm body num">${EVENT.pax} pax · ${t(EVENT.type)}</p></div></div>
     <div class="budget"><div class="vrow"><span class="lbl">${ic('wallet','s14')} ${t('budget')}</span><span class="sm num"><b>${RM(spent)}</b> <span class="muted">/ ${RM(EVENT.budget)}</span></span></div>
       <div class="track" role="progressbar" aria-valuenow="${Math.round(spent/EVENT.budget*100)}" aria-valuemin="0" aria-valuemax="100" aria-label="${t('budget')}"><i style="width:${Math.min(100,spent/EVENT.budget*100)}%"></i></div>
       <div class="vrow cap muted"><span>${t('spent')}: ${Math.round(spent/EVENT.budget*100)}%</span><span>${t('left')}: ${RM(EVENT.budget-spent)}</span></div></div>
   </div>
   <div class="sec-head" style="margin-top:24px"><h2 class="h2">${t('checklist')}</h2><span class="sm muted num">${accN}/${vals.length} ${t('done')}</span></div>
   <div class="check">${CATS.map(c=>{const p=plan[c.id],v=p.v&&vById(p.v);
-    return `<button class="crow" ${p.st==='none'?`data-cat="${c.id}"`:`data-vendor="${p.v}"`}>
-      ${v?`<span class="ic photo-av" style="background-image:url('${v.img}')" role="img" aria-label="${v.name}"></span>`:`<span class="ic">${ic(c.icon)}</span>`}
-      <span class="t"><span class="h3" style="display:block">${c[lang]}</span><span class="v">${v?`${v.name} · <span class="num">${RM(p.amt)}</span>`:t('stNone')}</span></span>
-      ${p.st==='none'?`<span class="btn btn-secondary" style="height:36px;padding:0 12px;font-size:14px">${ic('search','s14')}${t('find')}</span>`:stChip(p)}
+    return `<button class="crow" ${(p.st==='none'||p.st==='can')?`data-cat="${c.id}"`:`data-booking="${c.id}"`}>
+      ${v&&p.st!=='can'?`<span class="ic photo-av" style="background-image:url('${v.img}')" role="img" aria-label="${v.name}"></span>`:`<span class="ic">${ic(c.icon)}</span>`}
+      <span class="t"><span class="h3" style="display:block">${c[lang]}</span><span class="v">${v&&p.st!=='can'?`${v.name} · <span class="num">${RM(p.amt)}</span>`:p.st==='can'?`${v.name} · ${t('cancelled')}`:t('stNone')}</span></span>
+      ${(p.st==='none'||p.st==='can')?`<span class="btn btn-secondary" style="height:36px;padding:0 12px;font-size:14px">${ic('search','s14')}${t('find')}</span>`:stChip(p)}
     </button>`}).join('')}</div>`;
+}
+function threads(){
+  const list=[[7,true],[11,false],[10,false]];
+  if(plan.catering.v&&plan.catering.st!=='none')list.unshift([plan.catering.v,false]);
+  return list.map(([id,un])=>{const c=CHATS[id]||[],last=c[c.length-1];return {id,un,last}});
 }
 function messages(){
   return `<div class="topbar"><h1 class="h2">${t('msgTitle')}</h1>${langToggle()}</div>
-  ${[[7,'Gambar pre-wedding boleh buat di Taman Botani?','09:12',true],[11,'Saya ada slot kosong pukul 6 pagi untuk solekan akad.','Semalam',false],[10,'Warna pelamin sudah dikemaskini, sila semak.','Isnin',false]].map(([id,m,tm,un])=>{const v=vById(id);return `<button class="thread"><span class="av" style="background:url('${v.img}') center/cover"></span><span style="flex:1;min-width:0"><span class="vrow"><span class="h3">${v.name}</span><span class="cap muted">${tm}</span></span><span class="sm ${un?'':'muted'}" style="display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;${un?'font-weight:600':''}">${m}</span></span></button>`}).join('')}`;
+  ${threads().map(({id,un,last})=>{const v=vById(id);return `<button class="thread" data-chat="${id}"><span class="av" style="background:url('${v.img}') center/cover"></span><span style="flex:1;min-width:0;display:flex;flex-direction:column"><span class="vrow"><span class="h3" style="flex:1;min-width:0">${v.name}</span><span class="cap muted" style="flex:none">${last?last.tm:''}</span></span><span class="sm ${un?'':'muted'}" style="${un?'font-weight:600':''}">${last?(last.photo?'📷 Foto':last.t):t('sayHi')}</span></span></button>`}).join('')}`;
+}
+function chat(){
+  const v=vById(S.chat),cat=v.cat,p=plan[cat],acc=p&&p.v===v.id&&p.st==='acc',req=p&&p.v===v.id&&p.st==='req';
+  const msgs=CHATS[v.id]||(CHATS[v.id]=[]);
+  return `<div class="chat-head"><button class="icon-btn" data-go="messages" aria-label="${t('back')}">${ic('chevron-left')}</button>
+    <span class="av" style="background:url('${v.img}') center/cover"></span>
+    <button style="flex:1;min-width:0;text-align:left" data-vendor="${v.id}"><span class="h3" style="display:block">${v.name}</span><span class="cap muted">${t('reply')} ${v.reply}</span></button>
+    ${acc?`<a class="icon-btn" href="tel:${PHONES[v.id]||''}" aria-label="Telefon">${ic('phone')}</a>`:''}</div>
+  <div class="pad" style="padding-top:12px">${acc?`<div class="alert info">${ic('phone','s16')}<span>${t('phoneOpen')} <b class="num">${PHONES[v.id]||'012-000 0000'}</b></span></div>`:`<div class="alert info">${ic('lock','s16')}<span>${t('phoneLocked')}</span></div>`}</div>
+  ${msgs.length?`<div class="bubbles" aria-live="polite"><span class="day-sep">${req?'Hari ini':'Minggu ini'}</span>${msgs.map((m,i)=>m.photo?`<div class="bub ${m.me?'me':'them'} photo"><img src="${m.photo}" alt="Foto dikongsi"><span class="tm" style="padding:0 8px 4px">${m.tm}</span></div>`:
+     `<${m.fail?'button':'div'} class="bub ${m.me?'me':'them'} ${m.fail?'fail':''}" ${m.fail?`data-retry-msg="${i}"`:''}>${m.t}<span class="tm">${m.fail?`${ic('rotate-ccw','s14')}${t('failed')}`:`${m.tm}${m.me?(m.sending?ic('clock','s14'):ic('check-check','s14')):''}`}</span></${m.fail?'button':'div'}>`).join('')}</div>`
+   :`<div class="state"><span class="ic">${ic('message-circle','s24')}</span><p class="h3">${t('sayHi')}</p><p class="sm body">${t('sayHiS')}</p><div class="seg" style="justify-content:center">${['Menu ada apa?','Boleh datang rasa dulu?','Harga untuk 500 pax?'].map(q=>`<button class="chip" data-quick="${q}">${q}</button>`).join('')}</div></div>`}`;
+}
+function login(){
+  return `<div class="backbar"><button class="icon-btn" data-go="home" aria-label="${t('back')}">${ic('chevron-left')}</button><h2></h2>${langToggle()}</div>
+  <div class="pad" style="display:flex;flex-direction:column;gap:24px;padding-top:8px">
+    <div style="display:flex;flex-direction:column;gap:8px"><div class="logo"><i>M</i>Majlis Hub</div><h1 class="display">${t('lgT')}</h1><p class="body">${t('lgS')}</p></div>
+    <div class="field" role="radiogroup" aria-label="${t('lgRole')}"><span class="lbl">${t('lgRole')}</span>
+      ${[['customer','calendar-heart','roleC'],['vendor','store','roleV']].map(([r,i,k])=>`<button class="opt" role="radio" aria-checked="${S.role===r}" data-role="${r}"><span class="radio"></span><span style="display:flex;gap:10px;align-items:center;flex:1">${ic(i)}<span class="h3">${t(k)}</span></span></button>`).join('')}</div>
+    ${S.emailMode?`<div class="field"><label for="em">${t('lgEmailL')}</label><input id="em" class="input" type="email" autocomplete="email" placeholder="aina@contoh.my"></div>
+      <div class="field"><label for="pw">${t('lgPass')}</label><div style="position:relative"><input id="pw" class="input" type="${S.showPw?'text':'password'}" autocomplete="current-password" style="padding-right:48px"><button class="icon-btn" style="position:absolute;right:2px;top:2px" data-showpw aria-pressed="${S.showPw}" aria-label="${t('lgShow')}">${ic(S.showPw?'eye-off':'eye')}</button></div></div>
+      <button class="btn btn-primary btn-block" data-emaillogin>${t('lgIn')}</button>
+      <button class="btn btn-secondary btn-block" data-email>${ic('phone','s16')}${t('lgPhone')}</button>`
+    :`<div class="field"><label for="ph">${t('lgPhone')}</label><div style="display:flex;gap:8px"><span class="input" style="width:auto;flex:none;font-weight:600;display:flex;align-items:center" aria-hidden="true">+60</span><input id="ph" class="input" inputmode="tel" autocomplete="tel-national" placeholder="12 345 6789" value="${S.phone}" ${S.phoneErr?'aria-invalid="true" style="border-color:var(--bahaya)"':''}></div>
+      ${S.phoneErr?`<span class="cap" style="color:var(--bahaya);display:flex;gap:4px;align-items:center">${ic('alert-circle','s14')}${t('lgPhoneErr')}</span>`:`<span class="cap muted">${t('lgPhoneHint')}</span>`}</div>
+      <button class="btn btn-primary btn-block" data-sendotp>${t('lgSend')}</button>
+      <div style="display:flex;align-items:center;gap:12px" class="cap muted"><span style="flex:1;height:1px;background:var(--line)"></span>${t('or')}<span style="flex:1;height:1px;background:var(--line)"></span></div>
+      <button class="btn btn-secondary btn-block" data-email>${ic('mail','s16')}${t('lgEmail')}</button>`}
+    <p class="cap muted" style="text-align:center">${t('lgTerms')}</p>
+  </div>`;
+}
+function otp(){
+  return `<div class="backbar"><button class="icon-btn" data-go="login" aria-label="${t('back')}">${ic('chevron-left')}</button><h2></h2></div>
+  <div class="pad" style="display:flex;flex-direction:column;gap:24px;padding-top:8px">
+    <div style="display:flex;flex-direction:column;gap:8px"><span class="ic" style="width:56px;height:56px;border-radius:50%;background:var(--p100);color:var(--hijau);display:grid;place-items:center">${ic('lock','s24')}</span>
+      <h1 class="display">${t('otpT')}</h1><p class="body">${t('otpS',{p:'+60 '+(S.phone||'12 345 6789')})}</p></div>
+    <div class="otp ${S.otpErr?'err':''}" role="group" aria-label="Kod 6 digit">${[0,1,2,3,4,5].map(i=>`<input inputmode="numeric" maxlength="1" autocomplete="${i?'off':'one-time-code'}" aria-label="Digit ${i+1}" data-otp="${i}">`).join('')}</div>
+    ${S.otpErr?`<div class="alert err" role="alert">${ic('alert-circle','s16')}<span>${t('otpErr')}</span></div>`:''}
+    <p class="sm muted" id="cd">${cdText()}</p>
+    <button class="btn btn-primary btn-block" data-verifyotp>${t('otpVerify')}</button>
+    <p class="cap muted">${t('otpDemo')}</p>
+  </div>`;
+}
+const cdText=()=>S.cd>0?t('otpWait',{s:S.cd}):`<button class="link" data-resend>${t('otpResend')}</button>`;
+function startCd(){S.cd=60;clearInterval(startCd.t);startCd.t=setInterval(()=>{S.cd--;const el=$('#cd');if(el)el.innerHTML=cdText();if(S.cd<=0)clearInterval(startCd.t)},1000)}
+const EVTYPES=[['evWed','heart-handshake'],['evKen','utensils-crossed'],['evCorp','briefcase'],['evBday','cake'],['evOther','party-popper']];
+function wizard(){
+  const w=S.wz,st=w.step,e=S.wzErr;
+  let body='';
+  if(st===0)body=`<div class="field"><label for="wzn">${t('wzName')}</label><input id="wzn" class="input" data-wzf="name" value="${w.name}"></div>
+    <div class="field" role="radiogroup" aria-label="${t('wz1')}"><span class="lbl">${t('wz1')}</span>${EVTYPES.map(([k,i])=>`<button class="opt" role="radio" aria-checked="${w.type===k}" data-wztype="${k}"><span class="radio"></span><span style="display:flex;gap:10px;align-items:center;flex:1">${ic(i)}<span class="h3">${t(k)}</span></span></button>`).join('')}</div>`;
+  if(st===1)body=`<div class="field"><label for="wzd">${t('wzDate')}</label><input id="wzd" type="date" class="input" data-wzf="iso" value="${w.iso}" ${e?'aria-invalid="true" style="border-color:var(--bahaya)"':''}>
+    ${e?`<span class="cap" style="color:var(--bahaya);display:flex;gap:4px;align-items:center">${ic('alert-circle','s14')}${t('wzPast')}</span>`:''}</div>
+    <button class="opt" role="checkbox" aria-checked="${w.day2}" data-wzday2><span class="box" style="${w.day2?'background:var(--hijau);border-color:var(--hijau);color:#fff':''}">${w.day2?ic('check','s14'):''}</span><span class="body">${t('wzDay2')}</span></button>`;
+  if(st===2)body=`<div class="field"><label for="wzl">${t('wzLoc')}</label><input id="wzl" class="input" data-wzf="place" value="${w.place}" placeholder="Cth: Dewan Seri Kenanga, Shah Alam" ${e?'aria-invalid="true" style="border-color:var(--bahaya)"':''}>
+    ${e?`<span class="cap" style="color:var(--bahaya);display:flex;gap:4px;align-items:center">${ic('alert-circle','s14')}${t('wzLocErr')}</span>`:''}</div>
+    <div class="field"><span class="lbl" id="wzpL">${t('bkPax')}</span><div class="stepper" role="group" aria-labelledby="wzpL"><button data-wzpax="-50" ${w.pax<=50?'disabled':''} aria-label="Kurang 50">${ic('minus')}</button><output class="num">${w.pax} pax</output><button data-wzpax="50" aria-label="Tambah 50">${ic('plus')}</button></div></div>`;
+  if(st===3)body=`<div class="field"><label for="wzb">${t('wzBudget')}</label><input id="wzb" class="input num" inputmode="numeric" data-wzf="budget" value="${w.budget}"><span class="cap muted">${t('wzBudgetHint')}</span></div>
+    <div class="sum"><div class="r"><span class="muted">${t(w.type)}</span><b>${w.name}</b></div><div class="r"><span class="muted">${t('wz2')}</span><span>${fmtDate(w.iso)}${w.day2?' + 1':''}</span></div><div class="r"><span class="muted">${t('wz3')}</span><span style="text-align:right">${w.place} · ${w.pax} pax</span></div></div>`;
+  return `<div class="backbar"><button class="icon-btn" data-go="planner" aria-label="${t('close')}">${ic('x')}</button><h2>${t('wzT')}</h2></div>
+  <div class="pad" style="display:flex;flex-direction:column;gap:20px">
+    <div style="display:flex;flex-direction:column;gap:8px"><div class="steps" aria-hidden="true">${[0,1,2,3].map(i=>`<i class="${i<=st?'on':''}"></i>`).join('')}</div><span class="cap muted">${t('step',{n:st+1})}</span><h1 class="display" style="font-size:24px">${t('wz'+(st+1))}</h1></div>
+    ${body}</div>`;
+}
+function booking(){
+  const c=S.bkCat,p=plan[c],v=vById(p.v),acc=p.st==='acc',can=p.st==='can';
+  return `<div class="backbar"><button class="icon-btn" data-go="planner" aria-label="${t('back')}">${ic('chevron-left')}</button><h2>${t('bkDetail')}</h2></div>
+  <div class="pad" style="display:flex;flex-direction:column;gap:16px">
+    <div class="vcard" style="display:flex;gap:12px;align-items:center"><span class="av" style="width:56px;height:56px;background:url('${v.img}') center/cover"></span><span style="flex:1;min-width:0"><span class="h3" style="display:block">${v.name}</span><span class="sm muted">${catName(v.cat)} · ${v.area}</span></span>${badge(v)}</div>
+    <div class="sum"><div class="r"><span class="muted">${EVENT.name}</span><span class="st ${can?'st-cancel':acc?'st-accepted':'st-requested'}">${ic(can?'ban':acc?'check':'hourglass','s14')}${t(can?'cancelled':acc?'stAcc':'stReq')}</span></div>
+      <div class="r"><span>${EVENT.date}</span><b class="num">${RM(p.amt)}</b></div></div>
+    <ol class="timeline">
+      <li class="done"><span class="dotc">${ic('check','s14')}</span><div><p class="h3">${t('s1')}</p><p class="cap muted">2 Nov 2026</p></div></li>
+      ${can?`<li class="done"><span class="dotc" style="background:var(--muted);border-color:var(--muted)">${ic('ban','s14')}</span><div><p class="h3">${t('cancelled')}</p><p class="cap muted">${[t('cr1'),t('cr2'),t('cr3'),t('cr4')][S.cancelWhy]}</p></div></li>`
+      :`<li class="${acc?'done':'now'}"><span class="dotc">${ic(acc?'check':'hourglass','s14')}</span><div><p class="h3">${acc?t('s3'):t('s2')}</p><p class="cap muted">${acc?'3 Nov 2026':t('s2s')}</p></div></li>
+      <li class="${acc?'now':''}"><span class="dotc">${ic('calendar-heart','s14')}</span><div><p class="h3 ${acc?'':'muted'}">${EVENT.date}</p></div></li>
+      <li><span class="dotc">${ic('star','s14')}</span><div><p class="h3 muted">${t('s4')}</p></div></li>`}</ol>
+    <button class="btn btn-primary btn-block" data-chat="${v.id}">${ic('message-circle','s16')}${t('msgVendor')}</button>
+    <button class="btn btn-secondary btn-block" data-vendor="${v.id}">${t('viewProfile')}</button>
+    ${can?'':`<button class="btn btn-secondary btn-block" style="color:var(--bahaya);border-color:rgba(180,35,24,.4)" data-cancelreq>${t('cancelReq')}</button>`}
+  </div>`;
+}
+function cancelSheet(){
+  openSheet(t('cancelT'),`<p class="body">${t('cancelS')}</p>
+    <div class="field" role="radiogroup" aria-label="${t('cancelWhy')}"><span class="lbl">${t('cancelWhy')}</span>${['cr1','cr2','cr3','cr4'].map((k,i)=>`<button class="opt" role="radio" aria-checked="${S.cancelWhy===i}" data-why="${i}"><span class="radio"></span><span class="body">${t(k)}</span></button>`).join('')}</div>`,
+    `<div style="display:flex;gap:12px"><button class="btn btn-secondary" style="flex:1" data-close>${t('keep')}</button><button class="btn" style="flex:1;background:var(--bahaya);color:#fff" data-confirmcancel>${t('confirmCancel')}</button></div>`);
+}
+function footer(){
+  if(S.screen==='vendor')return vendorCta();
+  if(S.screen==='chat')return `<div class="composer"><button class="icon-btn" data-photo aria-label="Hantar foto">${ic('image')}</button><label class="sr" for="msgIn">${t('typeMsg')}</label><input id="msgIn" placeholder="${t('typeMsg')}" autocomplete="off"><button class="send" data-sendmsg aria-label="Hantar">${ic('send','s16')}</button></div>`;
+  if(S.screen==='wizard')return `<div class="foot">${S.wz.step?`<button class="btn btn-secondary" data-wzback>${t('back')}</button>`:''}<button class="btn btn-primary" data-wznext>${S.wz.step===3?t('create'):t('next')}</button></div>`;
+  return '';
 }
 const langToggle=()=>`<div class="lang" role="group" aria-label="Bahasa"><button data-lang="ms" aria-pressed="${lang==='ms'}">BM</button><button data-lang="en" aria-pressed="${lang==='en'}">EN</button></div>`;
 
@@ -573,10 +716,12 @@ function verifySheet(){const v=vById(S.vendor);
 function locSheet(){
   const count=r=>V.filter(v=>v.cat===S.cat&&v.km<=r).length;
   openSheet(t('locT'),`<div class="field"><label for="locIn">${t('locS')}</label><input id="locIn" class="input" value="Dewan Seri Kenanga, Shah Alam"></div>
-    <div class="seg" style="margin-top:-4px"><button aria-pressed="true" class="chip">${t('byRadius')}</button><button aria-pressed="false" class="chip">${t('byState')}</button></div>
-    <div class="field"><div class="vrow"><label for="rad">${t('radius')}</label><b class="num" id="radV">${S.radius} km</b></div>
-    <input type="range" id="rad" min="10" max="150" step="5" value="${S.radius}"><div class="vrow cap muted"><span>10 km</span><span>150 km</span></div></div>`,
+    <div class="seg" style="margin-top:-4px"><button aria-pressed="${S.locMode==='radius'}" class="chip" data-locmode="radius">${t('byRadius')}</button><button aria-pressed="${S.locMode==='state'}" class="chip" data-locmode="state">${t('byState')}</button></div>
+    ${S.locMode==='radius'?`<div class="field"><div class="vrow"><label for="rad">${t('radius')}</label><b class="num" id="radV">${S.radius} km</b></div>
+    <input type="range" id="rad" min="10" max="150" step="5" value="${S.radius}"><div class="vrow cap muted"><span>10 km</span><span>150 km</span></div></div>`
+    :`<div class="field"><label for="stSel">${t('state')}</label><select id="stSel" class="input"><option>Selangor</option><option>Kuala Lumpur</option><option>Negeri Sembilan</option><option>Perak</option></select></div><div class="field"><label for="dSel">${t('district')}</label><select id="dSel" class="input"><option>Petaling</option><option>Klang</option><option>Kuala Selangor</option><option>Hulu Langat</option></select></div>`}`,
     `<button class="btn btn-primary btn-block" data-applyloc>${t('apply',{n:count(S.radius)})}</button>`);
+  if(!$('#rad')){$('[data-applyloc]').dataset.r=S.radius;return}
   $('#rad').oninput=e=>{const r=+e.target.value;$('#radV').textContent=r+' km';$('[data-applyloc]').textContent=t('apply',{n:count(r)});$('[data-applyloc]').dataset.r=r};
   $('[data-applyloc]').dataset.r=S.radius;
 }
@@ -595,7 +740,7 @@ function bookSheet(err){
   const b=S.bk,price=pk[b.pkg][1],total=v.unit==='pax'?price*b.pax:price;
   openSheet(t('bkTitle'),`
     ${err?`<div class="alert err" role="alert">${ic('alert-circle','s16')}<div><b>${t('takenT')}</b><p style="margin-top:4px">${t('takenS')}</p><div class="seg" style="margin-top:8px"><button class="chip" data-alt>Sab, 13 Feb</button><button class="chip" data-alt>Ahd, 15 Feb</button></div></div></div>`:''}
-    <div class="field"><span class="lbl">${t('bkEvent')}</span><div class="opt" aria-checked="true" style="cursor:default"><span class="ic" style="width:40px;height:40px;border-radius:50%;background:var(--emas50);color:var(--emas-teks);display:grid;place-items:center;flex:none">${ic('calendar-heart')}</span><span><span class="h3" style="display:block">${EVENT.name}</span><span class="sm muted">${EVENT.date} · ${EVENT.place}</span></span></div></div>
+    <div class="field"><span class="lbl">${t('bkEvent')}</span><div class="opt" aria-checked="true" style="cursor:default"><span class="ic" style="width:40px;height:40px;border-radius:50%;background:var(--emas50);color:var(--emas-teks);display:grid;place-items:center;flex:none">${ic('calendar-heart')}</span><span><span class="h3" style="display:block">${EVENT.name}</span><span class="sm muted">${S.bkDate||EVENT.date} · ${EVENT.place}</span></span></div></div>
     <div class="field" role="radiogroup" aria-label="${t('bkPkg')}"><span class="lbl">${t('bkPkg')}</span>${pk.map(([n,p],i)=>`<button class="opt" role="radio" aria-checked="${b.pkg===i}" data-pkg="${i}"><span class="radio"></span><span style="flex:1" class="vrow"><span class="h3">${n}</span><span class="price num">${RM(p)}${v.unit==='pax'?'<span class="sm muted" style="font-weight:400"> /pax</span>':''}</span></span></button>`).join('')}</div>
     ${v.unit==='pax'?`<div class="field"><span class="lbl" id="paxL">${t('bkPax')}</span><div class="stepper" role="group" aria-labelledby="paxL"><button data-pax="-50" ${b.pax<=v.min?'disabled':''} aria-label="Kurang 50">${ic('minus')}</button><output class="num">${b.pax} pax</output><button data-pax="50" aria-label="Tambah 50">${ic('plus')}</button></div><span class="cap muted">${t('minPax',{n:v.min})}</span></div>`:''}
     <div class="field"><label for="note">${t('bkNote')}</label><textarea id="note" class="input" placeholder="${t('bkNotePh')}"></textarea></div>
@@ -607,26 +752,70 @@ function bookSheet(err){
 /* ---------- render + events ---------- */
 function render(){
   document.documentElement.lang=lang;
-  const map={home,search,vendor,success,planner,messages};
+  const map={home,search,vendor,success,planner,messages,chat,login,otp,wizard,booking};
   screen.innerHTML=map[S.screen]();
-  screen.classList.toggle('nonav',S.screen==='vendor');
-  const tabOf={home:'home',search:'search',vendor:'search',success:'planner',planner:'planner',messages:'messages'}[S.screen];
-  $('#nav').style.display=S.screen==='vendor'?'none':'flex';
-  $('#nav').innerHTML=[['home','home','nHome'],['search','search','nSearch'],['planner','calendar-heart','nPlan'],['messages','message-circle','nMsg']].map(([k,i,l])=>`<button data-go="${k}" ${tabOf===k?'aria-current="page"':''}><span class="${k==='messages'?'dot':''}">${ic(i)}</span>${t(l)}</button>`).join('');
-  document.querySelectorAll('.phone>.sticky-cta').forEach(e=>e.remove());
-  if(S.screen==='vendor')$('#phone').insertAdjacentHTML('beforeend',vendorCta());
+  const own=['vendor','chat','wizard','login','otp'].includes(S.screen);
+  screen.classList.toggle('nonav',own);
+  const tabOf={home:'home',search:'search',vendor:'search',success:'planner',planner:'planner',booking:'planner',messages:'messages'}[S.screen];
+  $('#nav').style.display=own?'none':'flex';
+  $('#nav').innerHTML=[['home','home','nHome'],['search','search','nSearch'],['planner','calendar-heart','nPlan'],['messages','message-circle','nMsg']].map(([k,i,l])=>`<button data-go="${k}" ${tabOf===k?'aria-current="page"':''}><span class="${k==='messages'&&S.authed?'dot':''}">${ic(i)}</span>${t(l)}</button>`).join('');
+  document.querySelectorAll('.phone>.sticky-cta,.phone>.composer,.phone>.foot').forEach(e=>e.remove());
+  const f=footer();if(f)$('#phone').insertAdjacentHTML('beforeend',f);
+  if(S.screen==='chat'){const b=screen;b.scrollTop=b.scrollHeight}
 }
+function needLogin(after){S.after=after;S.otpErr=false;S.phoneErr=false;go('login')}
+function afterLogin(){S.authed=true;setSeg('#demoAuth','a','in');const a=S.after;S.after=null;toast(t('welcome'));
+  if(a==='book'){go('vendor');bookSheet(false)}else if(a==='planner'||a==='messages')go(a);else if(a&&a.save){S.saved.add(a.save);go('vendor',{vendor:a.save})}else go('home')}
+function sendMsg(text,photo){const m={me:1,t:text,photo,tm:new Date().toLocaleTimeString('ms-MY',{hour:'2-digit',minute:'2-digit'}),sending:true};
+  CHATS[S.chat].push(m);render();
+  setTimeout(()=>{m.sending=false;if(S.net==='fail'&&!photo)m.fail=true;if(S.screen==='chat')render()},700)}
 function refreshSearch(){S.loading=true;render();setTimeout(()=>{S.loading=false;if(S.screen==='search')render()},550)}
 
 document.addEventListener('click',e=>{
   const el=e.target.closest('button,[data-close]');if(!el)return;const d=el.dataset;
   if(e.target.id==='scrim'){closeSheet();return}
   if('close' in d){closeSheet();return}
-  if(d.lang){lang=d.lang;render();return}
+  if(d.lang){lang=d.lang;render();if(S.screen==='otp'&&S.cd>0)startCd.t&&0;return}
+  if(d.go&&!S.authed&&(d.go==='planner'||d.go==='messages')){needLogin(d.go);return}
+  if(d.login){needLogin(d.login);return}
+  if(d.role){S.role=d.role;render();return}
+  if('email' in d){S.emailMode=!S.emailMode;render();return}
+  if('showpw' in d){const v=$('#pw').value;S.showPw=!S.showPw;render();$('#pw').value=v;return}
+  if('emaillogin' in d){afterLogin();return}
+  if('sendotp' in d){S.phone=$('#ph').value.trim();const digits=S.phone.replace(/\D/g,'');if(S.phone&&(digits.length<9||digits.length>10)){S.phoneErr=true;render();return}
+    S.phoneErr=false;if(!S.phone)S.phone='12 345 6789';el.disabled=true;el.innerHTML=`<span class="spin"></span>${t('sending')}`;setTimeout(()=>{S.otpErr=false;go('otp');startCd();setTimeout(()=>$('[data-otp="0"]')&&$('[data-otp="0"]').focus(),60)},700);return}
+  if('resend' in d){startCd();toast(t('otpS',{p:'+60 '+S.phone}));return}
+  if('verifyotp' in d){const code=[...document.querySelectorAll('[data-otp]')].map(i=>i.value).join('');
+    if(code==='000000'){S.otpErr=true;render();return}
+    if(code.length<6)'482913'.split('').forEach((c,i)=>$(`[data-otp="${i}"]`).value=c);
+    el.disabled=true;el.innerHTML=`<span class="spin"></span>${t('otpVerify')}`;setTimeout(()=>{S.otpErr=false;clearInterval(startCd.t);afterLogin()},700);return}
+  if(d.chat){closeSheet();go('chat',{chat:+d.chat});return}
+  if(d.quick){sendMsg(d.quick);return}
+  if('sendmsg' in d){const v=$('#msgIn').value.trim();if(!v)return;sendMsg(v);return}
+  if('photo' in d){sendMsg('','img/gen/couple.jpg');return}
+  if(d.retryMsg!==undefined){const m=CHATS[S.chat][+d.retryMsg];m.fail=false;m.sending=true;render();setTimeout(()=>{m.sending=false;if(S.net==='fail')m.fail=true;render()},700);return}
+  if(d.booking){go('booking',{bkCat:d.booking});return}
+  if('cancelreq' in d){cancelSheet();return}
+  if(d.why){S.cancelWhy=+d.why;cancelSheet();return}
+  if('confirmcancel' in d){plan[S.bkCat].st='can';closeSheet();render();toast(t('cancelledToast'));return}
+  if('share' in d){try{navigator.clipboard&&navigator.clipboard.writeText(location.href.split('#')[0]+'#vendor')}catch(_){}toast(t('linkCopied'));return}
+  if(d.locmode){S.locMode=d.locmode;locSheet();return}
+  if('wizard' in d){S.wz={step:0,name:'Majlis Aina & Hakim',type:'evWed',iso:'2027-02-14',day2:false,place:'',pax:500,budget:45000};S.wzErr=null;go('wizard');return}
+  if(d.wztype){S.wz.type=d.wztype;render();return}
+  if('wzday2' in d){S.wz.day2=!S.wz.day2;render();return}
+  if(d.wzpax){S.wz.pax=Math.max(50,S.wz.pax+ +d.wzpax);render();return}
+  if('wzback' in d){S.wzErr=null;S.wz.step--;render();return}
+  if('wznext' in d){const w=S.wz;S.wzErr=null;
+    if(w.step===1&&new Date(w.iso)<=new Date(new Date().toDateString())){S.wzErr='past';render();return}
+    if(w.step===2&&!w.place.trim()){S.wzErr='loc';render();return}
+    if(w.step<3){w.step++;render();return}
+    EVENT={name:w.name||t(w.type),type:w.type,iso:w.iso,date:fmtDate(w.iso),place:w.place,pax:w.pax,budget:+String(w.budget).replace(/\D/g,'')||0};
+    Object.keys(plan).forEach(k=>plan[k]={st:'none'});toast(t('created'));go('planner');return}
   if(d.go){closeSheet();go(d.go,d.go==='search'&&!S.cat?{cat:'catering'}:{});return}
   if(d.cat){closeSheet();S.cmp.clear();go('search',{cat:d.cat});refreshSearch();return}
   if(d.vendor){closeSheet();go('vendor',{vendor:+d.vendor,tab:'pkg'});return}
   if('back' in d){go('search');return}
+  if(d.save&&!S.authed){needLogin({save:+d.save});return}
   if(d.save){const id=+d.save;S.saved.has(id)?S.saved.delete(id):(S.saved.add(id),toast(t('savedT')));el.setAttribute('aria-pressed',S.saved.has(id));return}
   if(d.cmp){const id=+d.cmp;if(S.cmp.has(id))S.cmp.delete(id);else if(S.cmp.size>=3){toast(t('maxCmp'));return}else S.cmp.add(id);render();return}
   if('compare' in d){if(S.cmp.size>=2)compareSheet();return}
@@ -640,17 +829,22 @@ document.addEventListener('click',e=>{
   if('book' in d){bookSheet(false);return}
   if(d.pkg){S.bk.pkg=+d.pkg;bookSheet(false);return}
   if(d.pax){const v=vById(S.vendor);S.bk.pax=Math.max(v.min,S.bk.pax+ +d.pax);bookSheet(false);return}
-  if('alt' in d){S.book='ok';setSeg('#demoBook','b','ok');bookSheet(false);toast('Tarikh ditukar ke '+el.textContent);return}
+  if('alt' in d){S.book='ok';setSeg('#demoBook','b','ok');S.bkDate=el.textContent+' 2027';bookSheet(false);toast(t('dateChanged',{d:el.textContent}));return}
   if('submit' in d){
     el.disabled=true;el.innerHTML=`<span class="spin"></span>${t('sending')}`;
     setTimeout(()=>{
       if(S.book==='taken'){bookSheet(true);return}
       const v=vById(S.vendor);plan[v.cat]={st:'req',v:v.id,amt:S.bk.total};
-      S.lastReq={v:v.id,pkg:S.bk.pkgName,pax:v.unit==='pax'?S.bk.pax:1,total:S.bk.total};
+      S.lastReq={v:v.id,date:S.bkDate||EVENT.date,pkg:S.bk.pkgName,pax:v.unit==='pax'?S.bk.pax:1,total:S.bk.total};
       closeSheet();go('success');
     },1100);return}
 });
 document.addEventListener('change',e=>{if(e.target.matches('[data-sort]')){S.sort=e.target.value;refreshSearch()}});
+document.addEventListener('input',e=>{const el=e.target;
+  if(el.dataset.wzf){S.wz[el.dataset.wzf]=el.value}
+  if(el.dataset.otp!==undefined&&el.value){const n=$(`[data-otp="${+el.dataset.otp+1}"]`);if(n)n.focus()}});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.id==='msgIn'){const v=e.target.value.trim();if(v)sendMsg(v)}
+  if(e.key==='Backspace'&&e.target.dataset&&e.target.dataset.otp&&!e.target.value){const p=$(`[data-otp="${+e.target.dataset.otp-1}"]`);if(p)p.focus()}});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSheet()});
 $('#scrim').onclick=closeSheet;
 
@@ -660,13 +854,26 @@ function setDemo(s){S.demo=s;setSeg('#demoState','s',s)}
 $('#demoState').onclick=e=>{const b=e.target.closest('button');if(!b)return;setDemo(b.dataset.s);if(S.screen!=='search')go('search',{cat:S.cat||'catering'});else render()};
 $('#demoBook').onclick=e=>{const b=e.target.closest('button');if(!b)return;S.book=b.dataset.b;setSeg('#demoBook','b',S.book)};
 $('#demoJump').onclick=e=>{const b=e.target.closest('button');if(!b)return;const j=b.dataset.j;closeSheet();
-  if(j==='reset'){plan=JSON.parse(fresh);S.cmp.clear();S.saved.clear();S.radius=70;S.filters={verified:true,date:false,rate:false,halal:false};setDemo('ideal');go('home');return}
-  go(j,j==='vendor'?{vendor:1,tab:'pkg'}:{});};
+  if(j==='reset'){plan=JSON.parse(fresh);S.authed=true;setSeg('#demoAuth','a','in');S.bkDate=null;EVENT={name:'Majlis Aina & Hakim',type:'evWed',iso:'2027-02-14',date:'Sab, 14 Feb 2027',place:'Dewan Seri Kenanga, Shah Alam',pax:500,budget:45000};S.cmp.clear();S.saved.clear();S.radius=70;S.filters={verified:true,date:false,rate:false,halal:false};setDemo('ideal');go('home');return}
+  if(j==='wizard'){S.wz={step:0,name:'Majlis Aina & Hakim',type:'evWed',iso:'2027-02-14',day2:false,place:'',pax:500,budget:45000};S.wzErr=null}
+  if(j==='login'){S.after=null}
+  go(j,j==='vendor'?{vendor:1,tab:'pkg'}:j==='chat'?{chat:7}:j==='booking'?{bkCat:'photo'}:{});};
+$('#demoAuth').onclick=e=>{const b=e.target.closest('button');if(!b)return;S.authed=b.dataset.a==='in';setSeg('#demoAuth','a',b.dataset.a);closeSheet();render()};
+$('#demoNet').onclick=e=>{const b=e.target.closest('button');if(!b)return;S.net=b.dataset.n;setSeg('#demoNet','n',S.net)};
 $('#fab').onclick=()=>{const p=$('#panel'),o=p.classList.toggle('open');$('#fab').setAttribute('aria-expanded',o);$('#fab').textContent=o?'Tutup':'Demo'};
 
-// deep links for sharing/review: #search #vendor #planner #messages #book #verify #compare #empty #success
+// deep links: #home #search #loading #error #empty #compare #vendor #guest #verify #book #success #planner #booking #cancel #messages #chat #chat-empty #login #otp #otp-error #wizard
 (function(){const h=location.hash.slice(1);if(!h)return render();
-  if(['search','vendor','planner','messages','home'].includes(h))return go(h,{cat:'catering'});
+  if(['search','vendor','planner','messages','home','login'].includes(h))return go(h,{cat:'catering'});
+  if(h==='loading'||h==='error'){setDemo(h);S.demo=h;return go('search',{cat:'catering'})}
+  if(h==='guest'){S.authed=false;setSeg('#demoAuth','a','guest');return go('vendor',{vendor:1})}
+  if(h==='otp'){S.phone='12 345 6789';go('otp');return startCd()}
+  if(h==='otp-error'){S.phone='12 345 6789';S.otpErr=true;go('otp');return startCd()}
+  if(h==='wizard'){S.wz={step:0,name:'Majlis Aina & Hakim',type:'evWed',iso:'2027-02-14',day2:false,place:'',pax:500,budget:45000};return go('wizard')}
+  if(h==='chat')return go('chat',{chat:7});
+  if(h==='chat-empty'){plan.catering={st:'req',v:1,amt:14000};return go('chat',{chat:1})}
+  if(h==='booking')return go('booking',{bkCat:'photo'});
+  if(h==='cancel'){go('booking',{bkCat:'makeup'});return cancelSheet()}
   if(h==='empty'){S.radius=10;return go('search',{cat:'catering'})}
   if(h==='compare'){S.cmp=new Set([1,2,4]);go('search',{cat:'catering'});return compareSheet()}
   if(h==='book'){go('vendor',{vendor:1});return bookSheet(false)}

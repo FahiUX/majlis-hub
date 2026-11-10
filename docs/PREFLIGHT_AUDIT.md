@@ -194,3 +194,18 @@ The empty-state pattern matches BRAND §9 (icon in a `pucuk-50` circle + one sen
 2. Close **B1–B3** with a small prototype increment: Auth (3 frames), Event stepper (4 steps), Chat thread (1 screen, 4 states). Add M6 Booking Detail at the same time since it's cheap (cloned from Success).
 3. Start the **Customer** Phase 5 build with rules W1–W17 in the coder brief.
 4. Run the **Phase 2b** Vendor/Admin prototype (B4) in parallel, then start the second coding wave.
+
+---
+
+## Resolution log — 2026-11-10 (user chose Option A: 2 waves)
+
+| ID | Status | What changed |
+| :--- | :--- | :--- |
+| B1 | ✅ Resolved | Prototype: Login/Register (role choice, +60 phone with validation error, email + password with eye toggle), OTP (6 boxes, auto-advance, 60s resend countdown, wrong-code error), guest mode (vendor CTA → "Log masuk untuk tempah", heart/planner/messages → login, returns to the intended action). Deep links `#login #otp #otp-error #guest`. |
+| B2 | ✅ Resolved | Prototype: 4-step Create Event wizard (type, date with past-date error + 2-day option, location with required error + pax stepper, budget + summary) → creates the event and resets the planner. `#wizard`. Vendor onboarding (V-1.x) clones this stepper in Wave 2. |
+| B3 | ✅ Resolved | Prototype: chat thread from inbox rows, booking detail and Success. Phone locked until Accepted, then shown with a call button; quick-reply "Say hi" empty state; send → sending tick → delivered; photo send; "Send fails" demo → failed bubble with tap-to-retry. `#chat #chat-empty`. |
+| B4 | ⏭ Deferred to Wave 2 | Vendor + Admin masters (M9–M12) to be prototyped before Vendor/Admin coding. Customer build is not blocked. |
+| B5 | ✅ Resolved | BRAND_GUIDELINES v1.1 §8 now uses padding-based sizing (py + leading) with a visual-height table and 44px hit areas; §1 drops `max-w-*`. Also added W21–W27 tokens: `bahaya-50`, `amaran-50`, `skeleton`, 6px checkbox radius, 1.5px control stroke, no side-only strokes, gold allowed list (W28). |
+| Extra | ✅ | M6 Booking Detail with timeline + Cancel request (reason sheet → Cancelled status in planner). Dead CTAs fixed: Share copies link, backbar search icon removed, "Ikut negeri" shows State/District selects, alt-date chips now change the request date. Deep links added for `#loading #error #booking #cancel`. Token fixes W18–W20, W23, W26, W27 applied in the prototype. |
+
+W1–W17 layout rules are carried into the Phase 5 coder brief (React build), not retro-fitted into the throwaway prototype CSS.
