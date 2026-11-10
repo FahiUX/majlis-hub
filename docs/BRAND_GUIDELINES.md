@@ -150,7 +150,7 @@
 
 **Status chips:** Requested = ink 1px outline · Accepted = `hijau` fill, white text · Completed = `pucuk-100` + `hijau` text · Declined/Cancelled = `hairline` (#E4E2DC) fill + `muted` text · Expired = `amaran` outline · Not started = `kertas` fill + `hairline` solid 1px + `muted` text. Each with an icon.
 
-**Surfaces:** Home event card = `hijau-malam` (celebration moment). Planner header = `pucuk-50` (working surface). Vendor card: photo 4:3 `rounded-xl`, Verified pill (on-photo variant) top-left, heart top-right, then name (h3, Fill) + rating (Hug), category · distance (body-sm muted), price line.
+**Surfaces:** Home hero = gradient `hijau-malam → hijau-pekat → hijau` (170°) with a soft `emas` glow top-right and the songket diamond pattern at 16% fading out downward, bottom corners 24px, status bar `hijau-malam`. The event card sits on it as a 10% white glass card. This is the only gradient in the product. Planner header = `pucuk-50` (working surface). Vendor card: photo 4:3 `rounded-xl`, Verified pill (on-photo variant) top-left, heart top-right, then name (h3, Fill) + rating (Hug), category · distance (body-sm muted), price line.
 
 **Layout rules for code:** flex + gap everywhere (grid only for >6 equal cards, e.g. calendar); two-text rows = left `flex-1 min-w-0` + right `shrink-0`; no margins for spacing; no `truncate` except single-line inputs and fixed table rows; dividers are `h-px` elements, not side borders.
 
