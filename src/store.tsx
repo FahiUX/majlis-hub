@@ -95,6 +95,6 @@ export const useStore = () => {
 
 /* ---------- shared helpers ---------- */
 export const toggle = (list: number[], id: number) => (list.includes(id) ? list.filter(x => x !== id) : [...list, id]);
-export const addDays = (iso: string, n: number) => { const d = new Date(iso + 'T00:00:00'); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10); };
+export const addDays = (iso: string, n: number) => { const d = new Date(iso + 'T00:00:00Z'); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); };
 export const daysBetween = (from: string, to: string) => Math.round((new Date(to + 'T00:00:00').getTime() - new Date(from + 'T00:00:00').getTime()) / 864e5);
 export const shortlistedCats = (e: MajlisEvent | null): CategoryId[] => (e ? (Object.keys(e.shortlist) as CategoryId[]) : []);

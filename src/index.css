@@ -43,6 +43,7 @@
 
 @keyframes kenburns { from { transform: scale(1); } to { transform: scale(1.08); } }
 @keyframes pop { 0% { transform: scale(.4); opacity: 0; } 30% { transform: scale(1.15); opacity: 1; } 100% { transform: scale(1); opacity: 0; } }
+@keyframes grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 @keyframes shimmer { from { background-position: -200px 0; } to { background-position: 200px 0; } }
 .skeleton { background: linear-gradient(90deg, var(--color-skeleton) 0, var(--color-kertas) 50%, var(--color-skeleton) 100%); background-size: 400px 100%; animation: shimmer 1.2s infinite linear; }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
