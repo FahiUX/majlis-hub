@@ -45,10 +45,10 @@ export default function ChatScreen({ id }: { id?: number | string }) {
           <div key={i} className={cx('w-full flex flex-col gap-1', m.me ? 'items-end' : 'items-start')}>
             {m.photo
               ? <img src={m.photo} alt="Gambar daripada vendor" className="w-[220px] aspect-[4/3] rounded-2xl object-cover" />
-              : <p className={cx('w-fit px-4 py-2.5 rounded-2xl text-[15px] leading-[22px]', m.me ? 'bg-hijau text-white' : 'bg-white border border-line', m.failed && 'opacity-60')}>{m.text}</p>}
+              : <p className={cx('w-fit px-4 py-2.5 rounded-2xl text-[15px] leading-[22px]', m.me ? (m.failed ? 'bg-hijau/60 text-white' : 'bg-hijau text-white') : 'bg-white border border-line')}>{m.text}</p>}
             {m.failed
               ? <button onClick={() => retry(i)} className="w-fit flex flex-row items-center gap-1 text-xs font-semibold text-bahaya"><AlertCircle className="w-3.5 h-3.5 shrink-0" />Gagal dihantar. Ketik untuk cuba lagi</button>
-              : <span className="w-fit flex flex-row items-center gap-1 text-[11px] text-muted">{m.time}{m.me && <CheckCheck className="w-3.5 h-3.5 shrink-0 text-hijau" />}</span>}
+              : <span className="w-fit flex flex-row items-center gap-1 text-xs text-muted">{m.time}{m.me && <CheckCheck className="w-3.5 h-3.5 shrink-0 text-hijau" />}</span>}
           </div>
         ))}
         <div ref={end} />

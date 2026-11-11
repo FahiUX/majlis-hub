@@ -29,12 +29,12 @@ export const rowsFor = (ev: MajlisEvent | null): Row[] => [
     cell: v => ev && v.busy.includes(ev.date) ? <span className="w-fit flex flex-row items-center gap-1 text-bahaya"><X className="w-4 h-4 shrink-0" />Penuh</span> : <span className="w-fit flex flex-row items-center gap-1"><Check className="w-4 h-4 shrink-0" />Kosong</span>,
     score: v => (ev && v.busy.includes(ev.date) ? 0 : 1),
   },
-  { label: 'Kandungan pakej', h: 'h-[136px]', cell: v => <span className="w-full flex flex-col gap-1 text-xs"><b className="w-full text-[13px]">{mainPkg(v).name}</b>{mainPkg(v).includes.slice(0, 3).map(i => <span key={i} className="w-full">• {i}</span>)}</span>, score: v => mainPkg(v).includes.length },
+  { label: 'Kandungan pakej', h: 'h-[136px]', cell: v => <span className="w-full flex flex-col gap-1 text-xs"><b className="w-full text-[13px]">{mainPkg(v).name}</b>{mainPkg(v).includes.slice(0, 3).map(i => <span key={i} className="w-full">{i}</span>)}</span>, score: v => mainPkg(v).includes.length },
   { label: 'Deposit', h: 'h-[52px]', cell: v => <span className="num">{mainPkg(v).depositPct}%</span>, score: v => -mainPkg(v).depositPct },
   { label: 'Ansuran', h: 'h-[52px]', cell: v => <span className="num">{mainPkg(v).plan.length} kali bayar</span>, score: v => mainPkg(v).plan.length },
   { label: 'Polisi batal', h: 'h-[72px]', cell: () => <span className="w-full text-xs">50% deposit balik jika batal &gt;60 hari</span> },
   { label: 'Masa balas', h: 'h-[52px]', cell: v => <span>~{v.reply}</span>, score: v => -replyMins(v.reply) },
-  { label: 'Portfolio', h: 'h-[84px]', cell: v => <span className="w-full flex flex-row gap-1">{v.gallery.slice(0, 3).map((g, i) => <Img key={i} src={g} cat={v.cat} alt="" className="flex-1 min-w-0 h-[56px] rounded-md" />)}</span> },
+  { label: 'Portfolio', h: 'h-[84px]', cell: v => <span className="w-full flex flex-row gap-1">{v.gallery.slice(0, 3).map((g, i) => <Img key={i} src={g} cat={v.cat} alt="" className="flex-1 min-w-0 h-[56px] rounded-xl" />)}</span> },
 ];
 
 export type Verdict = 'Nilai terbaik' | 'Rating tertinggi' | 'Dalam bajet anda';

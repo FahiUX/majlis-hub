@@ -30,9 +30,9 @@ export default function CompareShare() {
     <div className="w-full flex flex-col">
       <header className="w-full flex flex-col gap-2 p-5 bg-pucuk-50">
         <span className="w-fit flex flex-row items-center gap-2 text-sm font-bold text-hijau">
-          <span className="w-7 h-7 shrink-0 rounded-lg bg-hijau text-white font-display flex items-center justify-center">M</span>Majlis Hub
+          <span className="w-7 h-7 shrink-0 rounded-xl bg-hijau text-white font-display flex items-center justify-center">M</span>Majlis Hub
         </span>
-        <h1 className="w-full font-display text-[26px] leading-8 font-semibold">{s.userName} minta pendapat anda</h1>
+        <h1 className="w-full font-display text-[28px] leading-[34px] font-semibold">{s.userName} minta pendapat anda</h1>
         <p className="w-full text-sm text-body">Pilih {catById(vs[0].cat).name} untuk {s.event?.name ?? 'majlis'}. Tak perlu log masuk.</p>
       </header>
 
@@ -63,7 +63,7 @@ export default function CompareShare() {
             <div className="w-full flex flex-row items-center gap-2 text-sm">
               <Stars n={v.rating} size={12} /><span className="flex-1 min-w-0 num">{v.rating.toFixed(1)} · {v.reviews} ulasan · dari <b>{rm(fromPrice(v))}</b></span>
             </div>
-            {verdict[v.id].length > 0 && <div className="w-full flex flex-row flex-wrap gap-1.5">{verdict[v.id].map(t => <Pill key={t} tone={t === 'Dalam bajet anda' ? 'hijau' : 'emas'}>{t}</Pill>)}</div>}
+            {verdict[v.id].length > 0 && <div className="w-full flex flex-row flex-wrap gap-1.5">{verdict[v.id].map(t => <Pill key={t} tone={t === 'Rating tertinggi' ? 'emas' : 'hijau'}>{t}</Pill>)}</div>}
             <div className="w-full flex flex-row items-center gap-3">
               <span className="flex-1 min-w-0 text-sm text-muted num">{count(v.id)} undian</span>
               <Button variant={done === v.id ? 'secondary' : 'primary'} onClick={() => vote(v.id)}>{done === v.id ? <><Check className="w-4 h-4 shrink-0" />Diundi</> : 'Undi ini'}</Button>

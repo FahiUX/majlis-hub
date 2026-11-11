@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { Check, SlidersHorizontal, Sparkles, Star, TriangleAlert, X } from 'lucide-react';
+import { Check, RotateCcw, SlidersHorizontal, Sparkles, Star, TriangleAlert, X } from 'lucide-react';
 import { CATS, VENDORS, catById, fromPrice } from '../../data/mock';
 import type { CategoryId, Package, Vendor } from '../../data/types';
 import { useStore } from '../../store';
-import { swap } from '../../router';
-import { Button, Chip, Img, Sheet, cx, rm } from '../../components/ui';
+import { swap, useRoute } from '../../router';
+import { Button, Chip, Img, Sheet, cx, fmtDate, rm } from '../../components/ui';
 import { CatArt } from './CatArt';
 
 export interface Draft {
@@ -37,6 +37,8 @@ export function SuggestStep({ d, set }: { d: Draft; set: (p: Partial<Draft>) => 
   const { s, set: setS, toast } = useStore();
   const [swapCat, setSwapCat] = useState<CategoryId | null>(null);
   const [splitOpen, setSplitOpen] = useState(false);
+  const [confirm, setConfirm] = useState(false);
+  const demo = useRoute().q.get('demo');
   const { rows, total, fits, missing } = suggest(d);
   const over = total > d.budget;
   const swapRow = rows.find(r => r.cat === swapCat);
@@ -48,13 +50,16 @@ export function SuggestStep({ d, set }: { d: Draft; set: (p: Partial<Draft>) => 
   };
   const toggleCat = (c: CategoryId) => set({ cats: d.cats.includes(c) ? d.cats.filter(x => x !== c) : CATS.map(x => x.id).filter(x => x === c || d.cats.includes(x)) });
 
+  // a different type or date is a new majlis: confirm before replacing the current one (QA W4)
+  const replaces = !!s.event && (s.event.type !== d.type || s.event.date !== d.date);
   const finish = () => {
     const shortlist: Partial<Record<CategoryId, number>> = {};
     rows.forEach(r => { if (r.v) shortlist[r.cat] = r.v.id; });
     setS(() => ({
       event: {
-        name: s.event?.name ?? 'Majlis baru', type: d.type, date: d.date, place: d.place, pax: d.pax, budget: d.budget,
+        name: replaces || !s.event ? `Majlis ${d.type.toLowerCase()}` : s.event.name, type: d.type, date: d.date, place: d.place, pax: d.pax, budget: d.budget,
         split: Object.fromEntries(rows.map(r => [r.cat, Math.round(r.pct)])), shortlist, cats: d.cats,
+        custom: replaces ? [] : s.event?.custom,
       },
     }));
     toast('Pakej disimpan dalam Majlis Saya');
@@ -63,7 +68,7 @@ export function SuggestStep({ d, set }: { d: Draft; set: (p: Partial<Draft>) => 
 
   return (
     <section className="w-full flex flex-col gap-5">
-      <h2 className="w-full font-display text-[26px] leading-8 font-semibold">Bajet dan pakej dicadangkan</h2>
+      <h2 className="w-full font-display text-[28px] leading-[34px] font-semibold">Bajet dan pakej dicadangkan</h2>
 
       <div className="w-full flex flex-col gap-3 p-4 rounded-2xl bg-white border border-line">
         <label htmlFor="bajet" className="w-full text-[13px] leading-4 font-semibold">Jumlah bajet</label>
@@ -92,10 +97,21 @@ export function SuggestStep({ d, set }: { d: Draft; set: (p: Partial<Draft>) => 
       )}
 
       <div className="w-full flex flex-row items-center gap-2">
-        <h3 className="flex-1 min-w-0 flex flex-row items-center gap-1.5 text-lg font-semibold"><Sparkles className="w-5 h-5 shrink-0 text-emas" />Pakej dicadangkan</h3>
+        <h3 className="flex-1 min-w-0 flex flex-row items-center gap-1.5 text-lg font-semibold"><Sparkles className="w-5 h-5 shrink-0 text-hijau" />Pakej dicadangkan</h3>
         <Button variant="ghost" className="px-3! py-2!" onClick={() => setSplitOpen(true)}><SlidersHorizontal className="w-4 h-4 shrink-0" />Pembahagian</Button>
       </div>
 
+      {demo === 'loading' ? (
+        <div className="w-full flex flex-col gap-3" aria-busy="true" aria-label="Memuatkan cadangan">
+          {[0, 1, 2].map(i => <div key={i} className="w-full h-[132px] shrink-0 rounded-2xl skeleton" />)}
+        </div>
+      ) : demo === 'error' ? (
+        <div role="alert" className="w-full flex flex-col items-center gap-3 p-5 rounded-2xl bg-bahaya-50 text-center">
+          <p className="w-full text-base font-semibold text-bahaya">Gagal memuatkan cadangan</p>
+          <p className="w-full text-sm text-body">Semak sambungan internet anda dan cuba lagi.</p>
+          <Button variant="secondary" onClick={() => swap('/majlis/baru?step=4')}><RotateCcw className="w-4 h-4 shrink-0" />Cuba lagi</Button>
+        </div>
+      ) : (
       <div className="w-full flex flex-col gap-3">
         {rows.map(r => (
           <article key={r.cat} className="w-full flex flex-col gap-3 p-4 rounded-2xl bg-white border border-line">
@@ -123,6 +139,7 @@ export function SuggestStep({ d, set }: { d: Draft; set: (p: Partial<Draft>) => 
           </article>
         ))}
       </div>
+      )}
 
       <div className="sticky bottom-0 w-full flex flex-col gap-3 p-4 rounded-2xl bg-white shadow-float">
         <div className="w-full flex flex-row items-center gap-2 text-sm">
@@ -130,7 +147,7 @@ export function SuggestStep({ d, set }: { d: Draft; set: (p: Partial<Draft>) => 
           <span className={cx('w-fit shrink-0 num', over ? 'text-amaran font-semibold' : 'text-muted')}>{over ? `Lebih ${rm(total - d.budget)}` : `Baki ${rm(d.budget - total)}`}</span>
         </div>
         <div className="w-full h-2 rounded-full bg-line overflow-hidden"><div className={cx('h-full rounded-full', over ? 'bg-amaran' : 'bg-hijau')} style={{ width: `${Math.min(100, (total / (d.budget || 1)) * 100)}%` }} /></div>
-        <Button disabled={!d.cats.length} onClick={finish} className="w-full">Guna pakej ini</Button>
+        <Button disabled={!d.cats.length || demo === 'loading' || demo === 'error'} onClick={() => (replaces ? setConfirm(true) : finish())} className="w-full">Guna pakej ini</Button>
         <p className="w-full text-xs text-muted text-center">Vendor disenarai pendek, belum ditempah. Anda hantar permintaan tempahan kemudian.</p>
       </div>
 
@@ -142,11 +159,16 @@ export function SuggestStep({ d, set }: { d: Draft; set: (p: Partial<Draft>) => 
             <Img src={v.img} cat={v.cat} alt={v.name} className="w-14 h-14 shrink-0 rounded-xl" />
             <span className="flex-1 min-w-0 flex flex-col gap-0.5">
               <span className="w-full text-sm font-semibold">{v.name}</span>
-              <span className="w-full text-xs text-muted">★ {v.rating} · {v.reviews} ulasan · {v.km} km</span>
+              <span className="w-full flex flex-row items-center gap-1 text-xs text-muted"><Star className="w-3 h-3 shrink-0 fill-ink text-ink" /><span className="w-fit text-ink font-semibold">{v.rating}</span>· {v.reviews} ulasan · {v.km} km</span>
               <span className="w-full text-sm">{bestPkg(v, swapRow.slot).name} · <b className="num">{rm(bestPkg(v, swapRow.slot).price)}</b></span>
             </span>
           </button>
         ))}
+      </Sheet>
+
+      <Sheet open={confirm} onClose={() => setConfirm(false)} title="Ganti majlis sedia ada?"
+        footer={<><Button variant="secondary" block onClick={() => setConfirm(false)}>Batal</Button><Button block onClick={() => { setConfirm(false); finish(); }}>Ya, ganti</Button></>}>
+        {s.event && <p className="w-full text-sm text-body">Majlis Saya kini untuk <b>{s.event.name}</b> ({fmtDate(s.event.date)}). Pakej baru ini untuk {d.type.toLowerCase()} pada {fmtDate(d.date)} akan menggantikannya. Tempahan sedia ada kekal, tapi tarikhnya mungkin tidak sama.</p>}
       </Sheet>
 
       <Sheet open={splitOpen} onClose={() => setSplitOpen(false)} title="Laraskan pembahagian" footer={<Button block onClick={() => setSplitOpen(false)}>Siap</Button>}>

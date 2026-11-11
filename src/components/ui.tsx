@@ -5,7 +5,7 @@ import { FALLBACK_IMG } from '../data/mock';
 import type { BookingStatus, CategoryId, Vendor } from '../data/types';
 
 /* ---------- format ---------- */
-export const rm = (n: number) => 'RM ' + Math.round(n).toLocaleString('en-MY');
+export const rm = (n: number) => 'RM\u00A0' + Math.round(n).toLocaleString('en-MY');
 const MONTHS = ['Jan', 'Feb', 'Mac', 'Apr', 'Mei', 'Jun', 'Jul', 'Ogo', 'Sep', 'Okt', 'Nov', 'Dis'];
 const DAYS = ['Ahd', 'Isn', 'Sel', 'Rab', 'Kha', 'Jum', 'Sab'];
 export const fmtDate = (iso: string, withDay = false) => {

@@ -25,7 +25,7 @@ export default function BookSheet({ v, open, initialPkg, onClose }: { v: Vendor;
   const [done, setDone] = useState<string | null>(null);
   useEffect(() => { if (open) { setPkg(initialPkg ?? v.packages[0].id); setDone(null); } }, [open, initialPkg, v]);
 
-  const pkg = v.packages.find(p => p.id === pkgId)!;
+  const pkg = v.packages.find(p => p.id === pkgId) ?? v.packages[0];
   const taken = v.busy.includes(date);
   const past = date <= TODAY;
   const dup = s.bookings.some(b => b.vendorId === v.id && b.date === date && !CLOSED.includes(b.status));

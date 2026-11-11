@@ -63,6 +63,8 @@ export function ReelSlide({ reel, liked, saved, followed, commentCount, onLike, 
         {!noVideo && <video ref={video} src={reel.video} poster={reel.poster} muted playsInline loop preload="metadata" onError={() => setNoVideo(true)} className="absolute inset-0 w-full h-full object-cover" />}
       </button>
       <div aria-hidden="true" className="absolute inset-0 pointer-events-none bg-[linear-gradient(180deg,rgba(0,0,0,.5)_0,rgba(0,0,0,0)_20%,rgba(0,0,0,0)_42%,rgba(0,0,0,.82)_100%)]" />
+      {/* right-edge scrim so the white rail stays readable over light footage (QA W14) */}
+      <div aria-hidden="true" className="absolute inset-y-0 right-0 w-24 pointer-events-none bg-gradient-to-l from-black/40 to-transparent" />
       {paused && <span aria-hidden="true" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[72px] h-[72px] rounded-full bg-black/45 flex items-center justify-center pointer-events-none"><Play className="w-8 h-8 shrink-0 fill-white" /></span>}
       {burst > 0 && <Heart key={burst} aria-hidden="true" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28 fill-emas text-emas pointer-events-none animate-[pop_.8s_ease-out_forwards]" />}
 
@@ -91,7 +93,7 @@ export function ReelSlide({ reel, liked, saved, followed, commentCount, onLike, 
           {short ? reel.desc.slice(0, 80).trimEnd() + '… ' : reel.desc + ' '}
           {!short && <span className="font-semibold">{reel.tags}</span>}
         </p>
-        {reel.desc.length > 80 && <button onClick={() => setOpen(o => !o)} className="w-fit text-[13px] font-bold">{open ? 'Tutup' : 'lagi'}</button>}
+        {reel.desc.length > 80 && <button onClick={() => setOpen(o => !o)} className="w-fit py-3 text-[13px] leading-5 font-bold">{open ? 'Tutup' : 'lagi'}</button>}
         <span className="relative w-full h-[3px] shrink-0 rounded-full bg-white/30 overflow-hidden" aria-hidden="true">
           {active && !paused && <span className="absolute inset-y-0 left-0 w-full origin-left bg-white animate-[grow_10s_linear_infinite]" />}
         </span>

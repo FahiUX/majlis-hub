@@ -1,6 +1,18 @@
 import { vendorById } from '../../data/mock';
 import type { Booking, TabungEntry } from '../../data/types';
-import { TODAY, daysBetween } from '../../store';
+import { TODAY, addDays, daysBetween } from '../../store';
+
+/**
+ * Status as the customer sees it today: an unpaid deposit past its 30-day deadline is lapsed,
+ * a request with no vendor reply after 48h is expired (spec C-4.1 / C-4.4).
+ * ponytail: mirrors booking/BookingList `effective`; move both into store.tsx if a third module needs it.
+ */
+export const liveStatus = (b: Booking): Booking['status'] =>
+  b.status === 'deposit_due' && b.depositDeadline && b.depositDeadline < TODAY ? 'lapsed'
+    : b.status === 'requested' && addDays(b.createdAt, 2) < TODAY ? 'expired'
+      : b.status;
+/** not booked: never counts toward spend, checklist or Tabung */
+export const DEAD: Booking['status'][] = ['declined', 'expired', 'lapsed', 'cancelled'];
 
 export interface Due { bookingId: string; vendorName: string; label: string; amount: number; due: string; covered: number }
 
@@ -10,7 +22,7 @@ export interface Due { bookingId: string; vendorName: string; label: string; amo
  * Savings cover instalments in due order (waterfall) for the per-instalment rings.
  */
 export function plan(bookings: Booking[], tabung: TabungEntry[]) {
-  const active = bookings.filter(b => b.status === 'confirmed' || b.status === 'deposit_due');
+  const active = bookings.filter(b => liveStatus(b) === 'confirmed' || liveStatus(b) === 'deposit_due');
   const dues: Due[] = active
     .flatMap(b => b.payments.filter(p => !p.paidAt).map(p => ({ bookingId: b.id, vendorName: vendorById(b.vendorId)?.name ?? '', label: p.label, amount: p.amount, due: p.due, covered: 0 })))
     .sort((a, b) => a.due.localeCompare(b.due));
@@ -27,7 +39,8 @@ export function plan(bookings: Booking[], tabung: TabungEntry[]) {
   const span = Math.max(1, daysBetween(start, last));
   const neededNow = Math.round(owed * Math.min(1, daysBetween(start, TODAY) / span));
   const short = Math.max(0, neededNow - saved);
-  return { dues, saved, owed, remaining, months, monthly, short, active };
+  const overdue = dues.filter(d => d.due < TODAY);
+  return { dues, saved, owed, remaining, months, monthly, short, active, overdue };
 }
 
 // self-check: npx tsx src/modules/tabung/calc.ts
@@ -38,5 +51,11 @@ if (typeof process !== 'undefined' && process.argv[1]?.endsWith('calc.ts')) {
   console.assert(r.owed === 3000 && r.remaining === 1500, 'owed/remaining');
   console.assert(r.dues[0].covered === 1000 && r.dues[1].covered === 500, 'waterfall');
   console.assert(r.months === 3 && r.monthly === 500, `monthly ${r.months} ${r.monthly}`);
+  const lapsed: Booking = { ...b, id: 'l', status: 'deposit_due', depositDeadline: '2026-11-05' };
+  const expired: Booking = { ...b, id: 'e', status: 'requested', createdAt: '2026-11-07', payments: [] };
+  console.assert(liveStatus(lapsed) === 'lapsed' && liveStatus(expired) === 'expired' && liveStatus(b) === 'confirmed', 'liveStatus');
+  console.assert(plan([b, lapsed], []).owed === 3000, 'lapsed excluded from Tabung');
+  const late: Booking = { ...b, payments: [{ label: 'A', amount: 1000, due: '2026-11-01' }] };
+  console.assert(plan([late], []).overdue.length === 1, 'overdue');
   console.log('calc ok');
 }

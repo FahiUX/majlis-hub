@@ -1,8 +1,11 @@
+import { useEffect, useState } from 'react';
 import { Check, MessageCircle, ShieldCheck } from 'lucide-react';
 import { useStore } from '../../store';
 import { nav } from '../../router';
 import type { Vendor } from '../../data/types';
-import { Button, Divider, Img, Pill, Stars, cx, fmtDate, rm } from '../../components/ui';
+import { Button, Divider, EmptyState, Img, Pill, Stars, cx, fmtDate, rm } from '../../components/ui';
+import { effective } from '../booking/BookingList';
+import { loadReviews, reviewsChanged } from './reviews';
 
 export function PackagesTab({ v, onBook }: { v: Vendor; onBook: (pkgId: string) => void }) {
   return (
@@ -49,21 +52,26 @@ function Calendar({ v }: { v: Vendor }) {
   const iso = (d: number) => `${y}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
   const cells = [...Array(first).fill(0), ...Array.from({ length: days }, (_, i) => i + 1)];
   const evBusy = v.busy.includes(ev);
+  // OD10: a date is held while a customer's deposit is due. Mine = my deposit_due booking; others = demo hold.
+  const mineHeld = s.bookings.filter(b => b.vendorId === v.id && effective(b) === 'deposit_due').map(b => b.date);
+  const othersHeld = v.id % 2 === 0 && !v.busy.includes(`${y}-${String(m).padStart(2, '0')}-20`) ? [`${y}-${String(m).padStart(2, '0')}-20`] : [];
   return (
     <div className="w-full flex flex-col gap-3 p-5 rounded-2xl bg-white border border-line">
       <h2 className="w-full text-xl font-semibold">Kekosongan · {fmtDate(iso(1)).replace(/^1 /, '')}</h2>
-      <div className={cx('w-full flex flex-row items-center gap-2 p-3 rounded-xl text-sm font-semibold', evBusy ? 'bg-bahaya-50 text-bahaya' : 'bg-pucuk-50 text-hijau')}>
-        <span className="flex-1 min-w-0">Tarikh majlis anda ({fmtDate(ev)}): {evBusy ? 'sudah ditempah' : 'masih kosong'}</span>
+      <div className={cx('w-full flex flex-row items-center gap-2 p-3 rounded-xl text-sm font-semibold', evBusy ? 'bg-bahaya-50 text-bahaya' : mineHeld.includes(ev) ? 'bg-amaran-50 text-amaran' : 'bg-pucuk-50 text-hijau')}>
+        <span className="flex-1 min-w-0">Tarikh majlis anda ({fmtDate(ev)}): {evBusy ? 'sudah ditempah' : mineHeld.includes(ev) ? 'ditahan untuk anda, bayar deposit untuk kunci' : 'masih kosong'}</span>
       </div>
       <div className="w-full grid grid-cols-7 gap-1 text-center">
         {['A', 'I', 'S', 'R', 'K', 'J', 'S'].map((d, i) => <span key={i} className="text-xs font-semibold text-muted">{d}</span>)}
         {cells.map((d, i) => {
           if (!d) return <span key={i} />;
           const busy = v.busy.includes(iso(d));
+          const held = !busy && (mineHeld.includes(iso(d)) || othersHeld.includes(iso(d)));
           const mine = iso(d) === ev;
+          const label = busy ? 'ditempah' : held ? (mineHeld.includes(iso(d)) ? 'ditahan untuk anda' : 'ditahan, menunggu deposit') : 'kosong';
           return (
-            <span key={i} aria-label={`${d}: ${busy ? 'ditempah' : 'kosong'}${mine ? ', tarikh majlis anda' : ''}`}
-              className={cx('h-10 flex items-center justify-center rounded-full text-sm num', busy ? 'text-muted line-through bg-skeleton' : 'text-ink', mine && 'ring-2 ring-hijau font-bold')}>
+            <span key={i} role="img" aria-label={`${d}: ${label}${mine ? ', tarikh majlis anda' : ''}`}
+              className={cx('h-10 flex items-center justify-center rounded-full text-sm num', busy ? 'text-muted line-through bg-skeleton' : held ? 'text-amaran bg-amaran-50 border border-dashed border-amaran' : 'text-ink', mine && 'ring-2 ring-hijau font-bold')}>
               {d}
             </span>
           );
@@ -72,6 +80,7 @@ function Calendar({ v }: { v: Vendor }) {
       <div className="w-full flex flex-row flex-wrap items-center gap-4 text-xs text-body">
         <span className="w-fit flex flex-row items-center gap-1.5"><span className="w-3 h-3 shrink-0 rounded-full bg-white border border-line2" />Kosong</span>
         <span className="w-fit flex flex-row items-center gap-1.5"><span className="w-3 h-3 shrink-0 rounded-full bg-skeleton" />Ditempah (bergaris)</span>
+        <span className="w-fit flex flex-row items-center gap-1.5"><span className="w-3 h-3 shrink-0 rounded-full bg-amaran-50 border border-dashed border-amaran" />Ditahan (deposit belum dibayar)</span>
         <span className="w-fit flex flex-row items-center gap-1.5"><span className="w-3 h-3 shrink-0 rounded-full ring-2 ring-hijau" />Tarikh majlis anda</span>
       </div>
     </div>
@@ -79,7 +88,18 @@ function Calendar({ v }: { v: Vendor }) {
 }
 
 export function ReviewsTab({ v }: { v: Vendor }) {
-  const dist = [78, 15, 5, 1, 1];
+  const [mine, setMine] = useState(() => loadReviews().filter(r => r.vendorId === v.id));
+  useEffect(() => {
+    const on = () => setMine(loadReviews().filter(r => r.vendorId === v.id));
+    window.addEventListener(reviewsChanged, on);
+    return () => window.removeEventListener(reviewsChanged, on);
+  }, [v.id]);
+  const all = [...mine.map(r => ({ name: r.name, rating: r.rating, date: fmtDate(r.at).replace(/^\d+ /, ''), text: r.text, photos: r.photos, reply: undefined as string | undefined, isNew: true })),
+    ...v.sampleReviews.map(r => ({ ...r, photos: [] as string[], isNew: false }))];
+  // ponytail: 5→1 breakdown estimated from the average (mock has no per-star counts); use real counts with a backend
+  const five = Math.min(95, Math.max(40, Math.round((v.rating - 4) * 85 + 10)));
+  const dist = [five, ...[0.7, 0.2, 0.06, 0.04].map(f => Math.round((100 - five) * f))];
+  if (!all.length) return <EmptyState icon={<ShieldCheck className="w-6 h-6" />} title="Belum ada ulasan" body="Ulasan hanya datang daripada pelanggan yang selesai menempah melalui Majlis Hub." />;
   return (
     <>
       <div className="w-full flex flex-row items-center gap-5 p-5 rounded-2xl bg-white border border-line">
@@ -96,18 +116,21 @@ export function ReviewsTab({ v }: { v: Vendor }) {
           ))}
         </div>
       </div>
-      {v.sampleReviews.map(rv => (
-        <div key={rv.name} className="w-full flex flex-col gap-2.5 p-5 rounded-2xl bg-white border border-line">
+      {all.map(rv => (
+        <div key={rv.name + rv.text.slice(0, 12)} className="w-full flex flex-col gap-2.5 p-5 rounded-2xl bg-white border border-line">
           <div className="w-full flex flex-row items-center gap-3">
             <span className="w-10 h-10 shrink-0 rounded-full bg-pucuk-100 text-hijau text-sm font-bold flex items-center justify-center">{rv.name[0]}</span>
             <div className="flex-1 min-w-0 flex flex-col">
               <span className="w-full text-sm font-semibold">{rv.name}</span>
-              <span className="w-full text-xs text-muted">Perkahwinan · {rv.date}</span>
+              <span className="w-full text-xs text-muted">{rv.isNew ? 'Baru · ' : ''}Perkahwinan · {rv.date}</span>
             </div>
             <Stars n={rv.rating} size={12} />
           </div>
           <Pill><ShieldCheck className="w-3.5 h-3.5 shrink-0" />Tempahan melalui Majlis Hub</Pill>
           <p className="w-full text-[15px] leading-[22px] text-body">{rv.text}</p>
+          {rv.photos.length > 0 && (
+            <div className="w-full flex flex-row flex-wrap gap-2">{rv.photos.map(g => <Img key={g} src={g} cat={v.cat} alt="Gambar daripada pelanggan" className="w-16 h-16 shrink-0 rounded-xl" />)}</div>
+          )}
           {rv.reply && (
             <div className="w-full flex flex-col gap-1 p-3 rounded-xl bg-pucuk-50">
               <span className="w-full text-xs font-semibold text-hijau">Balasan {v.name}</span>

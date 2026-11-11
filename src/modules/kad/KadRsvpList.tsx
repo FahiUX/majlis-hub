@@ -90,7 +90,7 @@ export default function KadRsvpList() {
         <section className="w-full flex flex-col gap-3">
           <h2 className="w-full text-base font-semibold">Ucapan tetamu</h2>
           {wishes.length === 0 ? <p className="w-full text-sm text-muted">Belum ada ucapan.</p> : wishes.map(r => (
-            <div key={r.id} className={cx('w-full flex flex-col gap-1 p-4 rounded-xl', r.attending ? 'bg-pucuk-50' : 'bg-emas-50')}>
+            <div key={r.id} className={cx('w-full flex flex-col gap-1 p-4 rounded-xl', r.attending ? 'bg-pucuk-50' : 'bg-white border border-line')}>
               <p className="w-full text-sm text-body">“{r.message}”</p>
               <span className="w-full flex flex-row items-center gap-1 text-xs font-semibold"><MessageCircle className="w-3.5 h-3.5 shrink-0" />{r.name}</span>
             </div>

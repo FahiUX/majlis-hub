@@ -37,6 +37,7 @@ export default function KadGuest() {
 
   return (
     <div className="w-full flex flex-col gap-5 p-4">
+      <h1 className="sr-only">Jemputan perkahwinan {inv.bride} &amp; {inv.groom}</h1>
       <KadCard inv={inv} />
 
       {done ? (

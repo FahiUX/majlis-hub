@@ -37,9 +37,9 @@ export default function WizardScreen() {
             <ChevronLeft className="w-6 h-6 shrink-0" />
           </button>
           <h1 className="flex-1 min-w-0 text-[17px] leading-6 font-semibold">Majlis baru</h1>
-          <span className="w-fit shrink-0 px-3 text-sm text-muted num">Langkah {step}/4</span>
+          <span className="w-fit shrink-0 text-sm text-muted num">Langkah {step}/4</span>
         </div>
-        <div className="w-full flex flex-row gap-1.5 px-3" aria-hidden="true">
+        <div className="w-full flex flex-row gap-1.5" aria-hidden="true">
           {[1, 2, 3, 4].map(n => <span key={n} className={cx('flex-1 min-w-0 h-1 rounded-full', n <= step ? 'bg-hijau' : 'bg-line')} />)}
         </div>
       </header>
@@ -64,8 +64,8 @@ export default function WizardScreen() {
 
         {step === 2 && (
           <Q title="Bila tarikhnya?">
-            <Field label="Tarikh majlis" error={dateErr}>
-              <input type="date" min={addDays(TODAY, 1)} value={d.date} onChange={e => set({ date: e.target.value })} aria-invalid={!!dateErr}
+            <Field id="wz-date" label="Tarikh majlis" error={dateErr}>
+              <input id="wz-date" type="date" min={addDays(TODAY, 1)} value={d.date} onChange={e => set({ date: e.target.value })} aria-invalid={!!dateErr} aria-describedby={dateErr ? 'wz-date-err' : undefined}
                 className={cx('w-full px-3.5 py-3.5 leading-5 rounded-[10px] bg-white border text-[15px]', dateErr ? 'border-bahaya' : 'border-line2')} />
             </Field>
             <label className="w-full flex flex-row items-center gap-3 p-4 rounded-2xl bg-white border border-line">
@@ -76,8 +76,8 @@ export default function WizardScreen() {
               <input type="checkbox" className="w-5 h-5 shrink-0 accent-hijau" checked={d.twoDays} onChange={e => set({ twoDays: e.target.checked, day2: e.target.checked && d.date ? addDays(d.date, 1) : '' })} />
             </label>
             {d.twoDays && (
-              <Field label="Tarikh hari kedua" error={day2Err}>
-                <input type="date" min={d.date || addDays(TODAY, 2)} value={d.day2} onChange={e => set({ day2: e.target.value })}
+              <Field id="wz-day2" label="Tarikh hari kedua" error={day2Err}>
+                <input id="wz-day2" type="date" min={d.date || addDays(TODAY, 2)} value={d.day2} onChange={e => set({ day2: e.target.value })} aria-invalid={!!day2Err} aria-describedby={day2Err ? 'wz-day2-err' : undefined}
                   className="w-full px-3.5 py-3.5 leading-5 rounded-[10px] bg-white border border-line2 text-[15px]" />
               </Field>
             )}
@@ -86,14 +86,14 @@ export default function WizardScreen() {
 
         {step === 3 && (
           <Q title="Di mana, dan berapa ramai tetamu?">
-            <Field label="Lokasi majlis">
-              <input value={d.place} onChange={e => set({ place: e.target.value })} placeholder="Contoh: Dewan Seri Kenanga, Shah Alam"
+            <Field id="wz-place" label="Lokasi majlis">
+              <input id="wz-place" value={d.place} onChange={e => set({ place: e.target.value })} placeholder="Contoh: Dewan Seri Kenanga, Shah Alam"
                 className="w-full px-3.5 py-3.5 leading-5 rounded-[10px] bg-white border border-line2 text-[15px]" />
             </Field>
-            <Field label="Bilangan tetamu">
+            <Field id="wz-pax" label="Bilangan tetamu">
               <div className="w-full flex flex-row items-center gap-3">
                 <button aria-label="Kurang 50 tetamu" onClick={() => set({ pax: Math.max(50, d.pax - 50) })} className="w-12 h-12 shrink-0 rounded-full border border-line2 bg-white flex items-center justify-center"><Minus className="w-5 h-5 shrink-0" /></button>
-                <input type="number" inputMode="numeric" aria-label="Bilangan tetamu" value={d.pax} onChange={e => set({ pax: Math.max(0, Number(e.target.value)) })}
+                <input id="wz-pax" type="number" inputMode="numeric" value={d.pax} onChange={e => set({ pax: Math.max(0, Number(e.target.value)) })}
                   className="flex-1 min-w-0 px-3.5 py-3 leading-5 rounded-[10px] bg-white border border-line2 text-center text-xl font-bold num" />
                 <button aria-label="Tambah 50 tetamu" onClick={() => set({ pax: Math.min(3000, d.pax + 50) })} className="w-12 h-12 shrink-0 rounded-full border border-line2 bg-white flex items-center justify-center"><Plus className="w-5 h-5 shrink-0" /></button>
               </div>
@@ -116,18 +116,19 @@ export default function WizardScreen() {
 function Q({ title, children }: { title: string; children: ReactNode }) {
   return (
     <section className="w-full flex flex-col gap-4">
-      <h2 className="w-full font-display text-[26px] leading-8 font-semibold">{title}</h2>
+      <h2 className="w-full font-display text-[28px] leading-[34px] font-semibold">{title}</h2>
       {children}
     </section>
   );
 }
 
-export function Field({ label, error, children }: { label: string; error?: string; children: ReactNode }) {
+/** label is tied to the input by `id`; the error is linked from the input via aria-describedby `<id>-err` */
+export function Field({ id, label, error, children }: { id: string; label: string; error?: string; children: ReactNode }) {
   return (
     <div className="w-full flex flex-col gap-2">
-      <span className="w-full text-[13px] leading-4 font-semibold">{label}</span>
+      <label htmlFor={id} className="w-full text-[13px] leading-4 font-semibold">{label}</label>
       {children}
-      {error && <p role="alert" className="w-full flex flex-row items-center gap-1.5 text-sm text-bahaya"><TriangleAlert className="w-4 h-4 shrink-0" />{error}</p>}
+      {error && <p id={id + '-err'} role="alert" className="w-full flex flex-row items-center gap-1.5 text-sm text-bahaya"><TriangleAlert className="w-4 h-4 shrink-0" />{error}</p>}
     </div>
   );
 }

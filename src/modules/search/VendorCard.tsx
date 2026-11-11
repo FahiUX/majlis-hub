@@ -14,7 +14,8 @@ export function HeartButton({ id, className }: { id: number; className?: string 
       aria-label={on ? 'Buang dari simpanan' : 'Simpan vendor'} aria-pressed={on}
       onClick={e => {
         e.stopPropagation();
-        if (!s.authed) return nav('/masuk');
+        // guest: log in first, then come back here and finish the save (?save=<id>)
+        if (!s.authed) { const here = location.hash.slice(1) || '/'; return nav('/masuk?next=' + encodeURIComponent(here + (here.includes('?') ? '&' : '?') + 'save=' + id)); }
         set(p => ({ saved: toggle(p.saved, id) }));
         toast(on ? 'Dibuang dari simpanan' : 'Disimpan ke senarai pendek');
       }}
@@ -41,7 +42,7 @@ export function CompareCheck({ v }: { v: Vendor }) {
         if (!on && s.compare.length >= 3) return toast('Maksimum 3 vendor untuk dibanding');
         set(p => ({ compare: toggle(p.compare, v.id) }));
       }}
-      className="w-fit shrink-0 flex flex-row items-center gap-2 text-sm font-medium text-body"
+      className="w-fit shrink-0 flex flex-row items-center gap-2 py-3 text-sm font-medium text-body"
     >
       <span className={cx('w-5 h-5 shrink-0 rounded-[6px] flex items-center justify-center', on ? 'bg-hijau text-white' : 'bg-white border-[1.5px] border-line2')}>
         {on && <Check className="w-3.5 h-3.5 shrink-0" strokeWidth={3} />}

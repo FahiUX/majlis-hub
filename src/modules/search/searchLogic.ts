@@ -62,8 +62,8 @@ export function search(f: Filters): Vendor[] {
     matchesText(v, f.q) &&
     (f.state ? v.state === f.state : v.km <= f.km) &&
     fromPrice(v) >= f.min && fromPrice(v) <= f.max &&
-    (!f.r4 || v.rating >= 4.8),
-    // f.verified needs no check: only verified vendors go live (spec V-1.3), the chip just states it
+    (!f.r4 || v.rating >= 4),
+    // f.verified: every live vendor is verified (spec V-1.3), so turning it off returns the same list
   );
   const by = { near: (a: Vendor, b: Vendor) => a.km - b.km, top: (a: Vendor, b: Vendor) => b.rating - a.rating || b.reviews - a.reviews, price: (a: Vendor, b: Vendor) => fromPrice(a) - fromPrice(b) }[f.sort];
   return r.sort(by);
@@ -96,6 +96,7 @@ export function selfCheck() {
   console.assert(search({ ...base, q: 'jurugambar' }).every(v => v.cat === 'photo'), 'BM keyword');
   console.assert(search({ ...base, q: 'photographer' }).length > 0, 'EN keyword');
   console.assert(search({ ...base, min: 1000, max: 2000 }).every(v => fromPrice(v) >= 1000 && fromPrice(v) <= 2000), 'price range');
+  console.assert(search({ ...base, r4: true }).every(v => v.rating >= 4), 'rating 4+');
   console.assert(readFilters(new URLSearchParams(writeFilters({ ...base, cat: 'band', km: 30 }).split('?')[1])).km === 30, 'url roundtrip');
   return 'ok';
 }

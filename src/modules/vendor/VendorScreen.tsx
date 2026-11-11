@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { ChevronLeft, Clock, Heart, MapPin, SearchX, Share2, ShieldCheck, Check } from 'lucide-react';
+import { ChevronLeft, Clock, Heart, MapPin, RotateCcw, SearchX, Share2, ShieldCheck, Check, WifiOff } from 'lucide-react';
 import { useStore, toggle } from '../../store';
 import { back, nav, swap, useRoute } from '../../router';
 import { catById, fromPrice, vendorById } from '../../data/mock';
-import { Button, EmptyState, Img, Pill, Sheet, Stars, VerifiedBadge, cx, rm } from '../../components/ui';
+import { Button, EmptyState, Img, Pill, Sheet, Stars, TopBar, VerifiedBadge, cx, rm } from '../../components/ui';
 import { AboutTab, PackagesTab, PortfolioTab, ReviewsTab } from './VendorTabs';
 import BookSheet from './BookSheet';
 
@@ -17,6 +17,15 @@ export default function VendorScreen({ id }: { id?: number | string }) {
   const [book, setBook] = useState(r.q.get('book') === '1');
   const [pkgId, setPkgId] = useState<string | undefined>();
 
+  const demo = r.q.get('demo');
+  if (demo === 'loading') return <VendorSkeleton />;
+  if (demo === 'error') return (
+    <div className="w-full flex flex-col">
+      <TopBar title="Profil vendor" fallback="/cari" />
+      <EmptyState icon={<WifiOff className="w-6 h-6" />} title="Tidak dapat memuatkan profil" body="Semak sambungan internet anda dan cuba lagi."
+        action={<Button onClick={() => swap(`/vendor/${id}`)}><RotateCcw className="w-4 h-4 shrink-0" />Cuba lagi</Button>} />
+    </div>
+  );
   if (!v) return <EmptyState icon={<SearchX className="w-6 h-6" />} title="Vendor tidak dijumpai" body="Vendor ini mungkin tidak lagi aktif." action={<Button onClick={() => nav('/cari')}>Cari vendor lain</Button>} />;
 
   const tab = r.q.get('tab') ?? 'pakej';
@@ -77,9 +86,9 @@ export default function VendorScreen({ id }: { id?: number | string }) {
       <div role="tablist" aria-label="Maklumat vendor" className="sticky top-0 z-10 w-full flex flex-row bg-kertas border-b border-line">
         {TABS.map(([k, l]) => (
           <button key={k} role="tab" aria-selected={tab === k} onClick={() => swap(`/vendor/${v.id}?tab=${k}`)}
-            className={cx('flex-1 min-w-0 h-12 flex flex-col items-center justify-end gap-3 text-sm font-semibold', tab === k ? 'text-hijau' : 'text-muted')}>
+            className={cx('relative flex-1 min-w-0 flex flex-col items-center py-3.5 leading-5 text-sm font-semibold', tab === k ? 'text-hijau' : 'text-muted')}>
             {l}
-            <span className={cx('w-full h-0.5 shrink-0', tab === k ? 'bg-hijau' : 'bg-transparent')} />
+            {tab === k && <span className="absolute left-0 right-0 bottom-0 h-0.5 bg-hijau" />}
           </button>
         ))}
       </div>
@@ -117,6 +126,21 @@ export default function VendorScreen({ id }: { id?: number | string }) {
         </div>
       </Sheet>
       <BookSheet v={v} open={book} initialPkg={pkgId} onClose={() => setBook(false)} />
+    </div>
+  );
+}
+
+/** C-2.0 Loading: same shapes as the real profile (?demo=loading) */
+function VendorSkeleton() {
+  return (
+    <div className="w-full flex flex-col" aria-busy="true" aria-label="Memuatkan profil vendor">
+      <div className="w-full aspect-[4/3] shrink-0 skeleton" />
+      <div className="w-full flex flex-col gap-3 p-5">
+        <div className="w-2/3 h-7 rounded-xl skeleton" />
+        <div className="w-24 h-6 rounded-full skeleton" />
+        <div className="w-full flex flex-row items-center gap-4"><div className="w-16 h-12 rounded-xl skeleton" /><div className="flex-1 min-w-0 h-5 rounded-xl skeleton" /></div>
+        {[0, 1].map(i => <div key={i} className="w-full h-36 rounded-2xl skeleton" />)}
+      </div>
     </div>
   );
 }

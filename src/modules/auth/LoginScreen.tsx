@@ -1,12 +1,23 @@
 import { useEffect, useRef, useState } from 'react';
 import { AlertCircle, CalendarHeart, Store } from 'lucide-react';
 import { useStore } from '../../store';
-import { nav, useRoute } from '../../router';
+import { swap, useRoute } from '../../router';
 import { Button, TopBar, cx } from '../../components/ui';
 
 /** +60 mobile: 1X then 7–8 digits (leading 0 optional) */
 const clean = (p: string) => p.replace(/[\s-]/g, '').replace(/^0/, '');
 const validPhone = (p: string) => /^1\d{8,9}$/.test(clean(p));
+
+/**
+ * Leave login without a trace in history (QA B4): step back to the page that opened it,
+ * then swap to `next` if it differs (e.g. ?book=1). Opened from a shared link: just swap.
+ */
+const finish = (to: string) => {
+  if (((history.state as { d?: number } | null)?.d ?? 0) > 0) {
+    window.addEventListener('hashchange', () => { if (location.hash.slice(1) !== to) swap(to); }, { once: true });
+    history.back();
+  } else swap(to);
+};
 
 export default function LoginScreen() {
   const { set, toast } = useStore();
@@ -29,7 +40,7 @@ export default function LoginScreen() {
   }, [step]);
 
   const phoneErr = touched && !validPhone(phone);
-  const sendCode = () => { setTouched(true); if (validPhone(phone)) nav(`/masuk?step=otp&next=${encodeURIComponent(next)}`); };
+  const sendCode = () => { setTouched(true); if (validPhone(phone)) swap(`/masuk?step=otp&next=${encodeURIComponent(next)}`); };
 
   const type = (i: number, val: string) => {
     const digits = val.replace(/\D/g, '');
@@ -49,7 +60,7 @@ export default function LoginScreen() {
     if (c === '000000') { setOtpErr(true); return; }
     set(() => ({ authed: true }));
     toast(role === 'vendor' ? 'Log masuk berjaya. Papan pemuka vendor akan datang dalam Wave 2.' : 'Selamat datang ke Majlis Hub');
-    nav(next);
+    finish(next);
   };
 
   return (

@@ -15,8 +15,8 @@ function Skeleton() {
       {[0, 1].map(i => (
         <div key={i} className="w-full flex flex-col gap-3">
           <div className="w-full aspect-[4/3] rounded-xl skeleton" />
-          <div className="w-[60%] h-4 rounded skeleton" />
-          <div className="w-[40%] h-3 rounded skeleton" />
+          <div className="w-[60%] h-4 rounded-full skeleton" />
+          <div className="w-[40%] h-3 rounded-full skeleton" />
         </div>
       ))}
     </div>
@@ -25,7 +25,7 @@ function Skeleton() {
 
 export default function SearchScreen() {
   const { q } = useRoute();
-  const { s, set } = useStore();
+  const { s, set, toast } = useStore();
   const f = readFilters(q);
   const go = (patch: Partial<Filters>) => swap(writeFilters({ ...f, ...patch }));
   const [text, setText] = useState(f.q);
@@ -53,15 +53,26 @@ export default function SearchScreen() {
   const active: { label: string; clear: Partial<Filters> }[] = [
     ...(f.state ? [{ label: f.state, clear: { state: null } }] : f.km !== 70 ? [{ label: `${f.km} km`, clear: { km: 70 } }] : []),
     ...(f.min > 0 || f.max < PRICE_MAX ? [{ label: `${rm(f.min)} – ${rm(f.max)}`, clear: { min: 0, max: PRICE_MAX } }] : []),
-    ...(f.r4 ? [{ label: 'Rating 4.8+', clear: { r4: false } }] : []),
+    ...(f.r4 ? [{ label: 'Rating 4 ke atas', clear: { r4: false } }] : []),
     ...(f.sort !== 'near' ? [{ label: f.sort === 'top' ? 'Rating tertinggi' : 'Harga terendah', clear: { sort: 'near' as const } }] : []),
     ...(f.q ? [{ label: `"${f.q}"`, clear: { q: '' } }] : []),
   ];
   const nextKm = RADII.find(k => k > f.km);
   const isError = q.get('demo') === 'error';
 
+  // finish the save a guest started before logging in (?save=<id> comes back from /masuk)
+  const pendingSave = Number(q.get('save'));
+  useEffect(() => {
+    if (!pendingSave || !s.authed) return;
+    set(p => (p.saved.includes(pendingSave) ? {} : { saved: [...p.saved, pendingSave] })); // idempotent: effects can run twice
+    toast('Disimpan ke senarai pendek');
+    const rest = new URLSearchParams(q); rest.delete('save');
+    swap('/cari' + (rest.toString() ? '?' + rest.toString() : ''));
+  }, [pendingSave, s.authed]); // eslint-disable-line react-hooks/exhaustive-deps
+
   return (
     <div className="w-full flex-1 flex flex-col">
+      <h1 className="sr-only">Cari vendor</h1>
       <div className="sticky top-0 z-20 w-full flex flex-col gap-3 px-4 py-3 bg-kertas/95 backdrop-blur">
         <form role="search" onSubmit={e => { e.preventDefault(); submit(text); }} className="w-full flex flex-row items-center gap-2">
           <label className="flex-1 min-w-0 flex flex-row items-center gap-2 px-3.5 py-2.5 rounded-full bg-white border border-line2 focus-within:border-hijau focus-within:ring-4 focus-within:ring-pucuk-200/60">
@@ -74,7 +85,7 @@ export default function SearchScreen() {
             ? <button type="button" onClick={() => { setFocused(false); setText(f.q); }} className="w-fit shrink-0 px-2 py-2.5 text-sm font-semibold text-hijau">Batal</button>
             : <button type="button" aria-label="Tapis dan susun" onClick={() => setSheet(true)} className="relative w-11 h-11 shrink-0 rounded-full bg-hijau text-white flex items-center justify-center">
                 <SlidersHorizontal className="w-5 h-5 shrink-0" />
-                {active.length > 0 && <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-emas text-white text-[11px] font-bold flex items-center justify-center num">{active.length}</span>}
+                {active.length > 0 && <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-ink text-white text-[11px] font-bold flex items-center justify-center num">{active.length}</span>}
               </button>}
         </form>
         {!focused && (

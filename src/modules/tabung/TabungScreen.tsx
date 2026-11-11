@@ -37,12 +37,21 @@ export default function TabungScreen() {
     <div className="w-full flex flex-col">
       <TopBar title="Tabung" fallback="/majlis" />
       <div className="w-full flex flex-col gap-5 p-5">
+        {p.overdue.length > 0 && (
+          <div role="alert" className="w-full flex flex-row gap-3 p-4 rounded-2xl bg-amaran-50 text-amaran">
+            <TriangleAlert className="w-5 h-5 shrink-0" />
+            <div className="flex-1 min-w-0 flex flex-col gap-1 text-sm">
+              <p className="w-full font-semibold">{p.overdue.length} ansuran sudah lewat</p>
+              <p className="w-full text-body">{p.overdue.map(d => `${d.label} ${d.vendorName} (${fmtDate(d.due)})`).join(', ')}. Vendor sudah dimaklumkan. Tempahan anda tidak dibatalkan, tapi bayar segera.</p>
+            </div>
+          </div>
+        )}
         <section className="w-full flex flex-col gap-4 p-5 rounded-2xl bg-pucuk-50">
           <div className="w-full flex flex-row items-center gap-2">
             <span className="flex-1 min-w-0 text-sm font-semibold text-hijau">Simpan setiap bulan</span>
             {p.remaining === 0 ? <Pill>Cukup</Pill> : p.short > 0 ? <Pill tone="amaran"><TriangleAlert className="w-3.5 h-3.5 shrink-0" />Kurang {rm(p.short)}</Pill> : <Pill>Ikut rancangan</Pill>}
           </div>
-          <p className="w-full font-display text-[40px] leading-[44px] font-semibold num">{rm(p.monthly)}<span className="text-lg font-sans font-semibold text-muted">/bulan</span></p>
+          <p className="w-full font-display text-[48px] leading-[52px] font-semibold num">{rm(p.monthly)}<span className="text-lg font-sans font-semibold text-muted">/bulan</span></p>
           <p className="w-full text-sm text-body">Untuk {p.dues.length} bayaran dalam {p.months} bulan. Sudah simpan <b className="num">{rm(p.saved)}</b> daripada <b className="num">{rm(p.owed)}</b>.</p>
           <div className="w-full h-2 rounded-full bg-white overflow-hidden" role="progressbar" aria-label="Simpanan" aria-valuenow={Math.round((p.saved / p.owed) * 100)} aria-valuemin={0} aria-valuemax={100}>
             <div className="h-full rounded-full bg-hijau" style={{ width: `${Math.min(100, (p.saved / p.owed) * 100)}%` }} />
@@ -64,7 +73,7 @@ export default function TabungScreen() {
           <div className="w-full flex flex-col rounded-2xl bg-white border border-line overflow-hidden">
             {p.dues.map((d, i) => {
               const pct = d.covered / d.amount;
-              const soon = daysBetween(TODAY, d.due) <= 30;
+              const left = daysBetween(TODAY, d.due);
               return (
                 <div key={d.bookingId + d.label} className="w-full flex flex-col">
                   {i > 0 && <Divider />}
@@ -73,9 +82,10 @@ export default function TabungScreen() {
                     <div className="flex-1 min-w-0 flex flex-col gap-0.5">
                       <span className="w-full text-[15px] font-semibold">{d.vendorName}</span>
                       <span className="w-full text-sm text-muted">{d.label} · {fmtDate(d.due)}</span>
+                      {left < 0 ? <Pill tone="bahaya">Lewat {-left} hari</Pill> : left <= 30 && <Pill tone="amaran">Dalam {left} hari</Pill>}
                       <span className="w-full text-sm num"><b>{rm(d.amount)}</b> <span className="text-muted">· {Math.round(pct * 100)}% disimpan</span></span>
                     </div>
-                    <Button variant={soon ? 'primary' : 'secondary'} className="px-3! py-2!" onClick={() => nav('/tempahan/' + d.bookingId)}>Bayar</Button>
+                    <Button variant="secondary" className="px-3! py-2!" aria-label={`Bayar ${d.label} ${d.vendorName}`} onClick={() => nav('/tempahan/' + d.bookingId)}>Bayar</Button>
                   </div>
                 </div>
               );
@@ -90,7 +100,7 @@ export default function TabungScreen() {
               <div key={t.id} className="w-full flex flex-col">
                 {i > 0 && <Divider />}
                 <div className="w-full flex flex-row items-center gap-3 p-4">
-                  <span className={cx('w-9 h-9 shrink-0 rounded-full flex items-center justify-center', t.amount > 0 ? 'bg-pucuk-100 text-hijau' : 'bg-emas-50 text-emas-teks')}>
+                  <span className={cx('w-9 h-9 shrink-0 rounded-full flex items-center justify-center', t.amount > 0 ? 'bg-pucuk-100 text-hijau' : 'bg-line text-ink')}>
                     {t.amount > 0 ? <ArrowDownLeft className="w-4 h-4 shrink-0" /> : <ArrowUpRight className="w-4 h-4 shrink-0" />}
                   </span>
                   <div className="flex-1 min-w-0 flex flex-col">
@@ -128,8 +138,8 @@ function Ring({ pct }: { pct: number }) {
   const c = 2 * Math.PI * 18;
   return (
     <svg viewBox="0 0 44 44" className="w-11 h-11 shrink-0 -rotate-90" aria-hidden="true">
-      <circle cx="22" cy="22" r="18" fill="none" stroke="#DDF0E7" strokeWidth="5" />
-      <circle cx="22" cy="22" r="18" fill="none" stroke={pct >= 1 ? '#0E5E4B' : '#B98A2E'} strokeWidth="5" strokeLinecap="round" strokeDasharray={`${c * pct} ${c}`} />
+      <circle cx="22" cy="22" r="18" fill="none" stroke="var(--color-pucuk-100)" strokeWidth="5" />
+      <circle cx="22" cy="22" r="18" fill="none" stroke="var(--color-hijau)" strokeWidth="5" strokeLinecap="round" strokeDasharray={`${c * pct} ${c}`} />
     </svg>
   );
 }

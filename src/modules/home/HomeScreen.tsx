@@ -1,6 +1,6 @@
-import { ChevronRight, LogIn, Play, Search, ShieldCheck, SlidersHorizontal, Star, Tag, CalendarPlus } from 'lucide-react';
+import { ChevronRight, LogIn, Play, Search, ShieldCheck, SlidersHorizontal, Star, Tag, CalendarPlus, RotateCcw, WifiOff } from 'lucide-react';
 import { useStore, TODAY, daysBetween } from '../../store';
-import { nav } from '../../router';
+import { nav, swap, useRoute } from '../../router';
 import { Button, cx } from '../../components/ui';
 import { CATS, REELS, VENDORS, vendorById } from '../../data/mock';
 import { MiniVendorCard } from '../search/VendorCard';
@@ -14,11 +14,11 @@ function Ring({ days, pct }: { days: number; pct: number }) {
     <span className="relative w-16 h-16 shrink-0 flex items-center justify-center">
       <svg viewBox="0 0 64 64" className="absolute inset-0 w-16 h-16 -rotate-90" aria-hidden="true">
         <circle cx="32" cy="32" r={r} fill="none" stroke="rgba(255,255,255,.16)" strokeWidth="5" />
-        <circle cx="32" cy="32" r={r} fill="none" stroke="#B98A2E" strokeWidth="5" strokeLinecap="round" strokeDasharray={`${(pct / 100) * c} ${c}`} />
+        <circle cx="32" cy="32" r={r} fill="none" stroke="var(--color-emas)" strokeWidth="5" strokeLinecap="round" strokeDasharray={`${(pct / 100) * c} ${c}`} />
       </svg>
       <span className="relative w-fit flex flex-col items-center">
         <b className="w-fit font-display text-xl leading-5 font-semibold num">{days}</b>
-        <small className="w-fit text-[10px] font-semibold tracking-wider uppercase text-pucuk-200">Hari</small>
+        <small className="w-fit text-xs leading-3 font-semibold tracking-wider uppercase text-pucuk-200">Hari</small>
       </span>
     </span>
   );
@@ -40,14 +40,22 @@ function Hero() {
   const total = ev?.cats.length ?? 0;
   return (
     <section className="relative w-full flex flex-col overflow-hidden text-white"
-      style={{ background: 'radial-gradient(120% 80% at 100% 0%, rgba(185,138,46,.22) 0%, rgba(185,138,46,0) 55%), linear-gradient(170deg, #062E25 0%, #0A4A3B 55%, #0E5E4B 100%)' }}>
+      style={{ background: 'radial-gradient(120% 80% at 100% 0%, rgba(185,138,46,.22) 0%, rgba(185,138,46,0) 55%), linear-gradient(170deg, var(--color-malam) 0%, var(--color-pekat) 55%, var(--color-hijau) 100%)' }}>
       {/* songket pattern layer, fading out downward */}
       <div aria-hidden="true" className="absolute inset-0 pointer-events-none opacity-[.16]"
         style={{ backgroundImage: SONGKET, maskImage: 'linear-gradient(180deg,#000 30%,transparent 100%)', WebkitMaskImage: 'linear-gradient(180deg,#000 30%,transparent 100%)' }} />
-      <div className="relative w-full flex flex-col gap-5 px-4 py-5">
-        <span className="w-fit flex flex-row items-center gap-2 text-base font-bold">
-          <span className="w-8 h-8 shrink-0 rounded-lg bg-white text-hijau font-display text-lg flex items-center justify-center">M</span>Majlis Hub
-        </span>
+      {/* green-to-white fade (approved 150px over the last part of the hero): a real layer so it exports to Figma */}
+      <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-[150px] pointer-events-none"
+        style={{ background: 'linear-gradient(180deg, rgba(251,250,247,0) 0%, rgba(251,250,247,.08) 20%, rgba(251,250,247,.25) 40%, rgba(251,250,247,.5) 60%, rgba(251,250,247,.8) 80%, var(--color-kertas) 100%)' }} />
+      <div className="relative w-full flex flex-col gap-5 px-4 pt-5 pb-[104px]">
+        <div className="w-full flex flex-row items-center gap-2">
+          <span className="flex-1 min-w-0 flex flex-row items-center gap-2 text-base font-bold">
+            <span className="w-8 h-8 shrink-0 rounded-xl bg-white text-hijau font-display text-lg flex items-center justify-center">M</span>Majlis Hub
+          </span>
+          {s.authed
+            ? <button aria-label="Akaun" onClick={() => nav('/akaun')} className="w-11 h-11 shrink-0 rounded-full bg-white/[.12] text-white font-display text-lg font-semibold flex items-center justify-center">{s.userName.charAt(0)}</button>
+            : <button onClick={() => nav('/masuk?next=' + encodeURIComponent('/'))} className="w-fit shrink-0 inline-flex flex-row items-center gap-1.5 px-3.5 py-2 leading-5 rounded-full bg-white text-hijau text-sm font-semibold whitespace-nowrap"><LogIn className="w-4 h-4 shrink-0" />Log masuk</button>}
+        </div>
         <div className="w-full flex flex-col gap-1">
           <p className="w-full text-sm text-pucuk-200">{s.authed ? `Assalamualaikum, ${s.userName}` : 'Assalamualaikum'}</p>
           <h1 className="w-full font-display text-[28px] leading-[34px] font-semibold">Apa yang anda perlukan untuk majlis?</h1>
@@ -62,7 +70,7 @@ function Hero() {
           <div className="w-full flex flex-col gap-3 p-4 rounded-2xl bg-white/[.06]">
             <p className="w-full text-base font-semibold">Rancang majlis anda di satu tempat</p>
             <p className="w-full text-sm text-pucuk-200">Log masuk untuk simpan vendor, hantar tempahan dan urus bajet.</p>
-            <Button className="!bg-white !text-hijau" onClick={() => nav('/masuk')}><LogIn className="w-4 h-4 shrink-0" />Log masuk</Button>
+            <Button className="!bg-white !text-hijau" onClick={() => nav('/masuk?next=' + encodeURIComponent('/'))}><LogIn className="w-4 h-4 shrink-0" />Log masuk</Button>
           </div>
         ) : ev ? (
           <button onClick={() => nav('/majlis')} className="w-full flex flex-row items-center gap-3.5 p-4 rounded-2xl bg-white/[.06] text-left" aria-label={`${ev.name}, ${daysBetween(TODAY, ev.date)} hari lagi`}>
@@ -76,15 +84,12 @@ function Hero() {
           </button>
         ) : (
           <button onClick={() => nav('/majlis/baru')} className="w-full flex flex-row items-center gap-3 p-4 rounded-2xl bg-white/[.06] text-left">
-            <CalendarPlus className="w-6 h-6 shrink-0 text-emas" />
+            <CalendarPlus className="w-6 h-6 shrink-0 text-pucuk-200" />
             <span className="flex-1 min-w-0 text-base font-semibold">Mula rancang majlis anda</span>
             <ChevronRight className="w-5 h-5 shrink-0" />
           </button>
         )}
       </div>
-      {/* green-to-white fade: a real layer so it exports to Figma */}
-      <div aria-hidden="true" className="relative w-full h-[120px] shrink-0"
-        style={{ background: 'linear-gradient(180deg, rgba(251,250,247,0) 0%, rgba(251,250,247,.08) 20%, rgba(251,250,247,.25) 40%, rgba(251,250,247,.5) 60%, rgba(251,250,247,.8) 80%, #FBFAF7 100%)' }} />
     </section>
   );
 }
@@ -95,12 +100,40 @@ const TRUST = [
   { Icon: Tag, t: 'Harga jelas, tarikh dikunci', d: 'Harga RM tertera. Bayar deposit dalam 30 hari dan tarikh anda selamat.' },
 ];
 
+/** Loading state (?demo=loading): shimmer blocks in the shape of the sections */
+function HomeSkeleton() {
+  return (
+    <div className="w-full flex flex-col gap-8 p-4" aria-busy="true" aria-label="Memuatkan">
+      <div className="w-full flex flex-col gap-3">
+        <div className="w-32 h-6 rounded-full skeleton" />
+        <div className="w-full grid grid-cols-4 gap-2">{Array.from({ length: 8 }, (_, i) => <div key={i} className="w-full h-[92px] rounded-2xl skeleton" />)}</div>
+      </div>
+      <div className="w-full flex flex-row gap-3">{Array.from({ length: 3 }, (_, i) => <div key={i} className="w-[132px] h-[200px] shrink-0 rounded-xl skeleton" />)}</div>
+    </div>
+  );
+}
+
+/** Error state (?demo=error): sections could not load, retry */
+function HomeError() {
+  return (
+    <div className="w-full flex flex-col p-4">
+      <div role="alert" className="w-full flex flex-col items-center gap-3 p-6 rounded-2xl bg-bahaya-50 text-center">
+        <span className="w-12 h-12 shrink-0 rounded-full bg-white text-bahaya flex items-center justify-center"><WifiOff className="w-6 h-6 shrink-0" /></span>
+        <p className="w-full text-base font-semibold">Tak dapat memuatkan vendor</p>
+        <p className="w-full text-sm text-body">Semak sambungan internet anda dan cuba lagi.</p>
+        <Button variant="secondary" onClick={() => swap('/')}><RotateCcw className="w-4 h-4 shrink-0" />Cuba lagi</Button>
+      </div>
+    </div>
+  );
+}
+
 export default function HomeScreen() {
+  const demo = useRoute().q.get('demo');
   const near = VENDORS.filter(v => v.km <= 30).sort((a, b) => b.rating - a.rating || b.reviews - a.reviews).slice(0, 6);
   return (
     <div className="w-full flex flex-col">
       <Hero />
-      <div className="w-full flex flex-col gap-8 p-4">
+      {demo === 'loading' ? <HomeSkeleton /> : demo === 'error' ? <HomeError /> : <div className="w-full flex flex-col gap-8 p-4">
         <section className="w-full flex flex-col gap-3">
           <SectionHead title="Kategori" link="Lihat semua" to="/cari" />
           <div className="w-full grid grid-cols-4 gap-2">
@@ -148,7 +181,7 @@ export default function HomeScreen() {
             </div>
           ))}
         </section>
-      </div>
+      </div>}
     </div>
   );
 }

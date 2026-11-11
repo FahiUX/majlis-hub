@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AlertCircle, CircleCheckBig, CreditCard, Landmark, Loader2, Wallet } from 'lucide-react';
 import { useStore, TODAY } from '../../store';
 import { useRoute } from '../../router';
@@ -17,13 +17,16 @@ export function PaySheet({ b, open, onClose, idx = 0 }: { b: Booking; open: bool
   const r = useRoute();
   const [method, setMethod] = useState('fpx');
   const [phase, setPhase] = useState<'pick' | 'busy' | 'fail' | 'ok'>('pick');
-  useEffect(() => { if (open) setPhase('pick'); }, [open]);
+  // cancel the simulated payment if the sheet closes mid-way, so nothing is charged after "close" (QA W10)
+  const timer = useRef<number | undefined>(undefined);
+  useEffect(() => { if (open) setPhase('pick'); else window.clearTimeout(timer.current); }, [open]);
+  useEffect(() => () => window.clearTimeout(timer.current), []);
   const pay = b.payments[idx];
   if (!pay) return null;
 
   const go = () => {
     setPhase('busy');
-    window.setTimeout(() => {
+    timer.current = window.setTimeout(() => {
       if (r.q.get('fail') === '1') return setPhase('fail');
       set(p => ({
         bookings: p.bookings.map(x => x.id !== b.id ? x : {

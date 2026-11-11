@@ -1,13 +1,15 @@
 import { CalendarHeart, ChevronRight, Hourglass } from 'lucide-react';
-import { useStore, daysBetween, TODAY } from '../../store';
+import { useStore, daysBetween, addDays, TODAY } from '../../store';
 import { nav } from '../../router';
 import { vendorById } from '../../data/mock';
 import type { Booking } from '../../data/types';
 import { Button, EmptyState, Img, StatusChip, TopBar, cx, fmtDate, rm } from '../../components/ui';
 
-/** deposit_due past its deadline is treated as lapsed (spec: auto-cancel after 30 days) */
+/** time-based states: unpaid deposit past its 30-day deadline = lapsed; no vendor reply within 48h = expired */
 export const effective = (b: Booking): Booking['status'] =>
-  b.status === 'deposit_due' && b.depositDeadline && b.depositDeadline < TODAY ? 'lapsed' : b.status;
+  b.status === 'deposit_due' && b.depositDeadline && b.depositDeadline < TODAY ? 'lapsed'
+    : b.status === 'requested' && addDays(b.createdAt, 2) < TODAY ? 'expired'
+      : b.status;
 
 export function DepositLine({ b }: { b: Booking }) {
   const left = daysBetween(TODAY, b.depositDeadline ?? TODAY);

@@ -1,21 +1,51 @@
-import { useState } from 'react';
-import { CalendarX, Check, CircleCheckBig, Lock, MessageCircle, PiggyBank, SearchX, Sparkles } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { CalendarX, Check, CircleCheckBig, Lock, MessageCircle, PencilLine, PiggyBank, SearchX, Sparkles, Star } from 'lucide-react';
 import { useStore, daysBetween, TODAY, addDays } from '../../store';
 import { nav } from '../../router';
-import { vendorById } from '../../data/mock';
-import type { BookingStatus } from '../../data/types';
+import { VENDORS, vendorById } from '../../data/mock';
+import type { BookingStatus, Vendor } from '../../data/types';
 import { Button, Divider, EmptyState, Img, StatusChip, TopBar, VerifiedBadge, cx, fmtDate, rm } from '../../components/ui';
 import { DepositLine, effective } from './BookingList';
 import { CancelSheet, PaySheet } from './BookingSheets';
 import { buildPayments } from './plan';
+import ReviewSheet from './ReviewSheet';
+import { loadReviews, reviewsChanged } from '../vendor/reviews';
 
 const STEPS = ['Diminta', 'Diterima', 'Deposit', 'Disahkan', 'Selesai'];
 const STEP_OF: Partial<Record<BookingStatus, number>> = { requested: 0, accepted: 1, deposit_due: 2, confirmed: 3, completed: 4, reviewed: 4 };
+
+/** "Cuba vendor serupa": 3 same-category vendors free on the date (C-4.1 expired / declined) */
+function Similar({ v, date }: { v: Vendor; date: string }) {
+  const list = VENDORS.filter(x => x.cat === v.cat && x.id !== v.id && !x.busy.includes(date)).sort((a, b) => b.rating - a.rating).slice(0, 3);
+  if (!list.length) return null;
+  return (
+    <div className="w-full flex flex-col gap-3">
+      <h2 className="w-full text-base font-semibold">Cuba vendor serupa</h2>
+      {list.map(x => (
+        <button key={x.id} onClick={() => nav(`/vendor/${x.id}`)} className="w-full flex flex-row items-center gap-3 p-3 rounded-2xl bg-white border border-line text-left">
+          <Img src={x.img} cat={x.cat} alt="" className="w-12 h-12 shrink-0 rounded-xl" />
+          <span className="flex-1 min-w-0 flex flex-col">
+            <span className="w-full text-sm font-semibold">{x.name}</span>
+            <span className="w-full text-xs text-muted">{x.area} · {x.km} km · kosong {fmtDate(date)}</span>
+          </span>
+          <span className="w-fit flex flex-row items-center gap-1 text-sm font-semibold num"><Star className="w-3.5 h-3.5 shrink-0 fill-ink" />{x.rating.toFixed(1)}</span>
+        </button>
+      ))}
+    </div>
+  );
+}
 
 export default function BookingDetail({ id }: { id?: number | string }) {
   const { s, set, toast } = useStore();
   const [pay, setPay] = useState<number | null>(null);
   const [cancel, setCancel] = useState(false);
+  const [review, setReview] = useState(false);
+  const [mine, setMine] = useState(() => loadReviews().find(r => r.bookingId === id));
+  useEffect(() => {
+    const on = () => setMine(loadReviews().find(r => r.bookingId === id));
+    window.addEventListener(reviewsChanged, on);
+    return () => window.removeEventListener(reviewsChanged, on);
+  }, [id]);
   const b = s.bookings.find(x => x.id === id);
   const v = b && vendorById(b.vendorId);
   if (!b || !v) return (
@@ -65,21 +95,49 @@ export default function BookingDetail({ id }: { id?: number | string }) {
           </div>
         )}
 
+        {(st === 'expired' || st === 'declined') && (
+          <div className="w-full flex flex-col gap-2 p-5 rounded-2xl bg-white border border-line">
+            <span className="w-full flex flex-row items-center gap-2 text-base font-semibold"><CalendarX className="w-5 h-5 shrink-0 text-muted" /><span className="flex-1 min-w-0">{st === 'expired' ? 'Vendor tidak membalas dalam 48 jam' : 'Vendor menolak permintaan ini'}</span></span>
+            <p className="w-full text-sm text-body">{st === 'expired' ? 'Permintaan ini tamat tempoh secara automatik supaya anda boleh terus mencari. Tiada caj dikenakan.' : `Sebab: ${b.cancelReason ?? 'tidak dinyatakan'}. Tiada caj dikenakan.`}</p>
+          </div>
+        )}
+        {(st === 'expired' || st === 'declined') && <Similar v={v} date={b.date} />}
+
+        {(st === 'completed' || st === 'reviewed') && (
+          <div className="w-full flex flex-col gap-3 p-5 rounded-2xl bg-pucuk-50">
+            {mine ? (
+              <>
+                <span className="w-full text-base font-semibold">Ulasan anda</span>
+                <span className="w-fit flex flex-row items-center gap-0.5" aria-label={`${mine.rating} daripada 5 bintang`}>{[1, 2, 3, 4, 5].map(n => <Star key={n} className={cx('w-4 h-4 shrink-0 text-ink', n <= mine.rating ? 'fill-ink' : 'fill-none')} />)}</span>
+                <p className="w-full text-sm text-body">{mine.text}</p>
+                {daysBetween(mine.at, TODAY) <= 7 && <Button variant="secondary" onClick={() => setReview(true)}><PencilLine className="w-4 h-4 shrink-0" />Ubah ulasan</Button>}
+                <Button variant="ghost" onClick={() => nav(`/vendor/${v.id}?tab=ulasan`)}>Lihat di profil vendor</Button>
+              </>
+            ) : (
+              <>
+                <span className="w-full text-base font-semibold">Bagaimana {v.name}?</span>
+                <p className="w-full text-sm text-body">Majlis selesai pada {fmtDate(b.date)}. Ulasan anda akan bertanda "Tempahan melalui Majlis Hub" dan membantu pasangan lain.</p>
+                <Button block onClick={() => setReview(true)}><Star className="w-4 h-4 shrink-0" />Tulis ulasan</Button>
+              </>
+            )}
+          </div>
+        )}
+
         {step !== undefined && (
           <ol aria-label="Status tempahan" className="w-full flex flex-row items-start">
             {STEPS.map((l, i) => (
               <li key={l} className="flex-1 min-w-0 flex flex-col items-center gap-1.5 text-center">
-                <span className={cx('w-7 h-7 shrink-0 rounded-full flex items-center justify-center text-xs font-bold', i < step || st === 'completed' ? 'bg-hijau text-white' : i === step ? 'border-[1.5px] border-hijau text-hijau bg-white' : 'border-[1.5px] border-line2 text-muted bg-white')}>
+                <span className={cx('w-7 h-7 shrink-0 rounded-full flex items-center justify-center text-xs font-bold', i < step || st === 'completed' || st === 'reviewed' ? 'bg-hijau text-white' : i === step ? 'border-[1.5px] border-hijau text-hijau bg-white' : 'border-[1.5px] border-line2 text-muted bg-white')}>
                   {i < step ? <Check className="w-4 h-4 shrink-0" /> : i + 1}
                 </span>
-                <span className={cx('w-full text-[11px] font-semibold', i <= step ? 'text-ink' : 'text-muted')}>{l}</span>
+                <span className={cx('w-full text-xs font-semibold', i <= step ? 'text-ink' : 'text-muted')}>{l}</span>
               </li>
             ))}
           </ol>
         )}
 
         <div className="w-full flex flex-col gap-3 p-5 rounded-2xl bg-white border border-line text-sm">
-          {[['Pakej', pkg.name], ['Tarikh majlis', fmtDate(b.date, true)], ['Jumlah', rm(b.total)], ['Dihantar', fmtDate(b.createdAt)], ...(b.note ? [['Nota', b.note]] : []), ...(b.cancelReason ? [['Sebab batal', b.cancelReason]] : [])].map(([k, val]) => (
+          {[['Pakej', pkg.name], ['Tarikh majlis', fmtDate(b.date, true)], ['Jumlah', rm(b.total)], ['Dihantar', fmtDate(b.createdAt)], ...(b.note ? [['Nota', b.note]] : []), ...(b.cancelReason ? [[st === 'declined' ? 'Sebab ditolak' : 'Sebab batal', b.cancelReason]] : [])].map(([k, val]) => (
             <div key={k} className="w-full flex flex-row items-start gap-3"><span className="w-[110px] shrink-0 text-muted">{k}</span><span className="flex-1 min-w-0 font-medium num">{val}</span></div>
           ))}
         </div>
@@ -118,6 +176,7 @@ export default function BookingDetail({ id }: { id?: number | string }) {
         </div>
       </div>
       <PaySheet b={b} idx={pay ?? 0} open={pay !== null} onClose={() => setPay(null)} />
+      <ReviewSheet b={b} v={v} existing={mine} open={review} onClose={() => setReview(false)} />
       <CancelSheet b={b} policy={st === 'confirmed' ? v.cancelPolicy : undefined} open={cancel} onClose={() => setCancel(false)} />
     </div>
   );

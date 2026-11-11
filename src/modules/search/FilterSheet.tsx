@@ -18,7 +18,7 @@ export function BudgetSlider({ min, max, cat, onChange }: { min: number; max: nu
       </div>
       <div className="w-full flex flex-row items-end gap-1 h-12" aria-hidden="true">
         {bars.map(b => (
-          <span key={b.from} className={cx('flex-1 min-w-0 rounded-t-[3px]', b.to > min && b.from < max ? 'bg-hijau/70' : 'bg-line')} style={{ height: `${Math.max(6, (b.count / top) * 48)}px` }} />
+          <span key={b.from} className={cx('flex-1 min-w-0 rounded-full', b.to > min && b.from < max ? 'bg-hijau/70' : 'bg-line')} style={{ height: `${Math.max(6, (b.count / top) * 48)}px` }} />
         ))}
       </div>
       <div className="relative w-full h-11 shrink-0">
@@ -72,14 +72,14 @@ export default function FilterSheet({ open, f, onClose, onApply }: { open: boole
       <div className="w-full flex flex-col gap-3">
         <span className="w-full text-sm font-semibold">Susun ikut</span>
         <div className="w-full flex flex-row flex-wrap gap-2">
-          {([['near', 'Paling dekat'], ['top', 'Rating tertinggi'], ['price', 'Harga rendah → tinggi']] as const).map(([k, l]) => (
+          {([['near', 'Paling dekat'], ['top', 'Rating tertinggi'], ['price', 'Harga rendah ke tinggi']] as const).map(([k, l]) => (
             <Chip key={k} on={d.sort === k} onClick={() => setD({ ...d, sort: k })}>{l}</Chip>
           ))}
         </div>
       </div>
       <Divider />
       <div className="w-full flex flex-row flex-wrap gap-2">
-        <Chip on={d.r4} onClick={() => setD({ ...d, r4: !d.r4 })}><Star className="w-3.5 h-3.5 shrink-0 fill-current" />4.8 ke atas</Chip>
+        <Chip on={d.r4} onClick={() => setD({ ...d, r4: !d.r4 })}><Star className="w-3.5 h-3.5 shrink-0 fill-current" />4 ke atas</Chip>
         <Chip on={d.verified} onClick={() => setD({ ...d, verified: !d.verified })}>Disahkan sahaja</Chip>
       </div>
     </Sheet>

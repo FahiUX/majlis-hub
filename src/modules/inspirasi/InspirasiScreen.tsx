@@ -4,7 +4,7 @@ import { cx } from '../../components/ui';
 import { CATS, REELS, vendorById } from '../../data/mock';
 import type { CategoryId, Reel } from '../../data/types';
 import { toggle, useStore } from '../../store';
-import { nav } from '../../router';
+import { nav, useRoute } from '../../router';
 import { ReelSlide } from './ReelSlide';
 import { CommentsSheet, ReportSheet, ShareSheet, type ReelComment } from './ReelSheets';
 
@@ -13,6 +13,7 @@ const COPIES = 3;
 
 export default function InspirasiScreen() {
   const { s, set } = useStore();
+  const loading = useRoute().q.get('demo') === 'loading';
   const [cat, setCat] = useState<CategoryId | 'all'>('all');
   const [added, setAdded] = useState<Record<number, ReelComment[]>>({});
   const [sheet, setSheet] = useState<{ kind: 'comments' | 'share' | 'report'; reel: Reel } | null>(null);
@@ -47,6 +48,7 @@ export default function InspirasiScreen() {
 
   return (
     <div className="relative w-full flex-1 min-h-0 flex flex-col bg-black">
+      <h1 className="sr-only">Inspirasi</h1>
       <div role="group" aria-label="Kategori video" className="absolute top-0 inset-x-0 z-20 flex flex-row gap-2 p-3 overflow-x-auto">
         {[{ id: 'all' as const, name: 'Semua' }, ...CATS].map(c => (
           <button key={c.id} aria-pressed={cat === c.id} onClick={() => setCat(c.id)}
@@ -56,7 +58,15 @@ export default function InspirasiScreen() {
         ))}
       </div>
 
-      {reels.length === 0 ? (
+      {loading ? (
+        // Loading state (?demo=loading): dark skeleton in the shape of a reel
+        <div aria-busy="true" aria-label="Memuatkan video" className="absolute inset-0 flex flex-col justify-end gap-2 p-4 bg-black">
+          <div className="w-40 h-4 rounded-full bg-white/10" />
+          <div className="w-64 h-5 rounded-full bg-white/10" />
+          <div className="w-52 h-3 rounded-full bg-white/10" />
+          <div className="w-full h-11 rounded-xl bg-white/10" />
+        </div>
+      ) : reels.length === 0 ? (
         <div className="w-full flex-1 flex flex-col items-center justify-center gap-3 p-8 text-center text-white">
           <span className="w-14 h-14 shrink-0 rounded-full bg-white/10 flex items-center justify-center"><Clapperboard className="w-7 h-7 shrink-0" /></span>
           <p className="w-full text-base font-semibold">Belum ada video untuk kategori ini</p>
