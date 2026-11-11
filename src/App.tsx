@@ -1,8 +1,8 @@
 import { Fragment, useEffect, useRef } from 'react';
-import { CircleCheckBig, Clapperboard, Home, MessageCircle, Search, CalendarHeart } from 'lucide-react';
+import { CircleCheckBig, Lock, Clapperboard, Home, MessageCircle, Search, CalendarHeart } from 'lucide-react';
 import { StoreProvider, useStore } from './store';
 import { nav, useRoute, type Route } from './router';
-import { cx } from './components/ui';
+import { Button, EmptyState, cx } from './components/ui';
 import HomeScreen from './modules/home/HomeScreen';
 import SearchScreen from './modules/search/SearchScreen';
 import CompareScreen from './modules/search/CompareScreen';
@@ -22,9 +22,24 @@ import ChatScreen from './modules/chat/ChatScreen';
 import LoginScreen from './modules/auth/LoginScreen';
 import AccountScreen from './modules/auth/AccountScreen';
 
+/** pages with the customer's own data; guests get a login prompt instead (RBAC, PM audit B1) */
+const PRIVATE = ['tempahan', 'majlis', 'tabung', 'kad', 'mesej'];
+
+function LoginGate({ r }: { r: Route }) {
+  const next = encodeURIComponent(r.path + (r.q.toString() ? '?' + r.q.toString() : ''));
+  return (
+    <div className="w-full flex-1 flex flex-col justify-center">
+      <EmptyState icon={<Lock className="w-6 h-6 shrink-0" />} title="Log masuk untuk teruskan"
+        body="Halaman ini menyimpan maklumat majlis anda. Log masuk dengan nombor telefon untuk melihatnya."
+        action={<Button onClick={() => nav('/masuk?next=' + next)}>Log masuk</Button>} />
+    </div>
+  );
+}
+
 /** route table: first path part -> screen. Screens read their own params from the route. */
-function screenFor(r: Route) {
+function screenFor(r: Route, authed: boolean) {
   const [a, b] = r.parts;
+  if (!authed && a && PRIVATE.includes(a)) return <LoginGate r={r} />;
   switch (a) {
     case undefined: return <HomeScreen />;
     case 'cari': return <SearchScreen />;
@@ -90,13 +105,14 @@ function Toast() {
 
 function Shell() {
   const r = useRoute();
+  const { s } = useStore();
   const main = useRef<HTMLElement>(null);
   useEffect(() => { main.current?.scrollTo(0, 0); }, [r.path]);
   return (
     // phone-sized app; on desktop it sits centred like a device so stakeholders see the mobile layout
     <div className="w-full h-dvh flex flex-row justify-center bg-[#E9E6DF]">
       <div className="relative w-full sm:w-[430px] h-full flex flex-col bg-kertas overflow-hidden sm:shadow-float">
-        <main ref={main} className="w-full flex-1 min-h-0 flex flex-col overflow-y-auto overflow-x-hidden"><Fragment key={r.path}>{screenFor(r)}</Fragment></main>
+        <main ref={main} className="w-full flex-1 min-h-0 flex flex-col overflow-y-auto overflow-x-hidden"><Fragment key={r.path}>{screenFor(r, s.authed)}</Fragment></main>
         {!hideNav(r) && <BottomNav r={r} />}
         <Toast />
       </div>

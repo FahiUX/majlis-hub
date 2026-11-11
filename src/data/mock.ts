@@ -48,6 +48,8 @@ const REVIEW_POOL: Review[] = [
 const reviewsFor = (i: number): Review[] => [0, 3, 5].map(k => REVIEW_POOL[(i + k) % REVIEW_POOL.length]);
 
 const busy = ['2027-02-13', '2027-02-21', '2027-03-06'];
+/** vendors with a seeded booking in store.tsx; keep in sync with the initial bookings there */
+const SEEDED_BOOKED = [7, 10, 11, 18, 23, 26, 29];
 
 type Seed = [number, CategoryId, string, string, string, number, number, number, string, number, boolean?];
 // id, cat, name, area, state, km, rating, reviews, reply, base price, freelancer
@@ -60,19 +62,19 @@ const SEEDS: Seed[] = [
   [15, 'decor', 'Laman Bunga Events', 'Kuala Lumpur', 'WP Kuala Lumpur', 24, 4.8, 39, '2 jam', 8200],
   [11, 'makeup', 'Andaman Seri Ayu', 'Bangi', 'Selangor', 27, 5.0, 47, '1 jam', 1800, true],
   [16, 'makeup', 'Wajah Berseri by Kak Ros', 'Klang', 'Selangor', 18, 4.8, 92, '2 jam', 2200, true],
-  [17, 'makeup', 'Glow Bridal Studio', 'Cyberjaya', 'Selangor', 33, 4.6, 28, '3 jam', 1500],
+  [17, 'makeup', 'Glow Bridal Studio', 'Cyberjaya', 'Selangor', 33, 3.9, 28, '3 jam', 1500],
   [18, 'band', 'Akustik Rindu', 'Kuala Lumpur', 'WP Kuala Lumpur', 22, 4.9, 57, '1 jam', 2500],
   [19, 'band', 'Irama Kasih Band', 'Shah Alam', 'Selangor', 8, 4.7, 34, '3 jam', 3800],
   [20, 'band', 'Suara Syahdu Duo', 'Kajang', 'Selangor', 35, 4.8, 21, '2 jam', 1600, true],
   [8, 'mc', 'Amir Hakimi', 'Kuala Lumpur', 'WP Kuala Lumpur', 24, 4.8, 61, '30 min', 1200, true],
   [21, 'mc', 'Kak Long Emcee', 'Shah Alam', 'Selangor', 5, 4.9, 109, '1 jam', 1500, true],
-  [22, 'mc', 'Faizal Bicara', 'Seremban', 'Negeri Sembilan', 64, 4.6, 23, '2 jam', 800, true],
+  [22, 'mc', 'Faizal Bicara', 'Seremban', 'Negeri Sembilan', 64, 3.7, 23, '2 jam', 800, true],
   [23, 'bride', 'Pengapit Setia', 'Petaling Jaya', 'Selangor', 20, 4.9, 38, '1 jam', 900, true],
   [24, 'bride', 'Dara Assist', 'Bangi', 'Selangor', 29, 4.7, 19, '2 jam', 650, true],
   [25, 'bride', 'Teman Raja Sehari', 'Kuala Lumpur', 'WP Kuala Lumpur', 23, 4.8, 44, '1 jam', 1200],
   [26, 'kompang', 'Kompang Warisan Kg. Baru', 'Kuala Lumpur', 'WP Kuala Lumpur', 25, 4.9, 72, '3 jam', 800],
   [27, 'kompang', 'Hadrah Nurul Iman', 'Klang', 'Selangor', 17, 4.8, 36, '2 jam', 1100],
-  [28, 'kompang', 'Paluan Seri Selangor', 'Shah Alam', 'Selangor', 9, 4.6, 25, '4 jam', 600],
+  [28, 'kompang', 'Paluan Seri Selangor', 'Shah Alam', 'Selangor', 9, 3.8, 25, '4 jam', 600],
   [29, 'inai', 'Inai by Mira', 'Subang Jaya', 'Selangor', 14, 5.0, 53, '1 jam', 450, true],
   [30, 'inai', 'Henna Kasturi', 'Kuala Lumpur', 'WP Kuala Lumpur', 23, 4.8, 31, '2 jam', 380, true],
   [31, 'inai', 'Jari Berseri Henna', 'Seremban', 'Negeri Sembilan', 61, 4.7, 17, '3 jam', 300, true],
@@ -111,7 +113,8 @@ export const VENDORS: Vendor[] = SEEDS.map(([id, cat, name, area, state, km, rat
     about: `${name} berpangkalan di ${area} dan melayani majlis di sekitar ${state}. Kami utamakan komunikasi jelas, harga telus dan kerja yang tepat masa.`,
     packages: pkgs(id, base, PKG_ITEMS[cat], cat === 'inai' || cat === 'mc' ? PLAN2 : PLAN3),
     cancelPolicy: 'Batal lebih 60 hari sebelum majlis: deposit dipulangkan 50%. Kurang 60 hari: deposit tidak dipulangkan.',
-    busy: i % 3 === 0 ? [...busy, '2027-02-14'] : busy,
+    // some vendors are already taken on the demo event date, but never the ones Aina has booked (PM audit B2)
+    busy: i % 3 === 0 && !SEEDED_BOOKED.includes(id) ? [...busy, '2027-02-14'] : busy,
     sampleReviews: reviewsFor(i),
   };
 });
@@ -133,3 +136,5 @@ export const CHATS: Record<number, ChatMsg[]> = {
 };
 
 export const PHONES: Record<number, string> = { 7: '012-334 8810', 10: '017-662 4401', 11: '019-220 7314' };
+/** every vendor has a (fictional) number; shown only after the vendor accepts */
+export const phoneFor = (id: number) => PHONES[id] ?? `01${(id % 8) + 1}-${String(200 + id * 37).padStart(3, '0')} ${String(1000 + id * 271).slice(-4)}`;

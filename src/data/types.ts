@@ -84,6 +84,8 @@ export interface MajlisEvent {
   name: string;
   type: string;
   date: string;
+  /** optional second day, e.g. akad then sanding */
+  date2?: string;
   place: string;
   pax: number;
   budget: number;

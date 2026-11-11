@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import { AlertCircle, CheckCheck, Lock, MessageCircle, Phone, SearchX, Send } from 'lucide-react';
 import { useStore } from '../../store';
 import { nav, useRoute } from '../../router';
-import { PHONES, vendorById } from '../../data/mock';
+import { phoneFor, vendorById } from '../../data/mock';
+import { effective } from '../booking/BookingList';
 import type { ChatMsg } from '../../data/types';
 import { Button, Chip, EmptyState, TopBar, cx, fmtDate } from '../../components/ui';
 
@@ -21,7 +22,7 @@ export default function ChatScreen({ id }: { id?: number | string }) {
   if (!v) return <EmptyState icon={<SearchX className="w-6 h-6" />} title="Perbualan tidak dijumpai" action={<Button onClick={() => nav('/mesej')}>Semua mesej</Button>} />;
 
   const quick = [`Tarikh ${fmtDate(s.event?.date ?? '2027-02-14')} masih kosong?`, 'Boleh hantar senarai pakej?', 'Ada diskaun untuk akad + sanding?'];
-  const phoneOpen = s.bookings.some(b => b.vendorId === v.id && OPEN.includes(b.status));
+  const phoneOpen = s.bookings.some(b => b.vendorId === v.id && OPEN.includes(effective(b)));
   const write = (list: ChatMsg[]) => set(p => ({ chats: { ...p.chats, [v.id]: list } }));
   const send = (t: string) => {
     if (!t.trim()) return;
@@ -33,11 +34,11 @@ export default function ChatScreen({ id }: { id?: number | string }) {
   return (
     <div className="w-full flex-1 flex flex-col">
       <TopBar title={v.name} fallback="/mesej" right={phoneOpen
-        ? <a href={`tel:${PHONES[v.id] ?? '0123456789'}`} aria-label={`Telefon ${v.name}`} className="w-11 h-11 shrink-0 rounded-full bg-pucuk-100 text-hijau flex items-center justify-center"><Phone className="w-5 h-5 shrink-0" /></a>
+        ? <a href={`tel:${phoneFor(v.id).replace(/[^0-9]/g, '')}`} aria-label={`Telefon ${v.name}`} className="w-11 h-11 shrink-0 rounded-full bg-pucuk-100 text-hijau flex items-center justify-center"><Phone className="w-5 h-5 shrink-0" /></a>
         : undefined} />
       <div className="w-full flex flex-row items-center gap-2 px-5 py-2.5 bg-pucuk-50 text-xs text-hijau">
         <Lock className="w-3.5 h-3.5 shrink-0" />
-        <span className="flex-1 min-w-0">{phoneOpen ? `Tempahan diterima. Telefon: ${PHONES[v.id] ?? '012-345 6789'}` : 'Nombor telefon dikongsi selepas vendor terima tempahan.'}</span>
+        <span className="flex-1 min-w-0">{phoneOpen ? `Tempahan diterima. Telefon: ${phoneFor(v.id)}` : 'Nombor telefon dikongsi selepas vendor terima tempahan.'}</span>
       </div>
       <div className="w-full flex-1 flex flex-col gap-3 p-5">
         {msgs.length === 0 && <EmptyState icon={<MessageCircle className="w-6 h-6" />} title={`Mulakan perbualan dengan ${v.name}`} body="Ucap salam dan tanya tentang tarikh atau pakej." />}
