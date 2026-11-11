@@ -7,6 +7,9 @@ export const TODAY = '2026-11-11';
 export interface AppState {
   authed: boolean;
   userName: string;
+  phone: string;
+  email: string;
+  notif: { whatsapp: boolean; sms: boolean; email: boolean; push: boolean };
   event: MajlisEvent | null;
   bookings: Booking[];
   saved: number[];
@@ -26,6 +29,9 @@ export interface AppState {
 const initial: AppState = {
   authed: true,
   userName: 'Aina',
+  phone: '+60 12-778 4021',
+  email: 'aina.rahman@contoh.my',
+  notif: { whatsapp: true, sms: false, email: true, push: true },
   event: {
     name: 'Majlis Aina & Hakim', type: 'Perkahwinan', date: '2027-02-14', place: 'Shah Alam, Selangor', pax: 500, budget: 40000,
     split: {}, shortlist: {},
@@ -33,9 +39,9 @@ const initial: AppState = {
   },
   bookings: [
     { id: 'B-1042', vendorId: 7, packageId: '7-1', date: '2027-02-14', total: 4800, note: 'Akad pagi, sanding petang.', status: 'confirmed', createdAt: '2026-10-02', depositDeadline: '2026-11-03',
-      payments: [{ label: 'Deposit', amount: 1440, due: '2026-11-03', paidAt: '2026-10-20' }, { label: 'Bayaran kedua', amount: 1920, due: '2026-12-16' }, { label: 'Baki akhir', amount: 1440, due: '2027-02-07' }] },
-    { id: 'B-1057', vendorId: 10, packageId: '10-1', date: '2027-02-14', total: 6500, note: '', status: 'deposit_due', createdAt: '2026-10-18', depositDeadline: '2026-11-21',
-      payments: [{ label: 'Deposit', amount: 1950, due: '2026-11-21' }, { label: 'Bayaran kedua', amount: 2600, due: '2026-12-16' }, { label: 'Baki akhir', amount: 1950, due: '2027-02-07' }] },
+      payments: [{ label: 'Deposit', amount: 1440, due: '2026-11-03', paidAt: '2026-10-20' }, { label: 'Bayaran kedua', amount: 1920, due: '2026-11-08' }, { label: 'Baki akhir', amount: 1440, due: '2027-02-07' }] },
+    { id: 'B-1057', vendorId: 10, packageId: '10-1', date: '2027-02-14', total: 6500, note: '', status: 'deposit_due', createdAt: '2026-10-14', depositDeadline: '2026-11-13',
+      payments: [{ label: 'Deposit', amount: 1950, due: '2026-11-13' }, { label: 'Bayaran kedua', amount: 2600, due: '2026-12-16' }, { label: 'Baki akhir', amount: 1950, due: '2027-02-07' }] },
     { id: 'B-1063', vendorId: 11, packageId: '11-1', date: '2027-02-14', total: 1800, note: 'Solekan akad pukul 6 pagi.', status: 'requested', createdAt: '2026-11-10', payments: [] },
     // past and closed bookings, so every status can be demoed (PM review 2026-11-11)
     { id: 'B-0988', vendorId: 29, packageId: '29-0', date: '2026-10-31', total: 450, note: 'Malam berinai di rumah, Shah Alam.', status: 'completed', createdAt: '2026-09-02', depositDeadline: '2026-10-02',
@@ -57,6 +63,7 @@ const initial: AppState = {
     ayat: 'Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu pasangan hidup dari jenismu sendiri. (Ar-Rum: 21)',
     aturcara: [{ time: '11:00 pagi', item: 'Ketibaan tetamu' }, { time: '12:30 tgh', item: 'Ketibaan pengantin' }, { time: '1:00 ptg', item: 'Makan beradab' }, { time: '4:00 ptg', item: 'Majlis bersurai' }],
     rsvpClose: '2027-02-01',
+    invited: 120,
   },
   rsvps: [
     { id: 'r1', name: 'Mak Long Zaitun', phone: '012-555 1201', attending: true, count: 6, message: 'Tahniah Aina, semoga bahagia hingga ke Jannah.', at: '2026-11-08' },
@@ -72,7 +79,7 @@ const initial: AppState = {
   recent: ['pelamin moden', 'mak andam bangi'],
 };
 
-const KEY = 'majlishub.v2';
+const KEY = 'majlishub.v3';
 const load = (): AppState => {
   try { const s = localStorage.getItem(KEY); return s ? { ...initial, ...JSON.parse(s) } : initial; } catch { return initial; }
 };

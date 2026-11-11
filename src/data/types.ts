@@ -35,6 +35,18 @@ export interface Vendor {
   img: string;
   gallery: string[];
   freelancer?: boolean;
+  /** halal-certified products/ingredients (Mak Andam, Inai) */
+  halal?: boolean;
+  /** largest majlis (guests) the vendor serves */
+  capacity: number;
+  /** dates with only one slot left (C-2.2 "1 slot lagi") */
+  limited: string[];
+  /** joined recently with few reviews (C-2.0 "Baru di Majlis Hub") */
+  isNew?: boolean;
+  /** suspended by admin: hidden from listings, profile shows "Tidak tersedia" */
+  suspended?: boolean;
+  lat: number;
+  lng: number;
   since: string;
   about: string;
   packages: Package[];
@@ -109,6 +121,10 @@ export interface Invitation {
   ayat: string;
   aturcara: { time: string; item: string }[];
   rsvpClose: string;
+  /** number of guests invited, for the "Belum jawab" count */
+  invited: number;
+  photo?: string;
+  accent?: 'hijau' | 'emas' | 'malam';
 }
 
 export interface Rsvp { id: string; name: string; phone: string; attending: boolean; count: number; message: string; at: string }

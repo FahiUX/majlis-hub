@@ -58,6 +58,22 @@ const busy = ['2027-02-13', '2027-02-21', '2027-03-06'];
 /** vendors with a seeded booking in store.tsx; keep in sync with the initial bookings there */
 const SEEDED_BOOKED = [7, 10, 11, 18, 23, 26, 29];
 
+/** town coordinates for distance from the event place (C-1.1) */
+export const AREAS: Record<string, [number, number]> = {
+  'Shah Alam': [3.0733, 101.5185], 'Petaling Jaya': [3.1073, 101.6067], 'Kuala Lumpur': [3.1390, 101.6869], 'Puchong': [3.0280, 101.6178],
+  'Bangi': [2.9255, 101.7764], 'Klang': [3.0449, 101.4456], 'Cyberjaya': [2.9213, 101.6559], 'Subang Jaya': [3.0567, 101.5851],
+  'Kajang': [2.9927, 101.7909], 'Seremban': [2.7297, 101.9381], 'Putrajaya': [2.9264, 101.6964], 'Rawang': [3.3213, 101.5767],
+};
+export const TOWNS = Object.keys(AREAS);
+/** road-ish km (straight line x1.25) from the town named in `place` (default Shah Alam) */
+export const kmFrom = (v: { lat: number; lng: number }, place?: string) => {
+  const town = TOWNS.find(t => place?.includes(t)) ?? 'Shah Alam';
+  const [la, ln] = AREAS[town];
+  const r = Math.PI / 180, dLa = (v.lat - la) * r, dLn = (v.lng - ln) * r;
+  const h = Math.sin(dLa / 2) ** 2 + Math.cos(la * r) * Math.cos(v.lat * r) * Math.sin(dLn / 2) ** 2;
+  return Math.max(1, Math.round(6371 * 2 * Math.asin(Math.sqrt(h)) * 1.25));
+};
+
 type Seed = [number, CategoryId, string, string, string, number, number, number, string, number, boolean?];
 // id, cat, name, area, state, km, rating, reviews, reply, base price, freelancer
 const SEEDS: Seed[] = [
@@ -109,13 +125,18 @@ const PKG_ITEMS: Record<CategoryId, [string, number, string[]][]> = {
   inai: [['Inai jari', 1, ['Kedua-dua tangan', 'Corak ringkas']], ['Inai penuh', 1.8, ['Tangan & kaki', 'Corak tradisional', 'Malam berinai di rumah']]],
 };
 
-export const VENDORS: Vendor[] = SEEDS.map(([id, cat, name, area, state, km, rating, reviews, reply, base, freelancer], i) => {
+const ALL_VENDORS: Vendor[] = SEEDS.map(([id, cat, name, area, state, km, rating, reviews, reply, base, freelancer], i) => {
   const imgs = IMG[cat];
   const k = SEEDS.filter(s => s[1] === cat).findIndex(s => s[0] === id);
   return {
     id, cat, name, area, state, km, rating, reviews, reply, freelancer,
     img: imgs[k % imgs.length],
     gallery: [imgs[k % imgs.length], ...imgs.filter((_, j) => j !== k % imgs.length), FALLBACK_IMG[cat]],
+    lat: AREAS[area][0] + (k - 1) * 0.004, lng: AREAS[area][1] + (k - 1) * 0.004,
+    halal: cat === 'makeup' || cat === 'inai' ? k !== 2 : undefined,
+    capacity: [1500, 800, 300][k] ?? 500,
+    limited: i % 4 === 1 ? ['2027-02-14', '2027-02-28'] : ['2027-02-28'],
+    isNew: reviews < 25,
     since: ['Mei 2026', 'Jun 2026', 'Jul 2026', 'Ogo 2026'][i % 4],
     about: `${name} berpangkalan di ${area} dan melayani majlis di sekitar ${state}. Kami utamakan komunikasi jelas, harga telus dan kerja yang tepat masa.`,
     // first vendor per category keeps the default plan (seeded bookings use it); others vary
@@ -127,7 +148,13 @@ export const VENDORS: Vendor[] = SEEDS.map(([id, cat, name, area, state, km, rat
     sampleReviews: reviewsFor(i),
   };
 });
-export const vendorById = (id: number) => VENDORS.find(v => v.id === id);
+/** `km` = distance from Shah Alam (default); screens with an event use kmFrom(v, event.place) */
+ALL_VENDORS.forEach(v => { v.km = kmFrom(v); });
+/** a suspended listing, reachable only by old links (C-2.0 error state) */
+ALL_VENDORS.push({ ...ALL_VENDORS[0], id: 32, name: 'Studio Kilauan (digantung)', suspended: true, reviews: 12 });
+/** live listings only */
+export const VENDORS: Vendor[] = ALL_VENDORS.filter(v => !v.suspended);
+export const vendorById = (id: number) => ALL_VENDORS.find(v => v.id === id);
 export const fromPrice = (v: Vendor) => Math.min(...v.packages.map(p => p.price));
 
 export const REELS: Reel[] = [
