@@ -1,7 +1,7 @@
 import { useState, type ReactNode } from 'react';
 import { Briefcase, Cake, ChevronLeft, Heart, Minus, Plus, Sparkles, TriangleAlert, UtensilsCrossed } from 'lucide-react';
 import { CATS } from '../../data/mock';
-import { TODAY, addDays, useStore } from '../../store';
+import { TODAY, addDays } from '../../store';
 import { back, swap, useRoute } from '../../router';
 import { Button, cx } from '../../components/ui';
 import { SuggestStep, type Draft } from './SuggestStep';
@@ -16,12 +16,11 @@ const TYPES = [
 
 export default function WizardScreen() {
   const r = useRoute();
-  const { s } = useStore();
   const step = Math.min(4, Math.max(1, Number(r.q.get('step')) || 1));
   const go = (n: number) => swap('/majlis/baru?step=' + n);
   const [d, setD] = useState<Draft>(() => ({
-    type: 'Perkahwinan', date: s.event?.date ?? '', twoDays: false, day2: '', place: s.event?.place ?? '', pax: s.event?.pax ?? 300,
-    budget: s.event?.budget ?? 25000, cats: CATS.map(c => c.id), weights: Object.fromEntries(CATS.map(c => [c.id, c.split])), picks: {},
+    type: '', date: '', twoDays: false, day2: '', place: '', pax: 300,
+    budget: 25000, cats: CATS.map(c => c.id), weights: Object.fromEntries(CATS.map(c => [c.id, c.split])), picks: {},
   }));
   const set = (p: Partial<Draft>) => setD(o => ({ ...o, ...p }));
 
@@ -50,8 +49,8 @@ export default function WizardScreen() {
             <div role="radiogroup" aria-label="Jenis majlis" className="w-full flex flex-col gap-3">
               {TYPES.map(({ id, Icon, hint }) => (
                 <button key={id} role="radio" aria-checked={d.type === id} onClick={() => set({ type: id })}
-                  className={cx('w-full flex flex-row items-center gap-3 p-4 rounded-2xl text-left', d.type === id ? 'border-2 border-hijau bg-pucuk-50' : 'border border-line bg-white')}>
-                  <span className="w-11 h-11 shrink-0 rounded-full bg-pucuk-100 text-hijau flex items-center justify-center"><Icon className="w-5 h-5 shrink-0" /></span>
+                  className={cx('w-full flex flex-row items-center gap-3 p-4 rounded-2xl text-left transition-colors', d.type === id ? 'border-2 border-hijau bg-pucuk-50' : 'border border-line bg-white hover:border-line2')}>
+                  <span className={cx('w-11 h-11 shrink-0 rounded-full flex items-center justify-center', d.type === id ? 'bg-pucuk-100 text-hijau' : 'bg-kertas text-muted')}><Icon className="w-5 h-5 shrink-0" /></span>
                   <span className="flex-1 min-w-0 flex flex-col gap-0.5">
                     <span className="w-full text-[15px] font-semibold">{id}</span>
                     <span className="w-full text-sm text-muted">{hint}</span>
