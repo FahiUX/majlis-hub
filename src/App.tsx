@@ -1,36 +1,107 @@
-import { Layers, CheckCircle2, ArrowRight } from 'lucide-react';
+import { useEffect, useRef } from 'react';
+import { CircleCheckBig, Clapperboard, Home, MessageCircle, Search, CalendarHeart } from 'lucide-react';
+import { StoreProvider, useStore } from './store';
+import { nav, useRoute, type Route } from './router';
+import { cx } from './components/ui';
+import HomeScreen from './modules/home/HomeScreen';
+import SearchScreen from './modules/search/SearchScreen';
+import CompareScreen from './modules/search/CompareScreen';
+import CompareShare from './modules/search/CompareShare';
+import VendorScreen from './modules/vendor/VendorScreen';
+import BookingList from './modules/booking/BookingList';
+import BookingDetail from './modules/booking/BookingDetail';
+import PlannerScreen from './modules/planner/PlannerScreen';
+import WizardScreen from './modules/planner/WizardScreen';
+import TabungScreen from './modules/tabung/TabungScreen';
+import KadEditor from './modules/kad/KadEditor';
+import KadRsvpList from './modules/kad/KadRsvpList';
+import KadGuest from './modules/kad/KadGuest';
+import InspirasiScreen from './modules/inspirasi/InspirasiScreen';
+import MessagesScreen from './modules/chat/MessagesScreen';
+import ChatScreen from './modules/chat/ChatScreen';
+import LoginScreen from './modules/auth/LoginScreen';
 
-export default function App() {
+/** route table: first path part -> screen. Screens read their own params from the route. */
+function screenFor(r: Route) {
+  const [a, b] = r.parts;
+  switch (a) {
+    case undefined: return <HomeScreen />;
+    case 'cari': return <SearchScreen />;
+    case 'banding': return b === 'kongsi' ? <CompareShare /> : <CompareScreen />;
+    case 'vendor': return <VendorScreen id={Number(b)} />;
+    case 'tempahan': return b ? <BookingDetail id={b} /> : <BookingList />;
+    case 'majlis': return b === 'baru' ? <WizardScreen /> : <PlannerScreen />;
+    case 'tabung': return <TabungScreen />;
+    case 'kad': return b === 'rsvp' ? <KadRsvpList /> : <KadEditor />;
+    case 'jemputan': return <KadGuest />;
+    case 'inspirasi': return <InspirasiScreen />;
+    case 'mesej': return b ? <ChatScreen id={Number(b)} /> : <MessagesScreen />;
+    case 'masuk': return <LoginScreen />;
+    default: return <HomeScreen />;
+  }
+}
+
+const TABS: { to: string; match: (string | undefined)[]; label: string; Icon: typeof Home }[] = [
+  { to: '/', match: [undefined], label: 'Utama', Icon: Home },
+  { to: '/cari', match: ['cari', 'banding', 'vendor'], label: 'Cari', Icon: Search },
+  { to: '/inspirasi', match: ['inspirasi'], label: 'Inspirasi', Icon: Clapperboard },
+  { to: '/majlis', match: ['majlis', 'tabung', 'kad', 'tempahan'], label: 'Majlis Saya', Icon: CalendarHeart },
+  { to: '/mesej', match: ['mesej'], label: 'Mesej', Icon: MessageCircle },
+];
+/** full-screen flows hide the tab bar */
+const NO_NAV = ['jemputan', 'masuk', 'banding'];
+const hideNav = (r: Route) => NO_NAV.includes(r.parts[0]) || (r.parts[0] === 'majlis' && r.parts[1] === 'baru') || (r.parts[0] === 'mesej' && !!r.parts[1]) || (r.parts[0] === 'vendor') || (r.parts[0] === 'kad');
+
+function BottomNav({ r }: { r: Route }) {
+  const { s } = useStore();
+  const dark = r.parts[0] === 'inspirasi';
+  const unread = Object.keys(s.chats).length > 0;
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col justify-center items-center p-6">
-      <div className="max-w-xl w-full bg-white rounded-2xl border border-slate-200/80 p-8 shadow-sm space-y-6">
-        <div className="flex items-center justify-between">
-          <div className="w-12 h-12 rounded-xl bg-slate-900 text-white flex items-center justify-center">
-            <Layers className="w-6 h-6" strokeWidth={1.5} />
-          </div>
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider bg-emerald-50 text-emerald-700 border border-emerald-200">
-            <CheckCircle2 className="w-3.5 h-3.5" />
-            Agent Engine Ready
-          </span>
-        </div>
-
-        <div className="space-y-2">
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900">
-            FahiUX Multi-Agent Platform
-          </h1>
-          <p className="text-sm text-slate-600 leading-relaxed">
-            Your project baseline is certified. The Manager, Requirement Analyst, Design Architect, Pre-Flight Auditor, TSX Coder, and Figma AI agents are loaded and ready.
-          </p>
-        </div>
-
-        <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
-          <span className="text-xs text-slate-400 font-mono">React 19 · Vite 6 · Tailwind v4</span>
-          <button className="inline-flex items-center gap-2 px-4 py-2 bg-slate-900 text-white rounded-lg text-sm font-medium hover:bg-slate-800 transition">
-            Start Phase 1
-            <ArrowRight className="w-4 h-4" />
+    <nav aria-label="Navigasi utama" className={cx('w-full flex flex-row items-stretch shrink-0 border-t', dark ? 'bg-black border-white/10' : 'bg-white border-line')}>
+      {TABS.map(({ to, match, label, Icon }) => {
+        const on = match.includes(r.parts[0]);
+        return (
+          <button key={to} onClick={() => nav(to)} aria-current={on ? 'page' : undefined}
+            className={cx('flex-1 min-w-0 flex flex-col items-center gap-1 py-2 text-[11px] font-semibold', on ? (dark ? 'text-white' : 'text-hijau') : (dark ? 'text-white/60' : 'text-muted'))}>
+            <span className="relative w-6 h-6 shrink-0">
+              <Icon className="w-6 h-6 shrink-0" strokeWidth={on ? 2.25 : 1.75} />
+              {label === 'Mesej' && unread && <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-bahaya" />}
+            </span>
+            {label}
           </button>
-        </div>
+        );
+      })}
+    </nav>
+  );
+}
+
+function Toast() {
+  const { toastMsg } = useStore();
+  if (!toastMsg) return null;
+  return (
+    <div role="status" className="absolute left-4 right-4 bottom-24 z-[60] flex flex-row items-center gap-2 px-4 py-3 rounded-2xl bg-ink text-white text-sm font-medium shadow-float">
+      <CircleCheckBig className="w-4 h-4 shrink-0 text-pucuk-200" />
+      <span className="flex-1 min-w-0">{toastMsg}</span>
+    </div>
+  );
+}
+
+function Shell() {
+  const r = useRoute();
+  const main = useRef<HTMLElement>(null);
+  useEffect(() => { main.current?.scrollTo(0, 0); }, [r.path]);
+  return (
+    // phone-sized app; on desktop it sits centred like a device so stakeholders see the mobile layout
+    <div className="w-full h-dvh flex flex-row justify-center bg-[#E9E6DF]">
+      <div className="relative w-full sm:w-[430px] h-full flex flex-col bg-kertas overflow-hidden sm:shadow-float">
+        <main ref={main} className="w-full flex-1 min-h-0 flex flex-col overflow-y-auto overflow-x-hidden">{screenFor(r)}</main>
+        {!hideNav(r) && <BottomNav r={r} />}
+        <Toast />
       </div>
     </div>
   );
+}
+
+export default function App() {
+  return <StoreProvider><Shell /></StoreProvider>;
 }

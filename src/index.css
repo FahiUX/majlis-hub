@@ -1,11 +1,48 @@
 @import "tailwindcss";
 
-@layer base {
-  :root {
-    --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-  }
+/* Majlis Hub tokens: docs/BRAND_GUIDELINES.md v1.1 */
+@theme {
+  --font-sans: "Figtree", system-ui, -apple-system, sans-serif;
+  --font-display: "Fraunces", Georgia, serif;
 
-  body {
-    font-family: var(--font-sans);
-  }
+  --color-hijau: #0E5E4B;
+  --color-pekat: #0A4A3B;
+  --color-malam: #062E25;
+  --color-pucuk-50: #EFF7F3;
+  --color-pucuk-100: #DDF0E7;
+  --color-pucuk-200: #B9DFCD;
+  --color-emas: #B98A2E;
+  --color-emas-teks: #8A6420;
+  --color-emas-50: #F7F0E1;
+  --color-kertas: #FBFAF7;
+  --color-ink: #1B2420;
+  --color-body: #3C4743;
+  --color-muted: #67716D;
+  --color-line: #E4E2DC;
+  --color-line2: #CFCCC4;
+  --color-bahaya: #B42318;
+  --color-bahaya-50: #FEF3F2;
+  --color-amaran: #A15C07;
+  --color-amaran-50: #FEF6E7;
+  --color-skeleton: #EFEDE8;
+  --color-info: #1F5FA8;
+
+  --shadow-float: 0 0 0 1px rgba(27,36,32,.04), 0 2px 6px rgba(27,36,32,.05), 0 8px 24px rgba(27,36,32,.08);
 }
+
+@layer base {
+  html, body { background: var(--color-kertas); color: var(--color-ink); }
+  body { font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+  /* Mobile app: scroll without visible scrollbars (user rule 2026-11-10) */
+  * { scrollbar-width: none; }
+  *::-webkit-scrollbar { display: none; }
+  button { cursor: pointer; }
+  :focus-visible { outline: 2px solid var(--color-hijau); outline-offset: 2px; }
+  .num { font-variant-numeric: tabular-nums; }
+}
+
+@keyframes kenburns { from { transform: scale(1); } to { transform: scale(1.08); } }
+@keyframes pop { 0% { transform: scale(.4); opacity: 0; } 30% { transform: scale(1.15); opacity: 1; } 100% { transform: scale(1); opacity: 0; } }
+@keyframes shimmer { from { background-position: -200px 0; } to { background-position: 200px 0; } }
+.skeleton { background: linear-gradient(90deg, var(--color-skeleton) 0, var(--color-kertas) 50%, var(--color-skeleton) 100%); background-size: 400px 100%; animation: shimmer 1.2s infinite linear; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }

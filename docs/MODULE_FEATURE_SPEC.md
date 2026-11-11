@@ -1,7 +1,7 @@
 # MODULE & FEATURE SPECIFICATION MATRIX
 
 **Project Name:** Majlis Hub
-**Document Version:** 2.0 (v1.0 Gate 1 approved 2026-11-06 · v1.1 Inspirasi feed 2026-11-10 · **v2.0 stakeholder feedback 2026-11-11: talent-first categories, real search, budget slider, richer compare, package suggestion, digital kad kahwin + RSVP, booking deposit, Tabung savings plan.** Pending Gate 1 re-approval)
+**Document Version:** 2.0 (v1.0 Gate 1 approved 2026-11-06 · v1.1 Inspirasi feed 2026-11-10 · **v2.0 stakeholder feedback 2026-11-11: talent-first categories, real search, budget slider, richer compare, package suggestion, digital kad kahwin + RSVP, booking deposit, Tabung savings plan.** **Gate 1 v2.0 approved 2026-11-11** with Open Decisions 9–12 as recommended. **Gate 3 approved 2026-11-11**: Phase 5 front end started)
 **Build scope (Phase 5):** front end only. All data is mock, payments are simulated, nothing is sent or charged.
 **Target Platform:** Mobile-first responsive web app (Customer on phone; Vendor & Admin dashboards optimised for desktop, usable on phone)
 **Languages:** Bahasa Melayu + English (toggle, BM default)
