@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { Fragment, useEffect, useRef } from 'react';
 import { CircleCheckBig, Clapperboard, Home, MessageCircle, Search, CalendarHeart } from 'lucide-react';
 import { StoreProvider, useStore } from './store';
 import { nav, useRoute, type Route } from './router';
@@ -20,6 +20,7 @@ import InspirasiScreen from './modules/inspirasi/InspirasiScreen';
 import MessagesScreen from './modules/chat/MessagesScreen';
 import ChatScreen from './modules/chat/ChatScreen';
 import LoginScreen from './modules/auth/LoginScreen';
+import AccountScreen from './modules/auth/AccountScreen';
 
 /** route table: first path part -> screen. Screens read their own params from the route. */
 function screenFor(r: Route) {
@@ -37,6 +38,7 @@ function screenFor(r: Route) {
     case 'inspirasi': return <InspirasiScreen />;
     case 'mesej': return b ? <ChatScreen id={Number(b)} /> : <MessagesScreen />;
     case 'masuk': return <LoginScreen />;
+    case 'akaun': return <AccountScreen />;
     default: return <HomeScreen />;
   }
 }
@@ -94,7 +96,7 @@ function Shell() {
     // phone-sized app; on desktop it sits centred like a device so stakeholders see the mobile layout
     <div className="w-full h-dvh flex flex-row justify-center bg-[#E9E6DF]">
       <div className="relative w-full sm:w-[430px] h-full flex flex-col bg-kertas overflow-hidden sm:shadow-float">
-        <main ref={main} className="w-full flex-1 min-h-0 flex flex-col overflow-y-auto overflow-x-hidden">{screenFor(r)}</main>
+        <main ref={main} className="w-full flex-1 min-h-0 flex flex-col overflow-y-auto overflow-x-hidden"><Fragment key={r.path}>{screenFor(r)}</Fragment></main>
         {!hideNav(r) && <BottomNav r={r} />}
         <Toast />
       </div>

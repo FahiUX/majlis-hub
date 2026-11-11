@@ -106,13 +106,16 @@ export function EmptyState({ icon, title, body, action }: { icon: ReactNode; tit
 /* ---------- bottom sheet: scrim ink/48, 24px top corners, Esc + scrim close, focus moves in ---------- */
 export function Sheet({ open, onClose, title, children, footer }: { open: boolean; onClose: () => void; title: string; children: ReactNode; footer?: ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
+  // keep the latest onClose without re-running the effect, or every parent re-render steals focus from inputs (QA B1)
+  const closeRef = useRef(onClose);
+  closeRef.current = onClose;
   useEffect(() => {
     if (!open) return;
     ref.current?.focus();
-    const k = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
+    const k = (e: KeyboardEvent) => e.key === 'Escape' && closeRef.current();
     window.addEventListener('keydown', k);
     return () => window.removeEventListener('keydown', k);
-  }, [open, onClose]);
+  }, [open]);
   if (!open) return null;
   return (
     <div className="absolute inset-0 z-50 flex flex-col justify-end">

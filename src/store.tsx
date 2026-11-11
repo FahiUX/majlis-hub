@@ -37,6 +37,13 @@ const initial: AppState = {
     { id: 'B-1057', vendorId: 10, packageId: '10-1', date: '2027-02-14', total: 6500, note: '', status: 'deposit_due', createdAt: '2026-10-18', depositDeadline: '2026-11-21',
       payments: [{ label: 'Deposit', amount: 1950, due: '2026-11-21' }, { label: 'Bayaran kedua', amount: 2600, due: '2026-12-16' }, { label: 'Baki akhir', amount: 1950, due: '2027-02-07' }] },
     { id: 'B-1063', vendorId: 11, packageId: '11-1', date: '2027-02-14', total: 1800, note: 'Solekan akad pukul 6 pagi.', status: 'requested', createdAt: '2026-11-10', payments: [] },
+    // past and closed bookings, so every status can be demoed (PM review 2026-11-11)
+    { id: 'B-0988', vendorId: 29, packageId: '29-0', date: '2026-10-31', total: 450, note: 'Malam berinai di rumah, Shah Alam.', status: 'completed', createdAt: '2026-09-02', depositDeadline: '2026-10-02',
+      payments: [{ label: 'Deposit', amount: 225, due: '2026-10-02', paidAt: '2026-09-05' }, { label: 'Baki akhir', amount: 225, due: '2026-10-24', paidAt: '2026-10-24' }] },
+    { id: 'B-1049', vendorId: 23, packageId: '23-0', date: '2027-02-14', total: 900, note: '', status: 'requested', createdAt: '2026-11-07', payments: [] },
+    { id: 'B-1051', vendorId: 18, packageId: '18-1', date: '2027-02-14', total: 2500, note: 'Lagu masuk pengantin: Selamat Pengantin Baru.', status: 'declined', createdAt: '2026-11-01', payments: [], cancelReason: 'Penuh pada tarikh ini' },
+    { id: 'B-1038', vendorId: 26, packageId: '26-0', date: '2027-02-14', total: 800, note: '', status: 'deposit_due', createdAt: '2026-10-04', depositDeadline: '2026-11-05',
+      payments: [{ label: 'Deposit', amount: 240, due: '2026-11-05' }, { label: 'Bayaran kedua', amount: 320, due: '2026-12-16' }, { label: 'Baki akhir', amount: 240, due: '2027-02-07' }] },
   ],
   saved: [21],
   compare: [],
@@ -65,7 +72,7 @@ const initial: AppState = {
   recent: ['pelamin moden', 'mak andam bangi'],
 };
 
-const KEY = 'majlishub.v1';
+const KEY = 'majlishub.v2';
 const load = (): AppState => {
   try { const s = localStorage.getItem(KEY); return s ? { ...initial, ...JSON.parse(s) } : initial; } catch { return initial; }
 };

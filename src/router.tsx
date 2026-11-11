@@ -23,9 +23,11 @@ export function useRoute(): Route {
   return r;
 }
 
-/** in-app pushes, so Back on a page opened from a shared link goes to the fallback instead of leaving the app */
-let depth = 0;
-export const nav = (to: string) => { depth++; location.hash = to; };
-/** replace the current entry (tabs, filters) so Back skips it */
-export const swap = (to: string) => { history.replaceState(null, '', '#' + to); window.dispatchEvent(new HashChangeEvent('hashchange')); };
-export const back = (fallback = '/') => { if (depth > 0) { depth--; history.back(); } else { location.hash = fallback; } };
+/** in-app depth lives in history.state, so it survives browser/Android back (QA B5) */
+const depth = () => (history.state as { d?: number } | null)?.d ?? 0;
+const fire = () => window.dispatchEvent(new HashChangeEvent('hashchange'));
+export const nav = (to: string) => { history.pushState({ d: depth() + 1 }, '', '#' + to); fire(); };
+/** replace the current entry (tabs, filters, finished flows) so Back skips it */
+export const swap = (to: string) => { history.replaceState({ d: depth() }, '', '#' + to); fire(); };
+/** back inside the app; a page opened from a shared link goes to the fallback instead of leaving the app */
+export const back = (fallback = '/') => { if (depth() > 0) history.back(); else swap(fallback); };

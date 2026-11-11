@@ -34,11 +34,18 @@ const pkgs = (vid: number, base: number, items: [string, number, string[]][], pl
     depositPct: plan[0].pct, plan,
   }));
 
-const REVIEWS: Review[] = [
-  { name: 'Nurul Aina', rating: 5, date: 'Okt 2026', text: 'Sangat profesional dan tepat masa. Semua yang dijanjikan dalam pakej memang diberi, tiada caj tersembunyi.', reply: 'Terima kasih Aina, semoga berbahagia!' },
-  { name: 'Hafiz R.', rating: 5, date: 'Sep 2026', text: 'Mudah berurusan dari awal. Balas mesej cepat dan bagi cadangan yang masuk akal ikut bajet kami.' },
-  { name: 'Siti Mariam', rating: 4, date: 'Ogo 2026', text: 'Hasil cantik. Cuma lambat sikit sampai pada hari majlis sebab jalan sesak, tapi tetap sempat.' },
+/** review pool; each vendor gets its own 3 (no review is ever by the demo user) */
+const REVIEW_POOL: Review[] = [
+  { name: 'Hafiz R.', rating: 5, date: 'Okt 2026', text: 'Sangat profesional dan tepat masa. Semua yang dijanjikan dalam pakej memang diberi, tiada caj tersembunyi.', reply: 'Terima kasih Encik Hafiz, semoga berbahagia!' },
+  { name: 'Siti Mariam', rating: 4, date: 'Sep 2026', text: 'Hasil cantik. Cuma lambat sikit sampai pada hari majlis sebab jalan sesak, tapi tetap sempat.', reply: 'Maaf atas kelewatan, kami dah tambah masa perjalanan untuk majlis seterusnya.' },
+  { name: 'Liyana & Danial', rating: 5, date: 'Sep 2026', text: 'Mudah berurusan dari awal. Balas mesej cepat dan bagi cadangan yang masuk akal ikut bajet kami.' },
+  { name: 'Puan Rosnah', rating: 5, date: 'Ogo 2026', text: 'Anak saya puas hati sangat. Mak-mak saudara pun tanya nombor untuk majlis anak mereka.' },
+  { name: 'Azlan', rating: 4, date: 'Ogo 2026', text: 'Kerja kemas dan sopan. Harap boleh lebih awal hantar senarai keperluan pada pihak dewan.' },
+  { name: 'Nadia Hanim', rating: 5, date: 'Jul 2026', text: 'Berbaloi setiap sen. Bila ada perubahan saat akhir pun mereka tenang dan bantu selesaikan.', reply: 'Terima kasih Nadia! Seronok bekerjasama dengan keluarga anda.' },
+  { name: 'Khairul A.', rating: 3, date: 'Jul 2026', text: 'Okay secara keseluruhan, tapi komunikasi seminggu sebelum majlis agak perlahan.', reply: 'Terima kasih atas maklum balas. Kami kini ada pembantu khas untuk urusan minggu terakhir.' },
+  { name: 'Farah & Imran', rating: 5, date: 'Jun 2026', text: 'Tetamu puji banyak kali. Kami akan cadangkan pada kawan-kawan yang nak kahwin tahun depan.' },
 ];
+const reviewsFor = (i: number): Review[] => [0, 3, 5].map(k => REVIEW_POOL[(i + k) % REVIEW_POOL.length]);
 
 const busy = ['2027-02-13', '2027-02-21', '2027-03-06'];
 
@@ -105,7 +112,7 @@ export const VENDORS: Vendor[] = SEEDS.map(([id, cat, name, area, state, km, rat
     packages: pkgs(id, base, PKG_ITEMS[cat], cat === 'inai' || cat === 'mc' ? PLAN2 : PLAN3),
     cancelPolicy: 'Batal lebih 60 hari sebelum majlis: deposit dipulangkan 50%. Kurang 60 hari: deposit tidak dipulangkan.',
     busy: i % 3 === 0 ? [...busy, '2027-02-14'] : busy,
-    sampleReviews: REVIEWS,
+    sampleReviews: reviewsFor(i),
   };
 });
 export const vendorById = (id: number) => VENDORS.find(v => v.id === id);

@@ -91,6 +91,8 @@ export interface MajlisEvent {
   /** vendors picked from the suggested package (not booked yet) */
   shortlist: Partial<Record<CategoryId, number>>;
   cats: CategoryId[];
+  /** own checklist items, e.g. door gifts (C-3.3) */
+  custom?: { id: string; text: string; note: string; done: boolean }[];
 }
 
 export interface Invitation {
