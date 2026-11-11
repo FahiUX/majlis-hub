@@ -141,7 +141,7 @@ export function SuggestStep({ d, set }: { d: Draft; set: (p: Partial<Draft>) => 
       </div>
       )}
 
-      <div className="sticky bottom-0 w-full flex flex-col gap-3 p-4 rounded-2xl bg-white shadow-float">
+      <div className="sticky bottom-0 w-full flex flex-col gap-3 p-4 rounded-2xl bg-white border border-line shadow-float">
         <div className="w-full flex flex-row items-center gap-2 text-sm">
           <span className="flex-1 min-w-0 font-semibold">Jumlah {rm(total)}</span>
           <span className={cx('w-fit shrink-0 num', over ? 'text-amaran font-semibold' : 'text-muted')}>{over ? `Lebih ${rm(total - d.budget)}` : `Baki ${rm(d.budget - total)}`}</span>

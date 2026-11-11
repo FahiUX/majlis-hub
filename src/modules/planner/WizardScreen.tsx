@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from 'react';
-import { Briefcase, Cake, ChevronLeft, Heart, Minus, Plus, Sparkles, TriangleAlert, UtensilsCrossed } from 'lucide-react';
+import { Briefcase, Cake, ChevronLeft, Heart, Minus, Plus, Sparkles, TriangleAlert, UtensilsCrossed, X } from 'lucide-react';
 import { CATS } from '../../data/mock';
 import { TODAY, addDays } from '../../store';
 import { back, swap, useRoute } from '../../router';
@@ -30,16 +30,23 @@ export default function WizardScreen() {
 
   return (
     <div className="w-full flex-1 flex flex-col">
-      <header className="sticky top-0 z-20 w-full flex flex-col gap-2 px-2 py-2 bg-kertas/95 backdrop-blur">
-        <div className="w-full flex flex-row items-center gap-2">
-          <button aria-label="Kembali" onClick={() => (step > 1 ? go(step - 1) : back('/majlis'))} className="w-11 h-11 shrink-0 rounded-full flex items-center justify-center hover:bg-pucuk-50">
-            <ChevronLeft className="w-6 h-6 shrink-0" />
-          </button>
-          <h1 className="flex-1 min-w-0 text-[17px] leading-6 font-semibold">Majlis baru</h1>
-          <span className="w-fit shrink-0 text-sm text-muted num">Langkah {step}/4</span>
+      <header className="sticky top-0 z-20 w-full flex flex-col gap-3 px-5 py-3 bg-kertas/95 backdrop-blur border-b border-line">
+        <div className="w-full flex flex-row items-center justify-between">
+          <div className="flex-1 min-w-0 flex flex-row items-center gap-1 -ml-2">
+            <button aria-label="Kembali" onClick={() => (step > 1 ? go(step - 1) : back('/majlis'))} className="w-10 h-10 shrink-0 rounded-full flex items-center justify-center hover:bg-pucuk-50">
+              <ChevronLeft className="w-6 h-6 shrink-0" />
+            </button>
+            <h1 className="flex-1 min-w-0 text-[17px] leading-6 font-semibold truncate">Majlis baru</h1>
+          </div>
+          <div className="w-fit flex flex-row items-center gap-2 -mr-2">
+            <span className="text-xs font-semibold text-muted num whitespace-nowrap">Langkah {step}/4</span>
+            <button aria-label="Tutup" onClick={() => back('/majlis')} className="w-10 h-10 shrink-0 rounded-full flex items-center justify-center text-muted hover:bg-pucuk-50 hover:text-ink">
+              <X className="w-5 h-5 shrink-0" />
+            </button>
+          </div>
         </div>
         <div className="w-full flex flex-row gap-1.5" aria-hidden="true">
-          {[1, 2, 3, 4].map(n => <span key={n} className={cx('flex-1 min-w-0 h-1 rounded-full', n <= step ? 'bg-hijau' : 'bg-line')} />)}
+          {[1, 2, 3, 4].map(n => <span key={n} className={cx('flex-1 min-w-0 h-1.5 rounded-full', n <= step ? 'bg-hijau' : 'bg-line')} />)}
         </div>
       </header>
 
@@ -104,7 +111,7 @@ export default function WizardScreen() {
       </div>
 
       {step < 4 && (
-        <div className="sticky bottom-0 w-full flex flex-row p-4 bg-white shadow-float">
+        <div className="sticky bottom-0 w-full flex flex-row px-5 py-4 bg-white border-t border-line shadow-float">
           <Button block disabled={!ok} onClick={() => go(step + 1)}>Seterusnya</Button>
         </div>
       )}
