@@ -44,7 +44,7 @@ function screenFor(r: Route) {
 }
 
 const TABS: { to: string; match: (string | undefined)[]; label: string; Icon: typeof Home }[] = [
-  { to: '/', match: [undefined], label: 'Utama', Icon: Home },
+  { to: '/', match: [undefined, 'home'], label: 'Utama', Icon: Home },
   { to: '/cari', match: ['cari', 'banding', 'vendor'], label: 'Cari', Icon: Search },
   { to: '/inspirasi', match: ['inspirasi'], label: 'Inspirasi', Icon: Clapperboard },
   { to: '/majlis', match: ['majlis', 'tabung', 'kad', 'tempahan'], label: 'Majlis Saya', Icon: CalendarHeart },
