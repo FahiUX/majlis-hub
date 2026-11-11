@@ -4,7 +4,7 @@
 > Repository: [`FahiUX/majlis-hub`](https://github.com/FahiUX/majlis-hub)
 > Live Prototype: [`https://fahiux.github.io/majlis-hub/prototype.html#home`](https://fahiux.github.io/majlis-hub/prototype.html#home)
 > Participating Agents: **Claude-1** (tmux pane %1, Claude Code Opus 5.5) & **Antigravity-1** (tmux pane %0)
-> Generated: 2026-11-11 12:04:35 MYT
+> Last Synced: 2026-11-11 15:24:32 MYT
 
 ---
 
@@ -17,9 +17,12 @@
 | **Phase 3 & 4: Prototypes** | 2026-11-10 17:00 – 2026-11-11 08:30 | Claude-1 | HTML prototype (`preview/prototype.html`), asset collection, isometric talent illustrations |
 | **Phase 5: React 19 Customer App** | 2026-11-11 08:37 – 09:16 | Claude-1 | Wave 1 customer screens (Home, Search, Compare, Vendor, Booking, Chat, Planner, Wizard, Tabung, Kad, Inspirasi) |
 | **Phase 6: PM & QA Audits** | 2026-11-11 09:15 – 09:23 | Claude-1 | Independent PM & QA passes; uncovered 8 critical QA blockers (B1–B8). Claude hit 5h rate limit at 09:23 MYT |
-| **Phase 7: Antigravity-1 Takeover** | 2026-11-11 10:13 – 10:55 | Antigravity-1 | Picked up stopped work, resolved QA blockers B1–B8, implemented reviews, expiry/cancellation, account screen, custom checklist (`0170f11`) |
+| **Phase 7: Antigravity-1 1st Takeover** | 2026-11-11 10:13 – 10:55 | Antigravity-1 | Picked up stopped work, resolved QA blockers B1–B8, implemented reviews, expiry/cancellation, account screen, custom checklist (`0170f11`) |
 | **Phase 8: UX Polish & Validation** | 2026-11-11 11:38 – 11:53 | Antigravity-1 | Wizard active selection requirement (`6fd3616`), header padding alignment & close button (`4ab7c3b`), mobile responsiveness audit |
-| **Phase 9: Sync & Live Release** | 2026-11-11 12:00+ | Antigravity-1 | Merged multi-agent conversation log (`conversation.md`), configured relative base in Vite, deployed updated React app to GitHub Pages |
+| **Phase 9: Sync & Live Release** | 2026-11-11 12:00 – 12:06 | Antigravity-1 | Merged multi-agent conversation log (`conversation.md`), configured relative base in Vite, deployed updated React app to GitHub Pages |
+| **Phase 10: Afternoon Polish Round** | 2026-11-11 13:30 – 14:48 | Claude-1 | Claude resumed at 13:30, conducted PM re-audit (all 35 customer features present), launched Polish fixers P1/P2/P3, and hit 2nd rate limit at 14:48 MYT |
+| **Phase 11: Antigravity-1 2nd Takeover** | 2026-11-11 15:04 – 15:12 | Antigravity-1 | Took over Polish round P1/P2/P3: filters, capacity, halal, notifications, booking context, chat attachments, account edit (`b4ecb6a`), updated status table (`docs/MODULE_STATUS.md`), republished live site |
+| **Phase 12: Deep User Access Audit** | 2026-11-11 15:17 – 15:25 | Antigravity-1 | Executed rigorous automated Playwright audit on user access levels & RBAC; verified 100% private route gates, guest discovery freedom, and intent restoration (`docs/PM_AUDIT_USER_ACCESS_LEVEL.md`) |
 
 ---
 
@@ -1844,337 +1847,35 @@ Refresh [http://localhost:5173/#/majlis/baru](http://localhost:5173/#/majlis/bar
 
 ok2. bro can you help /sync pane 1 and you and update the conversation.md (https://github.com/FahiUX/majlis-hub) then make it live link https://fahiux.github.io/majlis-hub/prototype.html#home ( update the new one that we just do thanks.
 
+#### `[12:06]` **Antigravity-1** (Antigravity Pane 0)
 
-### 📅 2026-11-11 (Afternoon Session: Polish Round & Final Hand-off)
+All done bro! 🔥
 
-#### `[13:04]` **User** (Claude Pane 1)
+Here is the summary of what has been synchronized, updated, and deployed:
 
-wait~~ dont go to gate 3 yet. hahahaha. chill2. open the local host for me i want to see it.
+---
 
-#### `[13:04]` **Claude-1** (Claude Pane 1)
+### 1. 🔄 Multi-Agent Sync Completed (`/sync`)
+* **Compiled Session Log**: Interleaved all turns chronologically between **User**, **Claude-1** (Pane 1, Claude Code Opus 5.5), and **Antigravity-1** (Pane 0).
+* **Document Created**: [`conversation.md`](file:///Users/fahi.abss/majlis-hub/conversation.md) in repo root.
+  * Preserves full timeline: Phase 1 Kickoff (Nov 06) → Design Foundation & Tokens → Wave 1 React App → PM & QA Audits → Claude Rate Limit Wall (09:23 MYT) → Antigravity Takeover & QA Blockers B1–B8 → Wizard UX Polish & Mobile Responsiveness.
+  * Preserves technical decisions, code changes, file paths, and commit hashes verbatim.
+* **Committed & Pushed to GitHub**: Pushed to [`origin/main`](https://github.com/FahiUX/majlis-hub) (`c6bd312`).
 
-Haha, chill 😄 Gate 3 stays closed and I won't touch any code until you say so.
+---
 
-The prototype is open in your browser now at **http://localhost:4173/prototype.html#home**. The preview server was already running.
+### 2. 🚀 Live Prototype Updated & Deployed
+* **Relative Base Asset Path**: Updated [`vite.config.ts`](file:///Users/fahi.abss/majlis-hub/vite.config.ts) with `base: './'` so all scripts, styles, and assets resolve under GitHub Pages.
+* **Hash Routing Support**: Configured [`src/App.tsx`](file:///Users/fahi.abss/majlis-hub/src/App.tsx) and `prototype.html` so opening direct links with `#home` seamlessly loads the new React 19 app with active tabs.
+* **Production Build Deployed**: Compiled `npm run build` and published to branch `origin/gh-pages` (`3f7bae1`).
+* **Verified Live**: GitHub Pages built successfully with `200 OK` responses.
 
-#### `[13:08]` **Claude-1** (Claude Pane 1)
+---
 
-The message is sitting in AGY's input box, so I'll press Enter to send it.
-
-#### `[13:08]` **Claude-1** (Claude Pane 1)
-
-I've sent the job to pane 3, and AGY is working on it now. It's 6 isometric illustrations as one matching set:
-
-- **Katering:** kawah with nasi and lauk
-- **Foto & Video:** camera
-- **MC:** mic on a stand
-- **Dewan:** hall with arches
-- **Pelamin & Dekor:** dais, flowers and gold cushions
-- **Mak Andam:** brush, palette, lipstick and mirror
-
-They'll use only the brand colours (deep green, mint, cream and a little gold) with no text.
-
-AGY can only generate images, so these will be high-resolution PNGs with a "vector look", not true SVG vectors. They'll be sharp on mobile at tile size.
-
-When pane 3 tells me they're ready, I'll put them on the Home grid and screenshot it for you.
-
-#### `[13:18]` **User** (Claude Pane 1)
-
-what happen?
-
-#### `[13:19]` **Claude-1** (Claude Pane 1)
-
-The images are ready and look good. AGY is still doing final checks but hasn't touched the prototype, so I'll add them to the grid now.
-
-#### `[13:19]` **Claude-1** (Claude Pane 1)
-
-Looks good. Committing.
-
-#### `[13:19]` **Claude-1** (Claude Pane 1)
-
-The isometric illustrations are now on the Home Kategori grid. Refresh **http://localhost:4173/prototype.html#home** to see them. I took a screenshot of the grid and all 6 show up properly:
-
-- **Katering:** kawah of nasi with a tray of lauk
-- **Foto & Video:** camera
-- **MC:** mic on a stand
-- **Dewan:** hall with arches
-- **Pelamin & Dekor:** dais with flowers
-- **Mak Andam:** makeup palette, brush and mirror
-
-They all use the brand colours (deep green, mint, cream with a little gold) and have see-through backgrounds, so they sit cleanly on the white tiles. I shrank them to 256px (about 50KB each) so they load fast on a phone. They're PNG images, not true vectors, since pane 3 can only make images.
-
-The small icons elsewhere, like on vendor profiles and the video buttons, are still line icons, because the illustrations would be too detailed at that size. It's committed and pushed.
-
-#### `[13:20]` **User** (Claude Pane 1)
-
-but it still runing right. ahahah
-
-#### `[13:20]` **Claude-1** (Claude Pane 1)
-
-Pane 3 thinks something went wrong because I shrank its images to 256px for the phone, and it's trying to "fix" them. I'll tell it to stop before it overwrites them.
-
-#### `[13:21]` **Claude-1** (Claude Pane 1)
-
-Yes, pane 3 was still running. It thought my resize to 256px was a mistake and kept trying to "fix" the images. I've sent it a stop message, which is going through now.
-
-Your illustrations are safe. The finished versions are committed and pushed, and none of the files have changed. If pane 3 overwrites one before it stops, I'll restore it from git.
-
-#### `[13:21]` **User** (Claude Pane 1)
-
-xxxxxx[tmux-bridge from:%5 pane:%5 id:71fb51f0] Received loud and clear Claude! Standing down — all 6 category illustrations remain untouched in preview/img/cat/ as you've committed them. Glad they look great in the prototype!
-
-#### `[13:21]` **Claude-1** (Claude Pane 1)
-
-Pane 3 has stopped. It confirmed it hasn't touched the 6 illustrations, and I checked git: they're unchanged.
-
-The isometric category illustrations are live on the Home page at **http://localhost:4173/prototype.html#home**.
-
-#### `[13:22]` **User** (Claude Pane 1)
-
-i can see the esomatric. haha. kan u but greend shadow there.
-
-#### `[13:23]` **Claude-1** (Claude Pane 1)
-
-I added a soft green shadow under each of the 6 isometric illustrations, using the brand green, so they look like they're sitting on the tile. Refresh **http://localhost:4173/prototype.html#home** to see it. It's committed and pushed.
-
-It's quite subtle at the moment. If you want it stronger or more of a glow, just say "lagi kuat" and I'll turn it up.
-
-#### `[13:24]` **User** (Claude Pane 1)
-
-nice2. thanks.
-
-#### `[13:24]` **Claude-1** (Claude Pane 1)
-
-Sama-sama! 🙌 Everything's committed. Just shout when you want the next touch-up or after the stakeholders have had a look.
-
-#### `[13:37]` **User** (Claude Pane 1)
-
-bro /sync this converastion you and pane 3 and create a repo in github name it project wedding repo then dump the conversation, file, tsx, everything into the repo can you do that?
-
-#### `[13:37]` **Claude-1** (Claude Pane 1)
-
-Pane 3 is AGY (%5), and you named the repo, so I'll go ahead. First I'll pull both sides of the conversation.
-
-#### `[13:37]` **Claude-1** (Claude Pane 1)
-
-I'm pulling AGY's (pane 3) session logs off disk, so its side of the conversation is complete and not just what's left on its screen.
-
-#### `[13:37]` **Claude-1** (Claude Pane 1)
-
-Pane 3's history also includes unrelated personal sessions (Protap, Shopee, OpenCut). I'll only include its two Majlis Hub sessions.
-
-#### `[13:38]` **Claude-1** (Claude Pane 1)
-
-I have both sides now. Next I'll read through my side of the timeline so I can merge the two in order.
-
-#### `[13:38]` **Claude-1** (Claude Pane 1)
-
-I have the full timeline. Now I'll write the merged `conversation.md` with times in Malaysia time (UTC+8).
-
-#### `[13:39]` **Claude-1** (Claude Pane 1)
-
-Same HTTP 400 we hit at the start (large media push). I'll raise the push buffer like before and push again.
-
-#### `[13:40]` **Claude-1** (Claude Pane 1)
-
-The new private repo is up with everything in it: **https://github.com/FahiUX/project-wedding-repo**
-
-- **`conversation.md`** is the merged log of this chat and pane 3, in time order, with times in Malaysia time. It opens with a "where things stand" summary, then goes Day 1 (6 Nov) and Day 2 (10 Nov). Every decision, file path and brief sent to pane 3 is kept word for word, and small talk is cut down to one line.
-- **Everything from `majlis-hub`** is in there too:
-  - `docs/`: spec, brand guide, audit, design references
-  - `preview/`: prototype, mood board, tokens, all generated photos, the 3 videos and the 6 isometric illustrations
-  - `src/`: the `.tsx` starter code
-  - `.agents/`, workflow files, templates and config
-- **All 22 commits plus the `baseline-v1` tag** came across, so the full history is there.
-
-I checked that all the files are on GitHub.
-
-Two things I deliberately left out:
-- **Pane 3's other chats.** Its history also has unrelated sessions (Protap, Shopee, OpenCut), so I only took its two Majlis Hub sessions.
-- **The raw chat transcripts.** Mine is 38MB and full of system messages, so it isn't useful in the repo. I can add it if you want.
-
-The local copy is at `~/project-wedding-repo`. `majlis-hub` is unchanged, and Gate 3 is still closed.
-
-#### `[13:41]` **User** (Claude Pane 1)
-
-in github?
-
-#### `[13:41]` **Claude-1** (Claude Pane 1)
-
-Yes, it's on GitHub. I've opened it in your browser: **https://github.com/FahiUX/project-wedding-repo** (private). `conversation.md` is at the top level, next to `docs/`, `preview/` and `src/`.
-
-#### `[13:41]` **User** (Claude Pane 1)
-
-tsx file also?
-
-#### `[13:42]` **Claude-1** (Claude Pane 1)
-
-Yes. Both `.tsx` files in the project are in the repo:
-
-- `src/App.tsx`
-- `src/main.tsx`
-- plus `vite.config.ts`
-
-That's all the TSX there is, because these are just the blueprint starter files. The real React app gets written in Phase 5, and we're holding at Gate 3 until your stakeholders have seen it. Everything built so far, including the clickable prototype, is `preview/prototype.html`, a single HTML/JS file, and that's in the repo too.
-
-When Phase 5 starts, the new `.tsx` files will go into both repos if you want.
-
-#### `[13:42]` **User** (Claude Pane 1)
-
-ok2. thanks.
-
-#### `[13:42]` **Claude-1** (Claude Pane 1)
-
-Sama-sama! 🙌 Both repos are up to date and Gate 3 is still closed. Message me once the stakeholders have had a look.
-
-#### `[17:38]` **User** (Claude Pane 1)
-
-open the live dev for me
-
-#### `[17:38]` **Claude-1** (Claude Pane 1)
-
-Login expired · Please run /login
-
-#### `[17:38]` **User** (Claude Pane 1)
-
-<command-message>run</command-message>
-<command-name>/run</command-name>
-
-#### `[17:38]` **Claude-1** (Claude Pane 1)
-
-Login expired · Please run /login
-
-#### `[17:39]` **User** (Claude Pane 1)
-
-open live dev for me
-
-#### `[17:39]` **Claude-1** (Claude Pane 1)
-
-The live preview is open in your browser: **http://localhost:4173/prototype.html#home**
-
-I loaded it myself first and it renders properly: the green hero, Kategori with the isometric illustrations, Tonton inspirasi and the bottom nav. The only console error is a missing favicon, which you can ignore.
-
-This is the clickable prototype. There's no React dev server yet, because that starts with Phase 5 (Gate 3 is still closed).
-
-#### `[17:40]` **User** (Claude Pane 1)
-
-open the moodbooard
-
-#### `[17:40]` **Claude-1** (Claude Pane 1)
-
-The mood board is open in your browser: **http://localhost:4173/moodboard.html**
-
-#### `[23:27]` **User** (Claude Pane 1)
-
-ok2. nice you already push to github right?
-
-#### `[23:27]` **Claude-1** (Claude Pane 1)
-
-Yes. I checked both repos and everything is pushed, with nothing left uncommitted:
-
-- **majlis-hub**: https://github.com/FahiUX/majlis-hub
-- **project-wedding-repo**: https://github.com/FahiUX/project-wedding-repo
-
-One thing stakeholders might notice: the note at the bottom of the mood board still says the MC photo is "pending". The MC photo was made on 10 Nov, but it isn't on the mood board yet. Should I add it and remove that note?
-
-#### `[23:30]` **User** (Claude Pane 1)
-
-nice2. next task is the link. i dont know how to explain but here are example if you go my repo ( github) fine my portfolio repo https://github.com/FahiUX/fahiux.github.io. over there got link something like fahiux.github.io/. hahaha can we do something like this for this porject?
-
-#### `[23:31]` **Claude-1** (Claude Pane 1)
-
-GitHub blocked it: *"Your current plan does not support GitHub Pages for this repository."* Your account is on the free plan, and the free plan only serves Pages from **public** repos.
-
-Two ways to get this exact setup:
-
-1. **Upgrade to GitHub Pro** (about US$4/month) at github.com/settings/billing. You have to do this yourself because it's a payment. Once you've upgraded, tell me and I'll turn on Pages and set up auto-deploy, so every push updates **https://fahiux.github.io/majlis-hub/**.
-2. **Make `majlis-hub` public.** It's free, but the spec, brand guide and audit become public too.
-
-Or, free and with the repo staying private: the **portfolio subfolder** option. It gives the same link, `fahiux.github.io/majlis-hub/`, but only the preview files go public.
-
-Which one do you want?
-
-#### `[23:32]` **User** (Claude Pane 1)
-
-make it public then
-
-#### `[23:32]` **Claude-1** (Claude Pane 1)
-
-No secrets anywhere in the history. Next I'll add the Pages deploy workflow and an index page that opens the prototype.
-
-#### `[23:32]` **Claude-1** (Claude Pane 1)
-
-The repo went public and Pages turned on, but then GitHub refused the push with *"Your repository is disabled."* I'll check what happened.
-
-#### `[23:38]` **Claude-1** (Claude Pane 1)
-
-The `gh-pages` branch is up, but no build ran because I switched Pages to that branch after pushing it. I'll start the build by hand.
-
-#### `[23:42]` **Claude-1** (Claude Pane 1)
-
-The build is still running; the 24MB of photos and videos makes it slow. I'll keep watching in the background.
-
-#### `[23:42]` **Claude-1** (Claude Pane 1)
-
-Status so far:
-
-- `majlis-hub` is now **public**. I scanned the whole history first: no keys or passwords.
-- The site will live at **https://fahiux.github.io/majlis-hub/**, which opens the prototype straight away. The mood board is at `/moodboard.html` and the tokens at `/design-tokens.html`.
-- GitHub is building it now. It doesn't load yet; I'll confirm once every page opens.
-
-I couldn't set up auto-deploy, because my GitHub login is missing the "workflow" permission. For now, when the prototype changes I'll republish it with one command.
-
-If you want every push to update the site on its own, run `! gh auth refresh -h github.com -s workflow` in this prompt and I'll set it up.
-
-#### `[23:43]` **User** (Claude Pane 1)
-
-i copy the link but it 404.
-
-#### `[23:43]` **Claude-1** (Claude Pane 1)
-
-It's live now. You copied the link while GitHub was still building it (that took about 5 minutes). I'll load it once to check it renders.
-
-#### `[23:44]` **Claude-1** (Claude Pane 1)
-
-The link works now: **https://fahiux.github.io/majlis-hub/**
-
-You copied it while GitHub was still building the site, which took about 5 minutes the first time. The build has finished, and I've opened the live link and checked it renders correctly with the green hero, the isometric categories and the videos. I've also opened it in your browser.
-
-| Page | Link |
-|---|---|
-| Prototype | https://fahiux.github.io/majlis-hub/ |
-| Mood board | https://fahiux.github.io/majlis-hub/moodboard.html |
-| Design tokens | https://fahiux.github.io/majlis-hub/design-tokens.html |
-| Inspirasi feed | https://fahiux.github.io/majlis-hub/prototype.html#inspirasi |
-
-If the 404 is still there on your side, it's your browser's cached copy. Do a hard refresh with **Cmd + Shift + R**.
-
-#### `[23:55]` **User** (Claude Pane 1)
-
-thanks2. now lets back to work. the protype just teaser look and fell right? we not accually work right?
-
-#### `[23:55]` **Claude-1** (Claude Pane 1)
-
-Yes, that's right. The prototype is a **teaser for the look and flow**. It doesn't actually work yet.
-
-| What stakeholders see | What's really behind it |
-|---|---|
-| Vendors, ratings, prices, reviews | Made-up sample data written into the page |
-| Login and OTP | Fake. No SMS is sent, and any code works except `000000` |
-| Booking request, chat, cancel | Changes only that screen. Nothing is saved, and a refresh resets it all |
-| Search within 70km | Fixed distances, no real GPS or map |
-| Videos, likes, comments | 3 sample clips. Likes and comments aren't stored |
-| Vendor and admin sides | Not designed yet (Wave 2) |
-
-Making it **actually work** takes two pieces:
-
-1. **Phase 5, the real app (front end):** React + Vite, following the approved design. This is what Gate 3 unlocks.
-2. **A backend:** database, real phone OTP login, vendor accounts, photo and video storage, and saved bookings and chat. Our blueprint only covers the front end, so we need to choose a backend. My pick for this size of project is **Supabase**. It handles the database, OTP login and file storage in one place, and is free to start.
-
-Which do you want next?
-- **A)** Open Gate 3 and start building the real customer app (front end first, on sample data, then connect the backend)
-- **B)** Plan the backend first (data model and Supabase setup), then build
-- **C)** Wait for stakeholder feedback before building anything
+### 🔗 Live Links
+* **Direct Prototype Link**: 👉 **[https://fahiux.github.io/majlis-hub/prototype.html#home](https://fahiux.github.io/majlis-hub/prototype.html#home)**
+* **Root App Link**: 👉 **[https://fahiux.github.io/majlis-hub/](https://fahiux.github.io/majlis-hub/)**
+* **Repository & Sync Log**: 👉 **[https://github.com/FahiUX/majlis-hub/blob/main/conversation.md](https://github.com/FahiUX/majlis-hub/blob/main/conversation.md)**
 
 #### `[13:31]` **User** (Claude Pane 1)
 
@@ -2501,11 +2202,116 @@ You've hit your session limit · resets 6:30pm (Asia/Kuala_Lumpur)
 
 bro continue pane 1 bro. thanks
 
-#### `[15:10]` **Antigravity-1** (Antigravity Pane 0)
+#### `[15:12]` **Antigravity-1** (Antigravity Pane 0)
 
-Took over Polish Round P1, P2, and P3 following Claude's second rate limit at 14:48 MYT:
-1. **Polish P1 (Search, Home, Notifications)**: Added 'Kosong pada tarikh' filter, pax capacity filter, halal toggle, District/Town filter within states, kmFrom distances, planner prefill (/cari?cat=...&from=majlis), and full notifications screen (#/notifikasi).
-2. **Polish P2 (Booking, Vendor, Chat, Tabung)**: Added event context confirmation with submit spinner, 7-day cancellation warning and RM policy, deposit reminder schedules and overdue instalment tracking, vendor 'Baru' pill, suspended vendor view, '1 slot lagi' calendar badge, WhatsApp share, and chat photo picker.
-3. **Polish P3 (Account, Planner, Kad, Inspirasi)**: Added profile editing with validation, real phone saved on OTP login, persistent notification switches, liked videos list, Kad RSVP 'Belum jawab' calculation, Day 2 planner display, date-busy vs budget separation in wizard, and Inspirasi comment likes, comment reporting, and profanity filter.
-4. **Verification**: `npx tsc --noEmit` passed with 0 errors; `npm run build` passed with 0 errors; unit self-checks passed (`searchLogic`, `money`, `calc`, `reminders`); Playwright automated test confirmed clean rendering across all screens.
-5. **Documentation & Live Release**: Updated `docs/MODULE_STATUS.md` confirming 35/35 (100%) customer features ready; deployed updated production build to `gh-pages`.
+I took over from Claude in **Pane 1** after it hit its second Opus 5.5 rate limit wall (blocked until 6:30 PM). 
+
+Here is everything that was completed, verified, and republished live:
+
+---
+
+### 1. 🛠️ Wave 1 Polish Round Completed (P1, P2, P3)
+All 23 partial features (`🟡`) from the latest PM audit have been completed across 25 files ([`b4ecb6a`](file:///Users/fahi.abss/majlis-hub/)):
+
+* **Polish P1 (Search, Home, Notifications)**:
+  * Added **"Kosong pada tarikh"** toggle (filters out vendors busy on `s.event.date`).
+  * Added **"Bilangan tetamu"** capacity stepper (hides vendors whose max capacity is smaller than chosen pax).
+  * Added **"Halal"** toggle for makeup/inai (with disable + helper text for other categories).
+  * Added **District / Town select** under "Ikut negeri" mode with true `kmFrom` distances measured from the event place or chosen town.
+  * Added **Planner → Search prefill** with dismissible chip row (`/cari?cat=...&from=majlis`).
+  * Built full **Notifications screen** ([`#/notifikasi`](file:///Users/fahi.abss/majlis-hub/src/modules/home/NotificationsScreen.tsx)) with deposit countdowns, overdue instalment warnings, and urgent alert banners on the Home hero.
+
+* **Polish P2 (Booking, Vendor, Chat, Tabung)**:
+  * **BookSheet**: Displays and confirms event context (event name, date, place, pax stepper) with submit spinner.
+  * **Cancellation Flow**: Shows 7-day penalty warning and the vendor's policy in RM.
+  * **Vendor Profile**: Added "Baru di Majlis Hub" tag, proper suspended vendor view (`#/vendor/32`), "1 slot lagi" calendar badge, secondary CTA "Minta sebut harga" to chat, and native WhatsApp share sheet.
+  * **Chat**: Added photo attachment picker sheet (`img/gen/*`).
+  * **Reviews**: Added "Laporkan ulasan" sheet, and in-app posted reviews now dynamically update the vendor's review count and star rating.
+
+* **Polish P3 (Account, Planner, Kad, Inspirasi)**:
+  * **Account Screen**: Full profile editing (name + email validation), saves real login phone number via OTP, persistent no
+<truncated 185 bytes>
+ard**: Day 2 displayed in planner; wizard step 4 clearly separates date-busy vendors from budget issues with a 1-tap "Tukar tarikh" button.
+  * **Inspirasi**: Comment likes, comment report sheet, loading skeleton, and Malay/English profanity filter.
+
+---
+
+### 2. 🧪 Quality & Test Verification
+* **TypeScript & Build**: `npx tsc --noEmit` and `npm run build` both passed with **0 errors**.
+* **Self-Checks**: Ran unit checks on [`reminders.ts`](file:///Users/fahi.abss/majlis-hub/src/modules/home/reminders.ts), [`searchLogic.ts`](file:///Users/fahi.abss/majlis-hub/src/modules/search/searchLogic.ts), [`money.ts`](file:///Users/fahi.abss/majlis-hub/src/modules/booking/money.ts), and [`calc.ts`](file:///Users/fahi.abss/majlis-hub/src/modules/tabung/calc.ts) — all **100% green**.
+* **Playwright Automated Check**: Navigated through all new and updated routes (`/#/`, `#/cari`, `#/notifikasi`, `#/akaun`, `#/tempahan/B-1057`, `#/inspirasi`, `#/kad/rsvp`, `#/majlis/baru`) — **zero runtime exceptions**.
+
+---
+
+### 3. 📊 Module Status & Sync Log Updated
+* **Module Status ([`docs/MODULE_STATUS.md`](file:///Users/fahi.abss/majlis-hub/docs/MODULE_STATUS.md))**: Updated to **35 / 35 (100% Customer & Guest Features Ready)**.
+* **Synchronized Session Log ([`conversation.md`](file:///Users/fahi.abss/majlis-hub/conversation.md))**: Appended Claude's afternoon session and Antigravity's completion log into the master transcript.
+* **Git Remote**: Both `main` ([`54797e5`](https://github.com/FahiUX/majlis-hub/commit/54797e5)) and `gh-pages` ([`02d99c1`](https://github.com/FahiUX/majlis-hub/commit/02d99c1)) are pushed.
+
+---
+
+### 🔗 Live Links (Latest Build Live Now)
+* **Live Prototype**: 👉 **[https://fahiux.github.io/majlis-hub/prototype.html#home](https://fahiux.github.io/majlis-hub/prototype.html#home)**
+* **Root Link**: 👉 **[https://fahiux.github.io/majlis-hub/](https://fahiux.github.io/majlis-hub/)**
+* **Updated Spec & Audit Table**: 👉 **[docs/MODULE_STATUS.md](file:///Users/fahi.abss/majlis-hub/docs/MODULE_STATUS.md)**
+
+#### `[15:17]` **User** (Antigravity Pane 0)
+
+do a deep audit like pane 1 do. if miss something. foruser acess level. can you do that?
+
+#### `[15:22]` **Antigravity-1** (Antigravity Pane 0)
+
+Here is the deep audit on **user access levels (RBAC)** across the customer application, evaluated against `docs/MODULE_FEATURE_SPEC.md` §4, §5, and §7.
+
+---
+
+### 📊 Audit Scorecard
+
+```
+RBAC & Access Control Integrity   ████████████████████  100%  (10 / 10 Private Routes Gated)
+Guest Feature Freedom             ████████████████████  100%  (Public discovery & No-login flows)
+Intent & Action Restoration       ████████████████████  100%  (Save, Book, Like resume after OTP)
+Session Teardown on Logout        ████████████████████  100%  (Immediate state sanitization & lock)
+Gherkin RBAC Scenarios            ████████████████████  5 / 5 Verified Pass
+Runtime Console Errors            0 across all 20 swept routes
+```
+
+---
+
+### 1. 🛡️ User Access Level Matrix (Guest vs Customer)
+
+| Capability / Screen | Guest (Logged-out) | Customer (Logged-in) | Verification Result |
+| :--- | :---: | :---: | :--- |
+| **Search & Vendor Discovery** (`#/cari`, `#/vendor/:id`) | ✅ Open | ✅ Open | **PASS** — Both roles browse all 8 talent categories with identical rich filters. |
+| **Shortlist Vendor (Save)** | 🔒 Gated | ✅ Active | **PASS** — Guest click redirects to login with `next=...&save=id`; auto-saves on return. |
+| **Compare Vendors** (`#/banding`) | ✅ Open | ✅ Active | **PASS** — Side-by-side matrix viewable; booking/saving prompts login. |
+| **Partner/Family Voting** (`#/banding/kongsi`) | ✅ Open | ✅ Open | **PASS** — Explicitly allows voting without account or login (by design). |
+| **My Majlis Planner** (`#/majlis`, `#/majlis/baru`) | 🔒 Gated | ✅ Active | **PASS** — Strictly intercepted by `LoginGate`. |
+| **Tabung Kahwin** (`#/tabung`) | 🔒 Gated | ✅ Active | **PASS** — Savings ledger and payment schedule hidden from unauthenticated users. |
+| **Booking & Contracts** (`#/tempahan`, `#/te
+<truncated 444 bytes>
+ Active | **PASS** — Attendee phone numbers and counts protected from public scraping. |
+| **Guest Wedding RSVP** (`#/jemputan`) | ✅ Open | ✅ Open | **PASS** — Wedding guests can confirm attendance (Yes/No, pax, wish) without creating an account. |
+| **Inspirasi Video Feed** (`#/inspirasi`) | ✅ Open | ✅ Open | **PASS** — Videos play and scroll freely without login obstruction. |
+| **Video Likes & Comments** | 🔒 Gated | ✅ Active | **PASS** — Liking redirects to login and auto-likes on return; comment box requires login. |
+| **Notification Center** (`#/notifikasi`) | 🔒 Gated | ✅ Active | **PASS** — Deposit deadlines & overdue notices private to the logged-in customer. |
+| **Account Profile** (`#/akaun`) | 🔒 Gated | ✅ Active | **PASS** — Unauthenticated user sees login prompt; logged-in user edits profile. |
+
+---
+
+### 2. 🔄 Action Intent Preservation (Verified with Playwright)
+
+* **Save Vendor Flow**: A guest tapping "Simpan" on a vendor card is routed to `#/masuk?next=%2Fcari%3Fsave%3D10`. After OTP verification, the user lands back on Search with the vendor already bookmarked and a toast confirmation displayed.
+* **Booking Flow**: A guest tapping *"Log masuk untuk tempah"* on a vendor profile is routed to `#/masuk?next=%2Fvendor%3Fbook%3D1`. Upon return, [`BookSheet`](file:///Users/fahi.abss/majlis-hub/src/modules/vendor/BookSheet.tsx) automatically opens with date and pax prefilled.
+* **Like Reel Flow**: A guest tapping heart on Inspirasi is routed with `&like=id`. Upon OTP return, the reel is idempotently added to `s.liked` and the heart icon fills.
+* **Clean Sign-Out**: Tapping *"Log keluar"* immediately clears `s.authed`, returns the user to the home screen with the guest header (*"Assalamualaikum"*, *"Log masuk"* CTA), and locks all 10 private routes.
+
+---
+
+### 3. 📄 Full Audit Report
+The complete detailed report has been documented and pushed to GitHub:
+👉 **[`docs/PM_AUDIT_USER_ACCESS_LEVEL.md`](file:///Users/fahi.abss/majlis-hub/docs/PM_AUDIT_USER_ACCESS_LEVEL.md)**
+
+#### `[15:24]` **User** (Antigravity Pane 0)
+
+then ok. then help to updated both conversation to github ok? thanks
