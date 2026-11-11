@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Check, RotateCcw, SlidersHorizontal, Sparkles, Star, TriangleAlert, X } from 'lucide-react';
+import { CalendarX, Check, RotateCcw, SlidersHorizontal, Sparkles, Star, TriangleAlert, X } from 'lucide-react';
 import { CATS, VENDORS, catById, fromPrice } from '../../data/mock';
 import type { CategoryId, Package, Vendor } from '../../data/types';
 import { useStore } from '../../store';
@@ -29,7 +29,9 @@ export function suggest(d: Draft) {
   const cheap = d.cats.map(cat => ({ cat, p: Math.min(...VENDORS.filter(v => v.cat === cat && !v.busy.includes(d.date)).map(fromPrice)) })).sort((a, b) => a.p - b.p);
   let left = d.budget; const fits: CategoryId[] = [];
   for (const c of cheap) if (c.p <= left) { left -= c.p; fits.push(c.cat); }
-  return { rows, total, fits, missing: rows.filter(r => !r.v).map(r => r.cat) };
+  // a category with nobody free on the date is a date problem, not a budget problem
+  const full = d.cats.filter(cat => !VENDORS.some(v => v.cat === cat && v.km <= 70 && !v.busy.includes(d.date)));
+  return { rows, total, fits, full, missing: rows.filter(r => !r.v && !full.includes(r.cat)).map(r => r.cat) };
 }
 const bestPkg = (v: Vendor, slot: number): Package => v.packages.filter(p => p.price <= slot).sort((a, b) => b.price - a.price)[0] ?? v.packages[0];
 
@@ -39,7 +41,7 @@ export function SuggestStep({ d, set }: { d: Draft; set: (p: Partial<Draft>) => 
   const [splitOpen, setSplitOpen] = useState(false);
   const [confirm, setConfirm] = useState(false);
   const demo = useRoute().q.get('demo');
-  const { rows, total, fits, missing } = suggest(d);
+  const { rows, total, fits, full, missing } = suggest(d);
   const over = total > d.budget;
   const swapRow = rows.find(r => r.cat === swapCat);
 
@@ -94,6 +96,17 @@ export function SuggestStep({ d, set }: { d: Draft; set: (p: Partial<Draft>) => 
         </div>
       </div>
 
+      {full.length > 0 && (
+        <div role="alert" className="w-full flex flex-row gap-3 p-4 rounded-2xl bg-amaran-50 text-amaran">
+          <CalendarX className="w-5 h-5 shrink-0" />
+          <div className="flex-1 min-w-0 flex flex-col gap-2 text-sm">
+            <p className="w-full font-semibold">Semua {full.map(c => catById(c).name).join(', ')} penuh pada {fmtDate(d.date)}</p>
+            <p className="w-full text-body">Bukan soal bajet: tiada vendor yang masih kosong pada tarikh ini dalam 70 km.</p>
+            <Button variant="secondary" className="px-3! py-2!" onClick={() => swap('/majlis/baru?step=2')}>Tukar tarikh</Button>
+          </div>
+        </div>
+      )}
+
       {missing.length > 0 && (
         <div role="alert" className="w-full flex flex-row gap-3 p-4 rounded-2xl bg-amaran-50 text-amaran">
           <TriangleAlert className="w-5 h-5 shrink-0" />
@@ -145,7 +158,7 @@ export function SuggestStep({ d, set }: { d: Draft; set: (p: Partial<Draft>) => 
                 <Button variant="secondary" className="px-3! py-2!" disabled={r.cands.length < 2} onClick={() => setSwapCat(r.cat)}>Tukar</Button>
               </div>
             ) : (
-              <p className="w-full text-sm text-amaran">Tiada calon dalam slot ini pada tarikh anda. Naikkan peratus kategori ini atau bajet.</p>
+              <p className="w-full text-sm text-amaran">{full.includes(r.cat) ? `Semua penuh pada ${fmtDate(d.date)}. Tukar tarikh atau buang kategori ini.` : 'Tiada calon dalam slot bajet ini. Naikkan peratus kategori ini atau bajet.'}</p>
             )}
           </article>
         ))}

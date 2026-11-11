@@ -1,8 +1,9 @@
-import { ChevronRight, LogIn, Play, Search, ShieldCheck, SlidersHorizontal, Star, Tag, CalendarPlus, RotateCcw, WifiOff } from 'lucide-react';
+import { AlertTriangle, Bell, ChevronRight, LogIn, Play, Search, ShieldCheck, SlidersHorizontal, Star, Tag, CalendarPlus, RotateCcw, WifiOff } from 'lucide-react';
 import { useStore, TODAY, daysBetween } from '../../store';
 import { nav, swap, useRoute } from '../../router';
 import { Button, cx } from '../../components/ui';
-import { CATS, REELS, VENDORS, vendorById } from '../../data/mock';
+import { CATS, REELS, VENDORS, kmFrom, vendorById } from '../../data/mock';
+import { notices } from './reminders';
 import { MiniVendorCard } from '../search/VendorCard';
 
 const SONGKET = "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cpath d='M20 4 36 20 20 36 4 20Z' fill='none' stroke='%23B9DFCD' stroke-width='1'/%3E%3Cpath d='M20 14 26 20 20 26 14 20Z' fill='%23B98A2E'/%3E%3C/svg%3E\")";
@@ -38,6 +39,7 @@ function Hero() {
   const ev = s.event;
   const confirmed = s.bookings.filter(b => ['confirmed', 'completed', 'reviewed'].includes(b.status)).length;
   const total = ev?.cats.length ?? 0;
+  const urgent = s.authed ? notices(s.bookings, s.invitation, s.rsvps).filter(n => n.urgent).length : 0;
   return (
     <section className="relative w-full flex flex-col overflow-hidden text-white"
       style={{ background: 'radial-gradient(120% 80% at 100% 0%, rgba(185,138,46,.22) 0%, rgba(185,138,46,0) 55%), linear-gradient(170deg, var(--color-malam) 0%, var(--color-pekat) 55%, var(--color-hijau) 100%)' }}>
@@ -53,7 +55,13 @@ function Hero() {
             <span className="w-8 h-8 shrink-0 rounded-xl bg-white text-hijau font-display text-lg flex items-center justify-center">M</span>Majlis Hub
           </span>
           {s.authed
-            ? <button aria-label="Akaun" onClick={() => nav('/akaun')} className="w-11 h-11 shrink-0 rounded-full bg-white/[.12] text-white font-display text-lg font-semibold flex items-center justify-center">{s.userName.charAt(0)}</button>
+            ? <span className="w-fit shrink-0 flex flex-row items-center gap-2">
+                <button aria-label={urgent ? `Notifikasi, ${urgent} segera` : 'Notifikasi'} onClick={() => nav('/notifikasi')} className="relative w-11 h-11 shrink-0 rounded-full bg-white/[.12] text-white flex items-center justify-center">
+                  <Bell className="w-5 h-5 shrink-0" />
+                  {urgent > 0 && <span className="absolute -top-0.5 -right-0.5 w-5 h-5 rounded-full bg-bahaya text-white text-[11px] font-bold flex items-center justify-center num">{urgent}</span>}
+                </button>
+                <button aria-label="Akaun" onClick={() => nav('/akaun')} className="w-11 h-11 shrink-0 rounded-full bg-white/[.12] text-white font-display text-lg font-semibold flex items-center justify-center">{s.userName.charAt(0)}</button>
+              </span>
             : <button onClick={() => nav('/masuk?next=' + encodeURIComponent('/'))} className="w-fit shrink-0 inline-flex flex-row items-center gap-1.5 px-3.5 py-2 leading-5 rounded-full bg-white text-hijau text-sm font-semibold whitespace-nowrap"><LogIn className="w-4 h-4 shrink-0" />Log masuk</button>}
         </div>
         <div className="w-full flex flex-col gap-1">
@@ -129,11 +137,25 @@ function HomeError() {
 
 export default function HomeScreen() {
   const demo = useRoute().q.get('demo');
-  const near = VENDORS.filter(v => v.km <= 30).sort((a, b) => b.rating - a.rating || b.reviews - a.reviews).slice(0, 6);
+  const { s } = useStore();
+  // distances from the event town, same as search
+  const near = VENDORS.map(v => ({ ...v, km: kmFrom(v, s.event?.place) })).filter(v => v.km <= 30).sort((a, b) => b.rating - a.rating || b.reviews - a.reviews).slice(0, 6);
+  const alert = s.authed ? notices(s.bookings, s.invitation, s.rsvps).find(n => n.urgent) : undefined;
   return (
     <div className="w-full flex flex-col">
       <Hero />
       {demo === 'loading' ? <HomeSkeleton /> : demo === 'error' ? <HomeError /> : <div className="w-full flex flex-col gap-8 p-4">
+        {alert && (
+          <button onClick={() => nav(alert.to)} className="w-full flex flex-row items-center gap-3 p-4 rounded-2xl bg-amaran-50 border border-amaran/30 text-left">
+            <AlertTriangle className="w-5 h-5 shrink-0 text-amaran" />
+            <span className="flex-1 min-w-0 text-sm font-semibold text-ink">
+              {alert.kind === 'deposit'
+                ? `Deposit ${alert.vendor} perlu dibayar ${alert.days <= 0 ? 'hari ini' : `dalam ${alert.days} hari`}`
+                : `${alert.label} ${alert.vendor} lewat ${-alert.days} hari`}
+            </span>
+            <ChevronRight className="w-5 h-5 shrink-0 text-amaran" />
+          </button>
+        )}
         <section className="w-full flex flex-col gap-3">
           <SectionHead title="Kategori" link="Lihat semua" to="/cari" />
           <div className="w-full grid grid-cols-4 gap-2">

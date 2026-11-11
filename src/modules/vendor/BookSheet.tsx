@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { AlertCircle, CircleCheckBig, TriangleAlert } from 'lucide-react';
+import { AlertCircle, CalendarHeart, CircleCheckBig, Loader2, MapPin, Minus, Plus, TriangleAlert, Users } from 'lucide-react';
 import { addDays, useStore, TODAY } from '../../store';
 import { nav } from '../../router';
 import type { Booking, Vendor } from '../../data/types';
@@ -24,7 +24,9 @@ export default function BookSheet({ v, open, initialPkg, onClose }: { v: Vendor;
   const [note, setNote] = useState('');
   const [done, setDone] = useState<string | null>(null);
   const [ack, setAck] = useState(false);
-  useEffect(() => { if (open) { setPkg(initialPkg ?? v.packages[0].id); setDone(null); setAck(false); } }, [open, initialPkg, v]);
+  const [pax, setPax] = useState(s.event?.pax ?? 300);
+  const [busy, setBusy] = useState(false);
+  useEffect(() => { if (open) { setPkg(initialPkg ?? v.packages[0].id); setDone(null); setAck(false); setBusy(false); } }, [open, initialPkg, v]);
 
   const pkg = v.packages.find(p => p.id === pkgId) ?? v.packages[0];
   const taken = v.busy.includes(date);
@@ -34,12 +36,19 @@ export default function BookSheet({ v, open, initialPkg, onClose }: { v: Vendor;
   const rival = s.bookings.find(b => b.vendorId !== v.id && b.date === date && OPEN.includes(effective(b)) && vendorById(b.vendorId)?.cat === v.cat);
   const err = past ? 'Tarikh sudah lepas. Pilih tarikh akan datang.' : taken ? `${v.name} sudah ditempah pada ${fmtDate(date)}.` : dup ? 'Anda sudah hantar permintaan kepada vendor ini untuk tarikh yang sama.' : null;
 
+  const overCap = pax > v.capacity;
   const submit = () => {
-    if (err || (rival && !ack)) return;
-    const id = 'B-' + Math.floor(1000 + Math.random() * 9000);
-    const b: Booking = { id, vendorId: v.id, packageId: pkg.id, date, total: pkg.price, note, status: 'requested', createdAt: TODAY, payments: [] };
-    set(p => ({ bookings: [b, ...p.bookings] }));
-    setDone(id);
+    if (err || (rival && !ack) || busy) return;
+    setBusy(true);
+    // simulated send so the spinner state is visible (C-4.0 Loading)
+    window.setTimeout(() => {
+      const id = 'B-' + Math.floor(1000 + Math.random() * 9000);
+      // ponytail: Booking has no pax field yet, so pax rides in the note; add Booking.pax when the backend lands
+      const b: Booking = { id, vendorId: v.id, packageId: pkg.id, date, total: pkg.price, note: [`${pax} tetamu`, note.trim()].filter(Boolean).join(' · '), status: 'requested', createdAt: TODAY, payments: [] };
+      set(p => ({ bookings: [b, ...p.bookings] }));
+      setBusy(false);
+      setDone(id);
+    }, 800);
   };
 
   if (done) return (
@@ -60,8 +69,22 @@ export default function BookSheet({ v, open, initialPkg, onClose }: { v: Vendor;
           <span className="w-full text-xs text-muted">Anggaran jumlah</span>
           <span className="w-full text-lg font-bold num">{rm(pkg.price)}</span>
         </div>
-        <Button onClick={submit} disabled={!!err || (!!rival && !ack)}>Hantar permintaan</Button>
+        <Button onClick={submit} disabled={!!err || (!!rival && !ack) || busy}>{busy ? <><Loader2 className="w-4 h-4 shrink-0 animate-spin" />Menghantar…</> : 'Hantar permintaan'}</Button>
       </>}>
+      <div className="w-full flex flex-col gap-3 p-4 rounded-xl bg-pucuk-50">
+        <span className="w-full flex flex-row items-center gap-2 text-sm font-semibold"><CalendarHeart className="w-4 h-4 shrink-0 text-hijau" /><span className="flex-1 min-w-0">{s.event?.name ?? 'Majlis anda'}</span></span>
+        <span className="w-full flex flex-row items-center gap-2 text-sm text-body"><MapPin className="w-4 h-4 shrink-0 text-hijau" /><span className="flex-1 min-w-0">{s.event?.place ?? 'Lokasi belum ditetapkan'}</span></span>
+        <div className="w-full flex flex-row items-center gap-3">
+          <Users className="w-4 h-4 shrink-0 text-hijau" />
+          <span id="pax-l" className="flex-1 min-w-0 text-sm text-body">Bilangan tetamu</span>
+          <div role="group" aria-labelledby="pax-l" className="w-fit flex flex-row items-center gap-1">
+            <button type="button" aria-label="Kurangkan tetamu" onClick={() => setPax(n => Math.max(10, n - 50))} className="w-11 h-11 shrink-0 rounded-full bg-white border border-line2 flex items-center justify-center"><Minus className="w-4 h-4 shrink-0" /></button>
+            <span className="w-14 shrink-0 text-center text-base font-bold num" aria-live="polite">{pax}</span>
+            <button type="button" aria-label="Tambah tetamu" onClick={() => setPax(n => n + 50)} className="w-11 h-11 shrink-0 rounded-full bg-white border border-line2 flex items-center justify-center"><Plus className="w-4 h-4 shrink-0" /></button>
+          </div>
+        </div>
+        {overCap && <span role="alert" className="w-full flex flex-row items-center gap-1.5 text-sm text-amaran"><TriangleAlert className="w-4 h-4 shrink-0" /><span className="flex-1 min-w-0">{v.name} biasanya melayan sehingga {v.capacity} tetamu. Tanya vendor dahulu atau kurangkan.</span></span>}
+      </div>
       <div role="radiogroup" aria-labelledby="pkg-l" className="w-full flex flex-col gap-2">
         <span id="pkg-l" className="w-full text-[13px] font-semibold">Pakej</span>
         {v.packages.map(p => (

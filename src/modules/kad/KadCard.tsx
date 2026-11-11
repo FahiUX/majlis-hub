@@ -2,9 +2,7 @@ import { MapPin } from 'lucide-react';
 import { cx, fmtDate } from '../../components/ui';
 import type { Invitation } from '../../data/types';
 
-export type Accent = 'hijau' | 'emas' | 'malam';
-/** photo + accent live on the invitation; ponytail: typed locally until types.ts gains `photo`/`accent` */
-export type KadInv = Invitation & { photo?: string; accent?: Accent };
+export type Accent = NonNullable<Invitation['accent']>;
 export const PHOTOS: { src: string; name: string }[] = [
   { src: '', name: 'Tiada foto' },
   { src: 'img/gen/couple.jpg', name: 'Taman' },
@@ -71,7 +69,7 @@ const LineArt = () => (
   </svg>
 );
 
-export function KadCard({ inv }: { inv: KadInv }) {
+export function KadCard({ inv }: { inv: Invitation }) {
   const k = { ...SKIN[inv.template], accent: accentCls(inv.template, inv.accent ?? DEFAULT_ACCENT[inv.template]) };
   const couple = `${inv.bride} & ${inv.groom}`;
   return (

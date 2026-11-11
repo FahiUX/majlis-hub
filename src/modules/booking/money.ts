@@ -1,4 +1,4 @@
-import { TODAY, addDays } from '../../store';
+import { TODAY, addDays, daysBetween } from '../../store';
 import type { Booking, TabungEntry } from '../../data/types';
 
 /**
@@ -40,6 +40,16 @@ export function tabungBalance(tabung: TabungEntry[], bookings: Booking[]) {
   return { total, spent, balance: Math.max(0, total - spent) };
 }
 
+/** reminder schedule before a due date (C-4.4): 14/7/3/1 days before; "sent" once that day has passed */
+export const reminders = (due: string) =>
+  [14, 7, 3, 1].map(d => ({ days: d, at: addDays(due, -d), sent: addDays(due, -d) <= TODAY }));
+
+/** refund if cancelled today (vendor policy: half the paid deposit back when more than 60 days out) */
+export const refundToday = (b: Booking) => {
+  const dep = b.payments[0]?.paidAt ? b.payments[0].amount : 0;
+  return { deposit: dep, refund: daysBetween(TODAY, b.date) > 60 ? Math.round(dep / 2) : 0 };
+};
+
 // self-check: npx tsx src/modules/booking/money.ts
 if (typeof process !== 'undefined' && process.argv[1]?.endsWith('money.ts')) {
   const base: Booking = { id: 'a', vendorId: 7, packageId: '7-0', date: '2027-02-14', total: 1000, note: '', status: 'confirmed', createdAt: TODAY,
@@ -52,5 +62,8 @@ if (typeof process !== 'undefined' && process.argv[1]?.endsWith('money.ts')) {
   console.assert(t.total === 800 && t.spent === 300 && t.balance === 500, `tabung ${JSON.stringify(t)}`);
   const before = tabungBalance([{ id: '1', amount: 800, note: '', at: '2026-11-05' }], [base]);
   console.assert(before.spent === 0, 'payment before saving started does not touch the tabung');
+  const rem = reminders('2026-11-13');
+  console.assert(rem.map(x => x.sent).join() === 'true,true,true,false', `reminders ${JSON.stringify(rem)}`);
+  console.assert(refundToday(base).refund === 150 && refundToday({ ...base, date: '2026-12-01' }).refund === 0, 'refund');
   console.log('money ok');
 }

@@ -2,12 +2,12 @@ import { useEffect, useRef, useState } from 'react';
 import { AlertCircle, Clock, MapPin, RotateCcw, Search, SearchX, SlidersHorizontal, Store, Tag, X } from 'lucide-react';
 import { useStore } from '../../store';
 import { nav, swap, useRoute } from '../../router';
-import { Button, Chip, EmptyState, cx, rm } from '../../components/ui';
+import { Button, Chip, EmptyState, cx, fmtDate, rm } from '../../components/ui';
 import { CATS, catById } from '../../data/mock';
 import VendorCard from './VendorCard';
 import FilterSheet from './FilterSheet';
 import CompareTray from './CompareTray';
-import { PRICE_MAX, RADII, readFilters, search, suggest, writeFilters, type Filters } from './searchLogic';
+import { PRICE_MAX, RADII, originOf, readFilters, search, suggest, writeFilters, type Filters } from './searchLogic';
 
 function Skeleton() {
   return (
@@ -26,8 +26,10 @@ function Skeleton() {
 export default function SearchScreen() {
   const { q } = useRoute();
   const { s, set, toast } = useStore();
-  const place = s.event?.place.split(',')[0] || 'lokasi anda';
+  const ev = s.event;
   const f = readFilters(q);
+  const ctx = { place: ev?.place, date: ev?.date };
+  const origin = originOf(f, ev?.place);
   const go = (patch: Partial<Filters>) => swap(writeFilters({ ...f, ...patch }));
   const [text, setText] = useState(f.q);
   const [focused, setFocused] = useState(q.get('focus') === '1');
@@ -41,7 +43,7 @@ export default function SearchScreen() {
   useEffect(() => { if (wantFocus) { setFocused(true); input.current?.focus(); } else { setFocused(false); setText(f.q); } }, [qs, wantFocus]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => { setLoading(true); const t = setTimeout(() => setLoading(false), 400); return () => clearTimeout(t); }, [f.cat]);
 
-  const results = search(f);
+  const results = search(f, ctx);
   const sugg = suggest(text);
   const submit = (value: string) => {
     const v = value.trim();
@@ -52,12 +54,21 @@ export default function SearchScreen() {
   const pickCat = (id: Filters['cat']) => { setText(''); setFocused(false); go({ cat: id, q: '' }); };
 
   const active: { label: string; clear: Partial<Filters> }[] = [
-    ...(f.state ? [{ label: f.state, clear: { state: null } }] : f.km !== 70 ? [{ label: `${f.km} km`, clear: { km: 70 } }] : []),
+    ...(f.state ? [{ label: f.town ?? f.state, clear: { state: null, town: null } }] : f.km !== 70 ? [{ label: `${f.km} km`, clear: { km: 70 } }] : []),
+    ...(f.free && ev && !f.fromMajlis ? [{ label: `Kosong ${fmtDate(ev.date)}`, clear: { free: false } }] : []),
+    ...(f.pax && !f.fromMajlis ? [{ label: `${f.pax} tetamu`, clear: { pax: 0 } }] : []),
+    ...(f.halal ? [{ label: 'Halal', clear: { halal: false } }] : []),
     ...(f.min > 0 || f.max < PRICE_MAX ? [{ label: `${rm(f.min)} – ${rm(f.max)}`, clear: { min: 0, max: PRICE_MAX } }] : []),
     ...(f.r4 ? [{ label: 'Rating 4 ke atas', clear: { r4: false } }] : []),
     ...(f.sort !== 'near' ? [{ label: f.sort === 'top' ? 'Rating tertinggi' : 'Harga terendah', clear: { sort: 'near' as const } }] : []),
     ...(f.q ? [{ label: `"${f.q}"`, clear: { q: '' } }] : []),
   ];
+  // planner link (?from=majlis): fill in the event's date and guests once, then the URL holds them
+  useEffect(() => {
+    if (f.fromMajlis && ev && !q.has('free') && !q.has('pax')) swap(writeFilters({ ...f, free: true, pax: ev.pax }));
+  }, [f.fromMajlis]); // eslint-disable-line react-hooks/exhaustive-deps
+  const chips = useRef<HTMLDivElement>(null);
+  useEffect(() => { chips.current?.querySelector('[aria-pressed="true"]')?.scrollIntoView({ inline: 'center', block: 'nearest' }); }, [f.cat]);
   const nextKm = RADII.find(k => k > f.km);
   const isError = q.get('demo') === 'error';
 
@@ -90,7 +101,7 @@ export default function SearchScreen() {
               </button>}
         </form>
         {!focused && (
-          <div className="w-full flex flex-row gap-2 overflow-x-auto" role="group" aria-label="Kategori">
+          <div ref={chips} className="w-full flex flex-row gap-2 overflow-x-auto" role="group" aria-label="Kategori">
             <Chip on={!f.cat} onClick={() => pickCat(null)}>Semua</Chip>
             {CATS.map(c => <Chip key={c.id} on={f.cat === c.id} onClick={() => pickCat(c.id)}>{c.name}</Chip>)}
           </div>
@@ -129,6 +140,12 @@ export default function SearchScreen() {
         </div>
       ) : (
         <div className="w-full flex-1 flex flex-col gap-4 p-4">
+          {f.fromMajlis && ev && (
+            <div className="w-full flex flex-row items-center gap-2 p-3 rounded-xl bg-pucuk-50">
+              <span className="flex-1 min-w-0 text-sm text-body"><b className="text-ink">Ikut majlis anda:</b> {fmtDate(ev.date)} · {ev.pax} tetamu · {origin}</span>
+              <button aria-label="Buang tapisan majlis" onClick={() => go({ fromMajlis: false, free: false, pax: 0 })} className="w-11 h-11 shrink-0 rounded-full flex items-center justify-center hover:bg-pucuk-100"><X className="w-4 h-4 shrink-0" /></button>
+            </div>
+          )}
           {active.length > 0 && (
             <div className="w-full flex flex-row flex-wrap gap-2">
               {active.map(a => (
@@ -139,7 +156,7 @@ export default function SearchScreen() {
             </div>
           )}
           {!isError && <p className="w-full text-sm text-muted" aria-live="polite">
-            <b className="text-ink num">{results.length} vendor</b> {f.cat ? catById(f.cat).name : 'semua kategori'} · {f.state ?? `dalam ${f.km} km dari ${place}`} · disahkan
+            <b className="text-ink num">{results.length} vendor</b> {f.cat ? catById(f.cat).name : 'semua kategori'} · {f.state ? (f.town ?? f.state) : `dalam ${f.km} km dari ${origin}`} · disahkan
           </p>}
           {isError ? (
             <EmptyState icon={<AlertCircle className="w-6 h-6" />} title="Tak dapat muatkan vendor" body="Sambungan terputus. Semak internet anda dan cuba lagi."

@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
-import { CalendarX, Check, CircleCheckBig, Lock, MessageCircle, PencilLine, PiggyBank, SearchX, Sparkles, Star } from 'lucide-react';
+import { BellRing, CalendarX, Check, CircleCheckBig, Flag, Lock, MessageCircle, PencilLine, PiggyBank, SearchX, Sparkles, Star, TriangleAlert } from 'lucide-react';
 import { useStore, daysBetween, TODAY, addDays } from '../../store';
 import { nav } from '../../router';
-import { VENDORS, vendorById } from '../../data/mock';
+import { VENDORS, kmFrom, vendorById } from '../../data/mock';
 import type { BookingStatus, Vendor } from '../../data/types';
-import { Button, Divider, EmptyState, Img, StatusChip, TopBar, VerifiedBadge, cx, fmtDate, rm } from '../../components/ui';
+import { Button, Divider, EmptyState, Img, Pill, StatusChip, TopBar, VerifiedBadge, cx, fmtDate, rm } from '../../components/ui';
 import { DepositLine, effective } from './BookingList';
 import { CancelSheet, PaySheet } from './BookingSheets';
 import { buildPayments } from './plan';
+import { reminders } from './money';
 import ReviewSheet from './ReviewSheet';
 import { loadReviews, reviewsChanged } from '../vendor/reviews';
 
@@ -15,7 +16,7 @@ const STEPS = ['Diminta', 'Diterima', 'Deposit', 'Disahkan', 'Selesai'];
 const STEP_OF: Partial<Record<BookingStatus, number>> = { requested: 0, accepted: 1, deposit_due: 2, confirmed: 3, completed: 4, reviewed: 4 };
 
 /** "Cuba vendor serupa": 3 same-category vendors free on the date (C-4.1 expired / declined) */
-function Similar({ v, date }: { v: Vendor; date: string }) {
+function Similar({ v, date, place }: { v: Vendor; date: string; place?: string }) {
   const list = VENDORS.filter(x => x.cat === v.cat && x.id !== v.id && !x.busy.includes(date)).sort((a, b) => b.rating - a.rating).slice(0, 3);
   if (!list.length) return null;
   return (
@@ -26,7 +27,7 @@ function Similar({ v, date }: { v: Vendor; date: string }) {
           <Img src={x.img} cat={x.cat} alt="" className="w-12 h-12 shrink-0 rounded-xl" />
           <span className="flex-1 min-w-0 flex flex-col">
             <span className="w-full text-sm font-semibold">{x.name}</span>
-            <span className="w-full text-xs text-muted">{x.area} · {x.km} km · kosong {fmtDate(date)}</span>
+            <span className="w-full text-xs text-muted">{x.area} · {kmFrom(x, place)} km · kosong {fmtDate(date)}</span>
           </span>
           <span className="w-fit flex flex-row items-center gap-1 text-sm font-semibold num"><Star className="w-3.5 h-3.5 shrink-0 fill-ink" />{x.rating.toFixed(1)}</span>
         </button>
@@ -58,6 +59,8 @@ export default function BookingDetail({ id }: { id?: number | string }) {
   const step = STEP_OF[st];
   const left = daysBetween(TODAY, b.depositDeadline ?? TODAY);
   const nextDue = b.payments.findIndex(p => !p.paidAt);
+  // reminder schedule for the next payment the customer owes (C-4.4)
+  const remindFor = st === 'deposit_due' ? b.payments[0] : st === 'confirmed' && nextDue >= 0 ? b.payments[nextDue] : undefined;
 
   const simulateAccept = () => {
     const deadline = addDays(TODAY, 30);
@@ -80,6 +83,7 @@ export default function BookingDetail({ id }: { id?: number | string }) {
 
         {st === 'deposit_due' && (
           <div className={cx('w-full flex flex-col gap-3 p-5 rounded-2xl border-2', left <= 3 ? 'border-bahaya bg-bahaya-50' : 'border-amaran/40 bg-amaran-50')}>
+            {left <= 3 && <span className="w-full flex flex-row items-center gap-1.5 text-sm font-bold text-bahaya"><TriangleAlert className="w-4 h-4 shrink-0" />Segera: {Math.max(left, 0)} hari lagi</span>}
             <p className="w-full text-base font-semibold">Bayar deposit {rm(b.payments[0]?.amount ?? 0)} dalam {Math.max(left, 0)} hari untuk kunci tarikh</p>
             <DepositLine b={b} />
             <span className="w-full flex flex-row items-center gap-1.5 text-sm text-body"><Lock className="w-4 h-4 shrink-0" /><span className="flex-1 min-w-0">Tarikh {fmtDate(b.date)} ditahan untuk anda sehingga {fmtDate(b.depositDeadline ?? TODAY)}. Jika tidak dibayar, tempahan dibatalkan secara automatik.</span></span>
@@ -101,7 +105,7 @@ export default function BookingDetail({ id }: { id?: number | string }) {
             <p className="w-full text-sm text-body">{st === 'expired' ? 'Permintaan ini tamat tempoh secara automatik supaya anda boleh terus mencari. Tiada caj dikenakan.' : `Sebab: ${b.cancelReason ?? 'tidak dinyatakan'}. Tiada caj dikenakan.`}</p>
           </div>
         )}
-        {(st === 'expired' || st === 'declined') && <Similar v={v} date={b.date} />}
+        {(st === 'expired' || st === 'declined') && <Similar v={v} date={b.date} place={s.event?.place} />}
 
         {(st === 'completed' || st === 'reviewed') && (
           <div className="w-full flex flex-col gap-3 p-5 rounded-2xl bg-pucuk-50">
@@ -118,6 +122,7 @@ export default function BookingDetail({ id }: { id?: number | string }) {
                 <span className="w-full text-base font-semibold">Bagaimana {v.name}?</span>
                 <p className="w-full text-sm text-body">Majlis selesai pada {fmtDate(b.date)}. Ulasan anda akan bertanda "Tempahan melalui Majlis Hub" dan membantu pasangan lain.</p>
                 <Button block onClick={() => setReview(true)}><Star className="w-4 h-4 shrink-0" />Tulis ulasan</Button>
+                <Button variant="ghost" onClick={() => toast('Laporan dihantar. Pasukan kami akan hubungi anda dalam 2 hari bekerja.')}><Flag className="w-4 h-4 shrink-0" />Majlis belum selesai? Laporkan</Button>
               </>
             )}
           </div>
@@ -153,13 +158,28 @@ export default function BookingDetail({ id }: { id?: number | string }) {
                   <div className="flex-1 min-w-0 flex flex-col">
                     <span className="w-full text-sm font-semibold">{p.label}</span>
                     <span className="w-full text-xs text-muted">{p.paidAt ? `Dibayar ${fmtDate(p.paidAt)}` : `Perlu dibayar sebelum ${fmtDate(p.due)}`}</span>
+                    {!p.paidAt && p.due < TODAY && <Pill tone="amaran"><TriangleAlert className="w-3.5 h-3.5 shrink-0" />Lewat {daysBetween(p.due, TODAY)} hari</Pill>}
                   </div>
                   <span className="w-fit text-sm font-bold num">{rm(p.amount)}</span>
                 </div>
-                {i === nextDue && <Button variant="secondary" onClick={() => setPay(i)}>Bayar {rm(p.amount)}</Button>}
+                {i === nextDue && (p.due < TODAY ? <Button onClick={() => setPay(i)}>Bayar sekarang {rm(p.amount)}</Button> : <Button variant="secondary" onClick={() => setPay(i)}>Bayar {rm(p.amount)}</Button>)}
               </div>
             ))}
             <Button variant="ghost" onClick={() => nav('/tabung')}><PiggyBank className="w-4 h-4 shrink-0" />Lihat pelan Tabung</Button>
+          </div>
+        )}
+
+        {remindFor && (
+          <div className="w-full flex flex-col gap-3 p-5 rounded-2xl bg-white border border-line">
+            <h2 className="w-full flex flex-row items-center gap-2 text-base font-semibold"><BellRing className="w-5 h-5 shrink-0 text-hijau" /><span className="flex-1 min-w-0">Peringatan · {remindFor.label}</span></h2>
+            <p className="w-full text-sm text-body">Kami ingatkan anda melalui WhatsApp sebelum {fmtDate(remindFor.due)}.</p>
+            {reminders(remindFor.due).map(m => (
+              <div key={m.days} className="w-full flex flex-row items-center gap-3 text-sm">
+                <span className={cx('w-6 h-6 shrink-0 rounded-full flex items-center justify-center', m.sent ? 'bg-hijau text-white' : 'border-[1.5px] border-line2 bg-white')}>{m.sent && <Check className="w-3.5 h-3.5 shrink-0" />}</span>
+                <span className="flex-1 min-w-0">{m.days} hari sebelum · {fmtDate(m.at)}</span>
+                <span className={cx('w-fit text-xs font-semibold', m.sent ? 'text-hijau' : 'text-muted')}>{m.sent ? 'Dihantar' : 'Akan datang'}</span>
+              </div>
+            ))}
           </div>
         )}
 
@@ -177,7 +197,7 @@ export default function BookingDetail({ id }: { id?: number | string }) {
       </div>
       <PaySheet b={b} idx={pay ?? 0} open={pay !== null} onClose={() => setPay(null)} />
       <ReviewSheet b={b} v={v} existing={mine} open={review} onClose={() => setReview(false)} />
-      <CancelSheet b={b} policy={st === 'confirmed' ? v.cancelPolicy : undefined} open={cancel} onClose={() => setCancel(false)} />
+      <CancelSheet b={b} open={cancel} onClose={() => setCancel(false)} />
     </div>
   );
 }

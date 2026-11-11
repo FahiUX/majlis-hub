@@ -11,6 +11,10 @@ import { CommentsSheet, ReportSheet, ShareSheet, type ReelComment } from './Reel
 /** feed repeats 3x; when the user reaches the first or last copy we jump to the same reel in the middle copy, so swiping never ends */
 const COPIES = 3;
 
+/** posted comments per reel; the store has no field for them (ponytail: move into AppState if comments grow) */
+const CKEY = 'majlishub.comments';
+const loadComments = (): Record<number, ReelComment[]> => { try { return JSON.parse(localStorage.getItem(CKEY) ?? '{}'); } catch { return {}; } };
+
 export default function InspirasiScreen() {
   const { s, set } = useStore();
   const q = useRoute().q;
@@ -18,7 +22,8 @@ export default function InspirasiScreen() {
   const loading = demo === 'loading';
   const startId = Number(q.get('v')) || 0;
   const [cat, setCat] = useState<CategoryId | 'all'>('all');
-  const [added, setAdded] = useState<Record<number, ReelComment[]>>({});
+  const [added, setAdded] = useState<Record<number, ReelComment[]>>(loadComments);
+  useEffect(() => { try { localStorage.setItem(CKEY, JSON.stringify(added)); } catch { /* private mode: comments live for this visit only */ } }, [added]);
   const [sheet, setSheet] = useState<{ kind: 'comments' | 'share' | 'report'; reel: Reel } | null>(null);
   const feed = useRef<HTMLDivElement>(null);
 
@@ -111,7 +116,9 @@ export default function InspirasiScreen() {
       )}
 
       <CommentsSheet reel={sheet?.kind === 'comments' ? sheet.reel : null} comments={sheet ? comments(sheet.reel) : []} onClose={() => setSheet(null)}
-        onSend={text => sheet && setAdded(a => ({ ...a, [sheet.reel.id]: [...(a[sheet.reel.id] ?? []), { name: s.userName, text, time: 'baru', likes: 0 }] }))} />
+        loading={q.get('cdemo') === 'loading'}
+        onSend={text => sheet && setAdded(a => ({ ...a, [sheet.reel.id]: [...(a[sheet.reel.id] ?? []), { name: s.userName, text, time: 'baru', likes: 0, failed: q.get('net') === 'off' }] }))}
+        onRetry={c => sheet && setAdded(a => ({ ...a, [sheet.reel.id]: (a[sheet.reel.id] ?? []).map(x => (x === c ? { ...x, failed: false } : x)) }))} />
       <ShareSheet reel={sheet?.kind === 'share' ? sheet.reel : null} onClose={() => setSheet(null)} />
       <ReportSheet reel={sheet?.kind === 'report' ? sheet.reel : null} onClose={() => setSheet(null)} />
     </div>

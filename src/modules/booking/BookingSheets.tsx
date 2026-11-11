@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import { AlertCircle, CircleCheckBig, CreditCard, Landmark, Loader2, Wallet } from 'lucide-react';
-import { useStore, TODAY } from '../../store';
+import { AlertCircle, CircleCheckBig, CreditCard, Landmark, Loader2, TriangleAlert, Wallet } from 'lucide-react';
+import { useStore, TODAY, daysBetween } from '../../store';
+import { refundToday } from './money';
 import { useRoute } from '../../router';
 import type { Booking } from '../../data/types';
 import { Button, Sheet, cx, fmtDate, rm } from '../../components/ui';
@@ -77,10 +78,13 @@ export function PaySheet({ b, open, onClose, idx = 0 }: { b: Booking; open: bool
 
 const REASONS = ['Tukar tarikh majlis', 'Jumpa vendor lain', 'Bajet tidak cukup', 'Majlis dibatalkan', 'Lain-lain'];
 
-export function CancelSheet({ b, policy, open, onClose }: { b: Booking; policy?: string; open: boolean; onClose: () => void }) {
+export function CancelSheet({ b, open, onClose }: { b: Booking; open: boolean; onClose: () => void }) {
   const { set, toast } = useStore();
   const [why, setWhy] = useState('');
   const [more, setMore] = useState('');
+  const toEvent = daysBetween(TODAY, b.date);
+  const soon = toEvent <= 7;
+  const { deposit, refund } = refundToday(b);
   const confirm = () => {
     set(p => ({ bookings: p.bookings.map(x => (x.id === b.id ? { ...x, status: 'cancelled', cancelReason: why === 'Lain-lain' ? more || why : why } : x)) }));
     toast('Tempahan dibatalkan');
@@ -89,10 +93,17 @@ export function CancelSheet({ b, policy, open, onClose }: { b: Booking; policy?:
   return (
     <Sheet open={open} onClose={onClose} title="Batalkan tempahan?"
       footer={<><Button variant="secondary" block onClick={onClose}>Simpan tempahan</Button><Button variant="danger" block disabled={!why} onClick={confirm}>Batalkan</Button></>}>
-      {policy && (
+      {soon && (
+        <div role="alert" className="w-full flex flex-row gap-2 p-4 rounded-xl bg-amaran-50 text-amaran">
+          <TriangleAlert className="w-4 h-4 shrink-0" />
+          <span className="flex-1 min-w-0 text-sm"><b>Majlis tinggal {Math.max(0, toEvent)} hari.</b> <span className="text-body">Vendor mungkin sudah menolak tempahan lain untuk tarikh ini. Pertimbangkan untuk berbincang dahulu.</span></span>
+        </div>
+      )}
+      {deposit > 0 && (
         <div className="w-full flex flex-col gap-1 p-4 rounded-xl bg-amaran-50">
-          <span className="w-full text-sm font-semibold text-amaran">Deposit sudah dibayar</span>
-          <span className="w-full text-sm text-body">{policy}</span>
+          <span className="w-full text-sm font-semibold text-amaran">Deposit {rm(deposit)} sudah dibayar</span>
+          <span className="w-full text-sm text-body">Polisi vendor: batal lebih 60 hari sebelum majlis, {rm(Math.round(deposit / 2))} dipulangkan. Kurang 60 hari, tiada pemulangan.</span>
+          <span className="w-full text-sm font-semibold num">Jika batal hari ini: {rm(refund)} dipulangkan</span>
         </div>
       )}
       <div role="radiogroup" aria-label="Sebab pembatalan" className="w-full flex flex-col gap-2">

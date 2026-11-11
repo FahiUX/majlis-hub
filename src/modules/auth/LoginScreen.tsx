@@ -7,6 +7,8 @@ import { Button, TopBar, cx } from '../../components/ui';
 /** +60 mobile: 1X then 7–8 digits (leading 0 optional) */
 const clean = (p: string) => p.replace(/[\s-]/g, '').replace(/^0/, '');
 const validPhone = (p: string) => /^1\d{8,9}$/.test(clean(p));
+/** display format saved to the account: +60 1X-XXX XXXX */
+export const fmtPhone = (p: string) => { const d = clean(p); return `+60 ${d.slice(0, 2)}-${d.slice(2, 5)} ${d.slice(5)}`; };
 
 /**
  * Leave login without a trace in history (QA B4): step back to the page that opened it,
@@ -58,7 +60,7 @@ export default function LoginScreen() {
     const c = code.join('');
     if (c.length < 6) return;
     if (c === '000000') { setOtpErr(true); return; }
-    set(() => ({ authed: true }));
+    set(p => ({ authed: true, phone: validPhone(phone) ? fmtPhone(phone) : p.phone }));
     toast(role === 'vendor' ? 'Log masuk berjaya. Papan pemuka vendor akan datang dalam Wave 2.' : 'Selamat datang ke Majlis Hub');
     finish(next);
   };

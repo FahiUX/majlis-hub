@@ -1,7 +1,7 @@
 import { Check, Heart, Star } from 'lucide-react';
 import { useStore, toggle } from '../../store';
 import { nav } from '../../router';
-import { Img, Stars, VerifiedBadge, cx, rm } from '../../components/ui';
+import { Img, Pill, Stars, VerifiedBadge, cx, rm } from '../../components/ui';
 import { catById, fromPrice, vendorById } from '../../data/mock';
 import type { Vendor } from '../../data/types';
 
@@ -61,7 +61,7 @@ export default function VendorCard({ v, compare = true }: { v: Vendor; compare?:
           <Img src={v.img} cat={v.cat} alt={v.name} className="w-full h-full" />
         </button>
         <div className="absolute inset-0 p-2 flex flex-row items-start justify-between pointer-events-none">
-          <span className="p-1"><VerifiedBadge v={v} onPhoto /></span>
+          <span className="w-fit flex flex-row flex-wrap gap-1.5 p-1"><VerifiedBadge v={v} onPhoto />{v.isNew && <Pill tone="white">Baru</Pill>}</span>
           <HeartButton id={v.id} />
         </div>
       </div>

@@ -4,7 +4,7 @@ import { Button, Divider, TopBar, cx, fmtDate } from '../../components/ui';
 import { useStore } from '../../store';
 import { nav } from '../../router';
 import type { Invitation } from '../../data/types';
-import { ACCENTS, KadCard, PHOTOS, TEMPLATES, type KadInv } from './KadCard';
+import { ACCENTS, KadCard, PHOTOS, TEMPLATES } from './KadCard';
 import { KadShare } from './KadShare';
 
 const REQUIRED: (keyof Invitation)[] = ['bride', 'groom', 'date', 'venue'];
@@ -32,14 +32,14 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
 
 export default function KadEditor() {
   const { s, set } = useStore();
-  const inv = s.invitation as KadInv;
+  const inv = s.invitation;
   // stable keys for editable aturcara rows, so deleting a middle row keeps focus on the right input
   const ids = useRef<number[]>(inv.aturcara.map((_, i) => i));
   const nextId = useRef(inv.aturcara.length);
   const [tried, setTried] = useState(false);
   const [share, setShare] = useState(false);
   const preview = useRef<HTMLDivElement>(null);
-  const up = (p: Partial<KadInv>) => set(st => ({ invitation: { ...st.invitation, ...p } }));
+  const up = (p: Partial<Invitation>) => set(st => ({ invitation: { ...st.invitation, ...p } }));
 
   // pre-fill empty fields from the My Majlis event
   useEffect(() => {

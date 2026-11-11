@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { ChevronLeft, Clock, Heart, MapPin, RotateCcw, SearchX, Share2, ShieldCheck, Check, WifiOff } from 'lucide-react';
+import { Ban, ChevronLeft, Clock, Copy, Heart, MapPin, MessageCircle, RotateCcw, SearchX, Share2, ShieldCheck, Check, Sparkles, WifiOff } from 'lucide-react';
 import { useStore, toggle } from '../../store';
 import { back, nav, swap, useRoute } from '../../router';
-import { catById, fromPrice, vendorById } from '../../data/mock';
-import { Button, EmptyState, Img, Pill, Sheet, Stars, TopBar, VerifiedBadge, cx, rm } from '../../components/ui';
+import { catById, fromPrice, kmFrom, vendorById } from '../../data/mock';
+import { Button, EmptyState, Img, Pill, Sheet, Stars, TopBar, VerifiedBadge, cx, fmtDate, rm } from '../../components/ui';
 import { AboutTab, PackagesTab, PortfolioTab, ReviewsTab } from './VendorTabs';
 import BookSheet from './BookSheet';
+import { useMyReviews, withMine } from './reviews';
 
 const TABS = [['pakej', 'Pakej'], ['ulasan', 'Ulasan'], ['portfolio', 'Portfolio'], ['tentang', 'Tentang']] as const;
 
@@ -19,6 +20,8 @@ export default function VendorScreen({ id }: { id?: number | string }) {
   const wantBook = r.q.get('book') === '1';
   useEffect(() => { if (wantBook) setBook(true); }, [wantBook]);
   const [pkgId, setPkgId] = useState<string | undefined>();
+  const [share, setShare] = useState(false);
+  const mine = useMyReviews(Number(id));
 
   const demo = r.q.get('demo');
   if (demo === 'loading') return <VendorSkeleton />;
@@ -30,6 +33,18 @@ export default function VendorScreen({ id }: { id?: number | string }) {
     </div>
   );
   if (!v) return <EmptyState icon={<SearchX className="w-6 h-6" />} title="Vendor tidak dijumpai" body="Vendor ini mungkin tidak lagi aktif." action={<Button onClick={() => nav('/cari')}>Cari vendor lain</Button>} />;
+  // C-2.0 Error: suspended listing reached from an old link
+  if (v.suspended) return (
+    <div className="w-full flex flex-col">
+      <TopBar title="Profil vendor" fallback="/cari" />
+      <EmptyState icon={<Ban className="w-6 h-6" />} title="Vendor ini tidak tersedia buat masa ini"
+        body="Penyenaraian ini sedang disemak oleh pasukan Majlis Hub. Tempahan sedia ada tidak terjejas."
+        action={<Button onClick={() => nav(`/cari?cat=${v.cat}`)}>Cari vendor serupa</Button>} />
+    </div>
+  );
+  const score = withMine(v, mine);
+  const link = `${location.origin}${location.pathname}#/vendor/${v.id}`;
+  const quote = () => nav(`/mesej/${v.id}?draft=${encodeURIComponent(`Salam, boleh beri sebut harga untuk ${s.event ? fmtDate(s.event.date) : 'tarikh majlis saya'}, ${s.event?.pax ?? 300} tetamu?`)}`);
 
   const tab = r.q.get('tab') ?? 'pakej';
   const saved = s.saved.includes(v.id);
@@ -38,7 +53,7 @@ export default function VendorScreen({ id }: { id?: number | string }) {
     set(p => ({ saved: toggle(p.saved, v.id) }));
     toast(saved ? 'Dibuang dari senarai simpanan' : 'Disimpan ke senarai anda');
   };
-  const onShare = () => { navigator.clipboard?.writeText(location.href).catch(() => undefined); toast('Pautan disalin. Kongsi di WhatsApp.'); };
+  const copy = () => { navigator.clipboard?.writeText(link).catch(() => undefined); setShare(false); toast('Pautan disalin'); };
   const openBook = (pid?: string) => {
     if (!s.authed) return nav(`/masuk?next=${encodeURIComponent(`/vendor/${v.id}?book=1`)}`);
     setPkgId(pid); setBook(true);
@@ -55,7 +70,7 @@ export default function VendorScreen({ id }: { id?: number | string }) {
           <div className="w-full flex flex-row items-center justify-between">
             <button aria-label="Kembali" onClick={() => back('/cari')} className="pointer-events-auto w-11 h-11 shrink-0 rounded-full bg-white/95 shadow-float flex items-center justify-center"><ChevronLeft className="w-6 h-6 shrink-0" /></button>
             <div className="w-fit flex flex-row items-center gap-2">
-              <button aria-label="Kongsi" onClick={onShare} className="pointer-events-auto w-11 h-11 shrink-0 rounded-full bg-white/95 shadow-float flex items-center justify-center"><Share2 className="w-5 h-5 shrink-0" /></button>
+              <button aria-label="Kongsi" onClick={() => setShare(true)} className="pointer-events-auto w-11 h-11 shrink-0 rounded-full bg-white/95 shadow-float flex items-center justify-center"><Share2 className="w-5 h-5 shrink-0" /></button>
               <button aria-label={saved ? 'Buang simpanan' : 'Simpan'} aria-pressed={saved} onClick={onSave} className="pointer-events-auto w-11 h-11 shrink-0 rounded-full bg-white/95 shadow-float flex items-center justify-center"><Heart className={cx('w-5 h-5 shrink-0', saved ? 'fill-bahaya text-bahaya' : '')} /></button>
             </div>
           </div>
@@ -69,19 +84,26 @@ export default function VendorScreen({ id }: { id?: number | string }) {
       <div className="w-full flex flex-col gap-4 p-5">
         <div className="w-full flex flex-col gap-2">
           <h1 className="w-full text-2xl leading-[30px] font-bold">{v.name}</h1>
-          <button onClick={() => setVerify(true)} className="w-fit" aria-label="Apa yang kami semak">
-            <VerifiedBadge v={v} />
-          </button>
-        </div>
-        <div className="w-full flex flex-row items-center gap-4">
-          <span className="w-fit font-display text-5xl leading-[52px] font-semibold num">{v.rating.toFixed(1)}</span>
-          <div className="flex-1 min-w-0 flex flex-col gap-1">
-            <Stars n={v.rating} size={16} />
-            <span className="w-full text-sm text-body">{v.reviews} ulasan sebenar</span>
+          <div className="w-full flex flex-row flex-wrap items-center gap-2">
+            <button onClick={() => setVerify(true)} className="w-fit" aria-label="Apa yang kami semak">
+              <VerifiedBadge v={v} />
+            </button>
+            {v.isNew && <Pill tone="emas"><Sparkles className="w-3.5 h-3.5 shrink-0" />Baru di Majlis Hub</Pill>}
           </div>
         </div>
+        {score.reviews === 0 ? (
+          <p className="w-full text-sm text-body">Belum ada ulasan. Vendor baru disahkan, jadi jadilah antara yang pertama menempah.</p>
+        ) : (
+          <div className="w-full flex flex-row items-center gap-4">
+            <span className="w-fit font-display text-5xl leading-[52px] font-semibold num">{score.rating.toFixed(1)}</span>
+            <div className="flex-1 min-w-0 flex flex-col gap-1">
+              <Stars n={score.rating} size={16} />
+              <span className="w-full text-sm text-body">{score.reviews} ulasan sebenar</span>
+            </div>
+          </div>
+        )}
         <div className="w-full flex flex-row flex-wrap items-center gap-4 text-sm text-body">
-          <span className="w-fit flex flex-row items-center gap-1.5"><MapPin className="w-4 h-4 shrink-0" />{v.area} · {v.km} km</span>
+          <span className="w-fit flex flex-row items-center gap-1.5"><MapPin className="w-4 h-4 shrink-0" />{v.area} · {kmFrom(v, s.event?.place)} km</span>
           <span className="w-fit flex flex-row items-center gap-1.5"><Clock className="w-4 h-4 shrink-0" />Biasanya balas dalam {v.reply}</span>
         </div>
       </div>
@@ -97,8 +119,8 @@ export default function VendorScreen({ id }: { id?: number | string }) {
       </div>
 
       <div className="w-full flex flex-col gap-5 p-5">
-        {tab === 'pakej' && <PackagesTab v={v} onBook={openBook} />}
-        {tab === 'ulasan' && <ReviewsTab v={v} />}
+        {tab === 'pakej' && <PackagesTab v={v} onBook={openBook} onQuote={quote} />}
+        {tab === 'ulasan' && <ReviewsTab v={v} score={score} />}
         {tab === 'portfolio' && <PortfolioTab v={v} />}
         {tab === 'tentang' && <AboutTab v={v} />}
       </div>
@@ -127,6 +149,13 @@ export default function VendorScreen({ id }: { id?: number | string }) {
         <div className="w-full flex flex-row items-center gap-2 p-3 rounded-xl bg-pucuk-50 text-sm text-hijau">
           <ShieldCheck className="w-4 h-4 shrink-0" /><span className="flex-1 min-w-0">Disahkan sejak {v.since}</span>
         </div>
+      </Sheet>
+      <Sheet open={share} onClose={() => setShare(false)} title={`Kongsi ${v.name}`}>
+        <a href={`https://wa.me/?text=${encodeURIComponent(`${v.name} di Majlis Hub, disahkan dan dari ${rm(fromPrice(v))}. ${link}`)}`} target="_blank" rel="noreferrer" onClick={() => setShare(false)}
+          className="w-full flex flex-row items-center justify-center gap-2 px-5 py-3.5 leading-5 rounded-[10px] bg-hijau text-white text-[15px] font-semibold">
+          <MessageCircle className="w-4 h-4 shrink-0" />Kongsi di WhatsApp
+        </a>
+        <Button variant="secondary" onClick={copy} className="w-full"><Copy className="w-4 h-4 shrink-0" />Salin pautan</Button>
       </Sheet>
       <BookSheet v={v} open={book} initialPkg={pkgId} onClose={() => { setBook(false); if (wantBook) { r.q.delete('book'); swap(r.path + (r.q.toString() ? '?' + r.q : '')); } }} />
     </div>

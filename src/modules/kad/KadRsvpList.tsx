@@ -8,7 +8,7 @@ type Filter = 'all' | 'yes' | 'no';
 const csvCell = (v: string | number) => `"${String(v).replace(/"/g, '""')}"`;
 
 export default function KadRsvpList() {
-  const { s } = useStore();
+  const { s, set } = useStore();
   const [q, setQ] = useState('');
   const [f, setF] = useState<Filter>('all');
   const [share, setShare] = useState(false);
@@ -16,6 +16,9 @@ export default function KadRsvpList() {
   const people = yes.reduce((n, r) => n + r.count, 0);
   const no = s.rsvps.length - yes.length;
   const pax = s.event?.pax ?? 0;
+  const invited = s.invitation.invited;
+  const pending = Math.max(0, invited - s.rsvps.length);
+  const setInvited = (n: number) => set(p => ({ invitation: { ...p.invitation, invited: Math.max(0, Math.min(5000, n)) } }));
   const rows = s.rsvps
     .filter(r => (f === 'all' ? true : f === 'yes' ? r.attending : !r.attending))
     .filter(r => r.name.toLowerCase().includes(q.trim().toLowerCase()));
@@ -47,7 +50,7 @@ export default function KadRsvpList() {
       } />
       <div className="w-full flex flex-col gap-4 p-4">
         <div className="w-full flex flex-row items-stretch gap-3">
-          {[['Hadir', people, 'orang'], ['Tidak hadir', no, 'jawapan'], ['Jumlah jawapan', s.rsvps.length, 'tetamu']].map(([l, v, u]) => (
+          {[['Hadir', people, 'orang'], ['Tidak hadir', no, 'jawapan'], ['Belum jawab', pending, 'kad']].map(([l, v, u]) => (
             <div key={l} className="flex-1 min-w-0 flex flex-col gap-1 p-3 rounded-2xl bg-white border border-line">
               <span className="w-full text-xs font-semibold text-muted">{l}</span>
               <span className="w-full text-2xl font-bold num">{v}</span>
@@ -55,6 +58,13 @@ export default function KadRsvpList() {
             </div>
           ))}
         </div>
+
+        <label className="w-full flex flex-row items-center gap-3 text-sm">
+          <span className="flex-1 min-w-0 text-body">Kad dijemput <span className="text-muted">· {s.rsvps.length} sudah jawab</span></span>
+          <input type="number" inputMode="numeric" min={0} value={invited} aria-label="Bilangan kad dijemput"
+            onChange={e => setInvited(Number(e.target.value) || 0)}
+            className="w-[88px] shrink-0 px-3.5 py-2.5 leading-5 rounded-[10px] border border-line2 bg-white text-right num" />
+        </label>
 
         {pax > 0 && people > pax && (
           <p role="alert" className="w-full flex flex-row items-center gap-2 px-4 py-3 rounded-xl bg-amaran-50 text-sm font-medium text-amaran">

@@ -5,6 +5,7 @@ import { TODAY, daysBetween, useStore } from '../../store';
 import { nav } from '../../router';
 import { Button, Divider, EmptyState, Pill, StatusChip, fmtDate, rm } from '../../components/ui';
 import { DEAD, liveStatus, plan } from '../tabung/calc';
+import { OPEN, effective } from '../booking/money';
 import { CatArt } from './CatArt';
 import MoneyBar from '../booking/MoneyBar';
 import { CustomChecklist } from './CustomChecklist';
@@ -34,6 +35,7 @@ export default function PlannerScreen() {
   }
 
   const days = Math.max(0, daysBetween(TODAY, e.date));
+  const [day1, day2] = e.type === 'Perkahwinan' ? ['Akad', 'Sanding'] : ['Hari 1', 'Hari 2'];
   const bookingFor = (c: CategoryId): Booking | undefined =>
     [...s.bookings].reverse().find(b => vendorById(b.vendorId)?.cat === c && !DEAD.includes(liveStatus(b))) ??
     [...s.bookings].reverse().find(b => vendorById(b.vendorId)?.cat === c);
@@ -55,7 +57,7 @@ export default function PlannerScreen() {
           </div>
         </div>
         <div className="w-full flex flex-row flex-wrap items-center gap-x-4 gap-y-1 text-sm text-body">
-          <span className="inline-flex flex-row items-center gap-1.5 w-fit"><CalendarHeart className="w-4 h-4 shrink-0" />{fmtDate(e.date, true)}</span>
+          <span className="inline-flex flex-row items-center gap-1.5 w-fit"><CalendarHeart className="w-4 h-4 shrink-0" />{e.date2 ? `${day1} ${fmtDate(e.date, true)} · ${day2} ${fmtDate(e.date2, true)}` : fmtDate(e.date, true)}</span>
           <span className="inline-flex flex-row items-center gap-1.5 w-fit"><MapPin className="w-4 h-4 shrink-0" />{e.place}</span>
           <span className="inline-flex flex-row items-center gap-1.5 w-fit"><Users className="w-4 h-4 shrink-0" />{e.pax} tetamu</span>
         </div>
@@ -65,7 +67,7 @@ export default function PlannerScreen() {
       <div className="w-full flex flex-row items-stretch gap-3">
         <Shortcut icon={<MailOpen className="w-5 h-5 shrink-0" />} title="Kad Kahwin" value={`${hadir} hadir`} onClick={() => nav('/kad')} />
         <Shortcut icon={<PiggyBank className="w-5 h-5 shrink-0" />} title="Tabung" value={monthly ? `${rm(monthly)}/bln` : 'Tiada bayaran'} onClick={() => nav('/tabung')} />
-        <Shortcut icon={<ReceiptText className="w-5 h-5 shrink-0" />} title="Tempahan" value={`${s.bookings.filter(b => !DEAD.includes(liveStatus(b))).length} aktif`} onClick={() => nav('/tempahan')} />
+        <Shortcut icon={<ReceiptText className="w-5 h-5 shrink-0" />} title="Tempahan" value={`${s.bookings.filter(b => OPEN.includes(effective(b))).length} aktif`} onClick={() => nav('/tempahan')} />
       </div>
 
       <section className="w-full flex flex-col gap-3">
@@ -99,7 +101,7 @@ export default function PlannerScreen() {
                 ) : (
                   <div className="w-full flex flex-row items-center gap-3 p-4">
                     {row}
-                    <Button variant="secondary" className="py-2!" aria-label={sv ? `Lihat ${sv.name}` : `Cari ${c.name}`} onClick={() => nav(sv ? '/vendor/' + sv.id : `/cari?cat=${c.id}&km=70`)}>{sv ? 'Lihat' : 'Cari'}</Button>
+                    <Button variant="secondary" className="py-2!" aria-label={sv ? `Lihat ${sv.name}` : `Cari ${c.name}`} onClick={() => nav(sv ? '/vendor/' + sv.id : `/cari?cat=${c.id}&from=majlis`)}>{sv ? 'Lihat' : 'Cari'}</Button>
                   </div>
                 )}
               </div>

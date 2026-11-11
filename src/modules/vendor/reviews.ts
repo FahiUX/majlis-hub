@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 /**
  * Reviews written in the app (C-5.0).
  * ponytail: kept in their own localStorage key because the store has no reviews field yet;
@@ -28,4 +29,24 @@ export const clearReviews = () => {
   mem = [];
   try { localStorage.removeItem(KEY); } catch { /* ignore */ }
   window.dispatchEvent(new Event(EVENT));
+};
+
+/** this vendor's in-app reviews, live-updated when one is posted */
+export function useMyReviews(vendorId: number) {
+  const pick = () => loadReviews().filter(r => r.vendorId === vendorId);
+  const [mine, setMine] = useState(pick);
+  useEffect(() => {
+    const on = () => setMine(loadReviews().filter(r => r.vendorId === vendorId));
+    on();
+    window.addEventListener(EVENT, on);
+    return () => window.removeEventListener(EVENT, on);
+  }, [vendorId]);
+  return mine;
+}
+
+/** profile rating and count including reviews written in the app (C-5.0: count goes up after posting) */
+export const withMine = (v: { rating: number; reviews: number }, mine: UserReview[]) => {
+  const reviews = v.reviews + mine.length;
+  const rating = reviews ? (v.rating * v.reviews + mine.reduce((t, r) => t + r.rating, 0)) / reviews : 0;
+  return { rating, reviews };
 };

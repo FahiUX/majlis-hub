@@ -93,10 +93,10 @@ export default function TabungScreen() {
                     <div className="flex-1 min-w-0 flex flex-col gap-0.5">
                       <span className="w-full text-[15px] font-semibold">{d.vendorName}</span>
                       <span className="w-full text-sm text-muted">{d.label} · {fmtDate(d.due)}</span>
-                      {left < 0 ? <Pill tone="bahaya">Lewat {-left} hari</Pill> : left <= 30 && <Pill tone="amaran">Dalam {left} hari</Pill>}
+                      {left < 0 ? <Pill tone="amaran"><TriangleAlert className="w-3.5 h-3.5 shrink-0" />Lewat {-left} hari</Pill> : left <= 30 && <Pill tone="amaran">Dalam {left} hari</Pill>}
                       <span className="w-full text-sm num"><b>{rm(d.amount)}</b> <span className="text-muted">· {Math.round(pct * 100)}% disimpan</span></span>
                     </div>
-                    <Button variant="secondary" className="px-3! py-2!" aria-label={`Bayar ${d.label} ${d.vendorName}`} onClick={() => nav('/tempahan/' + d.bookingId)}>Bayar</Button>
+                    <Button variant={left < 0 ? 'primary' : 'secondary'} className="px-3! py-2!" aria-label={`Bayar ${d.label} ${d.vendorName}`} onClick={() => nav('/tempahan/' + d.bookingId)}>{left < 0 ? 'Bayar sekarang' : 'Bayar'}</Button>
                   </div>
                 </div>
               );

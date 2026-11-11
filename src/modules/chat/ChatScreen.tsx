@@ -1,20 +1,24 @@
 import { useEffect, useRef, useState } from 'react';
-import { AlertCircle, CheckCheck, Lock, MessageCircle, Phone, SearchX, Send } from 'lucide-react';
+import { AlertCircle, CheckCheck, ImagePlus, Lock, MessageCircle, Phone, SearchX, Send } from 'lucide-react';
 import { useStore } from '../../store';
 import { nav, useRoute } from '../../router';
 import { phoneFor, vendorById } from '../../data/mock';
 import { effective } from '../booking/BookingList';
 import type { ChatMsg } from '../../data/types';
-import { Button, Chip, EmptyState, TopBar, cx, fmtDate } from '../../components/ui';
+import { Button, Chip, EmptyState, Sheet, TopBar, cx, fmtDate } from '../../components/ui';
 
 const OPEN = ['accepted', 'deposit_due', 'confirmed', 'completed'];
 const now = () => new Date().toTimeString().slice(0, 5);
+/** photos the customer can share (no file upload without a backend) */
+const PHOTOS = ['img/gen/pelamin.jpg', 'img/gen/venue.jpg', 'img/gen/couple.jpg', 'img/gen/planning.jpg'];
 
 /** ?net=off simulates a failed send for QA */
 export default function ChatScreen({ id }: { id?: number | string }) {
   const { s, set } = useStore();
   const r = useRoute();
-  const [text, setText] = useState('');
+  // "Minta sebut harga" arrives with ?draft= prefilled (C-2.1)
+  const [text, setText] = useState(r.q.get('draft') ?? '');
+  const [pick, setPick] = useState(false);
   const end = useRef<HTMLDivElement>(null);
   const v = vendorById(Number(id));
   const msgs = (v && s.chats[v.id]) || [];
@@ -28,6 +32,10 @@ export default function ChatScreen({ id }: { id?: number | string }) {
     if (!t.trim()) return;
     write([...msgs, { me: true, text: t.trim(), time: now(), failed: r.q.get('net') === 'off' }]);
     setText('');
+  };
+  const sendPhoto = (photo: string) => {
+    write([...msgs, { me: true, photo, time: now(), failed: r.q.get('net') === 'off' }]);
+    setPick(false);
   };
   const retry = (i: number) => write(msgs.map((m, j) => (j === i ? { ...m, failed: false } : m)));
 
@@ -45,7 +53,7 @@ export default function ChatScreen({ id }: { id?: number | string }) {
         {msgs.map((m, i) => (
           <div key={i} className={cx('w-full flex flex-col gap-1', m.me ? 'items-end' : 'items-start')}>
             {m.photo
-              ? <img src={m.photo} alt="Gambar daripada vendor" className="w-[220px] aspect-[4/3] rounded-2xl object-cover" />
+              ? <img src={m.photo} alt={m.me ? 'Gambar anda' : 'Gambar daripada vendor'} className="w-[220px] aspect-[4/3] rounded-2xl object-cover" />
               : <p className={cx('w-fit px-4 py-2.5 rounded-2xl text-[15px] leading-[22px]', m.me ? (m.failed ? 'bg-hijau/60 text-white' : 'bg-hijau text-white') : 'bg-white border border-line')}>{m.text}</p>}
             {m.failed
               ? <button onClick={() => retry(i)} className="w-fit flex flex-row items-center gap-1 text-xs font-semibold text-bahaya"><AlertCircle className="w-3.5 h-3.5 shrink-0" />Gagal dihantar. Ketik untuk cuba lagi</button>
@@ -57,11 +65,24 @@ export default function ChatScreen({ id }: { id?: number | string }) {
       <div className="sticky bottom-0 w-full flex flex-col gap-3 p-4 bg-white shadow-float">
         <div className="w-full flex flex-row gap-2 overflow-x-auto">{quick.map(q => <Chip key={q} onClick={() => send(q)}>{q}</Chip>)}</div>
         <form onSubmit={e => { e.preventDefault(); send(text); }} className="w-full flex flex-row items-center gap-2">
+          <button type="button" aria-label="Hantar gambar" onClick={() => setPick(true)} className="w-11 h-11 shrink-0 rounded-full bg-pucuk-100 text-hijau flex items-center justify-center"><ImagePlus className="w-5 h-5 shrink-0" /></button>
           <input value={text} onChange={e => setText(e.target.value)} placeholder="Tulis mesej…" aria-label="Mesej"
             className="flex-1 min-w-0 px-3.5 py-3 bg-kertas border border-line2 rounded-full text-[15px]" />
           <button type="submit" aria-label="Hantar" disabled={!text.trim()} className="w-11 h-11 shrink-0 rounded-full bg-hijau text-white flex items-center justify-center disabled:bg-pucuk-200"><Send className="w-5 h-5 shrink-0" /></button>
         </form>
       </div>
+      <Sheet open={pick} onClose={() => setPick(false)} title="Hantar gambar">
+        <p className="w-full text-sm text-body">Pilih gambar rujukan untuk {v.name}.</p>
+        {[0, 2].map(i => (
+          <div key={i} className="w-full flex flex-row gap-2">
+            {PHOTOS.slice(i, i + 2).map(ph => (
+              <button key={ph} onClick={() => sendPhoto(ph)} aria-label={`Hantar ${ph.split('/').pop()}`} className="flex-1 min-w-0 aspect-[4/3] rounded-xl overflow-hidden">
+                <img src={ph} alt="" className="w-full h-full object-cover" />
+              </button>
+            ))}
+          </div>
+        ))}
+      </Sheet>
     </div>
   );
 }
