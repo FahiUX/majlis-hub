@@ -52,7 +52,7 @@ export default function CompareScreen() {
                     <span className="w-full text-[13px] leading-4 font-semibold">{v.name}</span>
                   </button>
                   <div className="w-full flex flex-row flex-wrap gap-1">
-                    {verdict[v.id].map(t => <Pill key={t} tone={t === 'Rating tertinggi' ? 'emas' : 'hijau'} className="!px-2 !py-0.5">{t}</Pill>)}
+                    {verdict[v.id].map(t => <Pill key={t} tone={t === 'Rating tertinggi' ? 'emas' : 'hijau'} className="!px-2 !py-0.5 !whitespace-normal">{t}</Pill>)}
                   </div>
                   {voters.length > 0 && (
                     <div className="w-full flex flex-row flex-wrap gap-1">
