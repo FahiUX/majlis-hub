@@ -1,11 +1,12 @@
-import { Bookmark, CalendarHeart, ChevronRight, LogIn, MailOpen, MapPin, PiggyBank, Plus, ReceiptText, TriangleAlert, Users } from 'lucide-react';
+import { Bookmark, CalendarHeart, ChevronRight, LogIn, MailOpen, MapPin, PiggyBank, Plus, ReceiptText, Users } from 'lucide-react';
 import { CATS, catById, vendorById } from '../../data/mock';
 import type { Booking, CategoryId } from '../../data/types';
 import { TODAY, daysBetween, useStore } from '../../store';
 import { nav } from '../../router';
-import { Button, Divider, EmptyState, Pill, StatusChip, cx, fmtDate, rm } from '../../components/ui';
+import { Button, Divider, EmptyState, Pill, StatusChip, fmtDate, rm } from '../../components/ui';
 import { DEAD, liveStatus, plan } from '../tabung/calc';
 import { CatArt } from './CatArt';
+import MoneyBar from '../booking/MoneyBar';
 import { CustomChecklist } from './CustomChecklist';
 
 export default function PlannerScreen() {
@@ -32,9 +33,6 @@ export default function PlannerScreen() {
     );
   }
 
-  const live = s.bookings.filter(b => !DEAD.includes(liveStatus(b)) && e.cats.includes(vendorById(b.vendorId)?.cat as CategoryId));
-  const spent = live.reduce((t, b) => t + b.total, 0);
-  const over = spent > e.budget;
   const days = Math.max(0, daysBetween(TODAY, e.date));
   const bookingFor = (c: CategoryId): Booking | undefined =>
     [...s.bookings].reverse().find(b => vendorById(b.vendorId)?.cat === c && !DEAD.includes(liveStatus(b))) ??
@@ -61,22 +59,13 @@ export default function PlannerScreen() {
           <span className="inline-flex flex-row items-center gap-1.5 w-fit"><MapPin className="w-4 h-4 shrink-0" />{e.place}</span>
           <span className="inline-flex flex-row items-center gap-1.5 w-fit"><Users className="w-4 h-4 shrink-0" />{e.pax} tetamu</span>
         </div>
-        <div className="w-full flex flex-col gap-2">
-          <div className="w-full flex flex-row items-center gap-2 text-sm">
-            <span className="flex-1 min-w-0 font-semibold">Ditempah {rm(spent)}</span>
-            <span className="w-fit shrink-0 text-muted num">daripada {rm(e.budget)}</span>
-          </div>
-          <div className="w-full h-2 rounded-full bg-white overflow-hidden" role="progressbar" aria-valuenow={Math.round(spent / e.budget * 100)} aria-valuemin={0} aria-valuemax={100} aria-label="Bajet digunakan">
-            <div className={cx('h-full rounded-full', over ? 'bg-amaran' : 'bg-hijau')} style={{ width: `${Math.min(100, spent / e.budget * 100)}%` }} />
-          </div>
-          {over && <p className="w-full flex flex-row items-center gap-1.5 text-sm text-amaran"><TriangleAlert className="w-4 h-4 shrink-0" />Melebihi bajet {rm(spent - e.budget)}. Anda masih boleh teruskan.</p>}
-        </div>
+        <MoneyBar bookings={s.bookings} budget={e.budget} />
       </section>
 
       <div className="w-full flex flex-row items-stretch gap-3">
         <Shortcut icon={<MailOpen className="w-5 h-5 shrink-0" />} title="Kad Kahwin" value={`${hadir} hadir`} onClick={() => nav('/kad')} />
         <Shortcut icon={<PiggyBank className="w-5 h-5 shrink-0" />} title="Tabung" value={monthly ? `${rm(monthly)}/bln` : 'Tiada bayaran'} onClick={() => nav('/tabung')} />
-        <Shortcut icon={<ReceiptText className="w-5 h-5 shrink-0" />} title="Tempahan" value={`${live.length} aktif`} onClick={() => nav('/tempahan')} />
+        <Shortcut icon={<ReceiptText className="w-5 h-5 shrink-0" />} title="Tempahan" value={`${s.bookings.filter(b => !DEAD.includes(liveStatus(b))).length} aktif`} onClick={() => nav('/tempahan')} />
       </div>
 
       <section className="w-full flex flex-col gap-3">

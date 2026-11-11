@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { Check, Copy, ExternalLink, Scale, Share2, Vote } from 'lucide-react';
+import { Check, ChevronLeft, ChevronRight, Copy, ExternalLink, Hourglass, Scale, Share2, Vote } from 'lucide-react';
 import { useStore } from '../../store';
 import { nav, useRoute } from '../../router';
 import { Button, EmptyState, Img, Pill, Sheet, TopBar, cx } from '../../components/ui';
 import { catById, vendorById } from '../../data/mock';
+import type { Vendor } from '../../data/types';
 import { bestIds, rowsFor, verdicts } from './compareRows';
 
 export const shareLink = (ids: number[]) => `${location.origin}${location.pathname}#/banding/kongsi?ids=${ids.join(',')}`;
@@ -14,6 +15,7 @@ export default function CompareScreen() {
   const ids = q.get('ids') ? q.get('ids')!.split(',').map(Number) : s.compare;
   const vs = ids.map(vendorById).filter(v => v !== undefined);
   const [share, setShare] = useState(false);
+  const [photo, setPhoto] = useState<{ v: Vendor; i: number } | null>(null);
 
   if (vs.length < 2) {
     return (
@@ -25,7 +27,7 @@ export default function CompareScreen() {
     );
   }
 
-  const rows = rowsFor(s.event);
+  const rows = rowsFor(s.event, s.bookings, (v, i) => setPhoto({ v, i }));
   const verdict = verdicts(vs, s.event);
   const votersFor = (id: number) => Object.entries(s.votes).filter(([, v]) => v === id).map(([n]) => n);
   const link = shareLink(vs.map(v => v.id));
@@ -54,10 +56,12 @@ export default function CompareScreen() {
                   <div className="w-full flex flex-row flex-wrap gap-1">
                     {verdict[v.id].map(t => <Pill key={t} tone={t === 'Rating tertinggi' ? 'emas' : 'hijau'} className="!px-2 !py-0.5 !whitespace-normal">{t}</Pill>)}
                   </div>
-                  {voters.length > 0 && (
+                  {voters.length > 0 ? (
                     <div className="w-full flex flex-row flex-wrap gap-1">
                       {voters.map(n => <span key={n} className="w-fit shrink-0 flex flex-row items-center gap-0.5 px-1.5 py-0.5 rounded-full bg-hijau text-white text-xs leading-4 font-semibold whitespace-nowrap">{n}<Check className="w-3 h-3 shrink-0" /></span>)}
                     </div>
+                  ) : (
+                    <span className="w-full flex flex-row items-center gap-1 text-xs text-muted"><Hourglass className="w-3.5 h-3.5 shrink-0" />Tunggu undian</span>
                   )}
                 </div>
                 {rows.map(r => {
@@ -79,6 +83,19 @@ export default function CompareScreen() {
         <Button variant="secondary" onClick={() => nav('/vendor/' + vs[0].id)}>Lihat vendor</Button>
         <Button block onClick={() => setShare(true)}><Share2 className="w-4 h-4 shrink-0" />Kongsi dengan pasangan</Button>
       </div>
+
+      <Sheet open={!!photo} onClose={() => setPhoto(null)} title={photo ? `${photo.v.name} · ${photo.i + 1}/${photo.v.gallery.length}` : 'Portfolio'}>
+        {photo && (
+          <>
+            <Img src={photo.v.gallery[photo.i]} cat={photo.v.cat} alt={`Portfolio ${photo.v.name} ${photo.i + 1}`} className="w-full aspect-[3/4] rounded-xl" />
+            <div className="w-full flex flex-row items-center gap-3">
+              <Button variant="secondary" aria-label="Foto sebelum" disabled={photo.i === 0} onClick={() => setPhoto({ ...photo, i: photo.i - 1 })}><ChevronLeft className="w-5 h-5 shrink-0" /></Button>
+              <span className="flex-1 min-w-0 text-center text-sm text-muted num">{photo.i + 1} daripada {photo.v.gallery.length}</span>
+              <Button variant="secondary" aria-label="Foto seterusnya" disabled={photo.i === photo.v.gallery.length - 1} onClick={() => setPhoto({ ...photo, i: photo.i + 1 })}><ChevronRight className="w-5 h-5 shrink-0" /></Button>
+            </div>
+          </>
+        )}
+      </Sheet>
 
       <Sheet open={share} onClose={() => setShare(false)} title="Kongsi untuk undian">
         <p className="w-full text-sm text-body">Pasangan atau keluarga buka pautan ini (tanpa log masuk) dan undi pilihan mereka. Undian akan muncul pada setiap lajur.</p>

@@ -51,27 +51,36 @@ function Calendar({ v }: { v: Vendor }) {
   const days = new Date(y, m, 0).getDate();
   const iso = (d: number) => `${y}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
   const cells = [...Array(first).fill(0), ...Array.from({ length: days }, (_, i) => i + 1)];
-  const evBusy = v.busy.includes(ev);
   // OD10: a date is held while a customer's deposit is due. Mine = my deposit_due booking; others = demo hold.
+  // The customer's own dates always win over "taken", so her lock never reads as someone else's (PM audit B2).
   const mineHeld = s.bookings.filter(b => b.vendorId === v.id && effective(b) === 'deposit_due').map(b => b.date);
+  const mineBooked = s.bookings.filter(b => b.vendorId === v.id && ['confirmed', 'completed', 'reviewed'].includes(effective(b))).map(b => b.date);
+  const mineAsked = s.bookings.filter(b => b.vendorId === v.id && ['requested', 'accepted'].includes(effective(b))).map(b => b.date);
+  const isMine = (d: string) => mineBooked.includes(d) || mineHeld.includes(d) || mineAsked.includes(d);
+  const evBusy = v.busy.includes(ev) && !isMine(ev);
+  const evText = mineBooked.includes(ev) ? ['bg-pucuk-50 text-hijau', 'tempahan anda, tarikh sudah dikunci']
+    : mineHeld.includes(ev) ? ['bg-amaran-50 text-amaran', 'ditahan untuk anda, bayar deposit untuk kunci']
+      : mineAsked.includes(ev) ? ['bg-pucuk-50 text-hijau', 'permintaan anda sedang menunggu jawapan vendor']
+        : evBusy ? ['bg-bahaya-50 text-bahaya', 'sudah ditempah'] : ['bg-pucuk-50 text-hijau', 'masih kosong'];
   const othersHeld = v.id % 2 === 0 && !v.busy.includes(`${y}-${String(m).padStart(2, '0')}-20`) ? [`${y}-${String(m).padStart(2, '0')}-20`] : [];
   return (
     <div className="w-full flex flex-col gap-3 p-5 rounded-2xl bg-white border border-line">
       <h2 className="w-full text-xl font-semibold">Kekosongan · {fmtDate(iso(1)).replace(/^1 /, '')}</h2>
-      <div className={cx('w-full flex flex-row items-center gap-2 p-3 rounded-xl text-sm font-semibold', evBusy ? 'bg-bahaya-50 text-bahaya' : mineHeld.includes(ev) ? 'bg-amaran-50 text-amaran' : 'bg-pucuk-50 text-hijau')}>
-        <span className="flex-1 min-w-0">Tarikh majlis anda ({fmtDate(ev)}): {evBusy ? 'sudah ditempah' : mineHeld.includes(ev) ? 'ditahan untuk anda, bayar deposit untuk kunci' : 'masih kosong'}</span>
+      <div className={cx('w-full flex flex-row items-center gap-2 p-3 rounded-xl text-sm font-semibold', evText[0])}>
+        <span className="flex-1 min-w-0">Tarikh majlis anda ({fmtDate(ev)}): {evText[1]}</span>
       </div>
       <div className="w-full grid grid-cols-7 gap-1 text-center">
         {['A', 'I', 'S', 'R', 'K', 'J', 'S'].map((d, i) => <span key={i} className="text-xs font-semibold text-muted">{d}</span>)}
         {cells.map((d, i) => {
           if (!d) return <span key={i} />;
-          const busy = v.busy.includes(iso(d));
-          const held = !busy && (mineHeld.includes(iso(d)) || othersHeld.includes(iso(d)));
+          const own = mineBooked.includes(iso(d));
+          const busy = !isMine(iso(d)) && v.busy.includes(iso(d));
+          const held = !busy && !own && (mineHeld.includes(iso(d)) || othersHeld.includes(iso(d)));
           const mine = iso(d) === ev;
-          const label = busy ? 'ditempah' : held ? (mineHeld.includes(iso(d)) ? 'ditahan untuk anda' : 'ditahan, menunggu deposit') : 'kosong';
+          const label = own ? 'tempahan anda' : busy ? 'ditempah' : held ? (mineHeld.includes(iso(d)) ? 'ditahan untuk anda' : 'ditahan, menunggu deposit') : mineAsked.includes(iso(d)) ? 'kosong, permintaan anda dihantar' : 'kosong';
           return (
             <span key={i} role="img" aria-label={`${d}: ${label}${mine ? ', tarikh majlis anda' : ''}`}
-              className={cx('h-10 flex items-center justify-center rounded-full text-sm num', busy ? 'text-muted line-through bg-skeleton' : held ? 'text-amaran bg-amaran-50 border border-dashed border-amaran' : 'text-ink', mine && 'ring-2 ring-hijau font-bold')}>
+              className={cx('h-10 flex items-center justify-center rounded-full text-sm num', own ? 'text-white bg-hijau font-semibold' : busy ? 'text-muted line-through bg-skeleton' : held ? 'text-amaran bg-amaran-50 border border-dashed border-amaran' : 'text-ink', mine && 'ring-2 ring-hijau font-bold')}>
               {d}
             </span>
           );
@@ -82,6 +91,7 @@ function Calendar({ v }: { v: Vendor }) {
         <span className="w-fit flex flex-row items-center gap-1.5"><span className="w-3 h-3 shrink-0 rounded-full bg-skeleton" />Ditempah (bergaris)</span>
         <span className="w-fit flex flex-row items-center gap-1.5"><span className="w-3 h-3 shrink-0 rounded-full bg-amaran-50 border border-dashed border-amaran" />Ditahan (deposit belum dibayar)</span>
         <span className="w-fit flex flex-row items-center gap-1.5"><span className="w-3 h-3 shrink-0 rounded-full ring-2 ring-hijau" />Tarikh majlis anda</span>
+        <span className="w-fit flex flex-row items-center gap-1.5"><span className="w-3 h-3 shrink-0 rounded-full bg-hijau" />Tempahan anda</span>
       </div>
     </div>
   );

@@ -1,10 +1,10 @@
-import { useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { Clapperboard } from 'lucide-react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { Clapperboard, RotateCcw, WifiOff } from 'lucide-react';
 import { cx } from '../../components/ui';
 import { CATS, REELS, vendorById } from '../../data/mock';
 import type { CategoryId, Reel } from '../../data/types';
 import { toggle, useStore } from '../../store';
-import { nav, useRoute } from '../../router';
+import { nav, swap, useRoute } from '../../router';
 import { ReelSlide } from './ReelSlide';
 import { CommentsSheet, ReportSheet, ShareSheet, type ReelComment } from './ReelSheets';
 
@@ -13,7 +13,10 @@ const COPIES = 3;
 
 export default function InspirasiScreen() {
   const { s, set } = useStore();
-  const loading = useRoute().q.get('demo') === 'loading';
+  const q = useRoute().q;
+  const demo = q.get('demo');
+  const loading = demo === 'loading';
+  const startId = Number(q.get('v')) || 0;
   const [cat, setCat] = useState<CategoryId | 'all'>('all');
   const [added, setAdded] = useState<Record<number, ReelComment[]>>({});
   const [sheet, setSheet] = useState<{ kind: 'comments' | 'share' | 'report'; reel: Reel } | null>(null);
@@ -23,11 +26,20 @@ export default function InspirasiScreen() {
   const loop = reels.length > 1;
   const slides = loop ? Array.from({ length: COPIES }, () => reels).flat() : reels;
 
-  // start in the middle copy
+  // start in the middle copy, at the reel from ?v= (Home strip, shared link)
   useLayoutEffect(() => {
     const el = feed.current;
-    if (el) el.scrollTop = loop ? reels.length * el.clientHeight : 0;
-  }, [reels, loop]);
+    const at = Math.max(0, reels.findIndex(r => r.id === startId));
+    if (el) el.scrollTop = ((loop ? reels.length : 0) + at) * el.clientHeight;
+  }, [reels, loop, startId]);
+
+  // a guest who tapped like is sent to login with &like=<id>; apply it once on return (idempotent: add, never toggle)
+  const pendingLike = Number(q.get('like')) || 0;
+  useEffect(() => {
+    if (!s.authed || !pendingLike) return;
+    set(st => ({ liked: st.liked.includes(pendingLike) ? st.liked : [...st.liked, pendingLike] }));
+    swap('/inspirasi?v=' + pendingLike);
+  }, [s.authed, pendingLike, set]);
 
   // runs once scrolling settles (debounced), using the real fractional slide height
   const settle = useRef(0);
@@ -43,7 +55,8 @@ export default function InspirasiScreen() {
     }, 120);
   };
 
-  const guard = (fn: () => void) => () => (s.authed ? fn() : nav('/masuk?next=/inspirasi'));
+  const login = (r: Reel, extra = '') => nav('/masuk?next=' + encodeURIComponent(`/inspirasi?v=${r.id}${extra}`));
+  const guard = (fn: () => void, r: Reel) => () => (s.authed ? fn() : login(r));
   const comments = (r: Reel) => [...r.comments, ...(added[r.id] ?? [])];
 
   return (
@@ -66,6 +79,14 @@ export default function InspirasiScreen() {
           <div className="w-52 h-3 rounded-full bg-white/10" />
           <div className="w-full h-11 rounded-xl bg-white/10" />
         </div>
+      ) : demo === 'error' ? (
+        // Error state (?demo=error): offline / feed failed to load
+        <div role="alert" className="w-full flex-1 flex flex-col items-center justify-center gap-3 p-8 text-center text-white">
+          <span className="w-14 h-14 shrink-0 rounded-full bg-white/10 flex items-center justify-center"><WifiOff className="w-7 h-7 shrink-0" /></span>
+          <p className="w-full text-base font-semibold">Video tidak dapat dimuatkan</p>
+          <p className="w-full text-sm text-white/70">Semak sambungan internet anda dan cuba lagi.</p>
+          <button onClick={() => swap('/inspirasi')} className="w-fit inline-flex flex-row items-center gap-2 px-5 py-3 leading-5 rounded-[10px] bg-white text-ink text-[15px] font-semibold"><RotateCcw className="w-4 h-4 shrink-0" />Cuba lagi</button>
+        </div>
       ) : reels.length === 0 ? (
         <div className="w-full flex-1 flex flex-col items-center justify-center gap-3 p-8 text-center text-white">
           <span className="w-14 h-14 shrink-0 rounded-full bg-white/10 flex items-center justify-center"><Clapperboard className="w-7 h-7 shrink-0" /></span>
@@ -79,12 +100,12 @@ export default function InspirasiScreen() {
             <ReelSlide key={`${r.id}-${i}`} reel={r}
               liked={s.liked.includes(r.id)} saved={s.savedReels.includes(r.id)} followed={s.followed.includes(r.vendorId)}
               commentCount={comments(r).length}
-              onLike={guard(() => set(st => ({ liked: toggle(st.liked, r.id) })))}
-              onSave={guard(() => set(st => ({ savedReels: toggle(st.savedReels, r.id) })))}
-              onFollow={guard(() => set(st => ({ followed: toggle(st.followed, r.vendorId) })))}
+              onLike={s.authed ? () => set(st => ({ liked: toggle(st.liked, r.id) })) : () => login(r, '&like=' + r.id)}
+              onSave={guard(() => set(st => ({ savedReels: toggle(st.savedReels, r.id) })), r)}
+              onFollow={guard(() => set(st => ({ followed: toggle(st.followed, r.vendorId) })), r)}
               onComments={() => setSheet({ kind: 'comments', reel: r })}
               onShare={() => setSheet({ kind: 'share', reel: r })}
-              onReport={guard(() => setSheet({ kind: 'report', reel: r }))} />
+              onReport={guard(() => setSheet({ kind: 'report', reel: r }), r)} />
           ))}
         </div>
       )}

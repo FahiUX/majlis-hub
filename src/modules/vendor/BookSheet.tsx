@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { AlertCircle, CircleCheckBig } from 'lucide-react';
+import { AlertCircle, CircleCheckBig, TriangleAlert } from 'lucide-react';
 import { addDays, useStore, TODAY } from '../../store';
 import { nav } from '../../router';
 import type { Booking, Vendor } from '../../data/types';
 import { Button, Chip, Sheet, cx, fmtDate, rm } from '../../components/ui';
-
-const CLOSED = ['declined', 'expired', 'lapsed', 'cancelled'];
+import { catById, vendorById } from '../../data/mock';
+import { DEAD, OPEN, effective } from '../booking/money';
 
 /** 3 nearest free dates around a taken one */
 const nearFree = (v: Vendor, d: string) => {
@@ -23,16 +23,19 @@ export default function BookSheet({ v, open, initialPkg, onClose }: { v: Vendor;
   const [date, setDate] = useState(s.event?.date ?? '2027-02-14');
   const [note, setNote] = useState('');
   const [done, setDone] = useState<string | null>(null);
-  useEffect(() => { if (open) { setPkg(initialPkg ?? v.packages[0].id); setDone(null); } }, [open, initialPkg, v]);
+  const [ack, setAck] = useState(false);
+  useEffect(() => { if (open) { setPkg(initialPkg ?? v.packages[0].id); setDone(null); setAck(false); } }, [open, initialPkg, v]);
 
   const pkg = v.packages.find(p => p.id === pkgId) ?? v.packages[0];
   const taken = v.busy.includes(date);
   const past = date <= TODAY;
-  const dup = s.bookings.some(b => b.vendorId === v.id && b.date === date && !CLOSED.includes(b.status));
+  const dup = s.bookings.some(b => b.vendorId === v.id && b.date === date && !DEAD.includes(effective(b)));
+  // another vendor in the same category on the same date: warn, don't block (PM audit gap #2)
+  const rival = s.bookings.find(b => b.vendorId !== v.id && b.date === date && OPEN.includes(effective(b)) && vendorById(b.vendorId)?.cat === v.cat);
   const err = past ? 'Tarikh sudah lepas. Pilih tarikh akan datang.' : taken ? `${v.name} sudah ditempah pada ${fmtDate(date)}.` : dup ? 'Anda sudah hantar permintaan kepada vendor ini untuk tarikh yang sama.' : null;
 
   const submit = () => {
-    if (err) return;
+    if (err || (rival && !ack)) return;
     const id = 'B-' + Math.floor(1000 + Math.random() * 9000);
     const b: Booking = { id, vendorId: v.id, packageId: pkg.id, date, total: pkg.price, note, status: 'requested', createdAt: TODAY, payments: [] };
     set(p => ({ bookings: [b, ...p.bookings] }));
@@ -57,7 +60,7 @@ export default function BookSheet({ v, open, initialPkg, onClose }: { v: Vendor;
           <span className="w-full text-xs text-muted">Anggaran jumlah</span>
           <span className="w-full text-lg font-bold num">{rm(pkg.price)}</span>
         </div>
-        <Button onClick={submit} disabled={!!err}>Hantar permintaan</Button>
+        <Button onClick={submit} disabled={!!err || (!!rival && !ack)}>Hantar permintaan</Button>
       </>}>
       <div role="radiogroup" aria-labelledby="pkg-l" className="w-full flex flex-col gap-2">
         <span id="pkg-l" className="w-full text-[13px] font-semibold">Pakej</span>
@@ -83,6 +86,18 @@ export default function BookSheet({ v, open, initialPkg, onClose }: { v: Vendor;
               <div className="w-full flex flex-row flex-wrap gap-2">{nearFree(v, date).map(d => <Chip key={d} onClick={() => setDate(d)}>{fmtDate(d, true)}</Chip>)}</div>
             </>
           )}
+        </div>
+      )}
+      {rival && !err && (
+        <div role="alert" className="w-full flex flex-col gap-3 p-4 rounded-xl bg-amaran-50">
+          <div className="w-full flex flex-row items-center gap-2 text-sm font-semibold text-amaran">
+            <TriangleAlert className="w-4 h-4 shrink-0" />
+            <span className="flex-1 min-w-0">Anda sudah ada {vendorById(rival.vendorId)?.name} untuk {catById(v.cat).name} pada tarikh ini.</span>
+          </div>
+          <label className="w-full flex flex-row items-center gap-3 text-sm text-body cursor-pointer">
+            <input type="checkbox" checked={ack} onChange={e => setAck(e.target.checked)} className="w-5 h-5 shrink-0 rounded-[6px] accent-hijau" />
+            <span className="flex-1 min-w-0">Saya faham, teruskan juga (contoh: perlukan 2 jurugambar)</span>
+          </label>
         </div>
       )}
       <label className="w-full flex flex-col gap-2">

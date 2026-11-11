@@ -52,7 +52,18 @@ export default function TabungScreen() {
             {p.remaining === 0 ? <Pill>Cukup</Pill> : p.short > 0 ? <Pill tone="amaran"><TriangleAlert className="w-3.5 h-3.5 shrink-0" />Kurang {rm(p.short)}</Pill> : <Pill>Ikut rancangan</Pill>}
           </div>
           <p className="w-full font-display text-[48px] leading-[52px] font-semibold num">{rm(p.monthly)}<span className="text-lg font-sans font-semibold text-muted">/bulan</span></p>
-          <p className="w-full text-sm text-body">Untuk {p.dues.length} bayaran dalam {p.months} bulan. Sudah simpan <b className="num">{rm(p.saved)}</b> daripada <b className="num">{rm(p.owed)}</b>.</p>
+          <p className="w-full text-sm text-body">Untuk {p.dues.length} bayaran belum dibayar ({rm(p.owed)}) dalam {p.months} bulan.</p>
+          <div className="w-full flex flex-row items-stretch gap-3">
+            <div className="flex-1 min-w-0 flex flex-col gap-0.5 p-3 rounded-xl bg-white">
+              <span className="w-full text-xs text-muted">Jumlah disimpan</span>
+              <span className="w-full text-base font-semibold num">{rm(p.total)}</span>
+            </div>
+            <div className="flex-1 min-w-0 flex flex-col gap-0.5 p-3 rounded-xl bg-white">
+              <span className="w-full text-xs text-muted">Baki tabung</span>
+              <span className="w-full text-base font-semibold num text-hijau">{rm(p.saved)}</span>
+              {p.spentFromTabung > 0 && <span className="w-full text-xs text-muted num">−{rm(p.spentFromTabung)} sudah dibayar</span>}
+            </div>
+          </div>
           <div className="w-full h-2 rounded-full bg-white overflow-hidden" role="progressbar" aria-label="Simpanan" aria-valuenow={Math.round((p.saved / p.owed) * 100)} aria-valuemin={0} aria-valuemax={100}>
             <div className="h-full rounded-full bg-hijau" style={{ width: `${Math.min(100, (p.saved / p.owed) * 100)}%` }} />
           </div>
@@ -65,7 +76,7 @@ export default function TabungScreen() {
           <summary className="w-full flex flex-row items-center gap-2 text-sm font-semibold cursor-pointer list-none">
             <span className="flex-1 min-w-0">Cara kira</span><ChevronDown className="w-4 h-4 shrink-0 group-open:rotate-180" />
           </summary>
-          <p className="w-full text-sm text-body">Baki perlu disimpan = jumlah bayaran belum dibayar ({rm(p.owed)}) tolak simpanan anda ({rm(p.saved)}) = {rm(p.remaining)}. Dibahagi dengan {p.months} bulan sehingga bayaran terakhir, dibundar ke RM 10.</p>
+          <p className="w-full text-sm text-body">Baki perlu disimpan = jumlah bayaran belum dibayar ({rm(p.owed)}) tolak baki tabung ({rm(p.saved)}) = {rm(p.remaining)}. Baki tabung = jumlah disimpan ({rm(p.total)}) tolak ansuran yang sudah dibayar sejak mula menabung ({rm(p.spentFromTabung)}). Dibahagi dengan {p.months} bulan sehingga bayaran terakhir, dibundar ke RM 10.</p>
         </details>
 
         <section className="w-full flex flex-col gap-3">

@@ -26,6 +26,7 @@ function Skeleton() {
 export default function SearchScreen() {
   const { q } = useRoute();
   const { s, set, toast } = useStore();
+  const place = s.event?.place.split(',')[0] || 'lokasi anda';
   const f = readFilters(q);
   const go = (patch: Partial<Filters>) => swap(writeFilters({ ...f, ...patch }));
   const [text, setText] = useState(f.q);
@@ -138,7 +139,7 @@ export default function SearchScreen() {
             </div>
           )}
           {!isError && <p className="w-full text-sm text-muted" aria-live="polite">
-            <b className="text-ink num">{results.length} vendor</b> {f.cat ? catById(f.cat).name : 'semua kategori'} · {f.state ?? `dalam ${f.km} km`} · disahkan
+            <b className="text-ink num">{results.length} vendor</b> {f.cat ? catById(f.cat).name : 'semua kategori'} · {f.state ?? `dalam ${f.km} km dari ${place}`} · disahkan
           </p>}
           {isError ? (
             <EmptyState icon={<AlertCircle className="w-6 h-6" />} title="Tak dapat muatkan vendor" body="Sambungan terputus. Semak internet anda dan cuba lagi."

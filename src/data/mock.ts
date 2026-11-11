@@ -23,6 +23,13 @@ const PLAN3: Instalment[] = [
   { label: 'Bayaran kedua', pct: 40, daysBefore: 60 },
   { label: 'Baki akhir', pct: 30, daysBefore: 7 },
 ];
+/** low-deposit plan for some vendors, so Compare shows real differences */
+const PLAN4: Instalment[] = [
+  { label: 'Deposit', pct: 20, daysBefore: null },
+  { label: 'Bayaran kedua', pct: 30, daysBefore: 90 },
+  { label: 'Bayaran ketiga', pct: 30, daysBefore: 30 },
+  { label: 'Baki akhir', pct: 20, daysBefore: 7 },
+];
 const PLAN2: Instalment[] = [
   { label: 'Deposit', pct: 50, daysBefore: null },
   { label: 'Baki akhir', pct: 50, daysBefore: 7 },
@@ -111,7 +118,9 @@ export const VENDORS: Vendor[] = SEEDS.map(([id, cat, name, area, state, km, rat
     gallery: [imgs[k % imgs.length], ...imgs.filter((_, j) => j !== k % imgs.length), FALLBACK_IMG[cat]],
     since: ['Mei 2026', 'Jun 2026', 'Jul 2026', 'Ogo 2026'][i % 4],
     about: `${name} berpangkalan di ${area} dan melayani majlis di sekitar ${state}. Kami utamakan komunikasi jelas, harga telus dan kerja yang tepat masa.`,
-    packages: pkgs(id, base, PKG_ITEMS[cat], cat === 'inai' || cat === 'mc' ? PLAN2 : PLAN3),
+    // first vendor per category keeps the default plan (seeded bookings use it); others vary
+    packages: pkgs(id, base, PKG_ITEMS[cat].map(([n, m, inc]) => [n, m, k === 1 ? [...inc, 'Konsultasi percuma sebelum majlis'] : k === 2 ? [...inc, 'Diskaun 5% tempahan awal'] : inc]),
+      k === 1 ? PLAN4 : k === 2 ? PLAN2 : cat === 'inai' || cat === 'mc' ? PLAN2 : PLAN3),
     cancelPolicy: 'Batal lebih 60 hari sebelum majlis: deposit dipulangkan 50%. Kurang 60 hari: deposit tidak dipulangkan.',
     // some vendors are already taken on the demo event date, but never the ones Aina has booked (PM audit B2)
     busy: i % 3 === 0 && !SEEDED_BOOKED.includes(id) ? [...busy, '2027-02-14'] : busy,

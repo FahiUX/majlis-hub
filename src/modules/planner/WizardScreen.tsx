@@ -1,10 +1,11 @@
 import { useState, type ReactNode } from 'react';
 import { Briefcase, Cake, ChevronLeft, Heart, Minus, Plus, Sparkles, TriangleAlert, UtensilsCrossed, X } from 'lucide-react';
 import { CATS } from '../../data/mock';
-import { TODAY, addDays } from '../../store';
+import { TODAY, addDays, useStore } from '../../store';
 import { back, swap, useRoute } from '../../router';
 import { Button, cx } from '../../components/ui';
 import { SuggestStep, type Draft } from './SuggestStep';
+import type { MajlisEvent } from '../../data/types';
 
 const TYPES = [
   { id: 'Perkahwinan', Icon: Heart, hint: 'Akad nikah, sanding, resepsi' },
@@ -14,14 +15,23 @@ const TYPES = [
   { id: 'Lain-lain', Icon: Sparkles, hint: 'Apa sahaja majlis' },
 ];
 
+const EMPTY: Draft = {
+  type: '', date: '', twoDays: false, day2: '', place: '', pax: 300,
+  budget: 25000, cats: CATS.map(c => c.id), weights: Object.fromEntries(CATS.map(c => [c.id, c.split])), picks: {},
+};
+const draftFrom = (e: MajlisEvent | null): Draft => !e ? EMPTY : {
+  type: e.type, date: e.date, twoDays: !!e.date2, day2: e.date2 ?? '', place: e.place, pax: e.pax, budget: e.budget, cats: e.cats,
+  weights: { ...EMPTY.weights, ...e.split }, picks: e.shortlist,
+};
+
 export default function WizardScreen() {
   const r = useRoute();
   const step = Math.min(4, Math.max(1, Number(r.q.get('step')) || 1));
   const go = (n: number) => swap('/majlis/baru?step=' + n);
-  const [d, setD] = useState<Draft>(() => ({
-    type: '', date: '', twoDays: false, day2: '', place: '', pax: 300,
-    budget: 25000, cats: CATS.map(c => c.id), weights: Object.fromEntries(CATS.map(c => [c.id, c.split])), picks: {},
-  }));
+  const { s } = useStore();
+  // edit the current majlis by default (PM audit: the wizard silently overwrote pax/budget); "Mula dari kosong" starts fresh
+  const [d, setD] = useState<Draft>(() => draftFrom(s.event));
+  const [fresh, setFresh] = useState(false);
   const set = (p: Partial<Draft>) => setD(o => ({ ...o, ...p }));
 
   const dateErr = d.date && d.date <= TODAY ? 'Tarikh ini sudah lepas. Pilih tarikh selepas hari ini.' : '';
@@ -36,7 +46,7 @@ export default function WizardScreen() {
             <button aria-label="Kembali" onClick={() => (step > 1 ? go(step - 1) : back('/majlis'))} className="w-10 h-10 shrink-0 rounded-full flex items-center justify-center hover:bg-pucuk-50">
               <ChevronLeft className="w-6 h-6 shrink-0" />
             </button>
-            <h1 className="flex-1 min-w-0 text-[17px] leading-6 font-semibold truncate">Majlis baru</h1>
+            <h1 className="flex-1 min-w-0 text-[17px] leading-6 font-semibold truncate">{s.event && !fresh ? 'Kemas kini majlis' : 'Majlis baru'}</h1>
           </div>
           <div className="w-fit flex flex-row items-center gap-2 -mr-2">
             <span className="text-xs font-semibold text-muted num whitespace-nowrap">Langkah {step}/4</span>
@@ -53,6 +63,12 @@ export default function WizardScreen() {
       <div className="w-full flex-1 flex flex-col gap-5 p-5">
         {step === 1 && (
           <Q title="Majlis apa yang anda rancang?">
+            {s.event && !fresh && (
+              <div className="w-full flex flex-row items-center gap-3 p-4 rounded-2xl bg-pucuk-50">
+                <span className="flex-1 min-w-0 text-sm text-body">Anda sedang mengemas kini <b>{s.event.name}</b>. Jawapan sedia ada telah diisi.</span>
+                <Button variant="ghost" className="px-3! py-2!" onClick={() => { setD(EMPTY); setFresh(true); }}>Mula dari kosong</Button>
+              </div>
+            )}
             <div role="radiogroup" aria-label="Jenis majlis" className="w-full flex flex-col gap-3">
               {TYPES.map(({ id, Icon, hint }) => (
                 <button key={id} role="radio" aria-checked={d.type === id} onClick={() => set({ type: id })}

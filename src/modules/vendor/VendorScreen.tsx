@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ChevronLeft, Clock, Heart, MapPin, RotateCcw, SearchX, Share2, ShieldCheck, Check, WifiOff } from 'lucide-react';
 import { useStore, toggle } from '../../store';
 import { back, nav, swap, useRoute } from '../../router';
@@ -15,6 +15,9 @@ export default function VendorScreen({ id }: { id?: number | string }) {
   const v = vendorById(Number(id));
   const [verify, setVerify] = useState(false);
   const [book, setBook] = useState(r.q.get('book') === '1');
+  // login returns here with ?book=1 after the screen already mounted, so react to the query too
+  const wantBook = r.q.get('book') === '1';
+  useEffect(() => { if (wantBook) setBook(true); }, [wantBook]);
   const [pkgId, setPkgId] = useState<string | undefined>();
 
   const demo = r.q.get('demo');
@@ -125,7 +128,7 @@ export default function VendorScreen({ id }: { id?: number | string }) {
           <ShieldCheck className="w-4 h-4 shrink-0" /><span className="flex-1 min-w-0">Disahkan sejak {v.since}</span>
         </div>
       </Sheet>
-      <BookSheet v={v} open={book} initialPkg={pkgId} onClose={() => setBook(false)} />
+      <BookSheet v={v} open={book} initialPkg={pkgId} onClose={() => { setBook(false); if (wantBook) { r.q.delete('book'); swap(r.path + (r.q.toString() ? '?' + r.q : '')); } }} />
     </div>
   );
 }

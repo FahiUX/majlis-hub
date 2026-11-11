@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Star } from 'lucide-react';
 import { Button, Chip, Divider, Sheet, cx, rm } from '../../components/ui';
-import { PRICE_MAX, PRICE_STEP, RADII, STATES, histogram, search, type Filters } from './searchLogic';
+import { useStore } from '../../store';
+import { PRICE_MAX, PRICE_STEP, STATES, histogram, search, type Filters } from './searchLogic';
 
 const THUMB = 'absolute inset-0 w-full h-11 appearance-none bg-transparent pointer-events-none [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-7 [&::-webkit-slider-thumb]:h-7 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-hijau [&::-webkit-slider-thumb]:shadow-float [&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:w-7 [&::-moz-range-thumb]:h-7 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-white [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-hijau';
 
@@ -38,6 +39,7 @@ export function BudgetSlider({ min, max, cat, onChange }: { min: number; max: nu
 
 export default function FilterSheet({ open, f, onClose, onApply }: { open: boolean; f: Filters; onClose: () => void; onApply: (f: Filters) => void }) {
   const [d, setD] = useState(f);
+  const place = useStore().s.event?.place.split(',')[0] || 'lokasi anda';
   const [mode, setMode] = useState<'radius' | 'state'>(f.state ? 'state' : 'radius');
   // re-seed the draft each time the sheet opens
   const [lastOpen, setLastOpen] = useState(open);
@@ -61,12 +63,21 @@ export default function FilterSheet({ open, f, onClose, onApply }: { open: boole
             ))}
           </div>
         </div>
-        <div className="w-full flex flex-row flex-wrap gap-2">
-          {mode === 'radius'
-            ? RADII.map(k => <Chip key={k} on={d.km === k} onClick={() => setD({ ...d, km: k })}>{k} km</Chip>)
-            : STATES.map(st => <Chip key={st} on={d.state === st} onClick={() => setD({ ...d, state: st })}>{st}</Chip>)}
-        </div>
-        <p className="w-full text-xs text-muted">{mode === 'radius' ? 'Diukur dari lokasi majlis anda, Shah Alam.' : 'Vendor yang berpangkalan di negeri ini.'}</p>
+        {mode === 'radius' ? (
+          <div className="w-full flex flex-col gap-1">
+            <div className="w-full flex flex-row items-center gap-2">
+              <span className="flex-1 min-w-0 text-sm text-muted">Jarak maksimum</span>
+              <span className="w-fit shrink-0 text-[15px] font-bold num">{d.km} km</span>
+            </div>
+            <input type="range" aria-label="Jarak maksimum dalam km" min={10} max={150} step={5} value={d.km}
+              onChange={e => setD({ ...d, km: Number(e.target.value) })} className="w-full h-11 accent-hijau" />
+          </div>
+        ) : (
+          <div className="w-full flex flex-row flex-wrap gap-2">
+            {STATES.map(st => <Chip key={st} on={d.state === st} onClick={() => setD({ ...d, state: st })}>{st}</Chip>)}
+          </div>
+        )}
+        <p className="w-full text-xs text-muted">{mode === 'radius' ? `Diukur dari lokasi majlis anda, ${place}.` : 'Vendor yang berpangkalan di negeri ini.'}</p>
       </div>
       <Divider />
       <div className="w-full flex flex-col gap-3">
@@ -82,6 +93,7 @@ export default function FilterSheet({ open, f, onClose, onApply }: { open: boole
         <Chip on={d.r4} onClick={() => setD({ ...d, r4: !d.r4 })}><Star className="w-3.5 h-3.5 shrink-0 fill-current" />4 ke atas</Chip>
         <Chip on={d.verified} onClick={() => setD({ ...d, verified: !d.verified })}>Disahkan sahaja</Chip>
       </div>
+      <p className="w-full text-xs text-muted">Semua vendor di Majlis Hub disahkan sebelum disenaraikan.</p>
     </Sheet>
   );
 }

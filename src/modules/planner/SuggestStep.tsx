@@ -50,14 +50,24 @@ export function SuggestStep({ d, set }: { d: Draft; set: (p: Partial<Draft>) => 
   };
   const toggleCat = (c: CategoryId) => set({ cats: d.cats.includes(c) ? d.cats.filter(x => x !== c) : CATS.map(x => x.id).filter(x => x === c || d.cats.includes(x)) });
 
-  // a different type or date is a new majlis: confirm before replacing the current one (QA W4)
-  const replaces = !!s.event && (s.event.type !== d.type || s.event.date !== d.date);
+  // any change to the current majlis is listed and confirmed before saving (QA W4, PM audit)
+  const day2 = d.twoDays && d.day2 ? d.day2 : undefined;
+  const e = s.event;
+  const changes = !e ? [] : ([
+    ['Jenis', e.type, d.type],
+    ['Tarikh', fmtDate(e.date), fmtDate(d.date)],
+    ['Hari kedua', e.date2 ? fmtDate(e.date2) : 'Tiada', day2 ? fmtDate(day2) : 'Tiada'],
+    ['Lokasi', e.place, d.place],
+    ['Tetamu', String(e.pax), String(d.pax)],
+    ['Bajet', rm(e.budget), rm(d.budget)],
+  ] as const).filter(([, a, b]) => a !== b);
+  const replaces = !!e && (e.type !== d.type || e.date !== d.date);
   const finish = () => {
     const shortlist: Partial<Record<CategoryId, number>> = {};
     rows.forEach(r => { if (r.v) shortlist[r.cat] = r.v.id; });
     setS(() => ({
       event: {
-        name: replaces || !s.event ? `Majlis ${d.type.toLowerCase()}` : s.event.name, type: d.type, date: d.date, place: d.place, pax: d.pax, budget: d.budget,
+        name: replaces || !s.event ? `Majlis ${d.type.toLowerCase()}` : s.event.name, type: d.type, date: d.date, date2: day2, place: d.place, pax: d.pax, budget: d.budget,
         split: Object.fromEntries(rows.map(r => [r.cat, Math.round(r.pct)])), shortlist, cats: d.cats,
         custom: replaces ? [] : s.event?.custom,
       },
@@ -147,7 +157,7 @@ export function SuggestStep({ d, set }: { d: Draft; set: (p: Partial<Draft>) => 
           <span className={cx('w-fit shrink-0 num', over ? 'text-amaran font-semibold' : 'text-muted')}>{over ? `Lebih ${rm(total - d.budget)}` : `Baki ${rm(d.budget - total)}`}</span>
         </div>
         <div className="w-full h-2 rounded-full bg-line overflow-hidden"><div className={cx('h-full rounded-full', over ? 'bg-amaran' : 'bg-hijau')} style={{ width: `${Math.min(100, (total / (d.budget || 1)) * 100)}%` }} /></div>
-        <Button disabled={!d.cats.length || demo === 'loading' || demo === 'error'} onClick={() => (replaces ? setConfirm(true) : finish())} className="w-full">Guna pakej ini</Button>
+        <Button disabled={!d.cats.length || demo === 'loading' || demo === 'error'} onClick={() => (changes.length ? setConfirm(true) : finish())} className="w-full">Guna pakej ini</Button>
         <p className="w-full text-xs text-muted text-center">Vendor disenarai pendek, belum ditempah. Anda hantar permintaan tempahan kemudian.</p>
       </div>
 
@@ -166,9 +176,18 @@ export function SuggestStep({ d, set }: { d: Draft; set: (p: Partial<Draft>) => 
         ))}
       </Sheet>
 
-      <Sheet open={confirm} onClose={() => setConfirm(false)} title="Ganti majlis sedia ada?"
-        footer={<><Button variant="secondary" block onClick={() => setConfirm(false)}>Batal</Button><Button block onClick={() => { setConfirm(false); finish(); }}>Ya, ganti</Button></>}>
-        {s.event && <p className="w-full text-sm text-body">Majlis Saya kini untuk <b>{s.event.name}</b> ({fmtDate(s.event.date)}). Pakej baru ini untuk {d.type.toLowerCase()} pada {fmtDate(d.date)} akan menggantikannya. Tempahan sedia ada kekal, tapi tarikhnya mungkin tidak sama.</p>}
+      <Sheet open={confirm} onClose={() => setConfirm(false)} title={replaces ? 'Ganti majlis sedia ada?' : 'Kemas kini majlis?'}
+        footer={<><Button variant="secondary" block onClick={() => setConfirm(false)}>Batal</Button><Button block onClick={() => { setConfirm(false); finish(); }}>{replaces ? 'Ya, ganti' : 'Ya, simpan'}</Button></>}>
+        {e && <p className="w-full text-sm text-body">Perubahan pada <b>{e.name}</b>:</p>}
+        <ul className="w-full flex flex-col gap-2">
+          {changes.map(([label, a, b]) => (
+            <li key={label} className="w-full flex flex-row items-center gap-2 text-sm">
+              <span className="w-[88px] shrink-0 text-muted">{label}</span>
+              <span className="flex-1 min-w-0 num">{a} → <b>{b}</b></span>
+            </li>
+          ))}
+        </ul>
+        {replaces && <p className="w-full text-sm text-amaran">Tempahan sedia ada kekal, tapi tarikhnya mungkin tidak sama dengan majlis baru.</p>}
       </Sheet>
 
       <Sheet open={splitOpen} onClose={() => setSplitOpen(false)} title="Laraskan pembahagian" footer={<Button block onClick={() => setSplitOpen(false)}>Siap</Button>}>

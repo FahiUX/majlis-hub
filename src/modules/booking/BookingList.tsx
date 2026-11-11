@@ -1,15 +1,13 @@
 import { CalendarHeart, ChevronRight, Hourglass } from 'lucide-react';
-import { useStore, daysBetween, addDays, TODAY } from '../../store';
+import { useStore, daysBetween, TODAY } from '../../store';
 import { nav } from '../../router';
 import { vendorById } from '../../data/mock';
 import type { Booking } from '../../data/types';
+import { effective } from './money';
+import MoneyBar from './MoneyBar';
 import { Button, EmptyState, Img, StatusChip, TopBar, cx, fmtDate, rm } from '../../components/ui';
 
-/** time-based states: unpaid deposit past its 30-day deadline = lapsed; no vendor reply within 48h = expired */
-export const effective = (b: Booking): Booking['status'] =>
-  b.status === 'deposit_due' && b.depositDeadline && b.depositDeadline < TODAY ? 'lapsed'
-    : b.status === 'requested' && addDays(b.createdAt, 2) < TODAY ? 'expired'
-      : b.status;
+export { effective } from './money';
 
 export function DepositLine({ b }: { b: Booking }) {
   const left = daysBetween(TODAY, b.depositDeadline ?? TODAY);
@@ -36,6 +34,7 @@ export default function BookingList() {
         <EmptyState icon={<CalendarHeart className="w-6 h-6" />} title="Belum ada tempahan" body="Cari vendor dan hantar permintaan. Semua tempahan anda akan muncul di sini." action={<Button onClick={() => nav('/cari')}>Cari vendor</Button>} />
       ) : (
         <div className="w-full flex flex-col gap-6 p-5">
+          <MoneyBar bookings={s.bookings} budget={s.event?.budget} />
           {GROUPS.map(([label, fn]) => {
             const list = s.bookings.filter(fn);
             if (!list.length) return null;

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type InputHTMLAttributes, type ReactNode } from 'react';
-import { Check, Eye, Plus, Send, Trash2, Users } from 'lucide-react';
-import { Button, Divider, TopBar, cx } from '../../components/ui';
+import { Check, Eye, Plus, Send, Trash2, TriangleAlert, Users } from 'lucide-react';
+import { Button, Divider, TopBar, cx, fmtDate } from '../../components/ui';
 import { useStore } from '../../store';
 import { nav } from '../../router';
 import type { Invitation } from '../../data/types';
@@ -46,6 +46,12 @@ export default function KadEditor() {
     if (s.event && (!inv.date || !inv.venue)) up({ date: inv.date || s.event.date, venue: inv.venue || s.event.place });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // the kad must agree with My Majlis: date exactly; venue must at least name the event's town (a dewan name is more specific)
+  const town = s.event?.place.split(',')[0].trim().toLowerCase() ?? '';
+  const dateOff = !!s.event && !!inv.date && inv.date !== s.event.date;
+  const placeOff = !!s.event && !!inv.venue && !!town && !inv.venue.toLowerCase().includes(town);
+  const syncEvent = () => s.event && up({ date: s.event.date, ...(placeOff ? { venue: s.event.place } : {}) });
+
   const missing = REQUIRED.filter(k => !String(inv[k]).trim());
   const err = (k: keyof Invitation) => (tried && missing.includes(k) ? 'Wajib diisi' : undefined);
   const onShare = () => { setTried(true); if (missing.length === 0) setShare(true); };
@@ -59,6 +65,18 @@ export default function KadEditor() {
         </button>
       } />
       <div className="w-full flex flex-col gap-5 p-4">
+        {s.event && (dateOff || placeOff) && (
+          <div role="status" className="w-full flex flex-col gap-3 p-4 rounded-2xl bg-amaran-50 border border-amaran/30">
+            <div className="w-full flex flex-row items-start gap-2">
+              <TriangleAlert className="w-5 h-5 shrink-0 text-amaran" />
+              <div className="flex-1 min-w-0 flex flex-col gap-1">
+                <p className="w-full text-sm font-semibold text-amaran">{dateOff && placeOff ? 'Tarikh dan tempat' : dateOff ? 'Tarikh' : 'Tempat'} kad berbeza dengan majlis anda</p>
+                <p className="w-full text-sm text-body">Majlis Saya: {fmtDate(s.event.date, true)} · {s.event.place}</p>
+              </div>
+            </div>
+            <Button variant="secondary" onClick={syncEvent}>Kemaskini ikut majlis</Button>
+          </div>
+        )}
         <div className="w-full flex flex-col gap-3">
           <h2 className="w-full text-base font-semibold">Pilih templat</h2>
           <div role="radiogroup" aria-label="Templat kad" className="w-full flex flex-row gap-2 overflow-x-auto">

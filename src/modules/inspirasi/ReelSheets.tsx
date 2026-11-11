@@ -1,11 +1,18 @@
 import { useState } from 'react';
 import { Flag, Heart, Link, LogIn, MessageCircle, Send } from 'lucide-react';
-import { Button, Sheet, cx } from '../../components/ui';
+import { Button, Sheet, cx, rm } from '../../components/ui';
+import { fromPrice, vendorById } from '../../data/mock';
 import { useStore } from '../../store';
 import { nav } from '../../router';
 import type { Reel } from '../../data/types';
 
 export type ReelComment = Reel['comments'][number];
+
+/** a vendor's own comment quotes the live "from" price, so it never disagrees with the CTA */
+const vendorPrice = (text: string, reel: Reel | null) => {
+  const v = reel && vendorById(reel.vendorId);
+  return v ? text.replace(/RM\s?[\d,]+/, rm(fromPrice(v))) : text;
+};
 
 export function CommentsSheet({ reel, comments, onClose, onSend }: { reel: Reel | null; comments: ReelComment[]; onClose: () => void; onSend: (text: string) => void }) {
   const { s } = useStore();
@@ -28,7 +35,7 @@ export function CommentsSheet({ reel, comments, onClose, onSend }: { reel: Reel 
               {c.vendor && <span className="w-fit px-2 py-0.5 rounded-full bg-hijau text-white text-[11px] font-semibold">Vendor</span>}
               <span className="w-fit text-muted">{c.time}</span>
             </span>
-            <p className="w-full text-sm text-body">{c.text}</p>
+            <p className="w-full text-sm text-body">{c.vendor ? vendorPrice(c.text, reel) : c.text}</p>
           </div>
           <span className="w-fit shrink-0 flex flex-col items-center gap-0.5 text-xs text-muted"><Heart className="w-4 h-4 shrink-0" />{c.likes}</span>
         </div>
@@ -40,7 +47,7 @@ export function CommentsSheet({ reel, comments, onClose, onSend }: { reel: Reel 
           <button aria-label="Hantar komen" disabled={!text.trim()} onClick={send} className="w-11 h-11 shrink-0 rounded-full bg-hijau text-white flex items-center justify-center disabled:bg-pucuk-200"><Send className="w-5 h-5 shrink-0" /></button>
         </div>
       ) : (
-        <div className="w-full flex flex-row"><Button block onClick={() => nav('/masuk?next=/inspirasi')}><LogIn className="w-5 h-5 shrink-0" />Log masuk untuk komen</Button></div>
+        <div className="w-full flex flex-row"><Button block onClick={() => nav('/masuk?next=' + encodeURIComponent('/inspirasi?v=' + (reel?.id ?? '')))}><LogIn className="w-5 h-5 shrink-0" />Log masuk untuk komen</Button></div>
       )}
     </Sheet>
   );
@@ -48,7 +55,7 @@ export function CommentsSheet({ reel, comments, onClose, onSend }: { reel: Reel 
 
 export function ShareSheet({ reel, onClose }: { reel: Reel | null; onClose: () => void }) {
   const { toast } = useStore();
-  const link = location.origin + location.pathname + '#/inspirasi';
+  const link = location.origin + location.pathname + '#/inspirasi?v=' + (reel?.id ?? '');
   const copy = async () => { try { await navigator.clipboard.writeText(link); } catch { /* clipboard blocked: link still shown in toast */ } toast('Pautan disalin'); onClose(); };
   const native = async () => { if (navigator.share) { try { await navigator.share({ title: reel?.title, url: link }); } catch { /* user cancelled */ } } else copy(); onClose(); };
   const row = 'w-full flex flex-row items-center gap-3 px-4 py-3.5 leading-5 rounded-xl border border-line bg-white text-[15px] font-semibold';
