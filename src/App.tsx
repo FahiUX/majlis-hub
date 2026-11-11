@@ -21,9 +21,10 @@ import MessagesScreen from './modules/chat/MessagesScreen';
 import ChatScreen from './modules/chat/ChatScreen';
 import LoginScreen from './modules/auth/LoginScreen';
 import AccountScreen from './modules/auth/AccountScreen';
+import NotificationsScreen from './modules/home/NotificationsScreen';
 
 /** pages with the customer's own data; guests get a login prompt instead (RBAC, PM audit B1) */
-const PRIVATE = ['tempahan', 'majlis', 'tabung', 'kad', 'mesej'];
+const PRIVATE = ['tempahan', 'majlis', 'tabung', 'kad', 'mesej', 'notifikasi'];
 
 function LoginGate({ r }: { r: Route }) {
   const next = encodeURIComponent(r.path + (r.q.toString() ? '?' + r.q.toString() : ''));
@@ -54,6 +55,7 @@ function screenFor(r: Route, authed: boolean) {
     case 'mesej': return b ? <ChatScreen id={Number(b)} /> : <MessagesScreen />;
     case 'masuk': return <LoginScreen />;
     case 'akaun': return <AccountScreen />;
+    case 'notifikasi': return <NotificationsScreen />;
     default: return <HomeScreen />;
   }
 }
