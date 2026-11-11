@@ -61,7 +61,8 @@ export function SuggestStep({ d, set }: { d: Draft; set: (p: Partial<Draft>) => 
     ['Tetamu', String(e.pax), String(d.pax)],
     ['Bajet', rm(e.budget), rm(d.budget)],
   ] as const).filter(([, a, b]) => a !== b);
-  const replaces = !!e && (e.type !== d.type || e.date !== d.date);
+  // only a different event type is a new majlis; a new date/pax/budget updates the same one (keeps name + checklist) (QA N1)
+  const replaces = !!e && e.type !== d.type;
   const finish = () => {
     const shortlist: Partial<Record<CategoryId, number>> = {};
     rows.forEach(r => { if (r.v) shortlist[r.cat] = r.v.id; });
