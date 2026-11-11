@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { BellRing, CalendarX, Check, CircleCheckBig, Flag, Lock, MessageCircle, PencilLine, PiggyBank, SearchX, Sparkles, Star, TriangleAlert } from 'lucide-react';
-import { useStore, daysBetween, TODAY, addDays } from '../../store';
+import { useStore, daysBetween, TODAY } from '../../store';
 import { nav } from '../../router';
 import { VENDORS, kmFrom, vendorById } from '../../data/mock';
 import type { BookingStatus, Vendor } from '../../data/types';
 import { Button, Divider, EmptyState, Img, Pill, StatusChip, TopBar, VerifiedBadge, cx, fmtDate, rm } from '../../components/ui';
 import { DepositLine, effective } from './BookingList';
 import { CancelSheet, PaySheet } from './BookingSheets';
-import { buildPayments } from './plan';
+import { buildPayments, depositDeadline } from './plan';
 import { reminders } from './money';
 import ReviewSheet from './ReviewSheet';
 import { loadReviews, reviewsChanged } from '../vendor/reviews';
@@ -63,7 +63,7 @@ export default function BookingDetail({ id }: { id?: number | string }) {
   const remindFor = st === 'deposit_due' ? b.payments[0] : st === 'confirmed' && nextDue >= 0 ? b.payments[nextDue] : undefined;
 
   const simulateAccept = () => {
-    const deadline = addDays(TODAY, 30);
+    const deadline = depositDeadline(b.date);
     set(p => ({ bookings: p.bookings.map(x => (x.id === b.id ? { ...x, status: 'deposit_due', depositDeadline: deadline, payments: buildPayments(pkg, x.total, x.date, deadline) } : x)) }));
     toast(`${v.name} terima permintaan anda`);
   };

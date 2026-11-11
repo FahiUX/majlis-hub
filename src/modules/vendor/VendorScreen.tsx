@@ -88,7 +88,7 @@ export default function VendorScreen({ id }: { id?: number | string }) {
             <button onClick={() => setVerify(true)} className="w-fit" aria-label="Apa yang kami semak">
               <VerifiedBadge v={v} />
             </button>
-            {v.isNew && <Pill tone="emas"><Sparkles className="w-3.5 h-3.5 shrink-0" />Baru di Majlis Hub</Pill>}
+            {v.isNew && <Pill tone="hijau"><Sparkles className="w-3.5 h-3.5 shrink-0" />Baru di Majlis Hub</Pill>}
           </div>
         </div>
         {score.reviews === 0 ? (

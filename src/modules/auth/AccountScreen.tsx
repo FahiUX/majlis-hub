@@ -103,7 +103,7 @@ export default function AccountScreen() {
           <Divider />
           <Row icon={<Clapperboard className="w-5 h-5 shrink-0" />} label={`Video disukai · ${liked.length}`} />
           {liked.length === 0
-            ? <p className="w-full text-sm text-muted">Tekan ♥ atau ketik dua kali pada video Inspirasi untuk simpan di sini.</p>
+            ? <p className="w-full text-sm text-muted">Tekan ikon hati atau ketik dua kali pada video Inspirasi untuk simpan di sini.</p>
             : <div className="w-full flex flex-row flex-wrap gap-2">
                 {liked.map(r => (
                   <button key={r.id} onClick={() => nav(`/inspirasi?v=${r.id}`)} aria-label={`Tonton: ${r.title}`} className="w-[88px] shrink-0 flex flex-col gap-1 text-left">
