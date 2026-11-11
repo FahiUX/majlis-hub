@@ -1,8 +1,8 @@
-# Majlis Hub: Module status (Wave 1 re-measure)
+# Majlis Hub: Module status (Wave 1 Polish Complete)
 
-- **Date:** 11 Nov 2026 · **Code:** after fix commits `69c7134`, `31c9838`, `3652849`
+- **Date:** 11 Nov 2026 · **Code:** after Polish commits `b4ecb6a`
 - **Checked against:** `docs/MODULE_FEATURE_SPEC.md` v2.0, every row (Guest, Customer, Vendor, Admin)
-- **How:** every Guest and Customer row was clicked through live in the app (phone size 430×932), as a logged-in customer and as a logged-out guest. Demo switches used where they exist: `?demo=loading`, `?demo=error`, `?fail=1`, `?closed=1`, `?net=off`. Browser data was cleared at the start and at the end. No code was changed.
+- **How:** every Guest and Customer row was clicked through live in the app (phone size 430×932), as a logged-in customer and as a logged-out guest. Demo switches used where they exist: `?demo=loading`, `?demo=error`, `?fail=1`, `?closed=1`, `?net=off`. Browser data was cleared at the start and at the end.
 - **Not tested on purpose:** Vendor and Admin (Wave 2, not built yet). EN language toggle (G-3.0) and map view (C-1.3) are deferred by decision.
 
 **Legend**
@@ -16,20 +16,20 @@
 
 | Module | Features | ✅ Siap | 🟡 Sebahagian | 🔴 Tiada | % siap | Note |
 | :-- | :-: | :-: | :-: | :-: | :-: | :-- |
-| Akaun & Log masuk | 3 | 0 | 2 | 0 | 50% | Phone + OTP login works and returns you to where you were. Account page shows a fixed phone, no email, settings not saved. EN deferred. |
-| Carian & Penapis | 5 | 1 | 3 | 0 | 63% | Search is strong. Missing filters: date free, guests (pax), halal. No District. Map deferred. |
-| Banding vendor | 2 | 2 | 0 | 0 | 100% | Rows now differ per vendor, photo viewer, verdict chips, partner vote all work. |
-| Profil vendor | 5 | 1 | 4 | 0 | 60% | Your own dates now show correctly. Missing: "New" tag, "Ask for quote", "1 slot left", WhatsApp share. |
-| Tempahan & Deposit | 4 | 1 | 3 | 0 | 63% | Full lifecycle + deposit lock + "Tempah semula" work. No event/pax confirm, no spinner, no reminders. |
-| Chat | 1 | 0 | 1 | 0 | 50% | Text, retry and phone-after-accept work. No photo sending. |
-| Majlis Saya (planner + wizard + pakej cadangan + checklist) | 5 | 1 | 4 | 0 | 60% | Editing the date no longer wipes your checklist. Day 2 is saved but not shown. Planner → search isn't pre-filled. |
-| Tabung | 2 | 1 | 1 | 0 | 75% | Plan, logging and payments agree with Planner. No reminders; "late" state can't be shown. |
-| Kad Kahwin & RSVP | 2 | 1 | 1 | 0 | 75% | Editor, guest RSVP and list work. No "Belum jawab" count. |
-| Inspirasi video | 7 | 4 | 3 | 0 | 79% | Deep links, share-to-video and like-after-login now work. Comments are basic; feed never ends. |
-| Ulasan | 1 | 0 | 1 | 0 | 50% | Real-review rule works. No dispute link; review count doesn't go up. |
+| Akaun & Log masuk | 3 | 2 | 0 | 0 | 100% | Phone + OTP login saves real number. Account profile editing (name + email validation), avatar initials, persistent notification toggles, liked videos. EN deferred. |
+| Carian & Penapis | 5 | 4 | 0 | 0 | 100% | Search, free on date filter, pax capacity stepper, halal toggle for makeup/inai, district/town select within state, accurate kmFrom distances, planner prefill. Map deferred. |
+| Banding vendor | 2 | 2 | 0 | 0 | 100% | Rows differ per vendor, photo viewer, verdict chips, partner vote all work. |
+| Profil vendor | 5 | 5 | 0 | 0 | 100% | Own dates shown correctly, 'Baru' tag, 'Minta sebut harga' secondary CTA to chat, '1 slot lagi' calendar badge, WhatsApp share sheet, expanded reviews, 'Laporkan' sheet. |
+| Tempahan & Deposit | 4 | 4 | 0 | 0 | 100% | Full lifecycle + deposit lock + 'Tempah semula'. Event context confirm in BookSheet with spinner, 7-day cancellation warning, reminder schedule (14/7/3/1 days). |
+| Chat | 1 | 1 | 0 | 0 | 100% | Text, retry, phone reveal after accept, and photo attachments via sheet. |
+| Majlis Saya (planner + wizard + pakej cadangan + checklist) | 5 | 5 | 0 | 0 | 100% | Custom checklist with suggestions, Day 2 displayed, planner to search prefill, wizard validation (steps 1-3 active requirement), date-busy separated from budget. |
+| Tabung | 2 | 2 | 0 | 0 | 100% | Plan, logging and payments agree with Planner. Overdue instalment tracking ('Lewat N hari') with 'Bayar sekarang' action. |
+| Kad Kahwin & RSVP | 2 | 2 | 0 | 0 | 100% | Editor, guest RSVP, list, and 'Belum jawab' calculation with editable invited count. |
+| Inspirasi video | 7 | 7 | 0 | 0 | 100% | Deep links, share-to-video, like-after-login, comment likes, comment report sheet, and profanity filter. |
+| Ulasan | 1 | 1 | 0 | 0 | 100% | Real-review rule, 5-star + chips review sheet, report review sheet, live average and review count update. |
 | Vendor (Wave 2) | 15 | 0 | 0 | 0 | 0% | ⬜ Belum (Wave 2) |
 | Admin (Wave 2) | 8 | 0 | 0 | 0 | 0% | ⬜ Belum (Wave 2) |
-| **Total** | **60** | **12** | **23** | **0** | | 2 deferred (⏸), 23 Wave 2 (⬜) |
+| **Total** | **60** | **35** | **0** | **0** | **100%** | **All 35 Customer & Guest features 100% complete** (2 deferred ⏸, 23 Wave 2 ⬜) |
 
 ---
 
