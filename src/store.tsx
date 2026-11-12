@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from 'react';
-import { CHATS, vendorById } from './data/mock';
+import { CHATS, applyOverlay, vendorById } from './data/mock';
 import { APPLICATIONS, AUDIT, CONTENT_REPORTS, ME_VENDOR, REVIEW_REPORTS, VENDOR_BOOKINGS, VENDOR_VIDEOS } from './data/wave2';
 import type { Application, AuditEntry, Booking, CategoryId, ChatMsg, ContentReport, Invitation, ListingStatus, MajlisEvent, Package, ReviewReport, Rsvp, TabungEntry, VendorBooking, VendorVideo } from './data/types';
 
@@ -36,9 +36,11 @@ export interface AppState {
     /** review key `${name}|${date}` -> reply */
     replies: Record<string, { text: string; at: string }>;
     reported: string[];
+    /** V-5.0 gallery picks and V-9.0 cancellation policy (vendor app); unset = vendor's mock values */
+    gallery?: string[]; cancelPolicy?: string;
   };
   videos: VendorVideo[];
-  /** vendor-side chat threads, keyed by booking id */
+  /** vendor-side threads with OTHER customers, keyed by booking id. Aina's thread is s.chats[ME_VENDOR] (me = Aina), shared with the customer app */
   vendorChats: Record<string, ChatMsg[]>;
   /* ---- Wave 2: admin ---- */
   applications: Application[];
@@ -111,7 +113,6 @@ const initial: AppState = {
   videos: VENDOR_VIDEOS,
   vendorChats: {
     'B-1066': [{ me: false, text: 'Salam kak, boleh buat solekan untuk 2 persalinan?', time: '10:14' }],
-    'B-1063': [{ me: false, text: 'Salam kak, untuk akad 14 Feb pukul 9 pagi, boleh?', time: 'Semalam' }, { me: true, text: 'Saya ada slot pukul 6 pagi untuk solekan akad.', time: 'Semalam' }],
   },
   applications: APPLICATIONS,
   suspended: [],
@@ -133,6 +134,8 @@ const StoreCtx = createContext<Ctx | null>(null);
 export function StoreProvider({ children }: { children: ReactNode }) {
   const [s, setS] = useState<AppState>(load);
   const [toastMsg, setToast] = useState<string | null>(null);
+  // admin suspensions/hidden reviews and the demo vendor's edits reach every customer screen (see mock.ts)
+  applyOverlay({ suspended: s.suspended, hiddenReviews: s.hiddenReviews, removedReels: s.videos.filter(v => v.status === 'removed').map(v => v.id), me: { id: ME_VENDOR, about: s.listing.about, packages: s.listing.packages, blocked: s.listing.blocked, replies: s.listing.replies } });
   useEffect(() => { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch { /* private mode: demo still works in memory */ } }, [s]);
   const set = useCallback((fn: (s: AppState) => Partial<AppState>) => setS(p => ({ ...p, ...fn(p) })), []);
   const reset = useCallback(() => setS(initial), []);

@@ -174,3 +174,30 @@ export const CHATS: Record<number, ChatMsg[]> = {
 export const PHONES: Record<number, string> = { 7: '012-334 8810', 10: '017-662 4401', 11: '019-220 7314' };
 /** every vendor has a (fictional) number; shown only after the vendor accepts */
 export const phoneFor = (id: number) => PHONES[id] ?? `01${(id % 8) + 1}-${String(200 + id * 37).padStart(3, '0')} ${String(1000 + id * 271).slice(-4)}`;
+
+/* ---------- Wave 2: admin + vendor edits flow back into the customer app ---------- */
+const ALL_REELS = [...REELS];
+const BASE = new Map(ALL_VENDORS.map(v => [v.id, { suspended: v.suspended, busy: v.busy, about: v.about, packages: v.packages, sampleReviews: v.sampleReviews }]));
+export interface Overlay {
+  suspended: number[]; hiddenReviews: string[]; removedReels: number[];
+  me: { id: number; about: string; packages: Package[]; blocked: string[]; replies: Record<string, { text: string }> };
+}
+/**
+ * Re-applies store state onto the static vendor list so every customer screen (search, home, profile, planner) sees it.
+ * ponytail: mutates module data from the store on each render (idempotent, cheap at 25 vendors); move vendors into
+ * AppState if the list ever gets big or needs a real backend.
+ */
+export function applyOverlay(o: Overlay) {
+  ALL_VENDORS.forEach(v => {
+    const b = BASE.get(v.id)!;
+    v.suspended = b.suspended || o.suspended.includes(v.id);
+    v.sampleReviews = b.sampleReviews.filter(r => !o.hiddenReviews.includes(`${v.id}|${r.name}|${r.date}`));
+    if (v.id === o.me.id) {
+      v.about = o.me.about; v.packages = o.me.packages;
+      v.busy = [...b.busy, ...o.me.blocked];
+      v.sampleReviews = v.sampleReviews.map(r => { const rep = o.me.replies[`${r.name}|${r.date}`]; return rep ? { ...r, reply: rep.text } : r; });
+    }
+  });
+  VENDORS.splice(0, VENDORS.length, ...ALL_VENDORS.filter(v => !v.suspended));
+  REELS.splice(0, REELS.length, ...ALL_REELS.filter(r => !o.removedReels.includes(r.id) && !vendorById(r.vendorId)?.suspended));
+}

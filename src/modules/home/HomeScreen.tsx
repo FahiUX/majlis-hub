@@ -140,6 +140,7 @@ export default function HomeScreen() {
   const { s } = useStore();
   // distances from the event town, same as search
   const near = VENDORS.map(v => ({ ...v, km: kmFrom(v, s.event?.place) })).filter(v => v.km <= 30).sort((a, b) => b.rating - a.rating || b.reviews - a.reviews).slice(0, 6);
+  const featured = s.featured.map(id => VENDORS.find(v => v.id === id)).filter(v => v !== undefined).map(v => ({ ...v, km: kmFrom(v, s.event?.place) }));
   const alert = s.authed ? notices(s.bookings, s.invitation, s.rsvps).find(n => n.urgent) : undefined;
   return (
     <div className="w-full flex flex-col">
@@ -186,6 +187,12 @@ export default function HomeScreen() {
             ))}
           </div>
         </section>
+
+        {/* A-6.0: featured vendors are picked by the Majlis Hub team in the admin console */}
+        {featured.length > 0 && <section className="w-full flex flex-col gap-3">
+          <SectionHead title="Pilihan Majlis Hub" link="Lihat semua" to="/cari?sort=top" />
+          <div className="w-full flex flex-row gap-3 overflow-x-auto">{featured.map(v => <MiniVendorCard key={v.id} v={v} />)}</div>
+        </section>}
 
         <section className="w-full flex flex-col gap-3">
           <SectionHead title="Vendor disahkan berhampiran" link="Lihat semua" to="/cari?sort=top&km=30" />
