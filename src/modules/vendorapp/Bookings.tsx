@@ -105,7 +105,7 @@ export function BookingList() {
                     <span className="w-full text-sm text-body">{fmtDate(b.date, true)} · {pkgOf(s, b.packageId)?.name}</span>
                     <span className="w-full text-sm text-muted">{b.pax} pax · {b.place} · {b.id}</span>
                   </button>
-                  <div className="w-full flex flex-row flex-wrap items-center gap-2"><StatusChip s={st} /><DepositPill b={b} /></div>
+                  <div className="w-full flex flex-row flex-wrap items-center gap-2"><StatusChip s={st} />{st !== 'deposit_due' && <DepositPill b={b} />}</div>
                   {st === 'requested' && <Countdown b={b} />}
                   {st === 'requested' && (
                     <div className="w-full flex flex-row gap-3">
@@ -186,7 +186,7 @@ export function BookingDetail({ id, action }: { id: string; action: string | nul
         <Card>
           <span className="w-full text-lg font-semibold">{b.customer}</span>
           <span className="w-full flex flex-row items-center gap-1.5 text-sm text-body"><Phone className="w-4 h-4 shrink-0 text-muted" /><span className="flex-1 min-w-0">{b.phone}</span></span>
-          <div className="w-full flex flex-row flex-wrap items-center gap-2"><StatusChip s={st} /><DepositPill b={b} /></div>
+          <div className="w-full flex flex-row flex-wrap items-center gap-2"><StatusChip s={st} />{st !== 'deposit_due' && <DepositPill b={b} />}</div>
           {st === 'requested' && <Countdown b={b} />}
         </Card>
 

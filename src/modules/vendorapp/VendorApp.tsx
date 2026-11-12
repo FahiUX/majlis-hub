@@ -142,7 +142,7 @@ function Banner() {
           <span className="flex-1 min-w-0 flex flex-col gap-0.5"><span className="w-full text-sm font-semibold text-amaran">Dalam semakan</span><span className="w-full text-sm text-body">Kami akan sahkan dalam 2 hari bekerja.</span></span></div>
       )}
       {L.status === 'rejected' && (
-        <div role="alert" className={cx(box, 'flex-col bg-bahaya-50')}>
+        <div role="alert" className="w-full flex flex-col gap-3 p-4 rounded-2xl bg-bahaya-50">
           <span className="w-full flex flex-row items-center gap-2 text-sm font-semibold text-bahaya"><CircleAlert className="w-5 h-5 shrink-0" />Permohonan ditolak</span>
           <span className="w-full text-sm text-body">Sebab: {L.rejectReason ?? 'tidak dinyatakan'}</span>
           <Button variant="danger" onClick={() => nav('/v/daftar')}>Betulkan & hantar semula</Button>

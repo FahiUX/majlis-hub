@@ -135,7 +135,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [s, setS] = useState<AppState>(load);
   const [toastMsg, setToast] = useState<string | null>(null);
   // admin suspensions/hidden reviews and the demo vendor's edits reach every customer screen (see mock.ts)
-  applyOverlay({ suspended: s.suspended, hiddenReviews: s.hiddenReviews, removedReels: s.videos.filter(v => v.status === 'removed').map(v => v.id), me: { id: ME_VENDOR, about: s.listing.about, packages: s.listing.packages, blocked: s.listing.blocked, replies: s.listing.replies } });
+  applyOverlay({ suspended: s.suspended, hiddenReviews: s.hiddenReviews, removedReels: s.videos.filter(v => v.status === 'removed').map(v => v.id), me: { id: ME_VENDOR, about: s.listing.about, packages: s.listing.packages, blocked: s.listing.blocked, replies: s.listing.replies, gallery: s.listing.gallery, cancelPolicy: s.listing.cancelPolicy } });
   useEffect(() => { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch { /* private mode: demo still works in memory */ } }, [s]);
   const set = useCallback((fn: (s: AppState) => Partial<AppState>) => setS(p => ({ ...p, ...fn(p) })), []);
   const reset = useCallback(() => setS(initial), []);

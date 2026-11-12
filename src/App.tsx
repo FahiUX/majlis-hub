@@ -97,11 +97,11 @@ function BottomNav({ r }: { r: Route }) {
   );
 }
 
-export function Toast() {
+export function Toast({ desk }: { desk?: boolean }) {
   const { toastMsg } = useStore();
   if (!toastMsg) return null;
   return (
-    <div role="status" className="absolute left-4 right-4 bottom-24 z-[60] flex flex-row items-center gap-2 px-4 py-3 rounded-2xl bg-ink text-white text-sm font-medium shadow-float">
+    <div role="status" className={cx('absolute z-[60]', desk ? 'right-10 bottom-10 w-[360px]' : 'left-4 right-4 bottom-24') + ' flex flex-row items-center gap-2 px-4 py-3 rounded-2xl bg-ink text-white text-sm font-medium shadow-float'}>
       <CircleCheckBig className="w-4 h-4 shrink-0 text-pucuk-200" />
       <span className="flex-1 min-w-0">{toastMsg}</span>
     </div>
@@ -114,7 +114,7 @@ function Shell() {
   const main = useRef<HTMLElement>(null);
   useEffect(() => { main.current?.scrollTo(0, 0); }, [r.path]);
   // Wave 2 admin console is a desktop web app (1440 baseline), not the phone frame
-  if (r.parts[0] === 'admin') return <div className="relative w-full h-dvh flex flex-col bg-kertas"><Fragment key={r.path}><AdminApp r={r} /></Fragment><Toast /></div>;
+  if (r.parts[0] === 'admin') return <div className="relative w-full h-dvh flex flex-col bg-kertas"><Fragment key={r.path}><AdminApp r={r} /></Fragment><Toast desk /></div>;
   return (
     // phone-sized app; on desktop it sits centred like a device so stakeholders see the mobile layout
     <div className="w-full h-dvh flex flex-row justify-center bg-[#E9E6DF]">

@@ -29,7 +29,7 @@ export function Profile() {
   const [name, setName] = useState(v.name);
   const [cats, setCats] = useState<CategoryId[]>([v.cat]);
   const [about, setAbout] = useState(s.listing.about);
-  const [gallery, setGallery] = useState(s.listing.gallery ?? v.gallery);
+  const [gallery, setGallery] = useState(() => [...new Set(s.listing.gallery ?? v.gallery)]);
   const [edit, setEdit] = useState<Package | null>(null);
   const [docErr, setDocErr] = useState('');
   const reverify = (what: string) => { set(p => ({ listing: { ...p.listing, pendingReverify: what } })); toast('Dihantar untuk semakan. Listing lama kekal aktif.'); };

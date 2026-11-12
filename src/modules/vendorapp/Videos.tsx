@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { CircleCheckBig, Clapperboard, Eye, Heart, Hourglass, Loader2, Lock, MessageCircle, MousePointerClick, PencilLine, Pin, Plus, Send, Trash2, Upload as UploadIcon } from 'lucide-react';
+import { CircleCheckBig, Clapperboard, Eye, Heart, Hourglass, Loader2, Lock, MessageCircle, MousePointerClick, PencilLine, Pin, Send, Trash2, Upload as UploadIcon } from 'lucide-react';
 import { nav, swap } from '../../router';
 import { useStore } from '../../store';
 import { CATS, vendorById } from '../../data/mock';
@@ -36,7 +36,7 @@ export function Videos() {
   };
   return (
     <div className="w-full flex flex-col">
-      <TopBar title="Video saya" fallback="/v" right={verified ? <button aria-label="Muat naik video" onClick={() => nav('/v/video/baru')} className="w-11 h-11 shrink-0 rounded-full flex items-center justify-center hover:bg-pucuk-50"><Plus className="w-5 h-5 shrink-0" /></button> : undefined} />
+      <TopBar title="Video saya" fallback="/v" />
       {!verified && s.videos.length === 0 ? <Locked /> : s.videos.length === 0 ? (
         <EmptyState icon={<Clapperboard className="w-6 h-6" />} title="Video pertama anda boleh tarik 3× lebih permintaan"
           body="Video pendek 60 saat tentang hasil kerja anda muncul di Inspirasi." action={<Button onClick={() => nav('/v/video/baru')}><UploadIcon className="w-4 h-4 shrink-0" />Muat naik video</Button>} />
@@ -51,7 +51,7 @@ export function Videos() {
                 <img src={v.poster} alt="" className="w-[72px] h-[128px] shrink-0 rounded-xl object-cover" />
                 <div className="flex-1 min-w-0 flex flex-col gap-1.5">
                   <span className="w-full text-[15px] font-semibold">{v.title}</span>
-                  <span className="w-full text-xs text-muted">{v.loc} · {v.tags}</span>
+                  <span className="w-full text-xs text-muted">{[v.loc, v.tags].filter(Boolean).join(' · ')}</span>
                   <div className="w-full flex flex-row flex-wrap gap-1.5">
                     <Pill tone={STATUS[v.status][1]}>{v.status === 'review' && <Hourglass className="w-3.5 h-3.5 shrink-0" />}{v.status === 'live' && <CircleCheckBig className="w-3.5 h-3.5 shrink-0" />}{STATUS[v.status][0]}</Pill>
                     {v.pinned && <Pill tone="muted"><Pin className="w-3.5 h-3.5 shrink-0" />Disemat</Pill>}

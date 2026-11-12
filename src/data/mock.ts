@@ -177,10 +177,10 @@ export const phoneFor = (id: number) => PHONES[id] ?? `01${(id % 8) + 1}-${Strin
 
 /* ---------- Wave 2: admin + vendor edits flow back into the customer app ---------- */
 const ALL_REELS = [...REELS];
-const BASE = new Map(ALL_VENDORS.map(v => [v.id, { suspended: v.suspended, busy: v.busy, about: v.about, packages: v.packages, sampleReviews: v.sampleReviews }]));
+const BASE = new Map(ALL_VENDORS.map(v => [v.id, { suspended: v.suspended, busy: v.busy, about: v.about, packages: v.packages, sampleReviews: v.sampleReviews, gallery: v.gallery, cancelPolicy: v.cancelPolicy }]));
 export interface Overlay {
   suspended: number[]; hiddenReviews: string[]; removedReels: number[];
-  me: { id: number; about: string; packages: Package[]; blocked: string[]; replies: Record<string, { text: string }> };
+  me: { id: number; about: string; packages: Package[]; blocked: string[]; replies: Record<string, { text: string }>; gallery?: string[]; cancelPolicy?: string };
 }
 /**
  * Re-applies store state onto the static vendor list so every customer screen (search, home, profile, planner) sees it.
@@ -194,6 +194,7 @@ export function applyOverlay(o: Overlay) {
     v.sampleReviews = b.sampleReviews.filter(r => !o.hiddenReviews.includes(`${v.id}|${r.name}|${r.date}`));
     if (v.id === o.me.id) {
       v.about = o.me.about; v.packages = o.me.packages;
+      v.gallery = o.me.gallery?.length ? o.me.gallery : b.gallery; v.cancelPolicy = o.me.cancelPolicy || b.cancelPolicy;
       v.busy = [...b.busy, ...o.me.blocked];
       v.sampleReviews = v.sampleReviews.map(r => { const rep = o.me.replies[`${r.name}|${r.date}`]; return rep ? { ...r, reply: rep.text } : r; });
     }
