@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { AlertCircle, CalendarHeart, Store } from 'lucide-react';
+import { AlertCircle, CalendarHeart, Eye, EyeOff, Loader2, Store } from 'lucide-react';
 import { useStore } from '../../store';
 import { swap, useRoute } from '../../router';
 import { Button, TopBar, cx } from '../../components/ui';
@@ -7,8 +7,13 @@ import { Button, TopBar, cx } from '../../components/ui';
 /** +60 mobile: 1X then 7–8 digits (leading 0 optional) */
 const clean = (p: string) => p.replace(/[\s-]/g, '').replace(/^0/, '');
 const validPhone = (p: string) => /^1\d{8,9}$/.test(clean(p));
-/** display format saved to the account: +60 1X-XXX XXXX */
-export const fmtPhone = (p: string) => { const d = clean(p); return `+60 ${d.slice(0, 2)}-${d.slice(2, 5)} ${d.slice(5)}`; };
+/** display format saved to the account: +60 1X-XXX XXXX, or +60 1X-XXXX XXXX for 10-digit 011/015 numbers */
+export const fmtPhone = (p: string) => { const d = clean(p); const k = d.length === 10 ? 6 : 5; return `+60 ${d.slice(0, 2)}-${d.slice(2, k)} ${d.slice(k)}`; };
+const validEmail = (e: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.trim());
+/** the demo account's number: typing it shows the "already registered" path (G-2.0 edge) */
+const KNOWN = '127784021';
+/** ponytail: fake network wait so the button spinner state is visible; real auth replaces it */
+const WAIT = 700;
 
 /**
  * Leave login without a trace in history (QA B4): step back to the page that opened it,
@@ -22,7 +27,7 @@ const finish = (to: string) => {
 };
 
 export default function LoginScreen() {
-  const { set, toast } = useStore();
+  const { s: st, set, toast } = useStore();
   const r = useRoute();
   const next = r.q.get('next') ?? '/';
   const step = r.q.get('step') === 'otp' ? 'otp' : 'phone';
@@ -33,6 +38,15 @@ export default function LoginScreen() {
   const [otpErr, setOtpErr] = useState(false);
   const [cd, setCd] = useState(60);
   const boxes = useRef<(HTMLInputElement | null)[]>([]);
+  const [busy, setBusy] = useState(false);
+  const [mode, setMode] = useState<'phone' | 'email'>('phone');
+  const [email, setEmail] = useState(st.email);
+  const [pw, setPw] = useState('');
+  const [showPw, setShowPw] = useState(false);
+  const [eTried, setETried] = useState(false);
+  const later = (fn: () => void) => { setBusy(true); window.setTimeout(() => { setBusy(false); fn(); }, WAIT); };
+  // vendors land on their dashboard (Wave 2) unless login was opened from a specific page
+  const done = () => { toast(role === 'vendor' ? 'Selamat datang ke papan pemuka vendor' : 'Selamat datang ke Majlis Hub'); finish(role === 'vendor' && next === '/' ? '/v' : next); };
 
   useEffect(() => {
     if (step !== 'otp') return;
@@ -42,7 +56,14 @@ export default function LoginScreen() {
   }, [step]);
 
   const phoneErr = touched && !validPhone(phone);
-  const sendCode = () => { setTouched(true); if (validPhone(phone)) swap(`/masuk?step=otp&next=${encodeURIComponent(next)}`); };
+  const sendCode = () => { setTouched(true); if (validPhone(phone)) later(() => swap(`/masuk?step=otp&next=${encodeURIComponent(next)}`)); };
+  const emailErr = eTried && !validEmail(email) ? 'Emel tidak sah (cth. nama@contoh.my)' : '';
+  const pwErr = eTried && pw.length < 8 ? 'Kata laluan sekurang-kurangnya 8 aksara' : '';
+  const emailLogin = () => {
+    setETried(true);
+    if (!validEmail(email) || pw.length < 8) return;
+    later(() => { set(() => ({ authed: true, email: email.trim() })); done(); });
+  };
 
   const type = (i: number, val: string) => {
     const digits = val.replace(/\D/g, '');
@@ -59,10 +80,11 @@ export default function LoginScreen() {
   const verify = () => {
     const c = code.join('');
     if (c.length < 6) return;
-    if (c === '000000') { setOtpErr(true); return; }
-    set(p => ({ authed: true, phone: validPhone(phone) ? fmtPhone(phone) : p.phone }));
-    toast(role === 'vendor' ? 'Log masuk berjaya. Papan pemuka vendor akan datang dalam Wave 2.' : 'Selamat datang ke Majlis Hub');
-    finish(next);
+    later(() => {
+      if (c === '000000') { setOtpErr(true); return; }
+      set(p => ({ authed: true, phone: validPhone(phone) ? fmtPhone(phone) : p.phone }));
+      done();
+    });
   };
 
   return (
@@ -83,6 +105,7 @@ export default function LoginScreen() {
               </button>
             ))}
           </div>
+          {mode === 'phone' ? <>
           <label className="w-full flex flex-col gap-2">
             <span className="w-full text-[13px] font-semibold">Nombor telefon</span>
             <span className={cx('w-full flex flex-row items-center gap-2 px-3.5 py-3.5 leading-5 bg-white border rounded-[10px] focus-within:border-hijau focus-within:ring-4 focus-within:ring-pucuk-200/60', phoneErr ? 'border-bahaya' : 'border-line2')}>
@@ -92,8 +115,29 @@ export default function LoginScreen() {
             </span>
             {phoneErr && <span role="alert" className="w-full flex flex-row items-center gap-1.5 text-sm text-bahaya"><AlertCircle className="w-4 h-4 shrink-0" />Nombor tidak sah. Contoh: 12-345 6789</span>}
           </label>
-          <Button block onClick={sendCode}>Hantar kod</Button>
-          <p className="w-full text-xs text-muted text-center">Dengan meneruskan, anda bersetuju dengan Terma Penggunaan dan Dasar Privasi Majlis Hub.</p>
+          {validPhone(phone) && clean(phone) === KNOWN && <p className="w-full text-sm text-body">Nombor ini sudah berdaftar. Kami akan log masuk ke akaun anda.</p>}
+          <Button block onClick={sendCode} disabled={busy} aria-busy={busy}>{busy && <Loader2 className="w-4 h-4 shrink-0 animate-spin" />}{busy ? 'Menghantar…' : 'Hantar kod'}</Button>
+          </> : <>
+          <label className="w-full flex flex-col gap-2">
+            <span className="w-full text-[13px] font-semibold">Emel</span>
+            <input type="email" autoComplete="email" value={email} onChange={e => setEmail(e.target.value)} aria-invalid={!!emailErr || undefined}
+              className={cx('w-full px-3.5 py-3.5 leading-5 text-[15px] bg-white border rounded-[10px] outline-none focus:border-hijau', emailErr ? 'border-bahaya' : 'border-line2')} />
+            {emailErr && <span role="alert" className="w-full flex flex-row items-center gap-1.5 text-sm text-bahaya"><AlertCircle className="w-4 h-4 shrink-0" />{emailErr}</span>}
+          </label>
+          <label className="w-full flex flex-col gap-2">
+            <span className="w-full text-[13px] font-semibold">Kata laluan</span>
+            <span className={cx('w-full flex flex-row items-center gap-2 px-3.5 py-1.5 bg-white border rounded-[10px] focus-within:border-hijau', pwErr ? 'border-bahaya' : 'border-line2')}>
+              <input type={showPw ? 'text' : 'password'} autoComplete="current-password" value={pw} onChange={e => setPw(e.target.value)} aria-invalid={!!pwErr || undefined}
+                className="flex-1 min-w-0 py-2 leading-5 text-[15px] outline-none bg-transparent" />
+              <button type="button" onClick={() => setShowPw(v => !v)} aria-label={showPw ? 'Sembunyikan kata laluan' : 'Tunjuk kata laluan'} aria-pressed={showPw}
+                className="w-9 h-9 shrink-0 flex items-center justify-center text-muted">{showPw ? <EyeOff className="w-5 h-5 shrink-0" /> : <Eye className="w-5 h-5 shrink-0" />}</button>
+            </span>
+            {pwErr && <span role="alert" className="w-full flex flex-row items-center gap-1.5 text-sm text-bahaya"><AlertCircle className="w-4 h-4 shrink-0" />{pwErr}</span>}
+          </label>
+          <Button block onClick={emailLogin} disabled={busy} aria-busy={busy}>{busy && <Loader2 className="w-4 h-4 shrink-0 animate-spin" />}{busy ? 'Log masuk…' : 'Log masuk'}</Button>
+          </>}
+          <button onClick={() => setMode(m => (m === 'phone' ? 'email' : 'phone'))} className="w-fit self-center py-2 text-sm font-semibold text-hijau">{mode === 'phone' ? 'Guna emel dan kata laluan' : 'Guna nombor telefon'}</button>
+          <p className="w-full text-xs text-muted text-center">Dengan meneruskan, anda bersetuju dengan Terma Penggunaan dan Dasar Privasi Majlis Hub. Demo: semua log masuk membuka akaun contoh Aina.</p>
         </div>
       ) : (
         <div className="w-full flex flex-col gap-5 p-5">
@@ -106,7 +150,7 @@ export default function LoginScreen() {
             ))}
           </div>
           {otpErr && <span role="alert" className="w-full flex flex-row items-center gap-1.5 text-sm text-bahaya"><AlertCircle className="w-4 h-4 shrink-0" />Kod salah. Semak SMS dan cuba lagi.</span>}
-          <Button block onClick={verify} disabled={code.join('').length < 6}>Sahkan</Button>
+          <Button block onClick={verify} disabled={busy || code.join('').length < 6} aria-busy={busy}>{busy && <Loader2 className="w-4 h-4 shrink-0 animate-spin" />}{busy ? 'Mengesahkan…' : 'Sahkan'}</Button>
           <button disabled={cd > 0} onClick={() => { setCd(60); toast('Kod baharu dihantar'); }} className="w-fit self-center text-sm font-semibold text-hijau disabled:text-muted">
             {cd > 0 ? `Hantar semula dalam ${cd}s` : 'Hantar semula kod'}
           </button>

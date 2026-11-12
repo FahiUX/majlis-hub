@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { CalendarCheck, Minus, Plus, Star } from 'lucide-react';
+import { CalendarCheck, Loader2, LocateFixed, Minus, Plus, Star } from 'lucide-react';
+import { TOWNS, kmFrom } from '../../data/mock';
 import { Button, Chip, Divider, Sheet, cx, fmtDate, rm } from '../../components/ui';
 import { useStore } from '../../store';
 import { HALAL_CATS, PRICE_MAX, PRICE_STEP, STATES, histogram, originOf, search, townsIn, type Filters } from './searchLogic';
@@ -45,6 +46,17 @@ export default function FilterSheet({ open, f, onClose, onApply }: { open: boole
   // re-seed the draft each time the sheet opens
   const [lastOpen, setLastOpen] = useState(open);
   if (open !== lastOpen) { setLastOpen(open); if (open) { setD(f); setMode(f.state ? 'state' : 'radius'); } }
+  const [gps, setGps] = useState<'idle' | 'busy' | 'denied'>('idle');
+  // C-1.1: measure from the phone's location (nearest known town); denied/unavailable falls back to State -> District
+  const useGps = () => {
+    if (!navigator.geolocation) { setGps('denied'); setMode('state'); setD({ ...d, state: d.state ?? STATES[0], town: null }); return; }
+    setGps('busy');
+    navigator.geolocation.getCurrentPosition(
+      p => { const at = { lat: p.coords.latitude, lng: p.coords.longitude }; setGps('idle'); setD({ ...d, state: null, town: TOWNS.reduce((a, b) => (kmFrom(at, b) < kmFrom(at, a) ? b : a)) }); },
+      () => { setGps('denied'); setMode('state'); setD({ ...d, state: d.state ?? STATES[0], town: null }); },
+      { timeout: 8000 },
+    );
+  };
   const count = search(d, ctx).length;
   const halalOk = !d.cat || HALAL_CATS.includes(d.cat);
   return (
@@ -73,9 +85,13 @@ export default function FilterSheet({ open, f, onClose, onApply }: { open: boole
             </div>
             <input type="range" aria-label="Jarak maksimum dalam km" min={10} max={150} step={5} value={d.km}
               onChange={e => setD({ ...d, km: Number(e.target.value) })} className="w-full h-11 accent-hijau" />
+            <Button variant="secondary" onClick={useGps} disabled={gps === 'busy'} aria-busy={gps === 'busy'}>
+              {gps === 'busy' ? <Loader2 className="w-4 h-4 shrink-0 animate-spin" /> : <LocateFixed className="w-4 h-4 shrink-0" />}{gps === 'busy' ? 'Mencari lokasi…' : 'Guna lokasi semasa'}
+            </Button>
           </div>
         ) : (
           <div className="w-full flex flex-col gap-3">
+            {gps === 'denied' && <p role="alert" className="w-full text-sm text-amaran">Lokasi tidak dapat diakses. Pilih negeri dan daerah anda.</p>}
             <div className="w-full flex flex-row flex-wrap gap-2">
               {STATES.map(st => <Chip key={st} on={d.state === st} onClick={() => setD({ ...d, state: st, town: null })}>{st}</Chip>)}
             </div>
@@ -91,7 +107,7 @@ export default function FilterSheet({ open, f, onClose, onApply }: { open: boole
             )}
           </div>
         )}
-        <p className="w-full text-xs text-muted">{mode === 'radius' ? `Jarak diukur dari ${originOf(d, ev?.place)}${ev ? ' (lokasi majlis anda)' : ''}.` : d.town ? `Vendor yang berpangkalan di ${d.town}; jarak dari ${d.town}.` : 'Vendor yang berpangkalan di negeri ini.'}</p>
+        <p className="w-full text-xs text-muted">{mode === 'radius' ? `Jarak diukur dari ${originOf(d, ev?.place)}${d.town ? ' (lokasi semasa anda)' : ev ? ' (lokasi majlis anda)' : ''}.` : d.town ? `Vendor yang berpangkalan di ${d.town}; jarak dari ${d.town}.` : 'Vendor yang berpangkalan di negeri ini.'}</p>
       </div>
       <Divider />
       <div className="w-full flex flex-col gap-3">

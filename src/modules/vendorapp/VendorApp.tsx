@@ -7,7 +7,7 @@ import { vendorById } from '../../data/mock';
 import { ME_VENDOR } from '../../data/wave2';
 import type { ListingStatus } from '../../data/types';
 import { effective } from '../booking/money';
-import { useMyReviews, withMine } from '../vendor/reviews';
+
 import { Button, Chip, Divider, Pill, TopBar, cx, fmtDate } from '../../components/ui';
 import { useRows } from './kit';
 import { byUrgency, hoursLeft, replyLabel } from './logic';
@@ -187,7 +187,6 @@ function Dashboard() {
   const { s } = useStore();
   const rows = useRows();
   const v = vendorById(ME_VENDOR)!;
-  const mine = useMyReviews(ME_VENDOR);
   const [loading, setLoading] = useState(true);
   useEffect(() => { const t = window.setTimeout(() => setLoading(false), 350); return () => window.clearTimeout(t); }, []);
 
@@ -197,7 +196,7 @@ function Dashboard() {
   const asked = st.filter(([, x]) => x !== 'cancelled');
   const answered = asked.filter(([, x]) => !['requested', 'expired'].includes(x)).length;
   const rate = asked.length ? Math.round((answered / asked.length) * 100) : 0;
-  const { rating, reviews } = withMine(v, mine);
+  const { rating, reviews } = v;
   const urgent = byUrgency(rows).filter(b => effective(b) === 'requested' || (effective(b) === 'deposit_due' && (b.depositDeadline ?? b.date) <= addDays(TODAY, 7))).slice(0, 5);
   const kpis: [string, string, ReactNode][] = [
     ['Permintaan baru', String(newReq), <Inbox className="w-5 h-5 shrink-0" />],

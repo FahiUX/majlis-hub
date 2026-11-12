@@ -3,7 +3,7 @@ import { AlertCircle, Clock, MapPin, RotateCcw, Search, SearchX, SlidersHorizont
 import { useStore } from '../../store';
 import { nav, swap, useRoute } from '../../router';
 import { Button, Chip, EmptyState, cx, fmtDate, rm } from '../../components/ui';
-import { CATS, catById } from '../../data/mock';
+import { CATS, catById, vendorById } from '../../data/mock';
 import VendorCard from './VendorCard';
 import FilterSheet from './FilterSheet';
 import CompareTray from './CompareTray';
@@ -171,7 +171,7 @@ export default function SearchScreen() {
         </div>
       )}
 
-      <div className={cx('sticky bottom-0 z-20 w-full', s.compare.length && !focused ? 'flex' : 'hidden')}><CompareTray /></div>
+      <div className={cx('sticky bottom-0 z-20 w-full', s.compare.length && !focused && (!f.cat || vendorById(s.compare[0])?.cat === f.cat) ? 'flex' : 'hidden')}><CompareTray /></div>
       <FilterSheet open={sheet} f={f} onClose={() => setSheet(false)} onApply={d => { setSheet(false); go(d); }} />
     </div>
   );

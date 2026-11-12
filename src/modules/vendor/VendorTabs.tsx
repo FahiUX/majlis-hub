@@ -8,10 +8,13 @@ import { effective } from '../booking/BookingList';
 import { useMyReviews } from './reviews';
 
 export function PackagesTab({ v, onBook, onQuote }: { v: Vendor; onBook: (pkgId: string) => void; onQuote: () => void }) {
+  // C-2.1 edge: a long menu shows 3 and collapses the rest behind "Lihat menu penuh"
+  const [full, setFull] = useState(false);
+  const list = full ? v.packages : v.packages.slice(0, 3);
   return (
     <>
       <h2 className="w-full text-xl font-semibold">Pakej</h2>
-      {v.packages.map(p => (
+      {list.map(p => (
         <div key={p.id} className="w-full flex flex-col gap-3 p-5 rounded-2xl bg-white border border-line">
           <div className="w-full flex flex-row items-center gap-3">
             <h3 className="flex-1 min-w-0 text-base font-semibold">{p.name}</h3>
@@ -37,6 +40,7 @@ export function PackagesTab({ v, onBook, onQuote }: { v: Vendor; onBook: (pkgId:
           <Button variant="secondary" onClick={() => onBook(p.id)}>Pilih pakej ini</Button>
         </div>
       ))}
+      {v.packages.length > 3 && <Button variant="secondary" onClick={() => setFull(f => !f)}>{full ? 'Tunjuk kurang' : `Lihat menu penuh (${v.packages.length} pakej)`}</Button>}
       <div className="w-full flex flex-col gap-3 p-5 rounded-2xl bg-pucuk-50">
         <p className="w-full text-sm text-body">Tak jumpa pakej yang sesuai? Minta harga ikut tarikh dan bilangan tetamu anda.</p>
         <Button variant="secondary" onClick={onQuote}><MessageCircle className="w-4 h-4 shrink-0" />Minta sebut harga</Button>
@@ -161,7 +165,8 @@ export function ReviewsTab({ v, score }: { v: Vendor; score: { rating: number; r
           {!rv.isNew && <button onClick={() => { setWhy(''); setReport(rv.name); }} className="w-fit flex flex-row items-center gap-1.5 py-3 text-xs font-semibold text-muted"><Flag className="w-3.5 h-3.5 shrink-0" />Laporkan</button>}
         </div>
       ))}
-      {all.length > 2 && <Button variant="secondary" onClick={() => setAll(o => !o)}>{all3 ? 'Tunjuk kurang' : `Lihat semua ${score.reviews} ulasan`}</Button>}
+      {all3 && <p className="w-full text-xs text-muted text-center num">Menunjukkan {all.length} ulasan terkini daripada {score.reviews}</p>}
+      {all.length > 2 && <Button variant="secondary" onClick={() => setAll(o => !o)}>{all3 ? 'Tunjuk kurang' : `Lihat ${all.length - 2} lagi ulasan`}</Button>}
       <Sheet open={report !== null} onClose={() => setReport(null)} title="Laporkan ulasan"
         footer={<Button block disabled={!why} onClick={() => { setReport(null); toast('Laporan dihantar. Pasukan Majlis Hub akan menyemak ulasan ini.'); }}>Hantar laporan</Button>}>
         <p className="w-full text-sm text-body">Ulasan oleh {report}. Kenapa anda melaporkannya?</p>

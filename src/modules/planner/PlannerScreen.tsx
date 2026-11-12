@@ -1,9 +1,9 @@
-import { Bookmark, CalendarHeart, ChevronRight, LogIn, MailOpen, MapPin, PiggyBank, Plus, ReceiptText, Users } from 'lucide-react';
+import { AlertCircle, Bookmark, CalendarHeart, ChevronRight, LogIn, MailOpen, MapPin, PiggyBank, Plus, ReceiptText, Users } from 'lucide-react';
 import { CATS, catById, vendorById } from '../../data/mock';
 import type { Booking, CategoryId } from '../../data/types';
 import { TODAY, daysBetween, useStore } from '../../store';
 import { nav } from '../../router';
-import { Button, Divider, EmptyState, Pill, StatusChip, fmtDate, rm } from '../../components/ui';
+import { Button, Divider, EmptyState, Img, Pill, StatusChip, fmtDate, rm } from '../../components/ui';
 import { DEAD, liveStatus, plan } from '../tabung/calc';
 import { OPEN, effective } from '../booking/money';
 import { CatArt } from './CatArt';
@@ -69,6 +69,14 @@ export default function PlannerScreen() {
         <Shortcut icon={<PiggyBank className="w-5 h-5 shrink-0" />} title="Tabung" value={monthly ? `${rm(monthly)}/bln` : 'Tiada bayaran'} onClick={() => nav('/tabung')} />
         <Shortcut icon={<ReceiptText className="w-5 h-5 shrink-0" />} title="Tempahan" value={`${s.bookings.filter(b => OPEN.includes(effective(b))).length} aktif`} onClick={() => nav('/tempahan')} />
       </div>
+      {/* C-9.1 edge: more guests said Hadir than the majlis was planned for */}
+      {hadir > e.pax && (
+        <button role="alert" onClick={() => nav('/kad/rsvp')} className="w-full flex flex-row items-center gap-3 p-4 rounded-2xl bg-amaran-50 border border-amaran/30 text-left">
+          <AlertCircle className="w-5 h-5 shrink-0 text-amaran" />
+          <span className="flex-1 min-w-0 text-sm font-semibold text-ink">{hadir} tetamu sahkan hadir, melebihi {e.pax} pax. Kemas kini bilangan tetamu atau semak vendor.</span>
+          <ChevronRight className="w-5 h-5 shrink-0 text-amaran" />
+        </button>
+      )}
 
       <section className="w-full flex flex-col gap-3">
         <div className="w-full flex flex-row items-center gap-2">
@@ -82,7 +90,8 @@ export default function PlannerScreen() {
             const v = b ? vendorById(b.vendorId) : sv;
             const row = (
               <>
-                <CatArt art={c.art} size={40} />
+                {/* the chosen vendor's photo once there is one; category art until then */}
+                {v ? <Img src={v.img} cat={v.cat} alt="" className="w-10 h-10 shrink-0 rounded-full" /> : <CatArt art={c.art} size={40} />}
                 <div className="flex-1 min-w-0 flex flex-col gap-1 text-left">
                   <span className="w-full text-[15px] font-semibold">{c.name}</span>
                   {v && <span className="w-full text-sm text-muted">{v.name}</span>}

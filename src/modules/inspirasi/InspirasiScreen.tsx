@@ -1,15 +1,12 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { Clapperboard, RotateCcw, WifiOff } from 'lucide-react';
+import { Clapperboard, RotateCcw, Search, WifiOff } from 'lucide-react';
 import { cx } from '../../components/ui';
-import { CATS, REELS, vendorById } from '../../data/mock';
+import { CATS, REELS, kmFrom, vendorById } from '../../data/mock';
 import type { CategoryId, Reel } from '../../data/types';
 import { toggle, useStore } from '../../store';
 import { nav, swap, useRoute } from '../../router';
 import { ReelSlide } from './ReelSlide';
 import { CommentsSheet, ReportSheet, ShareSheet, type ReelComment } from './ReelSheets';
-
-/** feed repeats 3x; when the user reaches the first or last copy we jump to the same reel in the middle copy, so swiping never ends */
-const COPIES = 3;
 
 /** posted comments per reel; the store has no field for them (ponytail: move into AppState if comments grow) */
 const CKEY = 'majlishub.comments';
@@ -27,16 +24,17 @@ export default function InspirasiScreen() {
   const [sheet, setSheet] = useState<{ kind: 'comments' | 'share' | 'report'; reel: Reel } | null>(null);
   const feed = useRef<HTMLDivElement>(null);
 
-  const reels = useMemo(() => (cat === 'all' ? REELS : REELS.filter(r => vendorById(r.vendorId)?.cat === cat)), [cat]);
-  const loop = reels.length > 1;
-  const slides = loop ? Array.from({ length: COPIES }, () => reels).flat() : reels;
+  // C-7.0: nearest to the majlis first (mock has no upload dates, so freshness is not ranked)
+  const place = s.event?.place;
+  const reels = useMemo(() => REELS.filter(r => cat === 'all' || vendorById(r.vendorId)?.cat === cat)
+    .map(r => ({ r, km: kmFrom(vendorById(r.vendorId)!, place) })).sort((a, b) => a.km - b.km).map(x => x.r), [cat, place]);
 
-  // start in the middle copy, at the reel from ?v= (Home strip, shared link)
+  // start at the reel from ?v= (Home strip, shared link)
   useLayoutEffect(() => {
     const el = feed.current;
     const at = Math.max(0, reels.findIndex(r => r.id === startId));
-    if (el) el.scrollTop = ((loop ? reels.length : 0) + at) * el.clientHeight;
-  }, [reels, loop, startId]);
+    if (el) el.scrollTop = at * el.clientHeight;
+  }, [reels, startId]);
 
   // a guest who tapped like is sent to login with &like=<id>; apply it once on return (idempotent: add, never toggle)
   const pendingLike = Number(q.get('like')) || 0;
@@ -45,20 +43,6 @@ export default function InspirasiScreen() {
     set(st => ({ liked: st.liked.includes(pendingLike) ? st.liked : [...st.liked, pendingLike] }));
     swap('/inspirasi?v=' + pendingLike);
   }, [s.authed, pendingLike, set]);
-
-  // runs once scrolling settles (debounced), using the real fractional slide height
-  const settle = useRef(0);
-  const recentre = () => {
-    window.clearTimeout(settle.current);
-    settle.current = window.setTimeout(() => {
-      const el = feed.current;
-      const first = el?.firstElementChild as HTMLElement | null;
-      if (!el || !first || !loop) return;
-      const h = first.getBoundingClientRect().height, n = reels.length, i = Math.round(el.scrollTop / h);
-      if (i < n) el.scrollTop = (i + n) * h;
-      else if (i >= 2 * n) el.scrollTop = (i - n) * h;
-    }, 120);
-  };
 
   const login = (r: Reel, extra = '') => nav('/masuk?next=' + encodeURIComponent(`/inspirasi?v=${r.id}${extra}`));
   const guard = (fn: () => void, r: Reel) => () => (s.authed ? fn() : login(r));
@@ -100,9 +84,9 @@ export default function InspirasiScreen() {
           <button onClick={() => setCat('all')} className="w-fit px-5 py-3 leading-5 rounded-[10px] bg-white text-ink text-[15px] font-semibold">Tengok semua video</button>
         </div>
       ) : (
-        <div ref={feed} onScroll={recentre} className="absolute inset-0 overflow-y-scroll snap-y snap-mandatory">
-          {slides.map((r, i) => (
-            <ReelSlide key={`${r.id}-${i}`} reel={r}
+        <div ref={feed} className="absolute inset-0 overflow-y-scroll snap-y snap-mandatory">
+          {reels.map(r => (
+            <ReelSlide key={r.id} reel={r}
               liked={s.liked.includes(r.id)} saved={s.savedReels.includes(r.id)} followed={s.followed.includes(r.vendorId)}
               commentCount={comments(r).length}
               onLike={s.authed ? () => set(st => ({ liked: toggle(st.liked, r.id) })) : () => login(r, '&like=' + r.id)}
@@ -112,6 +96,14 @@ export default function InspirasiScreen() {
               onShare={() => setSheet({ kind: 'share', reel: r })}
               onReport={guard(() => setSheet({ kind: 'report', reel: r }), r)} />
           ))}
+          {/* C-7.0 edge: end of feed */}
+          <section aria-label="Tamat suapan" className="w-full h-full snap-start shrink-0 flex flex-col items-center justify-center gap-3 p-8 text-center text-white">
+            <span className="w-14 h-14 shrink-0 rounded-full bg-white/10 flex items-center justify-center"><Clapperboard className="w-7 h-7 shrink-0" /></span>
+            <p className="w-full text-base font-semibold">Anda dah tengok semua</p>
+            <p className="w-full text-sm text-white/70">Video baharu dimuat naik setiap minggu. Sementara itu, lihat vendor yang anda suka.</p>
+            <button onClick={() => feed.current?.scrollTo({ top: 0, behavior: 'smooth' })} className="w-fit inline-flex flex-row items-center gap-2 px-5 py-3 leading-5 rounded-[10px] bg-white text-ink text-[15px] font-semibold"><RotateCcw className="w-4 h-4 shrink-0" />Tonton semula</button>
+            <button onClick={() => nav(cat === 'all' ? '/cari' : `/cari?cat=${cat}`)} className="w-fit inline-flex flex-row items-center gap-2 px-5 py-3 leading-5 rounded-[10px] border border-white/40 text-white text-[15px] font-semibold"><Search className="w-4 h-4 shrink-0" />Cari vendor</button>
+          </section>
         </div>
       )}
 

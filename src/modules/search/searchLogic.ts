@@ -2,7 +2,7 @@ import { CATS, TOWNS, VENDORS, catById, fromPrice, kmFrom } from '../../data/moc
 import type { CategoryId, Vendor } from '../../data/types';
 
 export const RADII = [10, 30, 70, 150];
-export const STATES = ['Selangor', 'WP Kuala Lumpur', 'Negeri Sembilan'];
+export const STATES = ['Selangor', 'WP Kuala Lumpur', 'WP Putrajaya', 'Negeri Sembilan'];
 export const PRICE_STEP = 100;
 export const PRICE_MAX = Math.ceil(Math.max(...VENDORS.map(fromPrice)) / 500) * 500;
 
@@ -51,7 +51,7 @@ export const writeFilters = (f: Filters) => {
   if (f.q) p.set('q', f.q);
   if (f.km !== 70) p.set('km', String(f.km));
   if (f.state) p.set('st', f.state);
-  if (f.state && f.town) p.set('town', f.town);
+  if (f.town) p.set('town', f.town); // radius mode: town = GPS origin
   if (f.free) p.set('free', '1');
   if (f.pax) p.set('pax', String(f.pax));
   if (f.halal) p.set('halal', '1');

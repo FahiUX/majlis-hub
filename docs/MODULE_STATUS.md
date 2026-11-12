@@ -151,3 +151,30 @@ Stakeholder 10 points                                        10 / 10
 10. **C-1.1 / G-1.0:** no GPS-denied fallback, no multi-state service area, "near you" is fixed for guests.
 11. **G-2.0:** no email + password, no spinner on "Hantar kod" or "Sahkan", no "already registered" path.
 12. **Small:** phone formatted as "+60 13-987 65432". Logging in with another number inherits the last user's majlis. Copy glyph "♥" in Akaun. The BookSheet accepts a date other than the majlis date without saying so. The compare tray from another category stays visible in a new category.
+
+## 8. Polish round 2 (2026-11-12, customer side, fixed by Claude, not yet re-audited)
+
+Items from §7, each clicked through in the browser at 430px. 22 customer routes: 0 console errors, no horizontal scroll.
+
+1. Reviews written in the app are counted everywhere (search card, compare, planner, profile) through `applyOverlay` in mock.ts.
+2. The profile shows 6 reviews per vendor. The button says "Lihat N lagi ulasan" and the list ends with "Menunjukkan 6 ulasan terkini daripada 47".
+3. Swap sheet: up to 3 alternatives, with "Lebih slot bajet" or "Lebih jauh" labels, plus "Cari lagi". Vendors who declined the date are no longer suggested. Added 16 vendors so each category has 5.
+4. og:title, og:description and og:image in `index.html`, so WhatsApp shows a preview card. It is one card for the whole site.
+5. Packages: with more than 3, the rest sit behind "Lihat menu penuh (N pakej)".
+6. Comment likes are saved in localStorage with a stable key.
+7. Inspirasi: nearest to the majlis first, plus an end card "Anda dah tengok semua" with "Tonton semula" and "Cari vendor". The endless loop is removed.
+8. Majlis Saya shows an amber warning when guests marked Hadir are more than pax. The invited count can't go below the number already answered.
+9. Majlis Saya rows show the vendor's photo once one is chosen. Not done: map pin, more than one majlis.
+10. "Guna lokasi semasa" measures from the nearest town. When GPS is denied it falls back to State → District with a message.
+11. Login:
+    - email and password, with an eye toggle;
+    - spinner on Hantar kod, Sahkan and Log masuk;
+    - a message when the number is already registered;
+    - the vendor role opens #/v;
+    - 10-digit phone numbers are formatted correctly.
+12. Small fixes:
+    - the BookSheet warns when the date is not the majlis date;
+    - the compare tray is hidden in a different category;
+    - the "→" glyph is now an icon.
+
+Still open: one majlis only, no map pin, no multi-state service area, and every login opens the demo account (stated on the login screen).

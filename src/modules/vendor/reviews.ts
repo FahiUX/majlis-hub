@@ -44,9 +44,3 @@ export function useMyReviews(vendorId: number) {
   return mine;
 }
 
-/** profile rating and count including reviews written in the app (C-5.0: count goes up after posting) */
-export const withMine = (v: { rating: number; reviews: number }, mine: UserReview[]) => {
-  const reviews = v.reviews + mine.length;
-  const rating = reviews ? (v.rating * v.reviews + mine.reduce((t, r) => t + r.rating, 0)) / reviews : 0;
-  return { rating, reviews };
-};

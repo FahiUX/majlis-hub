@@ -99,6 +99,7 @@ export default function BookSheet({ v, open, initialPkg, onClose }: { v: Vendor;
         <span className="w-full text-[13px] font-semibold">Tarikh majlis</span>
         <input type="date" value={date} min={addDays(TODAY, 1)} onChange={e => setDate(e.target.value)}
           className={cx('w-full px-3.5 py-3.5 leading-5 bg-white border rounded-[10px] text-[15px]', err ? 'border-bahaya' : 'border-line2')} aria-invalid={!!err} />
+        {s.event && date !== s.event.date && date !== s.event.date2 && !err && <span className="w-full text-sm text-amaran">Bukan tarikh {s.event.name} ({fmtDate(s.event.date)}). Pastikan ini tarikh yang betul.</span>}
       </label>
       {err && (
         <div role="alert" className="w-full flex flex-col gap-3 p-4 rounded-xl bg-bahaya-50">

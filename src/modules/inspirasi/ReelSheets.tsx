@@ -18,6 +18,7 @@ const vendorPrice = (text: string, reel: Reel | null) => {
 const BAD = ['bodoh', 'babi', 'sial', 'celaka', 'bangang', 'pukimak', 'fuck', 'shit', 'bitch', 'bastard'];
 export const hasBadWord = (t: string) => BAD.some(w => new RegExp(`(^|[^a-z])${w}([^a-z]|$)`, 'i').test(t));
 
+const LKEY = 'majlishub.commentLikes';
 const CREASONS = ['Kesat atau menghina', 'Spam atau iklan', 'Maklumat palsu', 'Lain-lain'];
 
 export function CommentsSheet({ reel, comments, loading, onClose, onSend, onRetry }: {
@@ -26,7 +27,9 @@ export function CommentsSheet({ reel, comments, loading, onClose, onSend, onRetr
   const { s, toast } = useStore();
   const [text, setText] = useState('');
   const [blocked, setBlocked] = useState(false);
-  const [liked, setLiked] = useState<number[]>([]);
+  // comment likes survive reload; keyed by reel + author + text, not list position (PM #33)
+  const [liked, setLikedRaw] = useState<string[]>(() => { try { return JSON.parse(localStorage.getItem(LKEY) ?? '[]') as string[]; } catch { return []; } });
+  const setLiked = (f: (l: string[]) => string[]) => setLikedRaw(l => { const n = f(l); try { localStorage.setItem(LKEY, JSON.stringify(n)); } catch { /* private mode */ } return n; });
   const [report, setReport] = useState<number | null>(null);
   const [why, setWhy] = useState<string | null>(null);
   const send = () => {
@@ -54,7 +57,8 @@ export function CommentsSheet({ reel, comments, loading, onClose, onSend, onRetr
             <p className="w-full text-sm text-muted">Tanya harga, tarikh atau kongsi pendapat anda.</p>
           </div>
         ) : comments.map((c, i) => {
-          const on = liked.includes(i);
+          const k = `${reel?.id}|${c.name}|${c.text}`;
+          const on = liked.includes(k);
           return (
             <div key={i} className={cx('w-full flex flex-row items-start gap-3', c.vendor && 'p-3 rounded-xl bg-pucuk-50')}>
               <span className="w-9 h-9 shrink-0 rounded-full bg-pucuk-100 text-hijau text-sm font-bold flex items-center justify-center">{c.name[0]}</span>
@@ -73,7 +77,7 @@ export function CommentsSheet({ reel, comments, loading, onClose, onSend, onRetr
               </div>
               {!c.failed && (
                 <div className="w-fit shrink-0 flex flex-col items-center">
-                  <button aria-label={on ? 'Batal suka komen' : 'Suka komen'} aria-pressed={on} onClick={() => (s.authed ? setLiked(l => (on ? l.filter(x => x !== i) : [...l, i])) : nav('/masuk?next=' + encodeURIComponent('/inspirasi?v=' + (reel?.id ?? ''))))}
+                  <button aria-label={on ? 'Batal suka komen' : 'Suka komen'} aria-pressed={on} onClick={() => (s.authed ? setLiked(l => (on ? l.filter(x => x !== k) : [...l, k])) : nav('/masuk?next=' + encodeURIComponent('/inspirasi?v=' + (reel?.id ?? ''))))}
                     className="w-11 h-11 shrink-0 flex flex-col items-center justify-center gap-0.5 text-xs text-muted">
                     <Heart className={cx('w-4 h-4 shrink-0', on && 'fill-emas text-emas')} /><span className="num">{c.likes + (on ? 1 : 0)}</span>
                   </button>

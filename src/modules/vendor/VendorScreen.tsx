@@ -6,7 +6,7 @@ import { catById, fromPrice, kmFrom, vendorById } from '../../data/mock';
 import { Button, EmptyState, Img, Pill, Sheet, Stars, TopBar, VerifiedBadge, cx, fmtDate, rm } from '../../components/ui';
 import { AboutTab, PackagesTab, PortfolioTab, ReviewsTab } from './VendorTabs';
 import BookSheet from './BookSheet';
-import { useMyReviews, withMine } from './reviews';
+
 
 const TABS = [['pakej', 'Pakej'], ['ulasan', 'Ulasan'], ['portfolio', 'Portfolio'], ['tentang', 'Tentang']] as const;
 
@@ -21,7 +21,6 @@ export default function VendorScreen({ id }: { id?: number | string }) {
   useEffect(() => { if (wantBook) setBook(true); }, [wantBook]);
   const [pkgId, setPkgId] = useState<string | undefined>();
   const [share, setShare] = useState(false);
-  const mine = useMyReviews(Number(id));
 
   const demo = r.q.get('demo');
   if (demo === 'loading') return <VendorSkeleton />;
@@ -42,7 +41,8 @@ export default function VendorScreen({ id }: { id?: number | string }) {
         action={<Button onClick={() => nav(`/cari?cat=${v.cat}`)}>Cari vendor serupa</Button>} />
     </div>
   );
-  const score = withMine(v, mine);
+  // v.rating / v.reviews already include reviews written in the app (applyOverlay)
+  const score = v;
   const link = `${location.origin}${location.pathname}#/vendor/${v.id}`;
   const quote = () => nav(`/mesej/${v.id}?draft=${encodeURIComponent(`Salam, boleh beri sebut harga untuk ${s.event ? fmtDate(s.event.date) : 'tarikh majlis saya'}, ${s.event?.pax ?? 300} tetamu?`)}`);
 

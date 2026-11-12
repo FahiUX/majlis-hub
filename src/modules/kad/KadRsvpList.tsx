@@ -61,8 +61,10 @@ export default function KadRsvpList() {
 
         <label className="w-full flex flex-row items-center gap-3 text-sm">
           <span className="flex-1 min-w-0 text-body">Kad dijemput <span className="text-muted">· {s.rsvps.length} sudah jawab</span></span>
-          <input type="number" inputMode="numeric" min={0} value={invited} aria-label="Bilangan kad dijemput"
+          <input type="number" inputMode="numeric" min={s.rsvps.length} value={invited} aria-label="Bilangan kad dijemput"
             onChange={e => setInvited(Number(e.target.value) || 0)}
+            // can't invite fewer people than have already answered; clamp when the field is left (typing stays free)
+            onBlur={() => invited < s.rsvps.length && setInvited(s.rsvps.length)}
             className="w-[88px] shrink-0 px-3.5 py-2.5 leading-5 rounded-[10px] border border-line2 bg-white text-right num" />
         </label>
 

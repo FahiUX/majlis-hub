@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { CalendarX, Check, RotateCcw, SlidersHorizontal, Sparkles, Star, TriangleAlert, X } from 'lucide-react';
+import { ArrowRight, CalendarX, Check, RotateCcw, SlidersHorizontal, Sparkles, Star, TriangleAlert, X } from 'lucide-react';
 import { CATS, VENDORS, catById, fromPrice } from '../../data/mock';
 import type { CategoryId, Package, Vendor } from '../../data/types';
 import { useStore } from '../../store';
-import { swap, useRoute } from '../../router';
+import { nav, swap, useRoute } from '../../router';
 import { Button, Chip, Img, Sheet, cx, fmtDate, rm } from '../../components/ui';
 import { CatArt } from './CatArt';
 
@@ -13,16 +13,19 @@ export interface Draft {
 }
 
 /** budget split, suggestions and the greedy "budget fits N categories" check (spec C-3.0a) */
-export function suggest(d: Draft) {
+/** `no` = vendors that already declined this customer on the date (e.g. B-1051 "Penuh pada tarikh ini") */
+export function suggest(d: Draft, no: number[] = []) {
   const wsum = d.cats.reduce((t, c) => t + d.weights[c], 0) || 1;
   const rows = d.cats.map(cat => {
     const pct = (d.weights[cat] / wsum) * 100;
     const slot = (d.budget * pct) / 100;
-    const cands = VENDORS.filter(v => v.cat === cat && v.km <= 70 && !v.busy.includes(d.date) && fromPrice(v) <= slot)
-      .sort((a, b) => b.rating - a.rating || fromPrice(a) - fromPrice(b));
-    const v = cands.find(x => x.id === d.picks[cat]) ?? cands[0];
+    const free = VENDORS.filter(v => v.cat === cat && !v.busy.includes(d.date) && !no.includes(v.id));
+    const cands = free.filter(v => v.km <= 70 && fromPrice(v) <= slot).sort((a, b) => b.rating - a.rating || fromPrice(a) - fromPrice(b));
+    // swap list: every other free vendor, the ones in budget + range first; others are labelled (spec: 3 alternatives, widen radius)
+    const alts = [...cands, ...free.filter(v => !cands.includes(v)).sort((a, b) => fromPrice(a) - fromPrice(b))];
+    const v = free.find(x => x.id === d.picks[cat]) ?? cands[0];
     const pkg = v ? bestPkg(v, slot) : undefined;
-    return { cat, pct, slot, cands, v, pkg };
+    return { cat, pct, slot, cands, alts, v, pkg };
   });
   const total = rows.reduce((t, r) => t + (r.pkg?.price ?? 0), 0);
   // cheapest available price per category, cheapest first, until the budget runs out
@@ -41,7 +44,8 @@ export function SuggestStep({ d, set }: { d: Draft; set: (p: Partial<Draft>) => 
   const [splitOpen, setSplitOpen] = useState(false);
   const [confirm, setConfirm] = useState(false);
   const demo = useRoute().q.get('demo');
-  const { rows, total, fits, full, missing } = suggest(d);
+  const no = s.bookings.filter(b => b.status === 'declined' && b.date === d.date).map(b => b.vendorId);
+  const { rows, total, fits, full, missing } = suggest(d, no);
   const over = total > d.budget;
   const swapRow = rows.find(r => r.cat === swapCat);
 
@@ -152,10 +156,10 @@ export function SuggestStep({ d, set }: { d: Draft; set: (p: Partial<Draft>) => 
                 <Img src={r.v.img} cat={r.cat} alt={r.v.name} className="w-16 h-16 shrink-0 rounded-xl" />
                 <div className="flex-1 min-w-0 flex flex-col gap-0.5">
                   <span className="w-full text-sm font-semibold">{r.v.name}</span>
-                  <span className="w-full flex flex-row items-center gap-1 text-xs text-muted"><Star className="w-3.5 h-3.5 shrink-0 fill-ink text-ink" /><span className="w-fit text-ink font-semibold">{r.v.rating}</span>· {r.v.area}</span>
+                  <span className="w-full flex flex-row items-center gap-1 text-xs text-muted"><Star className="w-3.5 h-3.5 shrink-0 fill-ink text-ink" /><span className="w-fit text-ink font-semibold">{r.v.rating.toFixed(1)}</span>· {r.v.area}</span>
                   <span className="w-full text-sm">{r.pkg.name} · <b className="num">{rm(r.pkg.price)}</b></span>
                 </div>
-                <Button variant="secondary" className="px-3! py-2!" disabled={r.cands.length < 2} onClick={() => setSwapCat(r.cat)}>Tukar</Button>
+                <Button variant="secondary" className="px-3! py-2!" disabled={r.alts.length < 2} onClick={() => setSwapCat(r.cat)}>Tukar</Button>
               </div>
             ) : (
               <p className="w-full text-sm text-amaran">{full.includes(r.cat) ? `Semua penuh pada ${fmtDate(d.date)}. Tukar tarikh atau buang kategori ini.` : 'Tiada calon dalam slot bajet ini. Naikkan peratus kategori ini atau bajet.'}</p>
@@ -176,18 +180,20 @@ export function SuggestStep({ d, set }: { d: Draft; set: (p: Partial<Draft>) => 
       </div>
 
       <Sheet open={!!swapRow} onClose={() => setSwapCat(null)} title={swapRow ? `Pilihan ${catById(swapRow.cat).name}` : ''}>
-        {swapRow && <p className="w-full text-sm text-muted">Dalam slot {rm(swapRow.slot)} dan bebas pada tarikh anda.</p>}
-        {swapRow?.cands.filter(v => v.id !== swapRow.v?.id).slice(0, 3).map(v => (
+        {swapRow && <p className="w-full text-sm text-muted">Semua bebas pada tarikh anda. Slot bajet {rm(swapRow.slot)}.</p>}
+        {swapRow?.alts.filter(v => v.id !== swapRow.v?.id).slice(0, 3).map(v => (
           <button key={v.id} onClick={() => { set({ picks: { ...d.picks, [swapRow.cat]: v.id } }); setSwapCat(null); }}
             className="w-full flex flex-row items-center gap-3 p-3 rounded-2xl border border-line text-left hover:border-hijau">
             <Img src={v.img} cat={v.cat} alt={v.name} className="w-14 h-14 shrink-0 rounded-xl" />
             <span className="flex-1 min-w-0 flex flex-col gap-0.5">
               <span className="w-full text-sm font-semibold">{v.name}</span>
-              <span className="w-full flex flex-row items-center gap-1 text-xs text-muted"><Star className="w-3 h-3 shrink-0 fill-ink text-ink" /><span className="w-fit text-ink font-semibold">{v.rating}</span>· {v.reviews} ulasan · {v.km} km</span>
+              <span className="w-full flex flex-row items-center gap-1 text-xs text-muted"><Star className="w-3 h-3 shrink-0 fill-ink text-ink" /><span className="w-fit text-ink font-semibold">{v.rating.toFixed(1)}</span>· {v.reviews} ulasan · {v.km} km</span>
               <span className="w-full text-sm">{bestPkg(v, swapRow.slot).name} · <b className="num">{rm(bestPkg(v, swapRow.slot).price)}</b></span>
+              {!swapRow.cands.includes(v) && <span className="w-full text-xs font-semibold text-amaran">{fromPrice(v) > swapRow.slot ? `Lebih slot bajet ${rm(fromPrice(v) - swapRow.slot)}` : `Lebih jauh · ${v.km} km`}</span>}
             </span>
           </button>
         ))}
+        {swapRow && <Button variant="secondary" block onClick={() => nav(`/cari?cat=${swapRow.cat}&max=${Math.round(swapRow.slot)}`)}>Cari lagi {catById(swapRow.cat).name}</Button>}
       </Sheet>
 
       <Sheet open={confirm} onClose={() => setConfirm(false)} title={replaces ? 'Ganti majlis sedia ada?' : 'Kemas kini majlis?'}
@@ -197,7 +203,7 @@ export function SuggestStep({ d, set }: { d: Draft; set: (p: Partial<Draft>) => 
           {changes.map(([label, a, b]) => (
             <li key={label} className="w-full flex flex-row items-center gap-2 text-sm">
               <span className="w-[88px] shrink-0 text-muted">{label}</span>
-              <span className="flex-1 min-w-0 num">{a} → <b>{b}</b></span>
+              <span className="flex-1 min-w-0 flex flex-row flex-wrap items-center gap-1 num">{a}<ArrowRight aria-label="kepada" className="w-3.5 h-3.5 shrink-0 text-muted" /><b>{b}</b></span>
             </li>
           ))}
         </ul>

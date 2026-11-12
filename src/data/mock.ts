@@ -52,7 +52,7 @@ const REVIEW_POOL: Review[] = [
   { name: 'Khairul A.', rating: 3, date: 'Jul 2026', text: 'Okay secara keseluruhan, tapi komunikasi seminggu sebelum majlis agak perlahan.', reply: 'Terima kasih atas maklum balas. Kami kini ada pembantu khas untuk urusan minggu terakhir.' },
   { name: 'Farah & Imran', rating: 5, date: 'Jun 2026', text: 'Tetamu puji banyak kali. Kami akan cadangkan pada kawan-kawan yang nak kahwin tahun depan.' },
 ];
-const reviewsFor = (i: number): Review[] => [0, 3, 5].map(k => REVIEW_POOL[(i + k) % REVIEW_POOL.length]);
+const reviewsFor = (i: number): Review[] => [0, 3, 5, 1, 6, 2].map(k => REVIEW_POOL[(i + k) % REVIEW_POOL.length]);
 
 const busy = ['2027-02-13', '2027-02-21', '2027-03-06'];
 /** vendors with a seeded booking in store.tsx; keep in sync with the initial bookings there */
@@ -101,6 +101,23 @@ const SEEDS: Seed[] = [
   [29, 'inai', 'Inai by Mira', 'Subang Jaya', 'Selangor', 14, 5.0, 53, '1 jam', 450, true],
   [30, 'inai', 'Henna Kasturi', 'Kuala Lumpur', 'WP Kuala Lumpur', 23, 4.8, 31, '2 jam', 380, true],
   [31, 'inai', 'Jari Berseri Henna', 'Seremban', 'Negeri Sembilan', 61, 4.7, 17, '3 jam', 300, true],
+  // second wave of listings, so every category has 5 and swaps/compare have real choice (PM #3)
+  [33, 'photo', 'Momen Indah Studio', 'Subang Jaya', 'Selangor', 9, 4.8, 64, '1 jam', 3500],
+  [34, 'photo', 'Kisah Kita Visuals', 'Kajang', 'Selangor', 30, 4.6, 27, '2 jam', 2400, true],
+  [35, 'decor', 'Anggun Pelamin', 'Klang', 'Selangor', 15, 4.8, 58, '2 jam', 5200],
+  [36, 'decor', 'Taman Impian Dekor', 'Putrajaya', 'WP Putrajaya', 28, 4.6, 22, '3 jam', 3900],
+  [37, 'makeup', 'Seri Wajah Bridal', 'Shah Alam', 'Selangor', 4, 4.9, 81, '1 jam', 2000, true],
+  [38, 'makeup', 'Andam Ayu Puchong', 'Puchong', 'Selangor', 16, 4.7, 33, '2 jam', 1400, true],
+  [39, 'band', 'Gema Harmoni', 'Petaling Jaya', 'Selangor', 18, 4.8, 45, '2 jam', 2900],
+  [40, 'band', 'Melodi Pengantin', 'Bangi', 'Selangor', 30, 4.6, 19, '3 jam', 1900, true],
+  [41, 'mc', 'Ustaz Rizal MC', 'Klang', 'Selangor', 16, 4.9, 77, '1 jam', 1300, true],
+  [42, 'mc', 'Hana Bicara', 'Subang Jaya', 'Selangor', 10, 4.7, 26, '2 jam', 1000, true],
+  [43, 'bride', 'Sahabat Pengantin', 'Shah Alam', 'Selangor', 6, 4.8, 31, '1 jam', 800, true],
+  [44, 'bride', 'Bidadari Assist', 'Kajang', 'Selangor', 31, 4.6, 14, '2 jam', 550, true],
+  [45, 'kompang', 'Kompang Seri Puchong', 'Puchong', 'Selangor', 17, 4.8, 40, '2 jam', 700],
+  [46, 'kompang', 'Hadrah Al-Amin', 'Shah Alam', 'Selangor', 5, 4.7, 23, '3 jam', 950],
+  [47, 'inai', 'Inai Seri Klang', 'Klang', 'Selangor', 16, 4.8, 29, '1 jam', 350, true],
+  [48, 'inai', 'Henna Puteri', 'Petaling Jaya', 'Selangor', 19, 4.6, 12, '2 jam', 280, true],
 ];
 
 const IMG: Record<CategoryId, string[]> = {
@@ -144,7 +161,7 @@ const ALL_VENDORS: Vendor[] = SEEDS.map(([id, cat, name, area, state, km, rating
       k === 1 ? PLAN4 : k === 2 ? PLAN2 : cat === 'inai' || cat === 'mc' ? PLAN2 : PLAN3),
     cancelPolicy: 'Batal lebih 60 hari sebelum majlis: deposit dipulangkan 50%. Kurang 60 hari: deposit tidak dipulangkan.',
     // some vendors are already taken on the demo event date, but never the ones Aina has booked (PM audit B2)
-    busy: i % 2 === 0 && !SEEDED_BOOKED.includes(id) ? [...busy, '2027-02-14'] : busy,
+    busy: i % 2 === 0 && i < 24 && !SEEDED_BOOKED.includes(id) ? [...busy, '2027-02-14'] : busy,
     sampleReviews: reviewsFor(i),
   };
 });
@@ -177,9 +194,11 @@ export const phoneFor = (id: number) => PHONES[id] ?? `01${(id % 8) + 1}-${Strin
 
 /* ---------- Wave 2: admin + vendor edits flow back into the customer app ---------- */
 const ALL_REELS = [...REELS];
-const BASE = new Map(ALL_VENDORS.map(v => [v.id, { suspended: v.suspended, busy: v.busy, about: v.about, packages: v.packages, sampleReviews: v.sampleReviews, gallery: v.gallery, cancelPolicy: v.cancelPolicy }]));
+const BASE = new Map(ALL_VENDORS.map(v => [v.id, { suspended: v.suspended, busy: v.busy, about: v.about, packages: v.packages, sampleReviews: v.sampleReviews, rating: v.rating, reviews: v.reviews, gallery: v.gallery, cancelPolicy: v.cancelPolicy }]));
 export interface Overlay {
   suspended: number[]; hiddenReviews: string[]; removedReels: number[];
+  /** reviews written in the app (vendor/reviews.ts), counted into rating + count everywhere (search card, compare, profile) */
+  mine: { vendorId: number; rating: number }[];
   me: { id: number; about: string; packages: Package[]; blocked: string[]; replies: Record<string, { text: string }>; gallery?: string[]; cancelPolicy?: string };
 }
 /**
@@ -191,6 +210,9 @@ export function applyOverlay(o: Overlay) {
   ALL_VENDORS.forEach(v => {
     const b = BASE.get(v.id)!;
     v.suspended = b.suspended || o.suspended.includes(v.id);
+    const mine = o.mine.filter(r => r.vendorId === v.id);
+    v.reviews = b.reviews + mine.length;
+    v.rating = v.reviews ? (b.rating * b.reviews + mine.reduce((t, r) => t + r.rating, 0)) / v.reviews : 0;
     v.sampleReviews = b.sampleReviews.filter(r => !o.hiddenReviews.includes(`${v.id}|${r.name}|${r.date}`));
     if (v.id === o.me.id) {
       v.about = o.me.about; v.packages = o.me.packages;
