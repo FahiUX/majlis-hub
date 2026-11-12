@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from 'react';
-import { Bell, CalendarHeart, ChevronRight, Clapperboard, Globe, Heart, LogIn, LogOut, Pencil, RotateCcw } from 'lucide-react';
+import { Bell, CalendarHeart, ChevronRight, Clapperboard, Globe, Heart, LogIn, LogOut, Pencil, RotateCcw, ShieldCheck, Store } from 'lucide-react';
 import { useStore, type AppState } from '../../store';
 import { nav, swap } from '../../router';
 import { REELS, vendorById } from '../../data/mock';
@@ -127,6 +127,14 @@ export default function AccountScreen() {
               </button>
             </div>
           ))}
+        </div>
+
+        {/* Wave 2 demo: one login opens all three roles (no backend) */}
+        <div className="w-full flex flex-col gap-3 p-5 rounded-2xl bg-white border border-line">
+          <span className="w-full text-[13px] font-semibold text-muted">Mod demo</span>
+          <Row icon={<Store className="w-5 h-5 shrink-0" />} label="Buka sebagai vendor" onClick={() => nav('/v')} />
+          <Divider />
+          <Row icon={<ShieldCheck className="w-5 h-5 shrink-0" />} label="Buka konsol admin" onClick={() => nav('/admin')} />
         </div>
 
         <Button variant="secondary" onClick={() => setConfirm(true)}><RotateCcw className="w-4 h-4 shrink-0" />Tetapan semula demo</Button>

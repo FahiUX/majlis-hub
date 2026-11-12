@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from 'react';
-import { CHATS } from './data/mock';
-import type { Booking, CategoryId, ChatMsg, Invitation, MajlisEvent, Rsvp, TabungEntry } from './data/types';
+import { CHATS, vendorById } from './data/mock';
+import { APPLICATIONS, AUDIT, CONTENT_REPORTS, ME_VENDOR, REVIEW_REPORTS, VENDOR_BOOKINGS, VENDOR_VIDEOS } from './data/wave2';
+import type { Application, AuditEntry, Booking, CategoryId, ChatMsg, ContentReport, Invitation, ListingStatus, MajlisEvent, Package, ReviewReport, Rsvp, TabungEntry, VendorBooking, VendorVideo } from './data/types';
 
 export const TODAY = '2026-11-11';
 
@@ -24,6 +25,29 @@ export interface AppState {
   tabung: TabungEntry[];
   chats: Record<number, ChatMsg[]>;
   recent: string[];
+  /* ---- Wave 2: the demo vendor (ME_VENDOR) ---- */
+  vendorBookings: VendorBooking[];
+  listing: {
+    status: ListingStatus; rejectReason?: string;
+    /** edits to name/category/documents wait for re-verification; the live listing stays up meanwhile (V-5.0) */
+    pendingReverify?: string;
+    about: string; packages: Package[]; capacity: number; blocked: string[];
+    templates: string[];
+    /** review key `${name}|${date}` -> reply */
+    replies: Record<string, { text: string; at: string }>;
+    reported: string[];
+  };
+  videos: VendorVideo[];
+  /** vendor-side chat threads, keyed by booking id */
+  vendorChats: Record<string, ChatMsg[]>;
+  /* ---- Wave 2: admin ---- */
+  applications: Application[];
+  suspended: number[];
+  reviewReports: ReviewReport[];
+  hiddenReviews: string[];
+  contentReports: ContentReport[];
+  audit: AuditEntry[];
+  featured: number[];
 }
 
 const initial: AppState = {
@@ -77,6 +101,25 @@ const initial: AppState = {
   ],
   chats: CHATS,
   recent: ['pelamin moden', 'mak andam bangi'],
+  vendorBookings: VENDOR_BOOKINGS,
+  listing: {
+    status: 'verified', about: vendorById(ME_VENDOR)!.about, packages: vendorById(ME_VENDOR)!.packages, capacity: 2,
+    blocked: ['2026-12-25', '2026-12-26'],
+    templates: ['Terima kasih! Saya semak tarikh dan balas dalam 1 jam.', 'Tarikh ini masih kosong. Boleh tempah melalui aplikasi.', 'Maaf, tarikh ini sudah penuh. Boleh cuba tarikh lain?'],
+    replies: {}, reported: [],
+  },
+  videos: VENDOR_VIDEOS,
+  vendorChats: {
+    'B-1066': [{ me: false, text: 'Salam kak, boleh buat solekan untuk 2 persalinan?', time: '10:14' }],
+    'B-1063': [{ me: false, text: 'Salam kak, untuk akad 14 Feb pukul 9 pagi, boleh?', time: 'Semalam' }, { me: true, text: 'Saya ada slot pukul 6 pagi untuk solekan akad.', time: 'Semalam' }],
+  },
+  applications: APPLICATIONS,
+  suspended: [],
+  reviewReports: REVIEW_REPORTS,
+  hiddenReviews: [],
+  contentReports: CONTENT_REPORTS,
+  audit: AUDIT,
+  featured: [7, 10, 21],
 };
 
 const KEY = 'majlishub.v3';

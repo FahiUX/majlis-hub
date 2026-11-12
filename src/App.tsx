@@ -22,6 +22,8 @@ import ChatScreen from './modules/chat/ChatScreen';
 import LoginScreen from './modules/auth/LoginScreen';
 import AccountScreen from './modules/auth/AccountScreen';
 import NotificationsScreen from './modules/home/NotificationsScreen';
+import VendorApp from './modules/vendorapp/VendorApp';
+import AdminApp from './modules/admin/AdminApp';
 
 /** pages with the customer's own data; guests get a login prompt instead (RBAC, PM audit B1) */
 const PRIVATE = ['tempahan', 'majlis', 'tabung', 'kad', 'mesej', 'notifikasi'];
@@ -56,6 +58,7 @@ function screenFor(r: Route, authed: boolean) {
     case 'masuk': return <LoginScreen />;
     case 'akaun': return <AccountScreen />;
     case 'notifikasi': return <NotificationsScreen />;
+    case 'v': return <VendorApp r={r} />;
     default: return <HomeScreen />;
   }
 }
@@ -68,7 +71,7 @@ const TABS: { to: string; match: (string | undefined)[]; label: string; Icon: ty
   { to: '/mesej', match: ['mesej'], label: 'Mesej', Icon: MessageCircle },
 ];
 /** full-screen flows hide the tab bar */
-const NO_NAV = ['jemputan', 'masuk', 'banding'];
+const NO_NAV = ['jemputan', 'masuk', 'banding', 'v'];
 const hideNav = (r: Route) => NO_NAV.includes(r.parts[0]) || (r.parts[0] === 'majlis' && r.parts[1] === 'baru') || (r.parts[0] === 'mesej' && !!r.parts[1]) || (r.parts[0] === 'vendor') || (r.parts[0] === 'kad');
 
 function BottomNav({ r }: { r: Route }) {
@@ -94,7 +97,7 @@ function BottomNav({ r }: { r: Route }) {
   );
 }
 
-function Toast() {
+export function Toast() {
   const { toastMsg } = useStore();
   if (!toastMsg) return null;
   return (
@@ -110,6 +113,8 @@ function Shell() {
   const { s } = useStore();
   const main = useRef<HTMLElement>(null);
   useEffect(() => { main.current?.scrollTo(0, 0); }, [r.path]);
+  // Wave 2 admin console is a desktop web app (1440 baseline), not the phone frame
+  if (r.parts[0] === 'admin') return <div className="relative w-full h-dvh flex flex-col bg-kertas"><Fragment key={r.path}><AdminApp r={r} /></Fragment><Toast /></div>;
   return (
     // phone-sized app; on desktop it sits centred like a device so stakeholders see the mobile layout
     <div className="w-full h-dvh flex flex-row justify-center bg-[#E9E6DF]">

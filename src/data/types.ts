@@ -132,3 +132,28 @@ export interface Rsvp { id: string; name: string; phone: string; attending: bool
 export interface TabungEntry { id: string; amount: number; note: string; at: string }
 
 export interface ChatMsg { me: boolean; text?: string; photo?: string; time: string; failed?: boolean }
+
+/* ---------- Wave 2: vendor + admin ---------- */
+export type ListingStatus = 'draft' | 'submitted' | 'verified' | 'rejected';
+
+/** a booking request from another customer (the demo customer's own bookings live in AppState.bookings) */
+export interface VendorBooking extends Booking { customer: string; phone: string; pax: number; place: string }
+
+export interface VendorVideo {
+  id: number; title: string; loc: string; desc: string; tags: string; poster: string;
+  status: 'processing' | 'live' | 'review' | 'removed'; reason?: string;
+  views: number; likes: number; comments: number; profileTaps: number; enquiries: number; pinned?: boolean; packageId?: string;
+}
+
+/** vendor onboarding / verification application (V-1.x, A-2.x) */
+export interface Application {
+  id: string; business: string; cats: CategoryId[]; freelancer: boolean; ssm: string; ic: string; contact: string; phone: string;
+  area: string; radiusKm: number; nationwide: boolean;
+  docs: { kind: 'ssm' | 'ic-depan' | 'ic-belakang' | 'halal'; file: string; expiry?: string; broken?: boolean }[];
+  about: string; packages: { name: string; price: number }[];
+  status: ListingStatus; submittedAt: string; rejectReason?: string;
+}
+
+export interface ReviewReport { id: string; vendorId: number; review: Review; reason: string; reporter: string; at: string; status: 'open' | 'kept' | 'hidden'; note?: string }
+export interface ContentReport { id: string; kind: 'video' | 'comment'; vendorId: number; title: string; text?: string; poster?: string; reasons: Record<string, number>; autoFlag?: string; at: string; status: 'open' | 'approved' | 'removed' | 'warned'; note?: string }
+export interface AuditEntry { id: string; at: string; who: string; action: string; target: string; reason?: string }
