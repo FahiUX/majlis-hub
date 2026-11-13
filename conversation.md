@@ -2315,3 +2315,49 @@ The complete detailed report has been documented and pushed to GitHub:
 #### `[15:24]` **User** (Antigravity Pane 0)
 
 then ok. then help to updated both conversation to github ok? thanks
+
+
+---
+
+## Sync 13 Nov 2026 (Claude-1 pane %1, 11 Nov 17:49 → 12 Nov 09:58 MYT)
+
+_Antigravity pane %5 was closed at sync time, so its turns after 11 Nov 15:24 are not included._
+
+`[11 Nov 17:49]` Antigravity-1: Part B vendor photos done (bride-assistant, kompang, band), inai in progress.
+`[11 Nov 18:57]` Claude-1: polish round checked by an independent PM/QA agent and deployed, https://fahiux.github.io/majlis-hub/ (customer side verified at 81%).
+
+#### `[12 Nov 08:17]` **User**
+yes reroll kompang, then go wave 2
+
+`[12 Nov 08:22]` Claude-1: Antigravity rerolled `public/img/gen/kompang.jpg` (no flags) and replaced `inai.jpg` with a real henna photo; two builder agents started Wave 2: vendor app `#/v` (`src/modules/vendorapp/`) and admin console `#/admin` (`src/modules/admin/`, desktop 1440).
+
+#### `[12 Nov 08:30]` **User**
+after your credit been off, i ask otger ai to help to rinish up. run 1 time check if it miss out anything or what, thanks man.
+
+`[12 Nov 08:38]` Claude-1: both builders finished and the build passes, committed `e25585b`. Admin 8/8 spec rows; vendor 12/15 (missing: V-3.2 auto-complete, V-8.0 category/cover save, V-8.1 comment replies). Vendor and admin edits now reach the customer app through `applyOverlay` in `src/data/mock.ts`.
+
+#### `[12 Nov 08:46]` **User**
+user? already done?
+
+#### `[12 Nov 08:48]` **User**
+i dont care about vendor and admin yet. if you already done that it ok. but lets focus on user module and feature
+
+#### `[12 Nov 09:58]` **Claude-1**
+Vendor/admin QA stopped. Customer polish round 2: fixed all 12 open items, committed `a051676` and deployed (gh-pages `c69f903`):
+
+| # | Module | Fix |
+|---|---|---|
+| 1 | Ulasan | Same rating and review count on search cards and profile |
+| 2 | Profil vendor | 6 reviews shown, labelled "6 ulasan terkini daripada N" |
+| 3 | Majlis Saya | Swap shows up to 3 options plus "Cari lagi"; declined vendors not suggested (16 vendors added, ids 33–48) |
+| 4 | Profil vendor | WhatsApp link preview card (og tags in `index.html`) |
+| 5 | Profil vendor | Package list collapses after 3, "Lihat menu penuh" |
+| 6 | Inspirasi | Comment likes saved across reloads |
+| 7 | Inspirasi | Nearest first, end card "Anda dah tengok semua" |
+| 8 | Kad & RSVP | Too-many-guests warning also in Majlis Saya |
+| 9 | Majlis Saya | Vendor photo on booked rows |
+| 10 | Carian | "Guna lokasi semasa"; falls back to choose-by-state if GPS is blocked |
+| 11 | Log masuk | Email + password, loading spinners, "already registered" hint |
+| 12 | Small | Compare tray, wrong-date note, arrow icon |
+
+Checked in the browser: 22 customer screens at 430px, 0 console errors. Not yet re-scored by an independent checker. Still open: one majlis only, no map pin, every login opens Aina's demo account.
