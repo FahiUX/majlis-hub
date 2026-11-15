@@ -183,9 +183,10 @@ export const REELS: Reel[] = [
 ];
 
 export const CHATS: Record<number, ChatMsg[]> = {
-  7: [{ me: false, text: 'Assalamualaikum Aina! Tahniah atas majlis nanti.', time: '09:02' }, { me: true, text: 'Waalaikumsalam. Boleh buat sesi pre-wedding sekali?', time: '09:05' }, { me: false, text: 'Boleh. Gambar pre-wedding boleh buat di Taman Botani.', time: '09:12' }],
-  11: [{ me: true, text: 'Salam kak, untuk akad 14 Feb pukul 9 pagi, boleh?', time: 'Semalam' }, { me: false, text: 'Saya ada slot pukul 6 pagi untuk solekan akad.', time: 'Semalam' }],
-  10: [{ me: false, text: 'Warna pelamin sudah dikemaskini, sila semak.', time: 'Isnin' }, { me: false, photo: 'img/gen/pelamin.jpg', time: 'Isnin' }],
+  7: [{ id: 's7a', me: false, text: 'Assalamualaikum Aina! Tahniah atas majlis nanti.', time: '09:02', at: '2026-11-11T09:02' }, { id: 's7b', me: true, text: 'Waalaikumsalam. Boleh buat sesi pre-wedding sekali?', time: '09:05', at: '2026-11-11T09:05' }, { id: 's7c', me: false, text: 'Boleh. Gambar pre-wedding boleh buat di Taman Botani.', time: '09:12', at: '2026-11-11T09:12' }],
+  11: [{ id: 's11a', me: true, text: 'Salam kak, untuk akad 14 Feb pukul 9 pagi, boleh?', time: '21:40', at: '2026-11-10T21:40' }, { id: 's11b', me: false, text: 'Saya ada slot pukul 6 pagi untuk solekan akad.', time: '21:52', at: '2026-11-10T21:52' }],
+  10: [{ id: 's10a', me: false, text: 'Warna pelamin sudah dikemaskini, sila semak.', time: '15:20', at: '2026-11-09T15:20' },
+    { id: 's10b', me: false, photo: 'img/gen/pelamin.jpg', album: 's10', time: '15:21', at: '2026-11-09T15:21' }, { id: 's10c', me: false, photo: 'img/gen/venue.jpg', album: 's10', time: '15:21', at: '2026-11-09T15:21' }, { id: 's10d', me: false, photo: 'img/gen/planning.jpg', album: 's10', time: '15:21', at: '2026-11-09T15:21' }],
 };
 
 export const PHONES: Record<number, string> = { 7: '012-334 8810', 10: '017-662 4401', 11: '019-220 7314' };

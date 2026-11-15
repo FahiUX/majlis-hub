@@ -3,6 +3,7 @@ import { useStore, type AppState } from '../../store';
 import { ME_VENDOR } from '../../data/wave2';
 import type { Booking, VendorBooking } from '../../data/types';
 import { cx } from '../../components/ui';
+import { stamp } from '../chat/media';
 
 /** every booking with the demo vendor: other customers' (vendorBookings) + Aina's own (bookings) */
 export type VRow = VendorBooking & { mine: boolean };
@@ -47,8 +48,8 @@ export function Toggle({ on, onChange, label }: { on: boolean; onChange: (v: boo
 
 /** vendor sends a chat line. Aina's thread is s.chats[ME_VENDOR] where me = Aina, so the vendor writes me:false there */
 export const sendMsg = (b: { id: string; mine: boolean }, text: string) => (p: AppState): Partial<AppState> => b.mine
-  ? { chats: { ...p.chats, [ME_VENDOR]: [...(p.chats[ME_VENDOR] ?? []), { me: false, text, time: 'Baru' }] } }
-  : { vendorChats: { ...p.vendorChats, [b.id]: [...(p.vendorChats[b.id] ?? []), { me: true, text, time: 'Baru' }] } };
+  ? { chats: { ...p.chats, [ME_VENDOR]: [...(p.chats[ME_VENDOR] ?? []), { ...stamp(), me: false, text }] } }
+  : { vendorChats: { ...p.vendorChats, [b.id]: [...(p.vendorChats[b.id] ?? []), { ...stamp(), me: true, text }] } };
 
 /** the vendor's package for a booking (listing packages are what customers see via the overlay) */
 export const pkgOf = (s: AppState, id: string) => s.listing.packages.find(p => p.id === id);

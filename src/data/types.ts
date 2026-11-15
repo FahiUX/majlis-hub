@@ -131,7 +131,16 @@ export interface Rsvp { id: string; name: string; phone: string; attending: bool
 
 export interface TabungEntry { id: string; amount: number; note: string; at: string }
 
-export interface ChatMsg { me: boolean; text?: string; photo?: string; time: string; failed?: boolean }
+/** text is the caption when photo/video/file is set. `time` = HH:MM shown on the bubble, `at` = local ISO for the day separators */
+export interface ChatMsg {
+  id?: string; me: boolean; text?: string; photo?: string; video?: string;
+  file?: { name: string; size: number; url: string };
+  /** photos/videos sent together share an album id and render as one grid */
+  album?: string;
+  reply?: { id?: string; me: boolean; text: string };
+  deleted?: boolean;
+  time: string; at?: string; failed?: boolean;
+}
 
 /* ---------- Wave 2: vendor + admin ---------- */
 export type ListingStatus = 'draft' | 'submitted' | 'verified' | 'rejected';

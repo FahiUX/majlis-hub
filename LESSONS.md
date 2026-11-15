@@ -56,3 +56,29 @@ This file records real-world lessons, gotchas, friction points, and edge cases d
 - **Permanent Fix Applied:**
   - Added `.agents/08_retro_agent.md`; rewrote `.agents/07_figma_ai_agent.md` (state inventory, repair page-wide, prototype standard, final audit); Permanent Rules 14-21.
   - Updated the global `figma-standard-ui` skill (GRID for >6 cards, no truncation, code-faithful Hug, button/input/circle standards, gap 500, `references/figma-repair-rules.md`).
+
+### 2026-11-14 — Chat Photo/Video (Majlis Hub, task 1 of 4)
+- **What Worked Well:**
+  - A stakeholder report ("chat can't share photos/videos") turned into an ordered task list agreed with the user (1 → 4 → 3 → 2) before any code.
+  - Real gallery/camera picker, caption preview, video bubble, full-screen viewer; the vendor inbox now renders media (it showed blank bubbles before).
+  - Photos downscaled to 1080px JPEG data URLs so they survive reload; videos are session-only blob URLs with a "Video tamat" placeholder, stated rather than hidden.
+  - Verified with a real file upload in Playwright: 0 console errors.
+- **Friction Points / Human Corrections:**
+  - The build ran without calling the UI/UX and Retro agents first. User: "call the ui.ux agent and retro agent." UI/UX review is running after the fact.
+  - The repo here (`Documents\GitHub\project-wedding-repo`) is not the deploy repo (`FahiUX/majlis-hub`), so the change is not live yet.
+- **Rule Going Forward:**
+  - Any user-facing feature: brief the UI/UX agent (and open a Retro entry) **before** writing code, not after. Resuming on another machine does not skip the agent loop.
+  - When reporting "done", say which repo it is in and whether it is live.
+
+### 2026-11-14 — WhatsApp-style Chat (Majlis Hub, task 1, round 2)
+- **What Worked Well:**
+  - Second pass covered what the user listed: documents (PDF/Word/Excel/PPT ≤20 MB), day separators + HH:MM, album grid, swipe gallery, per-photo captions, reply / copy / delete (for everyone / for me) via long-press or right-click; vendor inbox reuses the same bubbles.
+  - Store key bumped `majlishub.v3` → `v4` so old chats with "Isnin" in the time field are dropped instead of migrated badly.
+  - Verified by real clicks: 0 console errors.
+- **Friction Points / Human Corrections:**
+  - User: "what isnin? i need time also." Seed messages showed only a weekday.
+  - The first version was a minimal pass; the user had to list the WhatsApp behaviours one by one.
+  - Media bubbles stretched full width: `w-fit` beat `w-[240px]` in the same class string.
+- **Rule Going Forward:**
+  - When a stakeholder says "like WhatsApp" (or any named app), list that app's behaviours up front and agree the list before building, not a minimal first pass.
+  - Never put two width (or other same-property) Tailwind classes on one element; pick one, and check the rendered size.

@@ -3,6 +3,7 @@ import { useStore } from '../../store';
 import { nav } from '../../router';
 import { catById, vendorById } from '../../data/mock';
 import { Button, Divider, EmptyState, Img } from '../../components/ui';
+import { preview } from './media';
 
 export default function MessagesScreen() {
   const { s } = useStore();
@@ -27,7 +28,7 @@ export default function MessagesScreen() {
                     <span className="flex-1 min-w-0 text-[15px] font-semibold">{v.name}</span>
                     <span className="w-fit text-xs text-muted">{last.time}</span>
                   </div>
-                  <span className="w-full text-sm text-body">{last.photo ? 'Menghantar gambar' : `${last.me ? 'Anda: ' : ''}${last.text}`}</span>
+                  <span className="w-full text-sm text-body">{`${last.me ? 'Anda: ' : ''}${preview(last)}`}</span>
                   <span className="w-full text-xs text-muted">{catById(v.cat).name}</span>
                 </div>
               </button>

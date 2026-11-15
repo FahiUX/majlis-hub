@@ -178,3 +178,12 @@ Items from §7, each clicked through in the browser at 430px. 22 customer routes
     - the "→" glyph is now an icon.
 
 Still open: one majlis only, no map pin, no multi-state service area, and every login opens the demo account (stated on the login screen).
+
+## 9. Chat media (14 Nov)
+
+Stakeholder: the chat could only send 4 canned sample photos. Task list agreed with the user, worked in order 1 → 4 → 3 → 2:
+
+1. **Chat photo/video → WhatsApp-style chat** — built, UI/UX review pending, not live. Round 1 (6370f28): picker, caption, video, viewer. Round 2 (3d1d836): documents ≤20 MB, day separators + HH:MM (store `v4`), album grid + swipe gallery, per-photo captions, reply / copy / delete (for everyone / for me); vendor inbox shares the bubbles. Photos persist; videos and documents are session-only. Deploys from `FahiUX/majlis-hub`.
+2. **Jam** — shared couple planning board, like a Spotify shared playlist. WhatsApp sharing stays. ☐
+3. **More vendor categories** — currently 8; add driver/kereta pengantin, katering, dewan, baju, cenderahati, DJ, videografer, kek, hantaran. ☐
+4. **Branding** — for a Malay-Muslim audience, open to everyone. ☐

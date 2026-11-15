@@ -7,6 +7,8 @@ import type { ChatMsg } from '../../data/types';
 import { effective } from '../booking/money';
 import { Button, EmptyState, Sheet, StatusChip, TopBar, cx, fmtDate } from '../../components/ui';
 import { inputCls, rowsOf, sendMsg, type VRow } from './kit';
+import { Bubble, preview } from '../chat/media';
+import { Gallery } from '../chat/Gallery';
 
 /** threads as the vendor sees them: `own` = the vendor wrote it */
 function threadsOf(s: AppState) {
@@ -40,7 +42,7 @@ export function Inbox() {
                 <span className="flex-1 min-w-0 flex flex-col gap-0.5">
                   <span className="w-full flex flex-row items-center gap-2"><span className="flex-1 min-w-0 text-[15px] font-semibold">{b.customer}</span><span className="w-fit text-xs text-muted">{last.time}</span></span>
                   <span className="w-full text-xs text-muted">{b.id} · {fmtDate(b.date)}</span>
-                  <span className={cx('w-full text-sm', last.own ? 'text-muted' : 'text-ink font-medium')}>{last.own ? 'Anda: ' : ''}{last.text ?? 'Gambar'}</span>
+                  <span className={cx('w-full text-sm', last.own ? 'text-muted' : 'text-ink font-medium')}>{last.own ? 'Anda: ' : ''}{preview(last)}</span>
                 </span>
               </button>
             );
@@ -59,11 +61,13 @@ export function Thread({ id }: { id: string }) {
   const [text, setText] = useState('');
   const [edit, setEdit] = useState(false);
   const [tpl, setTpl] = useState(s.listing.templates);
+  const [view, setView] = useState<number | null>(null);
   if (!b) return (
     <div className="w-full flex flex-col"><TopBar title="Mesej" fallback="/v/mesej" />
       <EmptyState icon={<MessageCircle className="w-6 h-6" />} title="Perbualan tidak dijumpai" action={<Button onClick={() => nav('/v/mesej')}>Semua mesej</Button>} />
     </div>
   );
+  const media = (t?.msgs ?? []).filter(m => (m.photo || m.video) && !m.deleted);
   const send = (msg: string) => { if (!msg.trim()) return; set(sendMsg(b, msg.trim())); setText(''); };
   const saveTpl = () => { set(p => ({ listing: { ...p.listing, templates: tpl.map(x => x.trim()).filter(Boolean) } })); toast('Templat disimpan'); setEdit(false); };
 
@@ -74,7 +78,7 @@ export function Thread({ id }: { id: string }) {
         <div className="w-full flex flex-row items-center gap-2 text-sm text-muted"><span className="flex-1 min-w-0">{fmtDate(b.date)} · {b.place}</span><StatusChip s={effective(b)} /></div>
         {(t?.msgs ?? []).map((m, i) => (
           <div key={i} className={cx('w-full flex flex-col gap-1', m.own ? 'items-end' : 'items-start')}>
-            <p className={cx('w-fit px-4 py-2.5 rounded-2xl text-[15px] leading-[22px]', m.own ? 'bg-hijau text-white' : 'bg-white border border-line')}>{m.text}</p>
+            <Bubble m={m} mine={m.own} who={b.customer} onPhoto={() => setView(media.indexOf(m))} />
             <span className="w-fit text-xs text-muted">{m.time}</span>
           </div>
         ))}
@@ -101,6 +105,7 @@ export function Thread({ id }: { id: string }) {
         ))}
         {tpl.length < 6 && <Button variant="secondary" onClick={() => setTpl([...tpl, ''])}><Plus className="w-4 h-4 shrink-0" />Tambah templat</Button>}
       </Sheet>
+      {view !== null && <Gallery items={media} start={view} who={b.customer} onClose={() => setView(null)} />}
     </div>
   );
 }

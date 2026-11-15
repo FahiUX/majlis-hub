@@ -113,7 +113,7 @@ const initial: AppState = {
   },
   videos: VENDOR_VIDEOS,
   vendorChats: {
-    'B-1066': [{ me: false, text: 'Salam kak, boleh buat solekan untuk 2 persalinan?', time: '10:14' }],
+    'B-1066': [{ id: 'v1066a', me: false, text: 'Salam kak, boleh buat solekan untuk 2 persalinan?', time: '10:14', at: '2026-11-10T10:14' }],
   },
   applications: APPLICATIONS,
   suspended: [],
@@ -124,7 +124,7 @@ const initial: AppState = {
   featured: [7, 10, 21],
 };
 
-const KEY = 'majlishub.v3';
+const KEY = 'majlishub.v4';
 const load = (): AppState => {
   try { const s = localStorage.getItem(KEY); return s ? { ...initial, ...JSON.parse(s) } : initial; } catch { return initial; }
 };
