@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" fill="none">
+  <title>WEEV — Concept 3: The Connected Vows</title>
+  <!-- Concept 3: The Connected Vows (Networked Milestone Nodes forming 'W') -->
+  <!-- Orthogonal Interwoven Pipeline forming 'W' -->
+  <path d="M68 96 V164 C68 186 86 204 108 204 C118 204 128 194 128 184 V120 V184 C128 194 138 204 148 204 C170 204 188 186 188 164 V96" 
+        stroke="#000000" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Central Intersecting Bridge / Weave Crossbar -->
+  <path d="M92 144 H164" stroke="#000000" stroke-width="16" stroke-linecap="round"/>
+
+  <!-- 3 Elevated Milestone Nodes (Rounded Squircles) -->
+  <!-- Left Node: Couple -->
+  <rect x="46" y="52" width="44" height="44" rx="12" fill="#000000"/>
+  <!-- Center Apex Node: Celebration Ring / Escrow -->
+  <circle cx="128" cy="74" r="24" stroke="#000000" stroke-width="16"/>
+  <!-- Right Node: Verified Ecosystem -->
+  <rect x="166" y="52" width="44" height="44" rx="12" fill="#000000"/>
+</svg>

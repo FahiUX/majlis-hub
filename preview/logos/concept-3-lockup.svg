@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 256" width="640" height="256" fill="none">
+  <!-- Concept 3 Horizontal Lockup -->
+  <g transform="translate(24, 28) scale(0.78)">
+    <path d="M68 96 V164 C68 186 86 204 108 204 C118 204 128 194 128 184 V120 V184 C128 194 138 204 148 204 C170 204 188 186 188 164 V96" 
+          stroke="#000000" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M92 144 H164" stroke="#000000" stroke-width="16" stroke-linecap="round"/>
+    <rect x="46" y="52" width="44" height="44" rx="12" fill="#000000"/>
+    <circle cx="128" cy="74" r="24" stroke="#000000" stroke-width="16"/>
+    <rect x="166" y="52" width="44" height="44" rx="12" fill="#000000"/>
+  </g>
+
+  <!-- Wordmark: W E E V -->
+  <g fill="#000000">
+    <path d="M250 82 H272 L290 156 L308 82 H328 L346 156 L364 82 H386 L356 182 H336 L318 114 L300 182 H280 Z"/>
+    <path d="M404 82 H462 V102 H426 V122 H456 V142 H426 V162 H464 V182 H404 Z"/>
+    <path d="M480 82 H538 V102 H502 V122 H532 V142 H502 V162 H540 V182 H480 Z"/>
+    <path d="M554 82 H576 L598 158 L620 82 H642 L610 182 H586 Z"/>
+  </g>
+</svg>

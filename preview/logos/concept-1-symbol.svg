@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" fill="none">
+  <title>WEEV — Concept 1: The Interwoven Ribbon</title>
+  <!-- Concept 1: The Interwoven Ribbon (Lettermark 'W' with interlocking matrimonial ring) -->
+  <g transform="translate(0, 10)">
+    <!-- Outer W ribbon -->
+    <path d="M42 58 L74 178 L114 90 L128 126 L142 90 L182 178 L214 58" 
+          stroke="#000000" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Central Interlocking Matrimonial Ring -->
+    <circle cx="128" cy="76" r="28" stroke="#000000" stroke-width="18"/>
+    <!-- Celebration Spark -->
+    <circle cx="128" cy="32" r="7" fill="#000000"/>
+  </g>
+</svg>
