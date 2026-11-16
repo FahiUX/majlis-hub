@@ -3,93 +3,160 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Majlis Hub Mood Board</title>
+<title>WEEV · Visual Moodboard (3A + 3B Imperial Merlot &amp; Champagne)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
 <style>
-  :root{--hijau:#0E5E4B;--malam:#062E25;--p50:#EFF7F3;--p100:#DDF0E7;--p200:#B9DFCD;--emas:#B98A2E;--emas50:#F7F0E1;--kertas:#FBFAF7;--ink:#1B2420;--body:#3C4743;--muted:#67716D;--line:#E4E2DC}
-  *{box-sizing:border-box;margin:0}
-  body{background:var(--kertas);color:var(--ink);font-family:Figtree,system-ui,sans-serif;line-height:1.5}
-  .wrap{max-width:1280px;margin:0 auto;padding:48px 24px 64px}
-  .eyebrow{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--hijau)}
-  h1{font-family:Fraunces,serif;font-weight:600;font-size:clamp(36px,6vw,64px);line-height:1.05;letter-spacing:-.02em;margin:12px 0 16px;max-width:14ch}
-  .lead{font-size:18px;color:var(--body);max-width:60ch}
-  .words{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
-  .words span{padding:8px 16px;border-radius:999px;background:#fff;border:1px solid var(--line);font-weight:600}
-  .words span em{font-style:normal;color:var(--muted);font-weight:500;margin-left:6px}
-  .grid{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:120px;gap:12px;margin:48px 0}
-  figure{position:relative;border-radius:16px;overflow:hidden;background:var(--p50)}
-  figure img{width:100%;height:100%;object-fit:cover;display:block}
-  figure.crop img{transform:scale(1.08)}
-  figcaption{position:absolute;left:12px;bottom:12px;right:12px;color:#fff;font-size:13px;font-weight:600;text-shadow:0 1px 8px rgba(0,0,0,.5)}
-  .grid{grid-template-areas:"a a a a b b b b c c c c" "a a a a b b b b c c c c" "a a a a q q q q c c c c" "a a a a q q q q c c c c" "d d d d d e e e t t t t" "d d d d d e e e t t t t" "f f f f f e e e p p p p" "f f f f f e e e p p p p"}
-  .a{grid-area:a}.b{grid-area:b}.c{grid-area:c}.d{grid-area:d}.e{grid-area:e}.f{grid-area:f}.p{grid-area:p}.quote{grid-area:q}.trust{grid-area:t}
-  .quote{background:var(--malam);color:#fff;border-radius:16px;padding:28px;display:flex;flex-direction:column;justify-content:space-between}
-  .quote p{font-family:Fraunces,serif;font-size:clamp(22px,2.4vw,30px);line-height:1.2}
-  .quote small{color:var(--p200);font-size:13px}
-  .songket{height:72px;margin:-32px 0 48px;border-radius:16px;background-color:var(--emas50);
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cpath d='M20 4 36 20 20 36 4 20Z' fill='none' stroke='%23B98A2E' stroke-width='1.2'/%3E%3Cpath d='M20 13 27 20 20 27 13 20Z' fill='%23B98A2E' fill-opacity='.35'/%3E%3C/svg%3E")}
-  .trust{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:10px;justify-content:center}
-  .pill{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;padding:4px 10px;border-radius:999px;background:var(--p100);color:var(--hijau);font-size:12px;font-weight:600}
-  .trust b{font-family:Fraunces,serif;font-size:44px;font-weight:600;line-height:1}
-  .trust .meta{color:var(--muted);font-size:14px}
-  h2{font-size:20px;font-weight:600;margin-bottom:16px}
-  .washes{display:flex;gap:0;height:96px;border-radius:16px;overflow:hidden;border:1px solid var(--line)}
-  .washes div{flex:1}
-  .notes{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px}
-  .note{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px}
-  .note h3{font-size:16px;font-weight:600;margin-bottom:6px}
-  .note p{color:var(--body);font-size:15px}
-  .credits{margin-top:48px;font-size:12px;color:var(--muted)}
-  .credits a{color:var(--muted)}
-  @media (max-width:860px){
-    .grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:140px;grid-template-areas:"a a" "a a" "a a" "b b" "q q" "c e" "c e" "d d" "t t" "f f" "p p"}
-    .notes{grid-template-columns:1fr}
-    .wrap{padding:32px 16px 48px}
+  :root {
+    --merlot: #481226;
+    --bordeaux: #320B1A;
+    --malam: #1E0711;
+    --p50: #FAF2F4;
+    --p100: #F3E2E7;
+    --p200: #DEC2CC;
+    --emas: #E5BE64;
+    --emas50: #FAF2DF;
+    --kertas: #FAF7F4;
+    --ink: #1C0912;
+    --body: #3D2731;
+    --muted: #6F6167;
+    --line: #ECE3DC;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body { background: var(--kertas); color: var(--ink); font-family: Figtree, system-ui, sans-serif; line-height: 1.5; }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 48px 24px 64px; }
+  .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--merlot); display: flex; align-items: center; gap: 8px; }
+  h1 { font-family: Fraunces, serif; font-weight: 600; font-size: clamp(36px, 5.5vw, 60px); line-height: 1.05; letter-spacing: -.02em; margin: 12px 0 16px; max-width: 16ch; }
+  .lead { font-size: 18px; color: var(--body); max-width: 62ch; line-height: 1.6; }
+  .words { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+  .words span { padding: 8px 18px; border-radius: 999px; background: #fff; border: 1px solid var(--line); font-weight: 600; font-size: 14px; box-shadow: 0 2px 6px rgba(0,0,0,0.02); }
+  .words span em { font-style: normal; color: var(--muted); font-weight: 500; margin-left: 6px; }
+  
+  .grid { display: grid; grid-template-columns: repeat(12, 1fr); grid-auto-rows: 120px; gap: 14px; margin: 48px 0; }
+  figure { position: relative; border-radius: 18px; overflow: hidden; background: var(--p50); }
+  figure img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .6s ease; }
+  figure:hover img { transform: scale(1.05); }
+  figcaption { position: absolute; left: 14px; bottom: 14px; right: 14px; color: #fff; font-size: 13px; font-weight: 600; text-shadow: 0 2px 8px rgba(0,0,0,.6); z-index: 2; }
+  figure::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(28,9,18,0.75) 100%); }
+  
+  .grid { grid-template-areas: 
+    "a a a a b b b b c c c c" 
+    "a a a a b b b b c c c c" 
+    "a a a a q q q q c c c c" 
+    "a a a a q q q q c c c c" 
+    "d d d d d e e e t t t t" 
+    "d d d d d e e e t t t t" 
+    "f f f f f e e e p p p p" 
+    "f f f f f e e e p p p p"; 
+  }
+  .a { grid-area: a; } .b { grid-area: b; } .c { grid-area: c; } .d { grid-area: d; } .e { grid-area: e; } .f { grid-area: f; } .p { grid-area: p; } .quote { grid-area: q; } .trust { grid-area: t; }
+  
+  .quote { 
+    background: radial-gradient(110% 90% at 85% 15%, rgba(229,190,100,0.24) 0%, transparent 60%), linear-gradient(165deg, var(--merlot) 0%, var(--malam) 100%);
+    color: #fff; border-radius: 18px; padding: 28px; display: flex; flex-direction: column; justify-content: space-between;
+    box-shadow: 0 8px 24px rgba(30,7,17,0.12);
+  }
+  .quote p { font-family: Fraunces, serif; font-size: clamp(20px, 2.2vw, 28px); line-height: 1.25; }
+  .quote small { color: var(--emas); font-size: 13px; font-weight: 600; }
+  
+  .weave-strip { height: 72px; margin: -32px 0 48px; border-radius: 16px; background-color: var(--emas50);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 44 44'%3E%3Cpath d='M22 4L40 22L22 40L4 22Z' fill='none' stroke='%23E5BE64' stroke-width='1.2'/%3E%3Ccircle cx='22' cy='22' r='4' fill='none' stroke='%23E5BE64' stroke-width='1.2'/%3E%3C/svg%3E");
+    border: 1px solid rgba(229,190,100,0.3);
+  }
+  
+  .trust { background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 24px; display: flex; flex-direction: column; gap: 8px; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
+  .pill { display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; padding: 4px 12px; border-radius: 999px; background: var(--p100); color: var(--merlot); font-size: 12px; font-weight: 700; }
+  .trust b { font-family: Fraunces, serif; font-size: 46px; font-weight: 700; line-height: 1; color: var(--merlot); }
+  .trust .meta { color: var(--muted); font-size: 13px; line-height: 1.4; }
+  
+  h2 { font-family: Fraunces, serif; font-size: 24px; font-weight: 600; margin-bottom: 16px; }
+  .washes { display: flex; gap: 0; height: 96px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); box-shadow: 0 4px 16px rgba(0,0,0,0.03); }
+  .washes div { flex: 1; }
+  
+  .notes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 48px; }
+  .note { background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+  .note h3 { font-size: 17px; font-weight: 600; margin-bottom: 6px; color: var(--merlot); font-family: Fraunces, serif; }
+  .note p { color: var(--body); font-size: 14px; line-height: 1.5; }
+  
+  .credits { margin-top: 48px; font-size: 12px; color: var(--muted); }
+  
+  @media (max-width: 860px) {
+    .grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 140px; grid-template-areas: "a a" "a a" "a a" "b b" "q q" "c e" "c e" "d d" "t t" "f f" "p p"; }
+    .notes { grid-template-columns: 1fr; }
+    .wrap { padding: 32px 16px 48px; }
   }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="eyebrow">Majlis Hub · Mood Board · Arah visual</div>
-  <h1>Semua untuk majlis anda, di satu tempat.</h1>
-  <p class="lead">The feeling we're after: walking into a well-run kenduri. It's warm and full of colour, but someone clearly has it all under control. The photos bring the celebration. The app stays calm, green and steady, so families feel they're in safe hands.</p>
+  <div class="eyebrow">
+    <svg width="22" height="22" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="40" height="40" rx="10" fill="#481226"/>
+      <path d="M9 13.5L14 26.5L18 16.5L20 21.5L22 16.5L26 26.5L31 13.5" stroke="#FAF7F4" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="20" cy="15" r="4.2" stroke="#E5BE64" stroke-width="2.2"/>
+    </svg>
+    WEEV · Visual Moodboard · 3A + 3B Imperial Merlot &amp; Champagne
+  </div>
+  <h1>Semua untuk majlis anda, disahkan di satu tempat.</h1>
+  <p class="lead">The feeling: walking into a world-class Malaysian celebration. Warm, royal, and aristocratic — whether it is a Malay kenduri, Chinese banquet, Indian sangeet, or Western ballroom reception. The photos lead the celebration. The app stays calm in Imperial Merlot, Champagne Gold, and Alabaster Linen so families and couples feel in trusted hands.</p>
+  
   <div class="words">
-    <span>Dipercayai<em>Trusted</em></span>
-    <span>Hangat<em>Warm</em></span>
-    <span>Teratur<em>Organised</em></span>
-    <span>Meraikan<em>Celebratory, sparingly</em></span>
+    <span>Dipercayai<em>Escrow &amp; SSM Checked</em></span>
+    <span>Meraikan<em>Celebratory Aristocracy</em></span>
+    <span>Untuk Semua<em>Multi-Cultural Inclusivity</em></span>
+    <span>Telus<em>No "PM for price"</em></span>
   </div>
 
   <div class="grid">
-    <figure class="a"><img loading="eager" src="img/gen/couple.jpg" alt="Malay bride and groom in emerald and cream songket laughing on a garden path"><figcaption>The feeling: joyful, and in safe hands</figcaption></figure>
-    <figure class="b"><img loading="eager" src="img/gen/venue.jpg" alt="Glasshouse wedding venue with white round tables, emerald napkins and gold cutlery"><figcaption>Venue: daylight, calm, ready</figcaption></figure>
-    <figure class="c"><img loading="eager" src="img/gen/pelamin.jpg" alt="Modern cream pelamin with white and green florals and gold songket cushions"><figcaption>Decor &amp; Pelamin: cream, green, a touch of gold</figcaption></figure>
-    <div class="quote"><p>"Pilih vendor yang disahkan, baca ulasan sebenar, dan tempah dengan tenang."</p><small>Voice: calm, specific, never over-promising</small></div>
-    <figure class="d"><img loading="eager" src="img/gen/catering.jpg" alt="Caterer serving ayam masak merah from a kenduri buffet line"><figcaption>Catering: generous, clean, appetising</figcaption></figure>
-    <figure class="e"><img loading="eager" src="img/gen/makeup.jpg" alt="Mak andam applying makeup to a smiling bride in a lace hijab and veil"><figcaption>Makeup: the quiet, personal moments</figcaption></figure>
-    <div class="trust">
-      <span class="pill">✓ Disahkan oleh Majlis Hub</span>
-      <b>4.9</b>
-      <span class="meta">★★★★★ · 128 ulasan sebenar<br>Semua daripada tempahan melalui Majlis Hub</span>
+    <figure class="a"><img loading="eager" src="img/gen/couple.jpg" alt="Malay bride and groom in royal songket on garden path"><figcaption>The Feeling: joyful, regal, and in safe hands</figcaption></figure>
+    <figure class="b"><img loading="eager" src="img/gen/venue.jpg" alt="Glasshouse wedding venue with champagne cutlery and natural light"><figcaption>Venue: grand, flooded with daylight</figcaption></figure>
+    <figure class="c"><img loading="eager" src="img/gen/pelamin.jpg" alt="Modern pelamin with cream and wine botanicals with gold ornaments"><figcaption>Decor: bespoke floral stage &amp; ambient lighting</figcaption></figure>
+    <div class="quote">
+      <p>"Pilih vendor yang disahkan, banding pakej secara telus, dan kunci tarikh dengan deposit selamat."</p>
+      <small>The WEEV Promise · Telus &amp; Meraikan</small>
     </div>
-    <figure class="f"><img loading="eager" src="img/gen/photographer.jpg" alt="Wedding photographer shooting the couple on the pelamin at a kenduri"><figcaption>Photo &amp; Video: their work leads the profile</figcaption></figure>
-    <figure class="p"><img loading="eager" src="img/gen/planning.jpg" alt="Young Malay couple planning their wedding on a phone at a cafe"><figcaption>Planning together: everything in one place</figcaption></figure>
+    <figure class="d"><img loading="eager" src="img/gen/catering.jpg" alt="Gourmet wedding banquet spread"><figcaption>Catering: generous, delicious &amp; clear per-pax pricing</figcaption></figure>
+    <figure class="e"><img loading="eager" src="img/gen/makeup.jpg" alt="Mak andam applying makeup to a smiling bride"><figcaption>Bridal Styling: personal, quiet, radiant moments</figcaption></figure>
+    <div class="trust">
+      <span class="pill">✓ Disahkan oleh WEEV</span>
+      <b>4.92</b>
+      <span class="meta">★★★★★ · 128 ulasan sebenar<br>Semua disahkan daripada tempahan melalui WEEV</span>
+    </div>
+    <figure class="f"><img loading="eager" src="img/gen/photographer.jpg" alt="Wedding photographer capturing couple"><figcaption>Photo &amp; Video: their craft leads the profile</figcaption></figure>
+    <figure class="p"><img loading="eager" src="img/gen/planning.jpg" alt="Couple planning their wedding together on mobile"><figcaption>Collaborative Planning: Kad, RSVP, and budget</figcaption></figure>
   </div>
-  <div class="songket" role="img" aria-label="Songket-inspired diamond motif in gold on cream"></div>
 
-  <h2>Colour washes (direction, not final tokens)</h2>
-  <div class="washes" aria-label="Colour direction from deep green through mint to paper and gold">
-    <div style="background:#062E25"></div><div style="background:#0E5E4B"></div><div style="background:#B9DFCD"></div><div style="background:#DDF0E7"></div><div style="background:#EFF7F3"></div><div style="background:#FBFAF7"></div><div style="background:#F7F0E1"></div><div style="background:#B98A2E"></div>
+  <div class="weave-strip" role="img" aria-label="Weave-inspired celebratory lattice in gold on champagne wash"></div>
+
+  <h2>Palet Warna 3A + 3B (Imperial Merlot &amp; Champagne Gold)</h2>
+  <div class="washes" aria-label="WEEV 3A+3B color wash">
+    <div style="background:#1E0711" title="Wine Noir"></div>
+    <div style="background:#320B1A" title="Velvet Bordeaux"></div>
+    <div style="background:#481226" title="Imperial Merlot"></div>
+    <div style="background:#E5BE64" title="Champagne Gold"></div>
+    <div style="background:#FAF2DF" title="Champagne Soft"></div>
+    <div style="background:#F3E2E7" title="Rosé Pill"></div>
+    <div style="background:#FAF2F4" title="Rosé Wash"></div>
+    <div style="background:#FAF7F4" title="Alabaster Linen"></div>
   </div>
 
   <div class="notes">
-    <div class="note"><h3>Green = safe hands</h3><p>One deep green for actions and trust marks. It feels steady and halal-friendly, and it isn't flashy.</p></div>
-    <div class="note"><h3>Gold = celebration</h3><p>Borrowed from songket and pelamin. Only for joyful moments like the countdown and "Top rated". Never for buttons.</p></div>
-    <div class="note"><h3>Photos do the shouting</h3><p>Vendors' real work is the hero. The interface stays white and paper so the pelamin, food and couples can shine.</p></div>
+    <div class="note">
+      <h3>Imperial Merlot = Wibawa &amp; Keberanian</h3>
+      <p>Satu warna wine merah agung untuk butang utama dan cop pengesahan. Mewakili tuah (Chinese), kemeriahan raja sehari (Malay), keberkatan tradisi (Indian), dan keanggunan black-tie (Western).</p>
+    </div>
+    <div class="note">
+      <h3>Champagne Gold = Meraikan Kejayaan</h3>
+      <p>Diilhamkan daripada kilauan cincin perkahwinan dan sulaman benang emas. Digunakan secara eksklusif untuk bulatan kira detik, lambang penarafan tertinggi, dan detik kemenangan.</p>
+    </div>
+    <div class="note">
+      <h3>Gambar Sebenar Memimpin Cerita</h3>
+      <p>Karya jurugambar dan vendor adalah wira sebenar. Antara muka kekal bersih di atas kanvas Alabaster Linen supaya hasil seni pelamin dan senyuman pengantin menyerlah sepenuhnya.</p>
+    </div>
   </div>
 
-  <p class="credits">All photos are AI-generated placeholders made for this mood board (Gemini via Antigravity). No real people, vendors or brands. The songket motif is drawn in CSS. The MC shot is pending (image quota).</p>
+  <p class="credits">WEEV Brand Book &amp; Visual Moodboard v2.0 · Local Preview: <a href="/preview/brand-identity.html" style="color: var(--merlot); font-weight: 600;">Open Full Brand Identity Deck &rarr;</a></p>
 </div>
 </body>
 </html>
