@@ -37,7 +37,7 @@ export default function VendorScreen({ id }: { id?: number | string }) {
     <div className="w-full flex flex-col">
       <TopBar title="Profil vendor" fallback="/cari" />
       <EmptyState icon={<Ban className="w-6 h-6" />} title="Vendor ini tidak tersedia buat masa ini"
-        body="Penyenaraian ini sedang disemak oleh pasukan Majlis Hub. Tempahan sedia ada tidak terjejas."
+        body="Penyenaraian ini sedang disemak oleh pasukan WEEV. Tempahan sedia ada tidak terjejas."
         action={<Button onClick={() => nav(`/cari?cat=${v.cat}`)}>Cari vendor serupa</Button>} />
     </div>
   );
@@ -88,7 +88,7 @@ export default function VendorScreen({ id }: { id?: number | string }) {
             <button onClick={() => setVerify(true)} className="w-fit" aria-label="Apa yang kami semak">
               <VerifiedBadge v={v} />
             </button>
-            {v.isNew && <Pill tone="hijau"><Sparkles className="w-3.5 h-3.5 shrink-0" />Baru di Majlis Hub</Pill>}
+            {v.isNew && <Pill tone="hijau"><Sparkles className="w-3.5 h-3.5 shrink-0" />Baru di WEEV</Pill>}
           </div>
         </div>
         {score.reviews === 0 ? (
@@ -134,7 +134,7 @@ export default function VendorScreen({ id }: { id?: number | string }) {
       </div>
 
       <Sheet open={verify} onClose={() => setVerify(false)} title="Apa yang kami semak">
-        <p className="w-full text-sm text-body">Pasukan Majlis Hub menyemak setiap vendor sebelum mereka boleh menerima tempahan.</p>
+        <p className="w-full text-sm text-body">Pasukan WEEV menyemak setiap vendor sebelum mereka boleh menerima tempahan.</p>
         {[
           v.freelancer ? 'Kad pengenalan sepadan dengan nama dan nombor telefon' : 'Pendaftaran SSM sepadan dengan nama perniagaan',
           'Gambar portfolio ialah hasil kerja sebenar',
@@ -151,7 +151,7 @@ export default function VendorScreen({ id }: { id?: number | string }) {
         </div>
       </Sheet>
       <Sheet open={share} onClose={() => setShare(false)} title={`Kongsi ${v.name}`}>
-        <a href={`https://wa.me/?text=${encodeURIComponent(`${v.name} di Majlis Hub, disahkan dan dari ${rm(fromPrice(v))}. ${link}`)}`} target="_blank" rel="noreferrer" onClick={() => setShare(false)}
+        <a href={`https://wa.me/?text=${encodeURIComponent(`${v.name} di WEEV, disahkan dan dari ${rm(fromPrice(v))}. ${link}`)}`} target="_blank" rel="noreferrer" onClick={() => setShare(false)}
           className="w-full flex flex-row items-center justify-center gap-2 px-5 py-3.5 leading-5 rounded-[10px] bg-hijau text-white text-[15px] font-semibold">
           <MessageCircle className="w-4 h-4 shrink-0" />Kongsi di WhatsApp
         </a>

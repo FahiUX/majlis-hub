@@ -41,7 +41,7 @@ export const rowsFor = (ev: MajlisEvent | null, bookings: Booking[], onPhoto: (v
   { label: 'Ansuran', h: 'h-[52px]', cell: v => <span className="num">{mainPkg(v).plan.length} kali bayar</span>, score: v => mainPkg(v).plan.length },
   { label: 'Polisi batal', h: 'h-[72px]', cell: v => <span className="w-full text-xs">Batal &gt;60 hari: {rm(refund(v))} dipulangkan. &lt;60 hari: tiada.</span>, score: v => refund(v) },
   { label: 'Masa balas', h: 'h-[52px]', cell: v => <span>~{v.reply}</span>, score: v => -replyMins(v.reply) },
-  { label: 'Di Majlis Hub sejak', h: 'h-[52px]', cell: v => <span className="num">{v.since}</span> },
+  { label: 'Di WEEV sejak', h: 'h-[52px]', cell: v => <span className="num">{v.since}</span> },
   { label: 'Portfolio', h: 'h-[84px]', cell: v => <span className="w-full flex flex-row gap-1">{v.gallery.slice(0, 3).map((g, i) => (
     <button key={i} onClick={() => onPhoto(v, i)} aria-label={`Lihat foto ${i + 1} ${v.name}`} className="flex-1 min-w-0 h-[56px] rounded-xl overflow-hidden"><Img src={g} cat={v.cat} alt="" className="w-full h-full" /></button>
   ))}</span> },

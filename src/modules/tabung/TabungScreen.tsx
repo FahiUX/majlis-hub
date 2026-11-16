@@ -69,7 +69,7 @@ export default function TabungScreen() {
           </div>
           {p.short > 0 && <p className="w-full text-sm text-amaran">Kurang {rm(p.short)} bulan ini ikut rancangan asal. Simpan {rm(p.monthly)} sebulan untuk kembali tepat masa.</p>}
           <Button onClick={() => setOpen(true)} className="w-full"><Plus className="w-4 h-4 shrink-0" />Saya dah simpan</Button>
-          <p className="w-full flex flex-row items-center gap-2 text-xs text-body"><Landmark className="w-4 h-4 shrink-0 text-hijau" /><span className="flex-1 min-w-0">Duit kekal dalam akaun bank anda. Majlis Hub cuma bantu rancang &amp; ingatkan.</span></p>
+          <p className="w-full flex flex-row items-center gap-2 text-xs text-body"><Landmark className="w-4 h-4 shrink-0 text-hijau" /><span className="flex-1 min-w-0">Duit kekal dalam akaun bank anda. WEEV cuma bantu rancang &amp; ingatkan.</span></p>
         </section>
 
         <details className="w-full flex flex-col gap-2 p-4 rounded-2xl bg-white border border-line group">

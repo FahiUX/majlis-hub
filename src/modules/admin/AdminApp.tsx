@@ -49,7 +49,7 @@ export default function AdminApp({ r }: { r: Route }) {
         <div className="w-full flex flex-col gap-6">
           <div className="w-full flex flex-row items-center gap-3">
             <span className="w-9 h-9 shrink-0 rounded-[10px] bg-hijau text-white flex items-center justify-center"><ShieldCheck className="w-5 h-5 shrink-0" /></span>
-            <span className="flex-1 min-w-0 font-display text-[17px] font-semibold">Majlis Hub · Admin</span>
+            <span className="flex-1 min-w-0 font-display text-[17px] font-semibold">WEEV · Admin</span>
           </div>
           <nav aria-label="Navigasi admin" className="w-full flex flex-col gap-1">
             {NAV.map(({ k, label, Icon }) => {

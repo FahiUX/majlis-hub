@@ -123,7 +123,7 @@ export function ReviewsTab({ v, score }: { v: Vendor; score: { rating: number; r
   // ponytail: 5→1 breakdown estimated from the average (mock has no per-star counts); use real counts with a backend
   const five = Math.min(95, Math.max(40, Math.round((score.rating - 4) * 85 + 10)));
   const dist = [five, ...[0.7, 0.2, 0.06, 0.04].map(f => Math.round((100 - five) * f))];
-  if (!all.length) return <EmptyState icon={<ShieldCheck className="w-6 h-6" />} title="Belum ada ulasan" body="Ulasan hanya datang daripada pelanggan yang selesai menempah melalui Majlis Hub." />;
+  if (!all.length) return <EmptyState icon={<ShieldCheck className="w-6 h-6" />} title="Belum ada ulasan" body="Ulasan hanya datang daripada pelanggan yang selesai menempah melalui WEEV." />;
   return (
     <>
       <div className="w-full flex flex-row items-center gap-5 p-5 rounded-2xl bg-white border border-line">
@@ -151,7 +151,7 @@ export function ReviewsTab({ v, score }: { v: Vendor; score: { rating: number; r
             </div>
             <Stars n={rv.rating} size={12} />
           </div>
-          <Pill><ShieldCheck className="w-3.5 h-3.5 shrink-0" />Tempahan melalui Majlis Hub</Pill>
+          <Pill><ShieldCheck className="w-3.5 h-3.5 shrink-0" />Tempahan melalui WEEV</Pill>
           <p className="w-full text-[15px] leading-[22px] text-body">{rv.text}</p>
           {rv.photos.length > 0 && (
             <div className="w-full flex flex-row flex-wrap gap-2">{rv.photos.map(g => <Img key={g} src={g} cat={v.cat} alt="Gambar daripada pelanggan" className="w-16 h-16 shrink-0 rounded-xl" />)}</div>
@@ -168,7 +168,7 @@ export function ReviewsTab({ v, score }: { v: Vendor; score: { rating: number; r
       {all3 && <p className="w-full text-xs text-muted text-center num">Menunjukkan {all.length} ulasan terkini daripada {score.reviews}</p>}
       {all.length > 2 && <Button variant="secondary" onClick={() => setAll(o => !o)}>{all3 ? 'Tunjuk kurang' : `Lihat ${all.length - 2} lagi ulasan`}</Button>}
       <Sheet open={report !== null} onClose={() => setReport(null)} title="Laporkan ulasan"
-        footer={<Button block disabled={!why} onClick={() => { setReport(null); toast('Laporan dihantar. Pasukan Majlis Hub akan menyemak ulasan ini.'); }}>Hantar laporan</Button>}>
+        footer={<Button block disabled={!why} onClick={() => { setReport(null); toast('Laporan dihantar. Pasukan WEEV akan menyemak ulasan ini.'); }}>Hantar laporan</Button>}>
         <p className="w-full text-sm text-body">Ulasan oleh {report}. Kenapa anda melaporkannya?</p>
         <div role="radiogroup" aria-label="Sebab laporan" className="w-full flex flex-col gap-2">
           {REPORT.map(r => (

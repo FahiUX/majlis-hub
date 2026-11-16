@@ -120,7 +120,7 @@ export default function BookingDetail({ id }: { id?: number | string }) {
             ) : (
               <>
                 <span className="w-full text-base font-semibold">Bagaimana {v.name}?</span>
-                <p className="w-full text-sm text-body">Majlis selesai pada {fmtDate(b.date)}. Ulasan anda akan bertanda "Tempahan melalui Majlis Hub" dan membantu pasangan lain.</p>
+                <p className="w-full text-sm text-body">Majlis selesai pada {fmtDate(b.date)}. Ulasan anda akan bertanda "Tempahan melalui WEEV" dan membantu pasangan lain.</p>
                 <Button block onClick={() => setReview(true)}><Star className="w-4 h-4 shrink-0" />Tulis ulasan</Button>
                 <Button variant="ghost" onClick={() => toast('Laporan dihantar. Pasukan kami akan hubungi anda dalam 2 hari bekerja.')}><Flag className="w-4 h-4 shrink-0" />Majlis belum selesai? Laporkan</Button>
               </>

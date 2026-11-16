@@ -165,7 +165,7 @@ export default function Onboarding() {
         )}
         {step === 2 && (
           <Card>
-            <p className="w-full text-sm text-muted">Dokumen hanya dilihat oleh pasukan pengesahan Majlis Hub.</p>
+            <p className="w-full text-sm text-muted">Dokumen hanya dilihat oleh pasukan pengesahan WEEV.</p>
             {kinds.map(k => (
               <div key={k} className="w-full flex flex-col gap-1.5">
                 <DocSlot kind={k} doc={docs[k]} onFile={f => upload(k, f)} />

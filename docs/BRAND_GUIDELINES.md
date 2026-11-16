@@ -1,11 +1,11 @@
-# 🎨 Brand Guidelines & Design Token Specification
+# 🎨 WEEV Brand Guidelines & Design Token Specification
 
-**Project:** Majlis Hub
-**Version:** 1.1 (Gate 2 approved 2026-11-10 · v1.1 resolves pre-flight B5 + W21–W29)
-**Design Philosophy:** *Warm marketplace, quiet confidence.* Photography and real proof (verified badges, real reviews, clear RM prices) carry the trust. The UI stays calm, generous and rounded so families feel welcome, and one deep green says "safe, checked, reliable".
-**Reference standard (craft bar only, not cloned):** `docs/design-reference/airbnb` (marketplace structure, photo-first cards, single-accent discipline, one shadow tier) + `docs/design-reference/nerdwallet` (green-as-trust, mint washes instead of elevation, comparison density). Majlis Hub has its own palette, fonts, radius scale and components.
+**Project:** WEEV (formerly Majlis Hub)  
+**Version:** 2.0 (Rebrand to Multi-Cultural Celebration Marketplace · 3A + 3B Imperial Merlot & Champagne System)  
+**Design Philosophy:** *Aristocratic warmth, celebratory prestige, and absolute escrow trust.*  
+WEEV is a premier event and wedding marketplace serving all Malaysian communities (Malay, Chinese, Indian, and Western celebrations). The identity balances high-ticket escrow trust with the joyous spirit of matrimony. The palette moves away from single-ethnicity tropes into universal celebratory luxury: rich Imperial Merlot wine, Champagne Gold ceremonial highlights, and warm Alabaster Linen canvases.
 
-**Tone words:** Dipercayai (Trusted) · Hangat (Warm) · Teratur (Organised) · Meraikan (Celebratory, used sparingly)
+**Tone words:** Exclusive (Eksklusif) · Trusted (Dipercayai) · Celebratory (Meraikan) · Inclusive (Untuk Semua) · Transparent (Telus)
 
 ---
 
@@ -27,144 +27,96 @@
 
 ---
 
-## 3. Colour System
+## 3. Colour System (3A + 3B Imperial Merlot & Champagne)
 
-| Token | Hex | Use |
+| Token | Hex | Role & Usage |
 | :--- | :--- | :--- |
-| `hijau` (primary) | `#0E5E4B` | Every primary CTA, active tab, selected state, Verified badge, links. White text on it = 7.7:1 |
-| `hijau-pekat` | `#0A4A3B` | Pressed / hover state of primary |
-| `hijau-malam` | `#062E25` | Footer, trust band, dark hero overlays |
-| `pucuk-50` | `#EFF7F3` | Large soft panels (planner header, trust callouts) |
-| `pucuk-100` | `#DDF0E7` | Selected filter pill fill, icon tiles |
-| `pucuk-200` | `#B9DFCD` | Focus halo, progress track |
-| `emas` | `#B98A2E` | **Celebration accent only.** Countdown ring, "Top rated" laurel, wedding ornaments. Never on body text |
-| `emas-teks` | `#8A6420` | Gold text where needed (5.35:1 on white) |
-| `emas-50` | `#F7F0E1` | Soft gold wash behind celebration moments |
-| `kertas` (canvas) | `#FBFAF7` | App background: warm paper white, not clinical |
-| `putih` (surface) | `#FFFFFF` | Cards, sheets, inputs |
-| `ink` | `#1B2420` | Headlines, prices, star ratings (stars are ink, never yellow) |
-| `body` | `#3C4743` | Running text |
-| `muted` | `#67716D` | Meta lines: distance, dates, captions |
-| `hairline` | `#E4E2DC` | Default 1px borders and dividers |
-| `hairline-kuat` | `#CFCCC4` | Input borders, strong dividers |
-| `bahaya` (danger) | `#B42318` | Errors, destructive actions |
-| `bahaya-50` | `#FEF3F2` | Error alert / error state background (text stays `bahaya` or `ink`) |
-| `amaran` (warning) | `#A15C07` | Over budget, reply deadline under 6h |
-| `amaran-50` | `#FEF6E7` | Warning alert background |
-| `skeleton` | `#EFEDE8` | Loading skeleton base (shimmer to `kertas`) |
-| `info` | `#1F5FA8` | Neutral info, inline legal links |
+| `merlot` / `hijau` (Primary) | `#481226` | **Imperial Merlot.** Every primary CTA, active navigation item, selected state, verified badge, and key link. White text on it = 9.8:1 contrast (AAA). |
+| `bordeaux` / `pekat` | `#320B1A` | **Deep Velvet Bordeaux.** Pressed and hover state of primary actions. |
+| `wine-noir` / `malam` | `#1E0711` | **Wine Noir.** Footers, dark hero base, and deep structural surfaces. |
+| `pucuk-50` (Wash) | `#FAF2F4` | **Delicate Rosé Silk Wash.** Soft panels, trust callouts, planner background cards. |
+| `pucuk-100` (Pill Fill) | `#F3E2E7` | **Soft Rosé Tint.** Selected filter pill fill, subtle badge backdrop. |
+| `pucuk-200` (Halo/Track) | `#DEC2CC` | **Velvet Mauve.** Focus ring halos, progress tracks, subtle indicators. |
+| `champagne` / `emas` | `#E5BE64` | **Champagne Gold Celebration Accent.** Countdown progress ring, "Top rated" laurels, wedding badges, celebration icons. Never used for plain body text. |
+| `champagne-text` / `emas-teks` | `#8C6918` | Gold text on white / paper surfaces (5.4:1 contrast ratio, WCAG AA). |
+| `champagne-soft` / `emas-50` | `#FAF2DF` | Soft champagne illumination wash behind milestone moments. |
+| `linen` / `kertas` (Canvas) | `#FAF7F4` | **Alabaster Linen.** Warm, human, natural canvas. Not harsh clinical blue-white. |
+| `putih` (Surface) | `#FFFFFF` | Primary cards, sheets, form inputs. |
+| `ink` | `#1C0912` | **Velvet Wine Noir.** Headlines, prices, star ratings. |
+| `body` | `#3D2731` | **Deep Espresso Plum.** Running body copy and descriptions. |
+| `muted` | `#6F6167` | **Velvet Taupe.** Metadata, distance, dates, captions. |
+| `line` (Hairline) | `#ECE3DC` | Default 1px card borders and hairlines. |
+| `line2` (Strong) | `#DAC9BF` | Form input borders and emphasized dividers. |
+| `bahaya` (Danger) | `#B42318` | Errors, cancellation notices, destructive actions. |
+| `bahaya-50` | `#FEF3F2` | Error alert banner background. |
+| `amaran` (Warning) | `#A15C07` | Deadlines under 6h, budget overrun notices. |
+| `amaran-50` | `#FEF6E7` | Warning banner background. |
+| `skeleton` | `#F1E9E4` | Skeleton loading shimmer base. |
+| `info` | `#1F5FA8` | Neutral legal and informational tags. |
 
-**Rules**
-- One green voice. On any screen, `hijau` appears in at most 1 filled CTA plus small trust marks. Everything else is ink on white/paper.
-- Gold is for celebration, never for status or actions. Allowed gold moments: countdown ring, "Top rated" laurel, "Paling popular" package pill, event icon in booking sheet.
-- Status is never colour alone. Always pair it with an icon and a label.
-
----
-
-## 4. Surface, Border & Elevation
-* **Page:** `kertas` · **Cards:** `putih` + `1px hairline`
-* **Active / Selected:** `2px hijau` border + `pucuk-50` fill
-* **Control stroke:** `1.5px line2` on checkbox, radio and timeline dots (only non-1px/2px stroke)
-* **No side-only strokes.** Vendor replies sit in a `pucuk-50` panel, `rounded-xl`, no left border.
-* **Focus ring:** `2px hijau` outline with 2px offset (keyboard), `4px pucuk-200` halo on inputs
-* **One shadow tier only** (floating elements: search pill, sticky bars, dropdowns, card hover):
-  `0 0 0 1px rgba(27,36,32,.04), 0 2px 6px rgba(27,36,32,.05), 0 8px 24px rgba(27,36,32,.08)`
-* **Scrim:** `ink` at 48% for sheets and modals
+### Color Rules:
+1. **One Master Voice:** On any screen, Imperial Merlot appears in at most 1 primary CTA plus trust badges. Everything else sits peacefully on white or Alabaster Linen.
+2. **Champagne Gold Discipline:** Gold is reserved for matrimonial celebration, countdown rings, and verified excellence. It is never used for general interactive buttons or status.
+3. **Multi-Cultural Appropriateness:** Red/wine represents joy and luck in Chinese weddings, deep bridal celebration in Indian weddings, royal court elegance in Malay weddings, and timeless black-tie romance in Western celebrations.
 
 ---
 
-## 5. Typography
-* **UI family: Figtree** (Google Fonts, 400/500/600/700). Friendly, open shapes that stay very legible in BM's longer words.
-* **Display accent: Fraunces** (Google Fonts, 500/600, soft optical size). Only for hero headlines, the My Majlis event name, and the big rating number. Gives a wedding-invitation warmth without going script.
-* **Numbers:** `font-variant-numeric: tabular-nums` on prices (RM), pax, ratings and dates.
+## 4. Brandmark & Symbolism ("The Infinite Weave")
+* **Symbolism:** Two interlocking rings seamlessly interwoven into an architectural, monoline 'W'. Reflects couples coming together, vendor collaboration, and reliable deposit escrow.
+* **Component:** `<WeevLogo light={boolean} size={number} variant={'mark' | 'full' | 'lockup'} />`
+* **Clear Space:** Maintain at least half the emblem width as clear space around the brandmark.
+* **Favicon:** Scalable vector SVG embedded in `<link rel="icon">`.
 
-| Token | Size / Line | Weight | Family | Use |
+---
+
+## 5. Typography Scale
+* **Display Font:** `Fraunces` (Serif) — used for brand name, page h1s, countdown days, and editorial callouts.
+* **Interface Font:** `Figtree` (Sans-Serif) — clean geometric sans for UI labels, tables, navigation, inputs, and running text.
+
+| Role | Size/Line | Weight | Font | Usage |
 | :--- | :--- | :--- | :--- | :--- |
-| `display` | 32/38 (mobile 28/34) | 600 | Fraunces | Home hero, event name |
-| `rating-xl` | 48/52 | 600 | Fraunces | Vendor rating "4.9" (peak trust moment) |
-| `h1` | 24/30 | 700 | Figtree | Page titles, vendor name |
-| `h2` | 20/26 | 600 | Figtree | Section heads ("Pakej", "Ulasan") |
-| `h3` | 16/22 | 600 | Figtree | Card titles, package names |
-| `body` | 15/22 | 400 | Figtree | Running text |
-| `body-sm` | 14/20 | 400 | Figtree | Card meta, distance, dates |
-| `label` | 13/16 | 600 | Figtree | Form labels, chip labels |
-| `caption` | 12/16 | 500 | Figtree | Helper text, timestamps |
-| `price` | 18/22 | 700 | Figtree tabular | "RM 28 / pax", "dari RM 2,500" |
-
-- Headlines max 2 lines, `tracking-tight` (-0.01em) on h1/display only.
-- No ALL-CAPS paragraphs. Uppercase is allowed only on micro-badges (11px/600, +0.04em).
-- BM copy runs ~20% longer than EN. Every text container must wrap gracefully. No fixed-width labels.
+| `display-lg` | 32/38 | 600 | Fraunces | Hero title, milestone headers |
+| `display-md` | 24/30 | 600 | Fraunces | Section headers, vendor profile names |
+| `h3` | 17/22 | 600 | Figtree | Card titles, sheet headers |
+| `body` | 15/22 | 400 | Figtree | Running body text |
+| `body-sm` | 13/18 | 400 | Figtree | Secondary meta, vendor categories |
+| `caption` | 12/16 | 500 | Figtree | Timestamps, helper hints |
+| `price` | 18/22 | 700 | Figtree (num) | Clear RM prices ("dari RM 2,500") |
 
 ---
 
 ## 6. Iconography (Lucide React)
-* **Library:** `lucide-react`, `strokeWidth={1.75}` everywhere. Sizes 16 / 20 / 24. Feature tiles: 24px icon in a 44px `pucuk-100` circle.
-* **Category icons:**
-
-| Category | Icon |
-| :--- | :--- |
-| Catering | `UtensilsCrossed` |
-| Photo & Video | `Camera` |
-| MC / Emcee | `Mic` |
-| Venue / Dewan | `Building2` |
-| Decor & Pelamin | `Flower2` |
-| Makeup / Mak Andam | `Sparkles` |
-
-* **Trust & system icons:** Verified `ShieldCheck` · Verified Freelancer `BadgeCheck` · Booked via Majlis Hub `CalendarCheck` · Rating `Star` (ink fill) · Distance `MapPin` · Response time `Clock` · Halal `Award` + "Halal" text label (no official JAKIM logo) · Save `Heart` · Compare `Scale` · Chat `MessageCircle` · Budget `Wallet` · Checklist `ListChecks`
+* **Library:** `lucide-react`, `strokeWidth={1.75}` across all icons. Sizes 16 / 20 / 24.
+* **Categories:**
+  - Catering: `UtensilsCrossed`
+  - Photo & Video: `Camera`
+  - MC / Emcee: `Mic`
+  - Venue / Dewan: `Building2`
+  - Decor & Pelamin: `Flower2`
+  - Makeup & Styling: `Sparkles`
+* **Trust & Verification Icons:**
+  - Verified Business: `ShieldCheck`
+  - Verified Freelancer: `BadgeCheck`
+  - Booked via WEEV: `CalendarCheck`
+  - Star Rating: `Star` (ink fill)
+  - Escrow Protection: `Landmark`
 
 ---
 
 ## 7. Signature Trust Components
 
-| Component | Spec |
+| Component | Specification |
 | :--- | :--- |
-| **Verified badge** | Pill, `pucuk-100` fill, `hijau` text 12/600, `ShieldCheck` 14px. Tap → bottom sheet "What we checked": ✓ SSM matches business name ✓ IC verified ✓ Halal cert valid until … ✓ Verified on 12 Okt 2026 |
-| **Verified Freelancer** | Same pill, `BadgeCheck` icon, label "Freelancer Disahkan" |
-| **Booked via Majlis Hub tag** | On every review. `CalendarCheck` 12px + caption muted "Tempahan melalui Majlis Hub · Kenduri, Jun 2026" |
-| **Rating block** | Fraunces 48px ink number + 5 ink stars + "128 ulasan sebenar" |
-| **Price line** | Always RM, always visible: "RM 28 / pax · min 300 pax" or "dari RM 2,500". Never "PM for price" |
-| **Response time** | `Clock` + "Biasanya balas dalam 2 jam" |
-| **Status chips** | Requested = ink outline · Accepted = hijau fill white text · Completed = pucuk-100 + hijau text · Declined/Cancelled = hairline fill muted text · Expired = amaran outline. Each with an icon |
+| **Verified Badge** | Pill, `pucuk-100` fill, `merlot` text 12/600, `ShieldCheck` 14px. Tap opens "What We Checked" sheet: SSM registration, IC identity verification, portfolio authenticity audit. |
+| **Verified Freelancer** | Same pill with `BadgeCheck` icon and "Freelancer Disahkan" label. |
+| **Booked via WEEV Tag** | Displayed on verified customer reviews: "Tempahan melalui WEEV · Perkahwinan, Jun 2026". |
+| **Transparent Pricing** | Always formatted with currency symbol, e.g., "RM 28 / pax" or "dari RM 2,500". "PM for price" is strictly prohibited. |
+| **Escrow Security Notice** | Clear reminder that funds remain safe with milestone-based payment schedules. |
 
 ---
 
-## 8. Component Blueprint Specs
-
-**Sizing rule (Figma-safe):** controls get their height from padding + line-height, never from `h-*`. Visual heights below are the result, not a fixed value. Small visuals (chip 36, heart 36) keep a **44×44 hit area** via an invisible padding wrapper or `::after` inset.
-
-| Component | Classes | Visual height |
-| :--- | :--- | :--- |
-| Primary button | `py-3.5 px-5 leading-5 bg-[#0E5E4B] text-white rounded-[10px] text-[15px] font-semibold hover:bg-[#0A4A3B]` · disabled `bg-[#B9DFCD] cursor-not-allowed` | 48 |
-| Secondary button | `py-3.5 px-5 leading-5 bg-white border border-[#CFCCC4] text-[#1B2420] rounded-[10px] font-semibold hover:bg-[#FBFAF7]` | 48 |
-| Small button (row actions: Cari, Pilih) | `py-2 px-3 leading-5 text-sm` + 44 hit area | 36 |
-| Tertiary / text | `text-[#0E5E4B] font-semibold underline-offset-4 hover:underline` | — |
-| Danger | `bg-white border border-[#B42318]/40 text-[#B42318]` (same padding as secondary) | 48 |
-| Input | `py-3.5 px-3.5 leading-5 bg-white border border-[#CFCCC4] rounded-[10px]` · focus `border-[#0E5E4B] ring-4 ring-[#B9DFCD]/60` · error `border-[#B42318]` + 12px error text with `AlertCircle` | 48 |
-| Textarea | input classes + `rows={3}` (no fixed height) | — |
-| Search pill | `py-1.5 pl-[18px] pr-1.5 rounded-full bg-white` + shadow tier; right orb 44px circle `hijau` | 56 |
-| Filter chip | `py-2 px-3.5 leading-5 rounded-full border border-[#E4E2DC] text-sm font-medium` · active `bg-[#DDF0E7] border-[#0E5E4B] text-[#0E5E4B]` + `X` | 36 (hit 44) |
-| Pill / badge | `py-1 px-2.5 leading-4 rounded-full text-xs font-semibold` · on-photo variant: `bg-white/95` + shadow tier | 24 |
-| Status chip | `py-1.5 px-2.5 leading-4 rounded-full text-[13px] font-semibold` + 14px icon | 28 |
-| Heart (on photo) | 36px visual circle `bg-white/95` + shadow, 44 hit area | 36 (hit 44) |
-| Language toggle | segmented, each option `py-1.5 px-3 text-xs font-bold` inside a `p-0.5` rounded-full track | 32 (hit 44) |
-
-**Status chips:** Requested = ink 1px outline · Accepted = `hijau` fill, white text · Completed = `pucuk-100` + `hijau` text · Declined/Cancelled = `hairline` (#E4E2DC) fill + `muted` text · Expired = `amaran` outline · Not started = `kertas` fill + `hairline` solid 1px + `muted` text. Each with an icon.
-
-**Surfaces:** Home hero = gradient `hijau-malam → hijau-pekat → hijau` (170°) with a soft `emas` glow top-right and the songket diamond pattern at 16% fading out downward, bottom corners 24px, status bar `hijau-malam`. The event card sits on it as a 10% white glass card. This is the only gradient in the product. Planner header = `pucuk-50` (working surface). Vendor card: photo 4:3 `rounded-xl`, Verified pill (on-photo variant) top-left, heart top-right, then name (h3, Fill) + rating (Hug), category · distance (body-sm muted), price line.
-
-**Layout rules for code:** flex + gap everywhere (grid only for >6 equal cards, e.g. calendar); two-text rows = left `flex-1 min-w-0` + right `shrink-0`; no margins for spacing; no `truncate` except single-line inputs and fixed table rows; dividers are `h-px` elements, not side borders.
-
----
-
-## 9. Imagery
-* Real Malaysian majlis: pelamin, dewan, food spreads, couples, families. Warm daylight, natural colour, no heavy filters.
-* Vendor photos are the hero. UI chrome stays white, paper and green so the photos lead.
-* Placeholder art (prototype only): royalty-free / CC-licensed with inline credit. Never stock photos with watermarks.
-* No illustrations of people in v1. Empty states use a single line icon in a `pucuk-50` circle + one short sentence + one action.
-
----
-
-## 10. Voice
-* BM default, friendly-formal ("anda"), short sentences. Example: "Tarikh ini masih kosong. Hantar permintaan sekarang."
-* Specific over vague: "Biasanya balas dalam 2 jam" beats "Fast response".
-* Never over-promise. No "Best caterer in Malaysia!". Let ratings and verification speak.
+## 8. Surfaces & Hero Treatment
+* **Hero Background (3A+3B Hybrid):**  
+  `radial-gradient(110% 90% at 85% 10%, rgba(229, 190, 100, 0.26) 0%, transparent 60%), linear-gradient(170deg, #52142E 0%, #360E1E 100%)`
+* **Lattice Pattern:** Subtle celebratory weave lattice overlay at 18% opacity with soft fade out.
+* **Fade to Canvas:** 150px gradient seamlessly transitioning from hero wine into Alabaster Linen (`#FAF7F4`).

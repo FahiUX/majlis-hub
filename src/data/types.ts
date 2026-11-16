@@ -41,7 +41,7 @@ export interface Vendor {
   capacity: number;
   /** dates with only one slot left (C-2.2 "1 slot lagi") */
   limited: string[];
-  /** joined recently with few reviews (C-2.0 "Baru di Majlis Hub") */
+  /** joined recently with few reviews (C-2.0 "Baru di WEEV") */
   isNew?: boolean;
   /** suspended by admin: hidden from listings, profile shows "Tidak tersedia" */
   suspended?: boolean;

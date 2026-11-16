@@ -5,6 +5,7 @@ import { nav, useRoute } from '../../router';
 import { Button, EmptyState, Img, Pill, Stars, VerifiedBadge, cx, rm } from '../../components/ui';
 import { catById, fromPrice, vendorById } from '../../data/mock';
 import { verdicts } from './compareRows';
+import { WeevLogo } from '../../components/WeevLogo';
 
 /** no-login vote page opened from the shared WhatsApp link (spec C-1.5) */
 export default function CompareShare() {
@@ -15,7 +16,7 @@ export default function CompareShare() {
   const [err, setErr] = useState(false);
   const [done, setDone] = useState<number | null>(null);
 
-  if (vs.length < 2) return <EmptyState icon={<Vote className="w-6 h-6" />} title="Pautan undian tidak sah" body="Minta pengantin kongsi semula pautan perbandingan." action={<Button onClick={() => nav('/')}>Ke Majlis Hub</Button>} />;
+  if (vs.length < 2) return <EmptyState icon={<Vote className="w-6 h-6" />} title="Pautan undian tidak sah" body="Minta pengantin kongsi semula pautan perbandingan." action={<Button onClick={() => nav('/')}>Ke WEEV</Button>} />;
 
   const verdict = verdicts(vs, s.event);
   const count = (id: number) => Object.values(s.votes).filter(v => v === id).length;
@@ -29,8 +30,8 @@ export default function CompareShare() {
   return (
     <div className="w-full flex flex-col">
       <header className="w-full flex flex-col gap-2 p-5 bg-pucuk-50">
-        <span className="w-fit flex flex-row items-center gap-2 text-sm font-bold text-hijau">
-          <span className="w-7 h-7 shrink-0 rounded-xl bg-hijau text-white font-display flex items-center justify-center">M</span>Majlis Hub
+        <span className="w-fit flex flex-row items-center gap-2">
+          <WeevLogo size={26} variant="full" />
         </span>
         <h1 className="w-full font-display text-[28px] leading-[34px] font-semibold">{s.userName} minta pendapat anda</h1>
         <p className="w-full text-sm text-body">Pilih {catById(vs[0].cat).name} untuk {s.event?.name ?? 'majlis'}. Tak perlu log masuk.</p>

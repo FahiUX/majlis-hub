@@ -46,7 +46,7 @@ export default function LoginScreen() {
   const [eTried, setETried] = useState(false);
   const later = (fn: () => void) => { setBusy(true); window.setTimeout(() => { setBusy(false); fn(); }, WAIT); };
   // vendors land on their dashboard (Wave 2) unless login was opened from a specific page
-  const done = () => { toast(role === 'vendor' ? 'Selamat datang ke papan pemuka vendor' : 'Selamat datang ke Majlis Hub'); finish(role === 'vendor' && next === '/' ? '/v' : next); };
+  const done = () => { toast(role === 'vendor' ? 'Selamat datang ke papan pemuka vendor' : 'Selamat datang ke WEEV'); finish(role === 'vendor' && next === '/' ? '/v' : next); };
 
   useEffect(() => {
     if (step !== 'otp') return;
@@ -137,7 +137,7 @@ export default function LoginScreen() {
           <Button block onClick={emailLogin} disabled={busy} aria-busy={busy}>{busy && <Loader2 className="w-4 h-4 shrink-0 animate-spin" />}{busy ? 'Log masuk…' : 'Log masuk'}</Button>
           </>}
           <button onClick={() => setMode(m => (m === 'phone' ? 'email' : 'phone'))} className="w-fit self-center py-2 text-sm font-semibold text-hijau">{mode === 'phone' ? 'Guna emel dan kata laluan' : 'Guna nombor telefon'}</button>
-          <p className="w-full text-xs text-muted text-center">Dengan meneruskan, anda bersetuju dengan Terma Penggunaan dan Dasar Privasi Majlis Hub. Demo: semua log masuk membuka akaun contoh Aina.</p>
+          <p className="w-full text-xs text-muted text-center">Dengan meneruskan, anda bersetuju dengan Terma Penggunaan dan Dasar Privasi WEEV. Demo: semua log masuk membuka akaun contoh Aina.</p>
         </div>
       ) : (
         <div className="w-full flex flex-col gap-5 p-5">

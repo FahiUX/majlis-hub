@@ -5,8 +5,9 @@ import { Button, cx } from '../../components/ui';
 import { CATS, REELS, VENDORS, kmFrom, vendorById } from '../../data/mock';
 import { notices } from './reminders';
 import { MiniVendorCard } from '../search/VendorCard';
+import { WeevLogo } from '../../components/WeevLogo';
 
-const SONGKET = "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cpath d='M20 4 36 20 20 36 4 20Z' fill='none' stroke='%23B9DFCD' stroke-width='1'/%3E%3Cpath d='M20 14 26 20 20 26 14 20Z' fill='%23B98A2E'/%3E%3C/svg%3E\")";
+const WEAVE_PATTERN = "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 44 44'%3E%3Cpath d='M22 4L40 22L22 40L4 22Z' fill='none' stroke='rgba(255,255,255,0.12)' stroke-width='1.2'/%3E%3Ccircle cx='22' cy='22' r='4' fill='none' stroke='%23E5BE64' stroke-width='1.2'/%3E%3C/svg%3E\")";
 
 /** countdown ring: gold arc = share of categories with a confirmed vendor */
 function Ring({ days, pct }: { days: number; pct: number }) {
@@ -42,17 +43,17 @@ function Hero() {
   const urgent = s.authed ? notices(s.bookings, s.invitation, s.rsvps).filter(n => n.urgent).length : 0;
   return (
     <section className="relative w-full flex flex-col overflow-hidden text-white"
-      style={{ background: 'radial-gradient(120% 80% at 100% 0%, rgba(185,138,46,.22) 0%, rgba(185,138,46,0) 55%), linear-gradient(170deg, var(--color-malam) 0%, var(--color-pekat) 55%, var(--color-hijau) 100%)' }}>
-      {/* songket pattern layer, fading out downward */}
-      <div aria-hidden="true" className="absolute inset-0 pointer-events-none opacity-[.16]"
-        style={{ backgroundImage: SONGKET, maskImage: 'linear-gradient(180deg,#000 30%,transparent 100%)', WebkitMaskImage: 'linear-gradient(180deg,#000 30%,transparent 100%)' }} />
-      {/* green-to-white fade (approved 150px over the last part of the hero): a real layer so it exports to Figma */}
+      style={{ background: 'radial-gradient(110% 90% at 85% 10%, rgba(229, 190, 100, 0.26) 0%, transparent 60%), linear-gradient(170deg, #52142E 0%, #360E1E 100%)' }}>
+      {/* celebratory weave pattern layer, fading out downward */}
+      <div aria-hidden="true" className="absolute inset-0 pointer-events-none opacity-[.18]"
+        style={{ backgroundImage: WEAVE_PATTERN, maskImage: 'linear-gradient(180deg,#000 30%,transparent 100%)', WebkitMaskImage: 'linear-gradient(180deg,#000 30%,transparent 100%)' }} />
+      {/* soft linen fade transition to canvas */}
       <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-[150px] pointer-events-none"
-        style={{ background: 'linear-gradient(180deg, rgba(251,250,247,0) 0%, rgba(251,250,247,.08) 20%, rgba(251,250,247,.25) 40%, rgba(251,250,247,.5) 60%, rgba(251,250,247,.8) 80%, var(--color-kertas) 100%)' }} />
+        style={{ background: 'linear-gradient(180deg, rgba(250,247,244,0) 0%, rgba(250,247,244,.08) 20%, rgba(250,247,244,.25) 40%, rgba(250,247,244,.5) 60%, rgba(250,247,244,.8) 80%, var(--color-kertas) 100%)' }} />
       <div className="relative w-full flex flex-col gap-5 px-4 pt-5 pb-[104px]">
         <div className="w-full flex flex-row items-center gap-2">
           <span className="flex-1 min-w-0 flex flex-row items-center gap-2 text-base font-bold">
-            <span className="w-8 h-8 shrink-0 rounded-xl bg-white text-hijau font-display text-lg flex items-center justify-center">M</span>Majlis Hub
+            <WeevLogo light size={30} variant="full" />
           </span>
           {s.authed
             ? <span className="w-fit shrink-0 flex flex-row items-center gap-2">
@@ -65,7 +66,7 @@ function Hero() {
             : <button onClick={() => nav('/masuk?next=' + encodeURIComponent('/'))} className="w-fit shrink-0 inline-flex flex-row items-center gap-1.5 px-3.5 py-2 leading-5 rounded-full bg-white text-hijau text-sm font-semibold whitespace-nowrap"><LogIn className="w-4 h-4 shrink-0" />Log masuk</button>}
         </div>
         <div className="w-full flex flex-col gap-1">
-          <p className="w-full text-sm text-pucuk-200">{s.authed ? `Assalamualaikum, ${s.userName}` : 'Assalamualaikum'}</p>
+          <p className="w-full text-sm text-pucuk-200">{s.authed ? `Hai, ${s.userName}` : 'Selamat datang ke WEEV'}</p>
           <h1 className="w-full font-display text-[28px] leading-[34px] font-semibold">Apa yang anda perlukan untuk majlis?</h1>
         </div>
         <div className="w-full flex flex-row items-center gap-2 py-1.5 pl-[18px] pr-1.5 rounded-full bg-white text-ink shadow-float">
@@ -104,7 +105,7 @@ function Hero() {
 
 const TRUST = [
   { Icon: ShieldCheck, t: 'Setiap vendor disahkan', d: 'Kami semak SSM atau IC sebelum vendor boleh terima tempahan.' },
-  { Icon: Star, t: 'Ulasan sebenar sahaja', d: 'Hanya pelanggan yang selesai tempah melalui Majlis Hub boleh mengulas.' },
+  { Icon: Star, t: 'Ulasan sebenar sahaja', d: 'Hanya pelanggan yang selesai tempah melalui WEEV boleh mengulas.' },
   { Icon: Tag, t: 'Harga jelas, tarikh dikunci', d: 'Harga RM tertera. Bayar deposit dalam 30 hari dan tarikh anda selamat.' },
 ];
 
@@ -188,9 +189,9 @@ export default function HomeScreen() {
           </div>
         </section>
 
-        {/* A-6.0: featured vendors are picked by the Majlis Hub team in the admin console */}
+        {/* A-6.0: featured vendors are picked by the WEEV editorial team in the admin console */}
         {featured.length > 0 && <section className="w-full flex flex-col gap-3">
-          <SectionHead title="Pilihan Majlis Hub" link="Lihat semua" to="/cari?sort=top" />
+          <SectionHead title="Pilihan WEEV" link="Lihat semua" to="/cari?sort=top" />
           <div className="w-full flex flex-row gap-3 overflow-x-auto">{featured.map(v => <MiniVendorCard key={v.id} v={v} />)}</div>
         </section>}
 
@@ -199,7 +200,7 @@ export default function HomeScreen() {
           <div className="w-full flex flex-row gap-3 overflow-x-auto">{near.map(v => <MiniVendorCard key={v.id} v={v} />)}</div>
         </section>
 
-        <section className={cx('w-full flex flex-col gap-3 p-4 rounded-2xl bg-pucuk-50')} aria-label="Kenapa Majlis Hub">
+        <section className={cx('w-full flex flex-col gap-3 p-4 rounded-2xl bg-pucuk-50')} aria-label="Kenapa WEEV">
           {TRUST.map(({ Icon, t, d }) => (
             <div key={t} className="w-full flex flex-row items-start gap-3">
               <span className="w-9 h-9 shrink-0 rounded-full bg-white text-hijau flex items-center justify-center"><Icon className="w-[18px] h-[18px] shrink-0" /></span>

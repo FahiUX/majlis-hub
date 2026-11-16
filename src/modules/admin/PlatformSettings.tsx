@@ -101,7 +101,7 @@ export default function PlatformSettings() {
         <Btn onClick={() => { set(p => ({ featured, audit: [...p.audit, logEntry('Tetapkan vendor pilihan', featured.map(id => VENDORS.find(v => v.id === id)?.name ?? id).join(', '))] })); toast('Vendor pilihan dikemas kini'); }}
           disabled={featured.join() === s.featured.join()}><Save className="w-4 h-4 shrink-0" />Simpan</Btn>
       </>}>
-        <p className="w-full text-sm text-body">Pilih sehingga {MAX_FEATURED} vendor aktif untuk bahagian "Pilihan Majlis Hub" di Home.</p>
+        <p className="w-full text-sm text-body">Pilih sehingga {MAX_FEATURED} vendor aktif untuk bahagian "Pilihan WEEV" di Home.</p>
         <div className="w-full grid grid-cols-3 gap-3">
           {VENDORS.map(v => {
             const on = featured.includes(v.id);

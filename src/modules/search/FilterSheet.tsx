@@ -145,7 +145,7 @@ export default function FilterSheet({ open, f, onClose, onApply }: { open: boole
         <Chip on={d.r4} onClick={() => setD({ ...d, r4: !d.r4 })}><Star className="w-3.5 h-3.5 shrink-0 fill-current" />4 ke atas</Chip>
         <Chip on={d.verified} onClick={() => setD({ ...d, verified: !d.verified })}>Disahkan sahaja</Chip>
       </div>
-      <p className="w-full text-xs text-muted">Semua vendor di Majlis Hub disahkan sebelum disenaraikan.</p>
+      <p className="w-full text-xs text-muted">Semua vendor di WEEV disahkan sebelum disenaraikan.</p>
     </Sheet>
   );
 }
