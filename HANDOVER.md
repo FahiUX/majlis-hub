@@ -120,7 +120,7 @@ python3 -m http.server 4174
 
 **Wordmark W.** Tried 3 new W's (`w-option-1-woven`, `w-option-2-heart-clean`, `w-option-3-pin`). User kept the **Direction 1 heart-ribbon W** (from `weev-direction-1-vector-mascot.jpg`).
 
-* `weev-w-mark.svg` / `weev-w-mark-light.svg`: hand-built clean vector of that W (Claude).
+* `weev-w-mark.svg` / `weev-w-mark-light.svg`: quick hand-built SVG of that W (Claude). **User rejected the shape** ("looks bad"). Placeholder only; redo properly.
 * `weev-favicon-w.svg` + `.png` (512) + `weev-favicon-32.png` + `weev-favicon.ico`: checked at real 32px and 16px.
 
 **Lockup v1** (`weev-tempa-lockup.jpg`, `weev-tempa-lockup-nest.jpg`): Tempa + Direction 1 W. User feedback still to apply (v2):
@@ -132,3 +132,10 @@ python3 -m http.server 4174
 Blocked: Antigravity image quota (`gemini-3.1-flash-image`) exhausted, resets ~02:24 MYT 17 Nov. Note: when quota ran out AGY silently switched to PIL cut-and-paste and produced broken images. Always tell it "generate fresh, no compositing".
 
 **Still open in the app (not started):** `src/index.css` still uses the rejected Merlot/Champagne palette (`--color-hijau: #481226`); `WeevLogo.tsx` loads `/preview/logos/*.png`, which is not in `public/` and breaks on GitHub Pages; Home/Compare still show the brain lockup. Graphify graph is stale (built from `68da8b9`).
+
+### Start here tomorrow (office, 17 Nov)
+1. `git pull origin main`, open `preview/logo-evolution.html` (top 2 sections: Final Lockup v1 + W options).
+2. AGY image quota is back after ~02:24. Send lockup v2 brief (see list above). Rule: generate fresh, no PIL compositing.
+3. Redo the Direction 1 heart-ribbon W as a proper vector (VectorCraft port 7979 or Illustrator), trace close to `weev-direction-1-vector-mascot.jpg`; then rebuild favicon/app icons from it. The current `weev-w-mark.svg` / `weev-favicon-*` are rejected drafts.
+4. Tempa app icon (head/bust on aubergine squircle).
+5. Then app: new palette in `src/index.css`, move logos into `public/` with relative paths, swap brain for Tempa in `WeevLogo.tsx`.

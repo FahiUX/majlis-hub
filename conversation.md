@@ -2447,3 +2447,4 @@ Checked in the browser: 22 customer screens at 430px, 0 console errors. Not yet 
 * Lockup v1 (Tempa + Direction 1 W). User: W too big, no legs, add app icon + favicon.
 * AGY hit image quota (resets ~02:24) and fell back to PIL compositing (broken output). Claude stopped it, deleted the scripts, hand-built the W as SVG + favicon (`weev-w-mark.svg`, `weev-favicon-w.svg/.png/.ico`).
 * Next: lockup v2 + Tempa app icon after quota reset; then move app to new palette, fix logo paths, swap brain for Tempa.
+* User on the hand-built SVG W: "Heart-Ribbon W looks bad, it's ok, we wait tomorrow." Marked as rejected draft in HANDOVER + logo-evolution.html. Continue at the office on 17 Nov: lockup v2 + Tempa app icon (after quota reset), proper vector W.
