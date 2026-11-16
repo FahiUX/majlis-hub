@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="612" height="792" viewBox="0 0 612 792">
+  <title>Untitled-1</title>
+  <g id="Layer_1" data-name="Layer 1">
+    <g>
+      <path d="M126 16 L386 16 C446.751 16 496 65.249 496 126 L496 386 C496 446.751 446.751 496 386 496 L126 496 C65.249 496 16 446.751 16 386 L16 126 C16 65.249 65.249 16 126 16 Z" fill="#faf7f4" stroke="#e8dfd8" stroke-width="2" stroke-miterlimit="10"/>
+      <path d="M110 180 C70 140 100 90 160 110 C200 120 220 180 256 260 C292 180 312 120 352 110 C412 90 442 140 402 180 C360 220 300 360 256 360 C212 360 152 220 110 180 Z" fill="none" stroke="#481226" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M256 260 C230 180 230 110 256 70 C282 110 282 180 256 260 Z" fill="#e5be64" stroke="#481226" stroke-width="14" stroke-linejoin="round"/>
+      <circle cx="256" cy="53" r="9" fill="#e5be64" stroke="#481226" stroke-width="4" stroke-miterlimit="10"/>
+    </g>
+  </g>
+</svg>

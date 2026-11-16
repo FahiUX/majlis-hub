@@ -1,0 +1,136 @@
+[
+  {
+    "command": "tool.select",
+    "params": {
+      "tool": "rectangle"
+    }
+  },
+  {
+    "command": "shape.rectangle",
+    "params": {
+      "x": 16,
+      "y": 16,
+      "width": 480,
+      "height": 480,
+      "radius": 110
+    }
+  },
+  {
+    "command": "paint.setFill",
+    "params": {
+      "color": "#FAF7F4"
+    }
+  },
+  {
+    "command": "paint.setStroke",
+    "params": {
+      "color": "#E8DFD8"
+    }
+  },
+  {
+    "command": "stroke.set",
+    "params": {
+      "weight": 2
+    }
+  },
+  {
+    "command": "tool.select",
+    "params": {
+      "tool": "pen"
+    }
+  },
+  {
+    "command": "path.create",
+    "params": {
+      "d": "M 110 180 C 70 140 100 90 160 110 C 200 120 220 180 256 260 C 292 180 312 120 352 110 C 412 90 442 140 402 180 C 360 220 300 360 256 360 C 212 360 152 220 110 180 Z",
+      "closed": true
+    }
+  },
+  {
+    "command": "paint.setFill",
+    "params": {
+      "none": true
+    }
+  },
+  {
+    "command": "paint.setStroke",
+    "params": {
+      "color": "#481226"
+    }
+  },
+  {
+    "command": "stroke.set",
+    "params": {
+      "weight": 22,
+      "cap": "round",
+      "join": "round"
+    }
+  },
+  {
+    "command": "path.create",
+    "params": {
+      "d": "M 256 260 C 230 180 230 110 256 70 C 282 110 282 180 256 260 Z",
+      "closed": true
+    }
+  },
+  {
+    "command": "paint.setFill",
+    "params": {
+      "color": "#E5BE64"
+    }
+  },
+  {
+    "command": "paint.setStroke",
+    "params": {
+      "color": "#481226"
+    }
+  },
+  {
+    "command": "stroke.set",
+    "params": {
+      "weight": 14,
+      "join": "round"
+    }
+  },
+  {
+    "command": "shape.ellipse",
+    "params": {
+      "x": 247,
+      "y": 44,
+      "width": 18,
+      "height": 18
+    }
+  },
+  {
+    "command": "paint.setFill",
+    "params": {
+      "color": "#E5BE64"
+    }
+  },
+  {
+    "command": "paint.setStroke",
+    "params": {
+      "color": "#481226"
+    }
+  },
+  {
+    "command": "stroke.set",
+    "params": {
+      "weight": 4
+    }
+  },
+  {
+    "command": "tool.select",
+    "params": {
+      "tool": "selection"
+    }
+  },
+  {
+    "command": "select.all",
+    "params": {}
+  },
+  {
+    "command": "object.group",
+    "params": {}
+  }
+]

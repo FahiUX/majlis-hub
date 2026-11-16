@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEEV — Luxury Logo Evolution & Inspiration Suite</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --merlot: #481226;
+            --gold: #E5BE64;
+            --silk: #FAF7F4;
+            --card-border: #E8DFD8;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #FAF7F4;
+            color: #222;
+            padding: 48px 24px;
+            line-height: 1.6;
+        }
+        .container { max-width: 1240px; margin: 0 auto; }
+        header { text-align: center; margin-bottom: 56px; }
+        .badge {
+            display: inline-block;
+            background: rgba(229, 190, 100, 0.15);
+            color: #8A1C3E;
+            font-weight: 700;
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 6px 16px;
+            border-radius: 999px;
+            border: 1px solid rgba(229, 190, 100, 0.4);
+            margin-bottom: 16px;
+        }
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            color: var(--merlot);
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+        p.subtitle {
+            font-size: 17px;
+            color: #665;
+            max-width: 680px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 26px;
+            color: var(--merlot);
+            margin: 48px 0 20px;
+            border-bottom: 2px solid #E8DFD8;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .section-title span {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            color: #8A1C3E;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* 3 Master Concepts */
+        .concepts-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+            margin-bottom: 48px;
+        }
+        @media (max-width: 992px) { .concepts-grid { grid-template-columns: 1fr; } }
+        
+        .concept-card {
+            background: #fff;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 14px 40px rgba(72, 18, 38, 0.06);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+        .concept-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 50px rgba(72, 18, 38, 0.12);
+        }
+        .img-wrap {
+            position: relative;
+            width: 100%;
+            height: 280px;
+            background: #20050e;
+            overflow: hidden;
+        }
+        .img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .card-body {
+            padding: 24px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .concept-tag {
+            font-size: 11px;
+            font-weight: 700;
+            color: #C2952E;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+        }
+        .concept-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            color: var(--merlot);
+            margin-bottom: 10px;
+        }
+        .concept-desc {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            flex: 1;
+        }
+        .btn-vectorcraft {
+            display: block;
+            background: var(--merlot);
+            color: #fff;
+            text-decoration: none;
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 13px;
+            text-align: center;
+            border: 1px solid var(--gold);
+            transition: background 0.2s;
+        }
+        .btn-vectorcraft:hover {
+            background: #601934;
+        }
+
+        /* User Inspiration Row */
+        .insp-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+            margin-top: 16px;
+        }
+        @media (max-width: 900px) { .insp-grid { grid-template-columns: repeat(2, 1fr); } }
+        .insp-card {
+            background: #fff;
+            border: 1px solid #E8DFD8;
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+        }
+        .insp-card img {
+            width: 100%;
+            height: 130px;
+            object-fit: contain;
+            border-radius: 6px;
+            background: #faf7f5;
+        }
+        .insp-card span {
+            display: block;
+            margin-top: 8px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="badge">WEEV Brand Identity Suite</div>
+            <h1>Elevated Logo Design Concepts</h1>
+            <p class="subtitle">Directly synthesized from your curated Logobook inspirations, geometric floral monograms, and wedding royalty references.</p>
+        </header>
+
+        <div class="section-title">
+            Three New Master Concepts
+            <span>3A + 3B Imperial Palette</span>
+        </div>
+
+        <div class="concepts-grid">
+            <!-- Concept 1 -->
+            <div class="concept-card">
+                <div class="img-wrap">
+                    <img src="logos/weev-direction-1-sovereign-lotus.jpg" alt="The Sovereign Lotus">
+                </div>
+                <div class="card-body">
+                    <div class="concept-tag">Concept A · Botanical Crown</div>
+                    <div class="concept-title">The Sovereign Lotus</div>
+                    <div class="concept-desc">
+                        A symmetrical geometric monogram uniting the letter 'W' with an unfolding royal lotus bloom and imperial crown. Hot-stamped in Champagne Gold on raw deckle-edge Imperial Merlot cotton cardstock.
+                    </div>
+                    <a href="logos/insp-lotus-w.vectorcraft" class="btn-vectorcraft">Open VectorCraft Vector (.vectorcraft)</a>
+                </div>
+            </div>
+
+            <!-- Concept 2 -->
+            <div class="concept-card">
+                <div class="img-wrap">
+                    <img src="logos/weev-direction-2-eternal-swash.jpg" alt="The Eternal Swash Serif">
+                </div>
+                <div class="card-body">
+                    <div class="concept-tag">Concept B · High Couture</div>
+                    <div class="concept-title">The Eternal Swash Serif</div>
+                    <div class="concept-desc">
+                        A high-fashion Roman Didot serif 'W' intertwined with a seamless calligraphic infinity ribbon swash that loops through the baseline. Evokes bridal couture, royal invitations, and luxury weddings.
+                    </div>
+                    <a href="logos/insp-swash-w.vectorcraft" class="btn-vectorcraft">Open VectorCraft Vector (.vectorcraft)</a>
+                </div>
+            </div>
+
+            <!-- Concept 3 -->
+            <div class="concept-card">
+                <div class="img-wrap">
+                    <img src="logos/weev-direction-3-crown-knot.jpg" alt="The Interwoven Crown Knot">
+                </div>
+                <div class="card-body">
+                    <div class="concept-tag">Concept C · Heritage Tiara</div>
+                    <div class="concept-title">The Interwoven Crown Knot</div>
+                    <div class="concept-desc">
+                        A modern monoline continuous ribbon emblem combining a royal wedding crown (inspired by Malay songket tanjak origami folds) with the letter 'W'. Hot-stamped in gold foil on silk stationery.
+                    </div>
+                    <a href="logos/insp-crown-w.vectorcraft" class="btn-vectorcraft">Open VectorCraft Vector (.vectorcraft)</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-title">
+            Your Curated Inspirations
+            <span>From /Users/fahi.abss/Desktop/LOgo</span>
+        </div>
+
+        <div class="insp-grid">
+            <div class="insp-card">
+                <img src="inspiration/logo_1.png" alt="Inspiration 1">
+                <span>1. 3D Ribbon Wave 'W'</span>
+            </div>
+            <div class="insp-card">
+                <img src="inspiration/logo_2.png" alt="Inspiration 2">
+                <span>2. Filigree Tiara 'W'</span>
+            </div>
+            <div class="insp-card">
+                <img src="inspiration/logo_3.png" alt="Inspiration 3">
+                <span>3. Modern Architectural 'W'</span>
+            </div>
+            <div class="insp-card">
+                <img src="inspiration/logo_4.png" alt="Inspiration 4">
+                <span>4. Geometric Lotus Monograms</span>
+            </div>
+            <div class="insp-card">
+                <img src="inspiration/logo_5.png" alt="Inspiration 5">
+                <span>5. Roman Serif + Infinity Swash</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

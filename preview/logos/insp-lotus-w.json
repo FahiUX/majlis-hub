@@ -1,0 +1,163 @@
+[
+  {
+    "command": "tool.select",
+    "params": {
+      "tool": "rectangle"
+    }
+  },
+  {
+    "command": "shape.rectangle",
+    "params": {
+      "x": 16,
+      "y": 16,
+      "width": 480,
+      "height": 480,
+      "radius": 110
+    }
+  },
+  {
+    "command": "paint.setFill",
+    "params": {
+      "color": "#FAF7F4"
+    }
+  },
+  {
+    "command": "paint.setStroke",
+    "params": {
+      "color": "#E8DFD8"
+    }
+  },
+  {
+    "command": "stroke.set",
+    "params": {
+      "weight": 2
+    }
+  },
+  {
+    "command": "tool.select",
+    "params": {
+      "tool": "pen"
+    }
+  },
+  {
+    "command": "path.create",
+    "params": {
+      "d": "M 256 360 C 210 360 140 320 110 240 C 92 192 108 140 148 120 C 180 104 220 128 240 180 L 256 220 L 272 180 C 292 128 332 104 364 120 C 404 140 420 192 402 240 C 372 320 302 360 256 360 Z",
+      "closed": true
+    }
+  },
+  {
+    "command": "paint.setFill",
+    "params": {
+      "none": true
+    }
+  },
+  {
+    "command": "paint.setStroke",
+    "params": {
+      "color": "#481226"
+    }
+  },
+  {
+    "command": "stroke.set",
+    "params": {
+      "weight": 20,
+      "cap": "round",
+      "join": "round"
+    }
+  },
+  {
+    "command": "path.create",
+    "params": {
+      "d": "M 176 170 L 256 360 L 336 170",
+      "closed": false
+    }
+  },
+  {
+    "command": "paint.setFill",
+    "params": {
+      "none": true
+    }
+  },
+  {
+    "command": "paint.setStroke",
+    "params": {
+      "color": "#481226"
+    }
+  },
+  {
+    "command": "stroke.set",
+    "params": {
+      "weight": 20,
+      "cap": "round",
+      "join": "round"
+    }
+  },
+  {
+    "command": "path.create",
+    "params": {
+      "d": "M 256 160 C 236 210 236 250 256 290 C 276 250 276 210 256 160 Z",
+      "closed": true
+    }
+  },
+  {
+    "command": "paint.setFill",
+    "params": {
+      "color": "#E5BE64"
+    }
+  },
+  {
+    "command": "paint.setStroke",
+    "params": {
+      "color": "#481226"
+    }
+  },
+  {
+    "command": "stroke.set",
+    "params": {
+      "weight": 6,
+      "join": "round"
+    }
+  },
+  {
+    "command": "shape.ellipse",
+    "params": {
+      "x": 246,
+      "y": 105,
+      "width": 20,
+      "height": 20
+    }
+  },
+  {
+    "command": "paint.setFill",
+    "params": {
+      "color": "#E5BE64"
+    }
+  },
+  {
+    "command": "paint.setStroke",
+    "params": {
+      "color": "#481226"
+    }
+  },
+  {
+    "command": "stroke.set",
+    "params": {
+      "weight": 4
+    }
+  },
+  {
+    "command": "tool.select",
+    "params": {
+      "tool": "selection"
+    }
+  },
+  {
+    "command": "select.all",
+    "params": {}
+  },
+  {
+    "command": "object.group",
+    "params": {}
+  }
+]
