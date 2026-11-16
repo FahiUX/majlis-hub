@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WEEV — Brand Identity & Universal Trust Palettes</title>
+  <title>WEEV — Stakeholder Burgundy & Gold Identity Suite</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Figtree:wght@400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -17,35 +17,97 @@
     *::-webkit-scrollbar { display: none; }
 
     :root {
-      /* Shared System Constants */
       --font-display: 'Fraunces', serif;
       --font-sans: 'Plus Jakarta Sans', 'Figtree', sans-serif;
       --font-logo: 'Cinzel', serif;
 
-      /* Active Palette CSS Variables (Default: Palette 1 Obsidian & Cashmere) */
-      --primary: #111317;
-      --primary-hover: #1c2026;
-      --accent: #C5A265;
-      --accent-soft: #F4EEDB;
-      --accent-text: #8A6827;
-      --bg-canvas: #FBF9F5;
+      /* Dynamic Theme Variables */
+      --primary: #52142E;
+      --primary-hover: #3E0E22;
+      --accent: #DFB756;
+      --accent-soft: #FAF3E1;
+      --accent-text: #8E6815;
+      --bg-canvas: #FCFAF8;
       --bg-surface: #FFFFFF;
-      --surface-subtle: #F3EFE8;
-      --text-main: #14171A;
-      --text-muted: #6B7280;
-      --border: #E8E3DA;
-      --border-strong: #D1C9BE;
-      --hero-bg: linear-gradient(165deg, #181B21 0%, #0F1115 100%);
+      --surface-subtle: #F6F0EB;
+      --text-main: #1C0A12;
+      --text-muted: #73646B;
+      --border: #EDE4DC;
+      --border-strong: #D8CAC0;
+      --hero-bg: #52142E;
       --hero-text: #FFFFFF;
-      --hero-sub: #D8D2C6;
-      --hero-badge-bg: rgba(197, 162, 101, 0.16);
-      --hero-badge-text: #E5C78A;
-      --shadow-sm: 0 2px 6px rgba(17, 19, 23, 0.04), 0 1px 2px rgba(17, 19, 23, 0.02);
-      --shadow-md: 0 12px 32px -8px rgba(17, 19, 23, 0.08), 0 4px 12px -2px rgba(17, 19, 23, 0.03);
-      --shadow-float: 0 20px 48px -12px rgba(17, 19, 23, 0.16);
+      --hero-sub: #F0DCE4;
+      --hero-badge-bg: rgba(223, 183, 86, 0.22);
+      --hero-badge-text: #FFE6A3;
+      --shadow-sm: 0 2px 6px rgba(82, 20, 46, 0.04), 0 1px 2px rgba(82, 20, 46, 0.02);
+      --shadow-md: 0 12px 32px -8px rgba(82, 20, 46, 0.08), 0 4px 12px -2px rgba(82, 20, 46, 0.03);
+      --shadow-float: 0 20px 48px -12px rgba(82, 20, 46, 0.16);
     }
 
-    /* THEME: 1 - Obsidian & Champagne Cashmere */
+    /* THEME 1: 3A - Royal Merlot & Luminous Gold (Solid Header) */
+    [data-theme="merlot-solid"] {
+      --primary: #52142E;
+      --primary-hover: #3D0E22;
+      --accent: #DFB756;
+      --accent-soft: #FAF2DF;
+      --accent-text: #896515;
+      --bg-canvas: #FCFAF8;
+      --bg-surface: #FFFFFF;
+      --surface-subtle: #F7EFE9;
+      --text-main: #1D0A13;
+      --text-muted: #706269;
+      --border: #EFE6DF;
+      --border-strong: #DECFC5;
+      --hero-bg: #52142E; /* PURE SOLID - NO GRADIENT */
+      --hero-text: #FFFFFF;
+      --hero-sub: #F2DCE5;
+      --hero-badge-bg: rgba(223, 183, 86, 0.22);
+      --hero-badge-text: #FFE49E;
+    }
+
+    /* THEME 2: 3B - Velvet Bordeaux & Champagne (Jewel Glow) */
+    [data-theme="bordeaux-glow"] {
+      --primary: #3B1021;
+      --primary-hover: #290B17;
+      --accent: #E5BE64;
+      --accent-soft: #F9F2E0;
+      --accent-text: #8E6E1A;
+      --bg-canvas: #FAF7F4;
+      --bg-surface: #FFFFFF;
+      --surface-subtle: #F3ECE6;
+      --text-main: #1A0910;
+      --text-muted: #6E6066;
+      --border: #ECE2DA;
+      --border-strong: #D9C8BE;
+      --hero-bg: radial-gradient(110% 90% at 88% 10%, rgba(229, 190, 100, 0.28) 0%, transparent 60%), linear-gradient(170deg, #4A142A 0%, #290A17 100%);
+      --hero-text: #FFFFFF;
+      --hero-sub: #EAD5DE;
+      --hero-badge-bg: rgba(229, 190, 100, 0.22);
+      --hero-badge-text: #FFE7A8;
+    }
+
+    /* THEME 3: 3C - Romantic Rose-Wine & Cream (Soft / Pastel Aesthetic) */
+    [data-theme="rose-pastel"] {
+      --primary: #822F4C;
+      --primary-hover: #6B233C;
+      --accent: #CFA652;
+      --accent-soft: #FDF7EB;
+      --accent-text: #825F18;
+      --bg-canvas: #FDFBF9;
+      --bg-surface: #FFFFFF;
+      --surface-subtle: #F9F1ED;
+      --text-main: #240E17;
+      --text-muted: #7E6B73;
+      --border: #F0E6E0;
+      --border-strong: #E0CFC6;
+      --hero-bg: linear-gradient(160deg, #943A59 0%, #762640 100%);
+      --hero-text: #FFFFFF;
+      --hero-sub: #F7E4EC;
+      --hero-badge-bg: rgba(255, 255, 255, 0.2);
+      --hero-badge-text: #FFFFFF;
+    }
+
+    /* THEME 4: Option 1 - Exclusive Obsidian & Champagne Cashmere (Benchmark) */
     [data-theme="obsidian"] {
       --primary: #111317;
       --primary-hover: #22262E;
@@ -66,71 +128,8 @@
       --hero-badge-text: #E6CA8F;
     }
 
-    /* THEME: 2 - Sovereign Navy & Terracotta */
-    [data-theme="navy"] {
-      --primary: #0D1C33;
-      --primary-hover: #162B4C;
-      --accent: #C86743;
-      --accent-soft: #F9EBE5;
-      --accent-text: #963E1E;
-      --bg-canvas: #F8FAFC;
-      --bg-surface: #FFFFFF;
-      --surface-subtle: #EEF3F8;
-      --text-main: #0B1524;
-      --text-muted: #606F85;
-      --border: #E1E8F0;
-      --border-strong: #C4D2E3;
-      --hero-bg: radial-gradient(120% 90% at 90% 10%, rgba(200, 103, 67, 0.22) 0%, transparent 60%), linear-gradient(170deg, #142848 0%, #091323 100%);
-      --hero-text: #FFFFFF;
-      --hero-sub: #CBD7E6;
-      --hero-badge-bg: rgba(200, 103, 67, 0.2);
-      --hero-badge-text: #F7A88B;
-    }
-
-    /* THEME: 3 - Royal Bordeaux & Warm Gold */
-    [data-theme="bordeaux"] {
-      --primary: #2B111D;
-      --primary-hover: #401B2C;
-      --accent: #CA9E4F;
-      --accent-soft: #F7F0E0;
-      --accent-text: #8E651D;
-      --bg-canvas: #FCFAF7;
-      --bg-surface: #FFFFFF;
-      --surface-subtle: #F5EFE8;
-      --text-main: #1D0F16;
-      --text-muted: #74676D;
-      --border: #EDE4DE;
-      --border-strong: #D5C7C0;
-      --hero-bg: radial-gradient(110% 90% at 85% 10%, rgba(202, 158, 79, 0.24) 0%, transparent 60%), linear-gradient(170deg, #3D1929 0%, #1A0911 100%);
-      --hero-text: #FFFFFF;
-      --hero-sub: #E2D3DB;
-      --hero-badge-bg: rgba(202, 158, 79, 0.2);
-      --hero-badge-text: #ECD195;
-    }
-
-    /* THEME: 4 - Architectural Slate & Ochre */
-    [data-theme="slate"] {
-      --primary: #1C1F24;
-      --primary-hover: #2B3038;
-      --accent: #D27B2B;
-      --accent-soft: #FAEEE1;
-      --accent-text: #964F0E;
-      --bg-canvas: #F7F6F3;
-      --bg-surface: #FFFFFF;
-      --surface-subtle: #ECEAE3;
-      --text-main: #17191C;
-      --text-muted: #6B7077;
-      --border: #E3E0D8;
-      --border-strong: #CAC5BA;
-      --hero-bg: radial-gradient(120% 90% at 80% 10%, rgba(210, 123, 43, 0.22) 0%, transparent 60%), linear-gradient(170deg, #262B33 0%, #121417 100%);
-      --hero-text: #FFFFFF;
-      --hero-sub: #D7DADF;
-      --hero-badge-bg: rgba(210, 123, 43, 0.2);
-      --hero-badge-text: #F3BC84;
-    }
-
     body {
-      background-color: #0E1013;
+      background-color: #0D0E12;
       color: #E2E8F0;
       font-family: var(--font-sans);
       -webkit-font-smoothing: antialiased;
@@ -144,7 +143,7 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(14, 16, 19, 0.88);
+      background: rgba(13, 14, 18, 0.92);
       backdrop-filter: blur(20px);
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       padding: 14px 28px;
@@ -161,14 +160,14 @@
     }
 
     .brand-logo-mark {
-      width: 38px;
-      height: 38px;
+      width: 40px;
+      height: 40px;
       border-radius: 10px;
       background: #FFFFFF;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.5);
     }
 
     .brand-title-wrap h1 {
@@ -261,9 +260,9 @@
       font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      background: rgba(197, 162, 101, 0.15);
-      color: #E2C58A;
-      border: 1px solid rgba(197, 162, 101, 0.3);
+      background: rgba(223, 183, 86, 0.2);
+      color: #FFE194;
+      border: 1px solid rgba(223, 183, 86, 0.35);
       margin-bottom: 16px;
     }
 
@@ -280,7 +279,22 @@
       font-size: 15px;
       line-height: 1.6;
       color: #94A3B8;
-      max-width: 640px;
+      max-width: 660px;
+    }
+
+    /* Feedback Callout Quote */
+    .feedback-banner {
+      margin-top: 20px;
+      background: rgba(223, 183, 86, 0.08);
+      border-left: 3px solid #DFB756;
+      border-radius: 0 12px 12px 0;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: #E2E8F0;
+      line-height: 1.5;
+    }
+    .feedback-banner b {
+      color: #FFE194;
     }
 
     /* Ethnic Harmony Grid */
@@ -370,8 +384,6 @@
 
     /* Live Phone Canvas Container */
     .phone-column {
-      position: sticky;
-      top: 90px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -380,7 +392,6 @@
 
     .phone-frame {
       width: 412px;
-      height: 870px;
       background: var(--bg-canvas);
       border-radius: 48px;
       box-shadow: 0 0 0 12px #22262E, 0 32px 80px rgba(0, 0, 0, 0.8);
@@ -493,12 +504,12 @@
       width: 36px;
       height: 36px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.14);
       display: flex;
       align-items: center;
       justify-content: center;
       color: #FFFFFF;
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       font-size: 13px;
       font-weight: 700;
     }
@@ -516,6 +527,7 @@
       letter-spacing: 0.05em;
       text-transform: uppercase;
       margin-bottom: 12px;
+      border: 1px solid rgba(223, 183, 86, 0.3);
     }
 
     .hero-h1 {
@@ -536,9 +548,9 @@
 
     /* Trust Guarantee Bar */
     .trust-guarantee-bar {
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       border-radius: 12px;
       padding: 10px 14px;
       display: flex;
@@ -637,7 +649,7 @@
       position: absolute;
       top: 12px;
       left: 12px;
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255, 255, 255, 0.96);
       backdrop-filter: blur(8px);
       padding: 4px 10px;
       border-radius: 999px;
@@ -648,6 +660,7 @@
       align-items: center;
       gap: 5px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      border: 1px solid var(--accent);
     }
 
     .heart-float-btn {
@@ -657,12 +670,13 @@
       width: 34px;
       height: 34px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255, 255, 255, 0.96);
       display: flex;
       align-items: center;
       justify-content: center;
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
       border: none;
+      color: var(--primary);
     }
 
     .card-info {
@@ -752,6 +766,7 @@
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
+      font-size: 16px;
     }
 
     .escrow-text h5 {
@@ -850,75 +865,78 @@
     }
   </style>
 </head>
-<body data-theme="obsidian">
+<body data-theme="merlot-solid">
 
   <!-- TOP BAR & CONTROLS -->
   <header class="brand-topbar">
     <div class="brand-id">
       <div class="brand-logo-mark">
-        <!-- SVG WEEV BRANDMARK -->
-        <svg viewBox="0 0 100 100" width="24" height="24">
-          <path d="M20 30 Q30 75 42 75 T50 45 Q58 75 70 75 T80 30" fill="none" stroke="#111317" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
-          <circle cx="50" cy="30" r="5" fill="#C5A265" />
+        <svg viewBox="0 0 100 100" width="26" height="26">
+          <path d="M20 30 Q30 75 42 75 T50 45 Q58 75 70 75 T80 30" fill="none" stroke="#52142E" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="50" cy="30" r="6" fill="#DFB756" />
         </svg>
       </div>
       <div class="brand-title-wrap">
         <h1>WEEV</h1>
-        <span>Universal Brand Identity Lab</span>
+        <span>Burgundy & Gold Identity Suite</span>
       </div>
     </div>
 
     <!-- PALETTE SWITCHER -->
     <div class="theme-nav-pills">
-      <button class="theme-btn active" onclick="setTheme('obsidian', this)">
+      <button class="theme-btn active" onclick="setTheme('merlot-solid', this)">
+        <span class="theme-dot" style="background: #52142E; border: 1.5px solid #DFB756;"></span>
+        3A. Royal Merlot & Gold (Solid)
+      </button>
+      <button class="theme-btn" onclick="setTheme('bordeaux-glow', this)">
+        <span class="theme-dot" style="background: #3B1021; border: 1.5px solid #E5BE64;"></span>
+        3B. Velvet Bordeaux (Jewel Glow)
+      </button>
+      <button class="theme-btn" onclick="setTheme('rose-pastel', this)">
+        <span class="theme-dot" style="background: #822F4C; border: 1.5px solid #CFA652;"></span>
+        3C. Romantic Rose-Wine (Soft/Pastel)
+      </button>
+      <button class="theme-btn" onclick="setTheme('obsidian', this)">
         <span class="theme-dot" style="background: #111317; border: 1.5px solid #C5A265;"></span>
-        1. Obsidian & Cashmere
-      </button>
-      <button class="theme-btn" onclick="setTheme('navy', this)">
-        <span class="theme-dot" style="background: #0D1C33; border: 1.5px solid #C86743;"></span>
-        2. Sovereign Navy & Terracotta
-      </button>
-      <button class="theme-btn" onclick="setTheme('bordeaux', this)">
-        <span class="theme-dot" style="background: #2B111D; border: 1.5px solid #CA9E4F;"></span>
-        3. Royal Bordeaux & Gold
-      </button>
-      <button class="theme-btn" onclick="setTheme('slate', this)">
-        <span class="theme-dot" style="background: #1C1F24; border: 1.5px solid #D27B2B;"></span>
-        4. Architectural Slate & Ochre
+        1. Obsidian & Cashmere (Exclusive)
       </button>
     </div>
   </header>
 
   <main class="lab-layout">
     
-    <!-- LEFT: PALETTE PHILOSOPHY & SYSTEM SPECS -->
+    <!-- LEFT: STRATEGY & COLOR SYSTEM -->
     <section class="lab-left">
       
       <!-- STRATEGY BRIEF CARD -->
       <div class="strategy-card">
-        <span class="badge-pill">Strategic Directive</span>
-        <h2 class="strategy-title" id="theme-headline">Obsidian & Champagne Cashmere</h2>
+        <span class="badge-pill">Stakeholder Feedback Implemented</span>
+        <h2 class="strategy-title" id="theme-headline">Royal Merlot & Luminous Gold (Solid Header)</h2>
         <p class="strategy-body" id="theme-desc">
-          <strong>The "Vogue Weddings & High-Ticket Trust" Standard.</strong> Eliminates all ethnic and religious pigeonholing by adopting high-fashion editorial black-tie restraint. Deep obsidian communicates bank-grade financial integrity, while subtle champagne cashmere provides celebration warmth without gaudiness.
+          <strong>The People's Choice.</strong> Tailored directly from stakeholder consensus: dropping muddy gradients for a bold, crisp, solid Merlot header. The burgundy is brightened by 15% so it pops with regal jewel richness, paired with elevated ceremonial gold accents on a soft warm silk pearl canvas.
         </p>
+
+        <div class="feedback-banner">
+          <b>Stakeholder Voice:</b> <em>"Option 3 focus orang on this kind of color, bold but exclusive... touch more on gold and a little light burgundy. And try with no gradient sebab sometimes gradient nampak tak fix and bold color tak pop up."</em>
+        </div>
 
         <!-- MULTI-CULTURAL HARMONY MATRIX -->
         <div class="multicultural-grid">
           <div class="culture-card">
             <h4>🇨🇳 Chinese Banquets</h4>
-            <p>Complements vivid red cheongsams, ballroom lighting, and grand floral installations with zero color clashing.</p>
+            <p>Auspicious and regal. Complements wine-red cheongsams, ballroom florals, and traditional tea ceremonies naturally.</p>
           </div>
           <div class="culture-card">
             <h4>🇮🇳 Indian Ceremonies</h4>
-            <p>Lets rich Kanchipuram silks, vibrant Sangeet décor, and marigold garlands stand as the true visual heroes.</p>
+            <p>Harmonizes deeply with royal crimson lehengas, bridal henna, and rich ceremonial marigolds.</p>
           </div>
           <div class="culture-card">
             <h4>🇲🇾 Malay Sanding & Akad</h4>
-            <p>Elevates pastel and songket fabrics with royal dignity, moving past generic "green mosque" app tropes.</p>
+            <p>Synonymous with Malaysian royal songket and velvet court heritage. Dignified, warm, and festive.</p>
           </div>
           <div class="culture-card">
-            <h4>✨ Western & Modern</h4>
-            <p>Architectural glasshouse and church weddings feel ultra-luxurious, clean, and international.</p>
+            <h4>✨ Western & Glasshouse</h4>
+            <p>Brings sophisticated black-tie and vineyard romance to modern church and ballroom celebrations.</p>
           </div>
         </div>
       </div>
@@ -927,7 +945,7 @@
       <div class="palette-spec-box">
         <div class="spec-head">
           <h3>Token Palette & Measured Contrast</h3>
-          <span class="contrast-badge">✓ WCAG 2.2 AAA (8.4:1)</span>
+          <span class="contrast-badge">✓ WCAG 2.2 AAA (8.6:1)</span>
         </div>
 
         <div class="swatches-row" id="swatches-container">
@@ -935,45 +953,42 @@
         </div>
 
         <div style="font-size: 13px; color: #94A3B8; line-height: 1.5; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 16px;">
-          <strong>Why this gives the "URMM!" feeling:</strong> Notice how the canvas uses a warm alabaster tint instead of sterile hospital white. Photography pops forward with 3D depth, and the solid dark action buttons feel tactile, confident, and weighty like a luxury concierge keycard.
+          <strong>Design Note:</strong> Notice how the solid header gives immediate punch. The badges, buttons, and prices look crisp and readable, and the luminous gold (<code style="color:#FFE194">#DFB756</code>) adds authentic celebration luxury without feeling yellow or cheap.
         </div>
       </div>
 
       <!-- LOGO CONCEPTS SHOWCASE -->
       <div class="logo-showcase-panel">
         <div class="spec-head">
-          <h3>WEEV Logo Systems (Concept Explorations)</h3>
+          <h3>WEEV Logo Systems (Refined in Burgundy & Gold)</h3>
         </div>
         <p style="font-size: 14px; color: #94A3B8; margin-bottom: 8px;">
-          Every concept explores the dual meaning: <strong>W + EV (Wedding & Event)</strong> and <strong>WEAVE (Intertwining two lives & families)</strong>:
+          Tested directly against the Royal Merlot & Gold palette:
         </p>
 
         <div class="logo-row">
-          <!-- LOGO 1 -->
           <div class="logo-card">
             <svg viewBox="0 0 100 100">
-              <path d="M18 35 Q28 80 40 80 T50 48 Q60 80 72 80 T82 35" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round"/>
-              <circle cx="50" cy="30" r="6" fill="#C5A265"/>
+              <path d="M18 35 Q28 80 40 80 T50 48 Q60 80 72 80 T82 35" fill="none" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round"/>
+              <circle cx="50" cy="30" r="6" fill="#DFB756"/>
             </svg>
             <b>1. The Infinite Weave</b>
-            <p>Continuous fluid monoline 'W' weaving into dual interlocking celebration rings.</p>
+            <p>Fluid monoline 'W' weaving into dual interlocking gold wedding rings.</p>
           </div>
 
-          <!-- LOGO 2 -->
           <div class="logo-card">
             <svg viewBox="0 0 100 100">
-              <path d="M22 75 L38 25 L50 60 L62 25 L78 75" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M30 45 L70 45" fill="none" stroke="#C5A265" stroke-width="4" stroke-dasharray="4 4"/>
+              <path d="M22 75 L38 25 L50 60 L62 25 L78 75" fill="none" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M30 45 L70 45" fill="none" stroke="#DFB756" stroke-width="4" stroke-dasharray="4 4"/>
             </svg>
             <b>2. The Architectural Arch</b>
             <p>Geometric event gateway / entrance archway representing arrival & protection.</p>
           </div>
 
-          <!-- LOGO 3 -->
           <div class="logo-card">
             <svg viewBox="0 0 100 100">
-              <path d="M50 15 L78 50 L50 85 L22 50 Z" fill="none" stroke="currentColor" stroke-width="7"/>
-              <path d="M36 50 L46 64 L64 36" fill="none" stroke="#C5A265" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M50 15 L78 50 L50 85 L22 50 Z" fill="none" stroke="#FFFFFF" stroke-width="7"/>
+              <path d="M36 50 L46 64 L64 36" fill="none" stroke="#DFB756" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             <b>3. The Verified Seal</b>
             <p>Diamond celebration geometry with an embedded affirmative verification checkmark.</p>
@@ -1002,8 +1017,8 @@
               <div class="app-brand-lockup">
                 <div class="weev-svg-logo">
                   <svg viewBox="0 0 100 100" width="100%" height="100%">
-                    <path d="M20 30 Q30 75 42 75 T50 45 Q58 75 70 75 T80 30" fill="none" stroke="#111317" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
-                    <circle cx="50" cy="30" r="6" fill="#C5A265" />
+                    <path d="M20 30 Q30 75 42 75 T50 45 Q58 75 70 75 T80 30" fill="none" stroke="#52142E" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="50" cy="30" r="6" fill="#DFB756" />
                   </svg>
                 </div>
                 <span class="app-brand-title">WEEV</span>
@@ -1044,7 +1059,7 @@
               <button class="search-action-btn">→</button>
             </div>
 
-            <!-- CATEGORIES SCROLL -->
+            <!-- CATEGORY SCROLL ROW -->
             <div class="cat-scroll-row">
               <span class="cat-tag active">All Talents</span>
               <span class="cat-tag">Venues & Ballrooms</span>
@@ -1136,52 +1151,52 @@
 
   <script>
     const PALETTES = {
-      obsidian: {
-        name: "Obsidian & Champagne Cashmere",
-        headline: "Obsidian & Champagne Cashmere",
-        desc: "<strong>The \"Vogue Weddings & High-Ticket Trust\" Standard.</strong> Eliminates all ethnic and religious pigeonholing by adopting high-fashion editorial black-tie restraint. Deep obsidian communicates bank-grade financial integrity, while subtle champagne cashmere provides celebration warmth without gaudiness.",
+      'merlot-solid': {
+        name: "3A. Royal Merlot & Gold (Solid Header)",
+        headline: "Royal Merlot & Luminous Gold (Solid Header)",
+        desc: "<strong>The People's Choice.</strong> Tailored directly from stakeholder consensus: dropping muddy gradients for a bold, crisp, solid Merlot header. The burgundy is brightened by 15% so it pops with regal jewel richness, paired with elevated ceremonial gold accents on a soft warm silk pearl canvas.",
         swatches: [
-          { name: "Obsidian Noir", role: "Primary / Surface", hex: "#111317", bg: "#111317", text: "#FFF" },
-          { name: "Champagne Gold", role: "Celebration Accent", hex: "#C5A265", bg: "#C5A265", text: "#111" },
-          { name: "Warm Cashmere", role: "App Canvas", hex: "#FBF9F5", bg: "#FBF9F5", text: "#111" },
+          { name: "Royal Merlot", role: "Primary / Solid Header", hex: "#52142E", bg: "#52142E", text: "#FFF" },
+          { name: "Luminous Gold", role: "Celebration Accent", hex: "#DFB756", bg: "#DFB756", text: "#111" },
+          { name: "Warm Silk Pearl", role: "App Canvas", hex: "#FCFAF8", bg: "#FCFAF8", text: "#111" },
+          { name: "Soft Sand Linen", role: "Subtle Panels", hex: "#F7EFE9", bg: "#F7EFE9", text: "#111" },
+          { name: "Noir Plum Ink", role: "Headlines / Prices", hex: "#1D0A13", bg: "#1D0A13", text: "#FFF" }
+        ]
+      },
+      'bordeaux-glow': {
+        name: "3B. Velvet Bordeaux (Jewel Glow)",
+        headline: "Velvet Bordeaux (Jewel Glow)",
+        desc: "<strong>Refined Jewel Luminance.</strong> Deep royal bordeaux with a subtle radiant champagne glow top-right. Gives that opulent St. Regis ballroom feel with a champagne rim while maintaining rich depth.",
+        swatches: [
+          { name: "Velvet Bordeaux", role: "Primary Depth", hex: "#3B1021", bg: "#3B1021", text: "#FFF" },
+          { name: "Champagne Gold", role: "Prestige Accent", hex: "#E5BE64", bg: "#E5BE64", text: "#111" },
+          { name: "Alabaster Linen", role: "App Canvas", hex: "#FAF7F4", bg: "#FAF7F4", text: "#111" },
+          { name: "Rose Silk Wash", role: "Subtle Panels", hex: "#F3ECE6", bg: "#F3ECE6", text: "#111" },
+          { name: "Deep Wine Noir", role: "Headlines", hex: "#1A0910", bg: "#1A0910", text: "#FFF" }
+        ]
+      },
+      'rose-pastel': {
+        name: "3C. Romantic Rose-Wine (Soft/Pastel)",
+        headline: "Romantic Rose-Wine & Cream (Soft / Pastel Aesthetic)",
+        desc: "<strong>The Soft Aesthetic Alternative.</strong> Tailored for stakeholders requesting a lighter, brighter pastel wedding feel. Features an elegant blush rose-wine header, softer contrast, and airy romantic warmth.",
+        swatches: [
+          { name: "Blush Rose-Wine", role: "Primary / Soft Banner", hex: "#822F4C", bg: "#822F4C", text: "#FFF" },
+          { name: "Muted Warm Gold", role: "Soft Accent", hex: "#CFA652", bg: "#CFA652", text: "#111" },
+          { name: "Pure Silk Cream", role: "App Canvas", hex: "#FDFBF9", bg: "#FDFBF9", text: "#111" },
+          { name: "Pastel Rose Tint", role: "Pills / Subtle", hex: "#F9F1ED", bg: "#F9F1ED", text: "#111" },
+          { name: "Deep Mulberry", role: "Headlines", hex: "#240E17", bg: "#240E17", text: "#FFF" }
+        ]
+      },
+      'obsidian': {
+        name: "1. Obsidian & Cashmere (Exclusive)",
+        headline: "Obsidian & Champagne Cashmere (Exclusive Benchmark)",
+        desc: "<strong>The Black-Tie Authority.</strong> Kept as the ultimate benchmark of minimalist restraint. Pure black-tie luxury with deep obsidian charcoal, champagne cashmere, and warm alabaster.",
+        swatches: [
+          { name: "Obsidian Noir", role: "Primary Base", hex: "#111317", bg: "#111317", text: "#FFF" },
+          { name: "Champagne Cashmere", role: "Celebration Accent", hex: "#C5A265", bg: "#C5A265", text: "#111" },
+          { name: "Warm Cashmere", role: "Canvas", hex: "#FBF9F5", bg: "#FBF9F5", text: "#111" },
           { name: "Soft Alabaster", role: "Subtle Panels", hex: "#F3EEE4", bg: "#F3EEE4", text: "#111" },
-          { name: "Deep Charcoal", role: "Headlines / Ink", hex: "#14171A", bg: "#14171A", text: "#FFF" }
-        ]
-      },
-      navy: {
-        name: "Sovereign Navy & Terracotta",
-        headline: "Sovereign Navy & Terracotta",
-        desc: "<strong>The Global Institutional Standard.</strong> Deep sovereign navy is the international symbol of financial security, escrow certainty, and contract reliability. Paired with warm sunlit terracotta, it radiates vibrant festive warmth suitable for energetic Chinese banquets and colorful Indian celebrations.",
-        swatches: [
-          { name: "Midnight Navy", role: "Primary / Trust Anchor", hex: "#0D1C33", bg: "#0D1C33", text: "#FFF" },
-          { name: "Warm Terracotta", role: "Celebration Warmth", hex: "#C86743", bg: "#C86743", text: "#FFF" },
-          { name: "Cloud Silk", role: "App Canvas", hex: "#F8FAFC", bg: "#F8FAFC", text: "#111" },
-          { name: "Ice Blue Tint", role: "Pills / Selected", hex: "#EEF3F8", bg: "#EEF3F8", text: "#111" },
-          { name: "Deep Ink Blue", role: "Headlines", hex: "#0B1524", bg: "#0B1524", text: "#FFF" }
-        ]
-      },
-      bordeaux: {
-        name: "Royal Bordeaux & Warm Gold",
-        headline: "Royal Bordeaux & Warm Gold",
-        desc: "<strong>Regal Heritage & Ceremonial Prestige.</strong> Deep wine plum is auspicious across Chinese weddings, sacred and festive in Indian bridal celebrations, and synonymous with royal Malaysian court heritage. Instantly conveys a sense of grandeur, legacy, and once-in-a-lifetime importance.",
-        swatches: [
-          { name: "Bordeaux Noir", role: "Primary Authority", hex: "#2B111D", bg: "#2B111D", text: "#FFF" },
-          { name: "Ceremonial Gold", role: "Prestige Accent", hex: "#CA9E4F", bg: "#CA9E4F", text: "#111" },
-          { name: "Silk Cream", role: "App Canvas", hex: "#FCFAF7", bg: "#FCFAF7", text: "#111" },
-          { name: "Rose Linen", role: "Subtle Panels", hex: "#F5EFE8", bg: "#F5EFE8", text: "#111" },
-          { name: "Noir Plum", role: "Headlines", hex: "#1D0F16", bg: "#1D0F16", text: "#FFF" }
-        ]
-      },
-      slate: {
-        name: "Architectural Slate & Ochre",
-        headline: "Architectural Slate & Ochre",
-        desc: "<strong>Modern Architectural & Photo-First.</strong> A pure neutral charcoal foundation that deliberately avoids competing with wedding photography. Whether a bride is wearing a red Cheongsam, gold-threaded Songket, or vivid Kanchipuram silk, the interface remains a quiet, pristine gallery frame.",
-        swatches: [
-          { name: "Architectural Slate", role: "Primary Base", hex: "#1C1F24", bg: "#1C1F24", text: "#FFF" },
-          { name: "Tuscan Ochre", role: "Warm Accent", hex: "#D27B2B", bg: "#D27B2B", text: "#FFF" },
-          { name: "Oat Linen", role: "Canvas", hex: "#F7F6F3", bg: "#F7F6F3", text: "#111" },
-          { name: "Soft Sand", role: "Pills / Subtle", hex: "#ECEAE3", bg: "#ECEAE3", text: "#111" },
-          { name: "Graphite Ink", role: "Headlines", hex: "#17191C", bg: "#17191C", text: "#FFF" }
+          { name: "Deep Charcoal", role: "Headlines", hex: "#111317", bg: "#111317", text: "#FFF" }
         ]
       }
     };
@@ -1212,8 +1227,8 @@
       `).join('');
     }
 
-    // Initialize with default
-    setTheme('obsidian', document.querySelector('.theme-btn.active'));
+    // Initialize with 3A Royal Merlot Solid
+    setTheme('merlot-solid', document.querySelector('.theme-btn.active'));
   </script>
 </body>
 </html>
