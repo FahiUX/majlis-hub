@@ -107,3 +107,31 @@ WEEV employs a dual-font typographic spine:
 * **Ken Burns Hero Animation:** Subtle zoom transition on featured image carousels (`@keyframes kenburns`).
 * **Micro Shimmer:** Loading skeletons employ linear gradient shimmer transitioning from `#F1E9E4` to Alabaster Linen (`#FAF7F4`) and back.
 * **Reduced Motion Compliance:** `@media (prefers-reduced-motion: reduce)` disables all transforms and animations for user accessibility.
+
+---
+
+## 6. Official Brandmark & Master Assets (Concept B: The Eternal Swash Serif)
+
+The official brand identity for **WEEV** is **Concept B: The Eternal Swash Serif**, approved and finalized in the 3A + 3B Imperial Merlot & Champagne Gold palette.
+
+### 6.1 Design Anatomy
+* **Lettermark**: Haute couture Didot Roman Serif 'W' with dramatic thick-and-thin stroke contrast.
+* **The Eternal Weave Swash**: An unbroken, calligraphic Champagne Gold infinity ribbon looping underneath the baseline and interweaving through the letterform stems.
+* **Matrimonial Spark**: A pearl-and-ring celebratory spark set into the central vertex.
+* **Color Specifications**:
+  - Primary Identity Base: Imperial Merlot (`#481226`)
+  - Accent Ribbon Swash: Champagne Gold (`#E5BE64`)
+  - Accent Hairlines: Silk White (`#FAF7F4`)
+
+### 6.2 Master Deliverable Files
+* **Native VectorCraft**: `preview/logos/weev-concept-b-lockup-dark.vectorcraft`
+* **Adobe Illustrator**: `preview/logos/weev-concept-b-lockup-dark.ai`
+* **Print Master**: `preview/logos/weev-concept-b-lockup-dark.eps`
+* **Vector PDF**: `preview/logos/weev-concept-b-lockup-dark.pdf`
+* **Web Vectors**:
+  - `preview/logos/weev-concept-b-symbol-dark.svg`
+  - `preview/logos/weev-concept-b-symbol-light.svg`
+  - `preview/logos/weev-concept-b-symbol-mono.svg`
+  - `preview/logos/weev-concept-b-lockup-dark.svg`
+  - `preview/logos/weev-concept-b-lockup-light.svg`
+* **React Component**: `<WeevLogo size={32} variant="full" />` in `src/components/WeevLogo.tsx`

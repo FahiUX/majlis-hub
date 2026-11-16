@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="1200" height="400" fill="none">
+  <rect width="1200" height="400" rx="24" fill="#481226"/>
+  
+  <!-- Symbol on Left (scaled to fit within 300x300) -->
+  <g transform="translate(48, 50) scale(0.6)">
+    <rect width="512" height="512" rx="112" fill="#330B1A" stroke="#E5BE64" stroke-opacity="0.4" stroke-width="4"/>
+    <path d="M110 132 H172 M141 132 V155 M340 132 H402 M371 132 V155" stroke="#E5BE64" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M141 146 L202 338 L256 182 L310 338 L371 146" stroke="#E5BE64" stroke-width="22" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path d="M141 146 L256 348 L371 146" stroke="#FAF7F4" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path d="M 74 330 C 52 375 92 418 152 396 C 218 372 242 278 298 288 C 354 298 424 382 438 334 C 448 290 398 252 344 268" 
+          stroke="#E5BE64" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <circle cx="256" cy="152" r="7" fill="#FAF7F4"/>
+    <circle cx="256" cy="152" r="13" stroke="#E5BE64" stroke-width="2.5"/>
+  </g>
+  
+  <!-- Wordmark 'WEEV' in Playfair / Didot Roman Serif -->
+  <text x="400" y="226" font-family="Didot, 'Bodoni 72', serif" font-size="142" font-weight="700" letter-spacing="6" fill="#FAF7F4">WEEV</text>
+  
+  <!-- Gold Divider Line -->
+  <line x1="404" y1="256" x2="1120" y2="256" stroke="#E5BE64" stroke-opacity="0.6" stroke-width="2"/>
+  
+  <!-- Sub-headline Descriptor -->
+  <text x="406" y="298" font-family="'Plus Jakarta Sans', -apple-system, sans-serif" font-size="24" font-weight="600" letter-spacing="8" fill="#E5BE64">WEDDING &amp; EVENT ECOSYSTEM</text>
+</svg>
