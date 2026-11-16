@@ -44,6 +44,27 @@
       --shadow-float: 0 20px 48px -12px rgba(82, 20, 46, 0.16);
     }
 
+    /* THEME 0: 3A + 3B HYBRID - Imperial Merlot & Champagne Glow */
+    [data-theme="hybrid-3ab"] {
+      --primary: #481226;
+      --primary-hover: #320B1A;
+      --accent: #E5BE64;
+      --accent-soft: #FAF2DF;
+      --accent-text: #8C6918;
+      --bg-canvas: #FAF7F4;
+      --bg-surface: #FFFFFF;
+      --surface-subtle: #F5EDE7;
+      --text-main: #1C0912;
+      --text-muted: #6F6167;
+      --border: #ECE3DC;
+      --border-strong: #DAC9BF;
+      --hero-bg: radial-gradient(110% 90% at 85% 10%, rgba(229, 190, 100, 0.26) 0%, transparent 60%), linear-gradient(170deg, #52142E 0%, #360E1E 100%);
+      --hero-text: #FFFFFF;
+      --hero-sub: #EED8E1;
+      --hero-badge-bg: rgba(229, 190, 100, 0.24);
+      --hero-badge-text: #FFE7A8;
+    }
+
     /* THEME 1: 3A - Royal Merlot & Luminous Gold (Solid Header) */
     [data-theme="merlot-solid"] {
       --primary: #52142E;
@@ -884,21 +905,25 @@
 
     <!-- PALETTE SWITCHER -->
     <div class="theme-nav-pills">
-      <button class="theme-btn active" onclick="setTheme('merlot-solid', this)">
-        <span class="theme-dot" style="background: #52142E; border: 1.5px solid #DFB756;"></span>
-        3A. Royal Merlot & Gold (Solid)
+      <button class="theme-btn active" onclick="setTheme('hybrid-3ab', this)">
+        <span class="theme-dot" style="background: #481226; border: 1.5px solid #E5BE64;"></span>
+        ⭐ 3A + 3B. Imperial Merlot & Champagne (Hybrid)
       </button>
       <button class="theme-btn" onclick="setTheme('bordeaux-glow', this)">
         <span class="theme-dot" style="background: #3B1021; border: 1.5px solid #E5BE64;"></span>
         3B. Velvet Bordeaux (Jewel Glow)
       </button>
+      <button class="theme-btn" onclick="setTheme('merlot-solid', this)">
+        <span class="theme-dot" style="background: #52142E; border: 1.5px solid #DFB756;"></span>
+        3A. Royal Merlot (Solid)
+      </button>
       <button class="theme-btn" onclick="setTheme('rose-pastel', this)">
         <span class="theme-dot" style="background: #822F4C; border: 1.5px solid #CFA652;"></span>
-        3C. Romantic Rose-Wine (Soft/Pastel)
+        3C. Romantic Rose-Wine (Pastel)
       </button>
       <button class="theme-btn" onclick="setTheme('obsidian', this)">
         <span class="theme-dot" style="background: #111317; border: 1.5px solid #C5A265;"></span>
-        1. Obsidian & Cashmere (Exclusive)
+        1. Obsidian & Cashmere
       </button>
     </div>
   </header>
@@ -1151,6 +1176,18 @@
 
   <script>
     const PALETTES = {
+      'hybrid-3ab': {
+        name: "⭐ 3A + 3B. Imperial Merlot & Champagne (Hybrid)",
+        headline: "Imperial Merlot & Champagne Jewel (3A + 3B Hybrid)",
+        desc: "<strong>The Ultimate Synthesis.</strong> Merges the vibrant, high-visibility Royal Merlot of 3A (#52142E) with the refined Champagne Jewel Glow & Velvet Bordeaux depth of 3B (#360E1E). The color pops vigorously without being dark/murky, while maintaining deep ballroom luxury and Champagne Gold (#E5BE64) accents.",
+        swatches: [
+          { name: "Imperial Merlot", role: "Primary Hue (3A Pop)", hex: "#481226", bg: "#481226", text: "#FFF" },
+          { name: "Champagne Gold", role: "Celebration Accent (3B)", hex: "#E5BE64", bg: "#E5BE64", text: "#111" },
+          { name: "Alabaster Linen", role: "App Canvas", hex: "#FAF7F4", bg: "#FAF7F4", text: "#111" },
+          { name: "Soft Silk Tint", role: "Subtle Panels", hex: "#F5EDE7", bg: "#F5EDE7", text: "#111" },
+          { name: "Velvet Wine Noir", role: "Headlines / Ink", hex: "#1C0912", bg: "#1C0912", text: "#FFF" }
+        ]
+      },
       'merlot-solid': {
         name: "3A. Royal Merlot & Gold (Solid Header)",
         headline: "Royal Merlot & Luminous Gold (Solid Header)",
@@ -1227,8 +1264,8 @@
       `).join('');
     }
 
-    // Initialize with 3A Royal Merlot Solid
-    setTheme('merlot-solid', document.querySelector('.theme-btn.active'));
+    // Initialize with 3A + 3B Hybrid
+    setTheme('hybrid-3ab', document.querySelector('.theme-btn.active'));
   </script>
 </body>
 </html>
