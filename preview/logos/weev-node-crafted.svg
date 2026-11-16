@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="612" height="792" viewBox="0 0 612 792">
+  <title>Untitled-1</title>
+  <g id="Layer_1" data-name="Layer 1">
+    <path d="M126 16 L386 16 C446.751 16 496 65.249 496 126 L496 386 C496 446.751 446.751 496 386 496 L126 496 C65.249 496 16 446.751 16 386 L16 126 C16 65.249 65.249 16 126 16 Z" fill="#faf7f4" stroke="#e5be64" stroke-width="4" stroke-miterlimit="10"/>
+    <path d="M160 190 L160 300 C160 313.333 166.667 320 180 320 L352 320 M352 190 L352 320" fill="none" stroke="#481226" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M138 120 L182 120 C193.046 120 202 128.954 202 140 L202 184 C202 195.046 193.046 204 182 204 L138 204 C126.954 204 118 195.046 118 184 L118 140 C118 128.954 126.954 120 138 120 Z" fill="#faf7f4" stroke="#481226" stroke-width="24" stroke-linejoin="round"/>
+    <path d="M330 120 L374 120 C385.046 120 394 128.954 394 140 L394 184 C394 195.046 385.046 204 374 204 L330 204 C318.954 204 310 195.046 310 184 L310 140 C310 128.954 318.954 120 330 120 Z" fill="#faf7f4" stroke="#481226" stroke-width="24" stroke-linejoin="round"/>
+    <path d="M330 280 L374 280 C385.046 280 394 288.954 394 300 L394 344 C394 355.046 385.046 364 374 364 L330 364 C318.954 364 310 355.046 310 344 L310 300 C310 288.954 318.954 280 330 280 Z" fill="#481226" stroke="#e5be64" stroke-width="20" stroke-linejoin="round"/>
+  </g>
+</svg>

@@ -1,0 +1,172 @@
+[
+  {
+    "command": "tool.select",
+    "params": {
+      "tool": "rectangle"
+    }
+  },
+  {
+    "command": "shape.rectangle",
+    "params": {
+      "x": 16,
+      "y": 16,
+      "width": 480,
+      "height": 480,
+      "radius": 110
+    }
+  },
+  {
+    "command": "paint.setFill",
+    "params": {
+      "color": "#FAF7F4"
+    }
+  },
+  {
+    "command": "paint.setStroke",
+    "params": {
+      "color": "#E5BE64"
+    }
+  },
+  {
+    "command": "stroke.set",
+    "params": {
+      "weight": 4
+    }
+  },
+  {
+    "command": "tool.select",
+    "params": {
+      "tool": "pen"
+    }
+  },
+  {
+    "command": "path.create",
+    "params": {
+      "d": "M 160 190 L 160 300 Q 160 320 180 320 L 352 320 M 352 190 L 352 320",
+      "closed": false
+    }
+  },
+  {
+    "command": "paint.setFill",
+    "params": {
+      "none": true
+    }
+  },
+  {
+    "command": "paint.setStroke",
+    "params": {
+      "color": "#481226"
+    }
+  },
+  {
+    "command": "stroke.set",
+    "params": {
+      "weight": 28,
+      "cap": "round",
+      "join": "round"
+    }
+  },
+  {
+    "command": "tool.select",
+    "params": {
+      "tool": "rectangle"
+    }
+  },
+  {
+    "command": "shape.rectangle",
+    "params": {
+      "x": 118,
+      "y": 120,
+      "width": 84,
+      "height": 84,
+      "radius": 20
+    }
+  },
+  {
+    "command": "paint.setFill",
+    "params": {
+      "color": "#FAF7F4"
+    }
+  },
+  {
+    "command": "paint.setStroke",
+    "params": {
+      "color": "#481226"
+    }
+  },
+  {
+    "command": "stroke.set",
+    "params": {
+      "weight": 24,
+      "join": "round"
+    }
+  },
+  {
+    "command": "shape.rectangle",
+    "params": {
+      "x": 310,
+      "y": 120,
+      "width": 84,
+      "height": 84,
+      "radius": 20
+    }
+  },
+  {
+    "command": "paint.setFill",
+    "params": {
+      "color": "#FAF7F4"
+    }
+  },
+  {
+    "command": "paint.setStroke",
+    "params": {
+      "color": "#481226"
+    }
+  },
+  {
+    "command": "stroke.set",
+    "params": {
+      "weight": 24,
+      "join": "round"
+    }
+  },
+  {
+    "command": "shape.rectangle",
+    "params": {
+      "x": 310,
+      "y": 280,
+      "width": 84,
+      "height": 84,
+      "radius": 20
+    }
+  },
+  {
+    "command": "paint.setFill",
+    "params": {
+      "color": "#481226"
+    }
+  },
+  {
+    "command": "paint.setStroke",
+    "params": {
+      "color": "#E5BE64"
+    }
+  },
+  {
+    "command": "stroke.set",
+    "params": {
+      "weight": 20,
+      "join": "round"
+    }
+  },
+  {
+    "command": "tool.select",
+    "params": {
+      "tool": "selection"
+    }
+  },
+  {
+    "command": "select.all",
+    "params": {}
+  }
+]

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="612" height="792" viewBox="0 0 612 792">
+  <title>Untitled-1</title>
+  <g id="Layer_1" data-name="Layer 1">
+    <g>
+      <path d="M126 16 L386 16 C446.751 16 496 65.249 496 126 L496 386 C496 446.751 446.751 496 386 496 L126 496 C65.249 496 16 446.751 16 386 L16 126 C16 65.249 65.249 16 126 16 Z" fill="#481226" stroke="#e5be64" stroke-width="4" stroke-miterlimit="10"/>
+      <path d="M160 200 L160 288 C160 304 168 312 184 312 L352 312 M352 200 L352 312" fill="none" stroke="#e5be64" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M140 120 L180 120 C192.15 120 202 129.85 202 142 L202 182 C202 194.15 192.15 204 180 204 L140 204 C127.85 204 118 194.15 118 182 L118 142 C118 129.85 127.85 120 140 120 Z" fill="#481226" stroke="#e5be64" stroke-width="22" stroke-linejoin="round"/>
+      <path d="M332 120 L372 120 C384.15 120 394 129.85 394 142 L394 182 C394 194.15 384.15 204 372 204 L332 204 C319.85 204 310 194.15 310 182 L310 142 C310 129.85 319.85 120 332 120 Z" fill="#481226" stroke="#e5be64" stroke-width="22" stroke-linejoin="round"/>
+      <path d="M332 270 L372 270 C384.15 270 394 279.85 394 292 L394 332 C394 344.15 384.15 354 372 354 L332 354 C319.85 354 310 344.15 310 332 L310 292 C310 279.85 319.85 270 332 270 Z" fill="#e5be64" stroke="#faf7f4" stroke-width="10" stroke-linejoin="round"/>
+    </g>
+  </g>
+</svg>
