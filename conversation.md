@@ -2361,3 +2361,62 @@ Vendor/admin QA stopped. Customer polish round 2: fixed all 12 open items, commi
 | 12 | Small | Compare tray, wrong-date note, arrow icon |
 
 Checked in the browser: 22 customer screens at 430px, 0 console errors. Not yet re-scored by an independent checker. Still open: one majlis only, no map pin, every login opens Aina's demo account.
+
+
+---
+
+## Sync 16 Nov 2026 (Antigravity-1: WEEV Brand Identity Evolution & Stakeholder Pivot)
+
+**Participants:** Antigravity-1 & User  
+**Timeframe:** 2026-11-16 14:00 – 17:00 MYT  
+**Focus:** Complete rebrand from Majlis Hub to WEEV, VectorCraft desktop app integration, 3D chiseled vector exploration, stakeholder pivot to modern mascot identity.
+
+---
+
+### Key Milestones & Actions Taken
+
+#### 1. Rebranding & Palettes (Phase 13)
+* Explored luxury wedding & event ecosystem branding under the name **WEEV** (Wedding & Event Ecosystem).
+* Formulated color systems across 4 themes:
+  * Theme 1: Emerald & Songket Gold (`#0B3B2C` / `#D4AF37`)
+  * Theme 2: Midnight Sapphire & Platinum (`#101B37` / `#E5E9F0`)
+  * Theme 3A/3B: Imperial Merlot & Champagne Gold (`#481226` / `#E5BE64`)
+  * Theme 4: Terracotta & Sandstone (`#9C4129` / `#E6D5B8`)
+* User established preference for **3A + 3B Imperial Merlot & Champagne Gold**.
+
+#### 2. VectorCraft Desktop Integration & Tooling
+* Connected to local VectorCraft desktop application via CLI (`vectorcraft-cli 0.24.1`) and active control server listening on socket `127.0.0.1:7979`.
+* Implemented bi-directional asset pipeline: converting SVG to `.vectorcraft`, `.ai`, `.pdf`, `.eps`, and opening documents live into the user's running VectorCraft desktop window.
+
+#### 3. Logobook Curation & 3D Vector Exploration
+* Curated reference logos from `/Users/fahi.abss/Desktop/LOgo`.
+* Developed 3 luxury concepts:
+  * **Concept A (The Sovereign Lotus):** Geometric lotus monogram and imperial crown.
+  * **Concept B (The Eternal Swash Serif W):** High-fashion Roman Didot serif 'W' intertwined with a calligraphic infinity ribbon swash.
+  * **Concept C (The Interwoven Crown Knot):** Modern continuous monoline crown ribbon.
+* User selected **Concept B**.
+* Attempted 3D photorealistic brushed gold salon board mockup vectorization. Auto-trace produced soft edges due to photographic texture noise; subsequently rebuilt into a pure mathematical **2-Tone Razor-Sharp Vector** (`#F5E0B8` highlight, `#8C6527` shadow) with clean polygon bevels and smooth cubic Beziers.
+
+#### 4. Stakeholder Feedback & Identity Pivot (Phase 14)
+* **Stakeholder Feedback:** The stakeholder rejected the formal royal serif Concept B as too traditional, ornate, and bridal/jewelry-focused.
+* **Stakeholder Preference Shared:** User provided `/Users/fahi.abss/Desktop/Screenshot 2026-11-16 at 4.49.24 PM.png` showing a vibrant, modern, mascot-driven identity:
+  1. **"The Brain" Mascot:** Friendly cool pink cartoon brain with dark sunglasses, wearing white gloves, holding wedding rings (Weddings) and a star calendar (Events).
+  2. **"weev" Wordmark:** Chubby, rounded lowercase wordmark with the 'W' sculpted into a rounded heart with pink inner heart and sash.
+  3. **Tagline:** *"Wedding • Event — Find Your People. Make It Happen."*
+* **Vector Execution:**
+  * Segmented and extracted multi-layered vector paths:
+    * `weev-mascot-master.svg` (Full Lockup)
+    * `weev-mascot-transparent.svg` (Transparent background)
+    * `weev-app-icon-mascot.svg` (Square 512x512 mascot app icon)
+    * `weev-app-icon-heart.svg` (Square 512x512 heart 'W' favicon)
+  * Exported to `.vectorcraft`, `.ai`, `.pdf`, `.eps`, `.png`.
+  * Loaded live into VectorCraft app window via socket command `file.open`.
+  * Updated React component `src/components/WeevLogo.tsx` with support for `variant="full"`, `variant="mark"`, and `variant="mascot"`.
+  * Documented complete handover in `HANDOVER.md`.
+
+---
+
+### Commit History (16 Nov 2026)
+* `1fb15b2` - `feat(logo): add 100% pure 3D vector SVG, VectorCraft, AI, PDF, EPS for Concept B`
+* `9de51c7` - `feat(logo): add razor-sharp mathematical 2-tone geometric vector suite for Concept B`
+* `1dc0f52` - `feat(brand): implement stakeholder-approved WEEV mascot and heart wordmark identity`
