@@ -1,0 +1,200 @@
+[
+  {
+    "command": "tool.select",
+    "params": {
+      "tool": "rectangle"
+    }
+  },
+  {
+    "command": "shape.rectangle",
+    "params": {
+      "x": 40,
+      "y": 40,
+      "width": 360,
+      "height": 360,
+      "radius": 80
+    }
+  },
+  {
+    "command": "paint.setFill",
+    "params": {
+      "color": "#FAF7F4"
+    }
+  },
+  {
+    "command": "paint.setStroke",
+    "params": {
+      "color": "#E8DFD8"
+    }
+  },
+  {
+    "command": "stroke.set",
+    "params": {
+      "weight": 2
+    }
+  },
+  {
+    "command": "tool.select",
+    "params": {
+      "tool": "pen"
+    }
+  },
+  {
+    "command": "path.create",
+    "params": {
+      "d": "M 148 180 L 148 246 Q 148 266 168 266 L 292 266 M 292 180 L 292 266",
+      "closed": false
+    }
+  },
+  {
+    "command": "paint.setFill",
+    "params": {
+      "none": true
+    }
+  },
+  {
+    "command": "paint.setStroke",
+    "params": {
+      "color": "#481226"
+    }
+  },
+  {
+    "command": "stroke.set",
+    "params": {
+      "weight": 20,
+      "cap": "round",
+      "join": "round"
+    }
+  },
+  {
+    "command": "tool.select",
+    "params": {
+      "tool": "rectangle"
+    }
+  },
+  {
+    "command": "shape.rectangle",
+    "params": {
+      "x": 114,
+      "y": 116,
+      "width": 68,
+      "height": 68,
+      "radius": 18
+    }
+  },
+  {
+    "command": "paint.setFill",
+    "params": {
+      "color": "#FAF7F4"
+    }
+  },
+  {
+    "command": "paint.setStroke",
+    "params": {
+      "color": "#481226"
+    }
+  },
+  {
+    "command": "stroke.set",
+    "params": {
+      "weight": 18,
+      "join": "round"
+    }
+  },
+  {
+    "command": "shape.rectangle",
+    "params": {
+      "x": 258,
+      "y": 116,
+      "width": 68,
+      "height": 68,
+      "radius": 18
+    }
+  },
+  {
+    "command": "paint.setFill",
+    "params": {
+      "color": "#FAF7F4"
+    }
+  },
+  {
+    "command": "paint.setStroke",
+    "params": {
+      "color": "#481226"
+    }
+  },
+  {
+    "command": "stroke.set",
+    "params": {
+      "weight": 18,
+      "join": "round"
+    }
+  },
+  {
+    "command": "shape.rectangle",
+    "params": {
+      "x": 258,
+      "y": 232,
+      "width": 68,
+      "height": 68,
+      "radius": 18
+    }
+  },
+  {
+    "command": "paint.setFill",
+    "params": {
+      "color": "#E5BE64"
+    }
+  },
+  {
+    "command": "paint.setStroke",
+    "params": {
+      "color": "#481226"
+    }
+  },
+  {
+    "command": "stroke.set",
+    "params": {
+      "weight": 12,
+      "join": "round"
+    }
+  },
+  {
+    "command": "tool.select",
+    "params": {
+      "tool": "type"
+    }
+  },
+  {
+    "command": "text.create",
+    "params": {
+      "x": 450,
+      "y": 230,
+      "text": "WEEV",
+      "size": 148,
+      "font": "Playfair Display",
+      "color": "#481226"
+    }
+  },
+  {
+    "command": "text.create",
+    "params": {
+      "x": 455,
+      "y": 290,
+      "text": "WEDDING & EVENT ECOSYSTEM",
+      "size": 26,
+      "font": "Plus Jakarta Sans",
+      "color": "#8A1C3E"
+    }
+  },
+  {
+    "command": "tool.select",
+    "params": {
+      "tool": "selection"
+    }
+  },
+  {
+    "command": "select.all",
+    "params": {}
+  }
+]

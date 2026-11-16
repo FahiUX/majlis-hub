@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="612" height="792" viewBox="0 0 612 792">
+  <title>Untitled-1</title>
+  <g id="Layer_1" data-name="Layer 1">
+    <path d="M120 40 L320 40 C364.183 40 400 75.817 400 120 L400 320 C400 364.183 364.183 400 320 400 L120 400 C75.817 400 40 364.183 40 320 L40 120 C40 75.817 75.817 40 120 40 Z" fill="#faf7f4" stroke="#e8dfd8" stroke-width="2" stroke-miterlimit="10"/>
+    <path d="M148 180 L148 246 C148 259.333 154.667 266 168 266 L292 266 M292 180 L292 266" fill="none" stroke="#481226" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M132 116 L164 116 C173.941 116 182 124.059 182 134 L182 166 C182 175.941 173.941 184 164 184 L132 184 C122.059 184 114 175.941 114 166 L114 134 C114 124.059 122.059 116 132 116 Z" fill="#faf7f4" stroke="#481226" stroke-width="18" stroke-linejoin="round"/>
+    <path d="M276 116 L308 116 C317.941 116 326 124.059 326 134 L326 166 C326 175.941 317.941 184 308 184 L276 184 C266.059 184 258 175.941 258 166 L258 134 C258 124.059 266.059 116 276 116 Z" fill="#faf7f4" stroke="#481226" stroke-width="18" stroke-linejoin="round"/>
+    <path d="M276 232 L308 232 C317.941 232 326 240.059 326 250 L326 282 C326 291.941 317.941 300 308 300 L276 300 C266.059 300 258 291.941 258 282 L258 250 C258 240.059 266.059 232 276 232 Z" fill="#e5be64" stroke="#481226" stroke-width="12" stroke-linejoin="round"/>
+    <text transform="matrix(1 0 0 1 450 230)" x="0" y="0" xml:space="preserve" font-family="&apos;Playfair Display&apos;, sans-serif" font-size="148" fill="#481226"><tspan x="0" y="0">WEEV</tspan></text>
+    <text transform="matrix(1 0 0 1 455 290)" x="0" y="0" xml:space="preserve" font-family="&apos;Plus Jakarta Sans&apos;, sans-serif" font-size="26" fill="#8a1c3e"><tspan x="0" y="0">WEDDING &amp; EVENT ECOSYSTEM</tspan></text>
+  </g>
+</svg>
