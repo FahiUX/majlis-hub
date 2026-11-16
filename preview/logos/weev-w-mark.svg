@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 100">
+  <title>WEEV heart-ribbon W</title>
+  <g fill="none" stroke-linejoin="round">
+    <path stroke="#2E1741" stroke-width="14" stroke-linecap="round"
+      d="M33 29 C30 18 20 14 13 19 C6 25 7 37 13 48 L35 84
+         C42 72 55 56 67 43 C75 33 73 15 60 14 C47 14 44 30 51 40 L85 84
+         L107 48 C113 37 114 25 107 19 C100 14 90 18 87 29"/>
+    <path stroke="#2E1741" stroke-width="14" stroke-linecap="butt" d="M57 15 C47 18 45 31 51 40 L87 87"/>
+    <path stroke="#DB619B" stroke-width="9.5" stroke-linecap="butt" d="M57 16.2 C48 19 46 31 51 40 L86.2 86"/>
+  </g>
+</svg>

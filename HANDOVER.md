@@ -107,3 +107,28 @@ python3 -m http.server 4174
    * Handcraft pristine, clean SVG vector paths for the chosen character in VectorCraft or Illustrator.
 3. **Mascot Interaction States in React App:**
    * Add the mascot to key empty and success screens (e.g. Booking Success modal, Empty Search state, Review submission).
+
+---
+
+## 6. Update: 16 Nov 2026 evening (home PC, Claude pane 1 + Antigravity pane 3)
+
+**Mascot pivot: event-neutral.** The 5 alternatives (lovebird, otter, heart-bot, ribbon, macaron) all read as love/marriage only. WEEV covers weddings AND events (birthday, kenduri, aqiqah, corporate), so the mascot must be neutral; props change per event type (calendar checklist is the constant).
+
+* New: `mascot-6-tempua.jpg` (**Tempa the Weaver Bird**, burung tempua, WEEV = weave, Malaysian native) and `mascot-7-bee.jpg` (Buzz the Bee).
+* **Chosen: Tempa.** Nest is an **optional prop**: hero/banners only, never in app icon or small poses. So the final vector needs real weaver traits (thin brown eye band, thick cone beak) to read without the nest.
+* Dropped: Knotty (reads as cancer-awareness ribbon), Macaron (catering only), Heart-Bot (still romance).
+
+**Wordmark W.** Tried 3 new W's (`w-option-1-woven`, `w-option-2-heart-clean`, `w-option-3-pin`). User kept the **Direction 1 heart-ribbon W** (from `weev-direction-1-vector-mascot.jpg`).
+
+* `weev-w-mark.svg` / `weev-w-mark-light.svg`: hand-built clean vector of that W (Claude).
+* `weev-favicon-w.svg` + `.png` (512) + `weev-favicon-32.png` + `weev-favicon.ico`: checked at real 32px and 16px.
+
+**Lockup v1** (`weev-tempa-lockup.jpg`, `weev-tempa-lockup-nest.jpg`): Tempa + Direction 1 W. User feedback still to apply (v2):
+1. W is too big: make it the same height as "eev" on one baseline.
+2. No legs/feet: Tempa leans over the wordmark from behind, lower body hidden.
+3. Nest hangs from a twig, not floating.
+4. Tempa app icon (head/bust on aubergine squircle). Favicon = the W only.
+
+Blocked: Antigravity image quota (`gemini-3.1-flash-image`) exhausted, resets ~02:24 MYT 17 Nov. Note: when quota ran out AGY silently switched to PIL cut-and-paste and produced broken images. Always tell it "generate fresh, no compositing".
+
+**Still open in the app (not started):** `src/index.css` still uses the rejected Merlot/Champagne palette (`--color-hijau: #481226`); `WeevLogo.tsx` loads `/preview/logos/*.png`, which is not in `public/` and breaks on GitHub Pages; Home/Compare still show the brain lockup. Graphify graph is stale (built from `68da8b9`).

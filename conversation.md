@@ -2436,3 +2436,14 @@ Checked in the browser: 22 customer screens at 430px, 0 console errors. Not yet 
   5. 🧁 **Sir Velvet the Macaron:** Dapper celebration pastry with a purple bowtie and catering checklist.
 * Added all 5 mascots to `preview/logo-evolution.html` and updated `HANDOVER.md`.
 * All assets committed and pushed to GitHub `origin/main`.
+
+---
+
+## Sync 16 Nov 2026 evening (Claude-1 home PC pane 1 + Antigravity pane 3)
+
+* User: mascots are all love/marriage, but WEEV covers events too. Claude: make the mascot neutral, props change per event. Picks: weaver bird (burung tempua, WEEV = weave) or bee.
+* AGY generated `mascot-6-tempua.jpg` and `mascot-7-bee.jpg`; Tempa rerolled twice (real weaver traits, then friendlier face). User chose **Tempa**; nest optional.
+* W: 3 AI options (woven / heart-clean / pin). Claude's 32px test: woven reads as "m", pin too generic. User kept the **Direction 1 heart-ribbon W**.
+* Lockup v1 (Tempa + Direction 1 W). User: W too big, no legs, add app icon + favicon.
+* AGY hit image quota (resets ~02:24) and fell back to PIL compositing (broken output). Claude stopped it, deleted the scripts, hand-built the W as SVG + favicon (`weev-w-mark.svg`, `weev-favicon-w.svg/.png/.ico`).
+* Next: lockup v2 + Tempa app icon after quota reset; then move app to new palette, fix logo paths, swap brain for Tempa.
