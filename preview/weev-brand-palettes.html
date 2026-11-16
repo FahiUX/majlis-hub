@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WEEV — Brand Identity & Universal Trust Palettes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Figtree:wght@400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      scrollbar-width: none;
+    }
+    *::-webkit-scrollbar { display: none; }
+
+    :root {
+      /* Shared System Constants */
+      --font-display: 'Fraunces', serif;
+      --font-sans: 'Plus Jakarta Sans', 'Figtree', sans-serif;
+      --font-logo: 'Cinzel', serif;
+
+      /* Active Palette CSS Variables (Default: Palette 1 Obsidian & Cashmere) */
+      --primary: #111317;
+      --primary-hover: #1c2026;
+      --accent: #C5A265;
+      --accent-soft: #F4EEDB;
+      --accent-text: #8A6827;
+      --bg-canvas: #FBF9F5;
+      --bg-surface: #FFFFFF;
+      --surface-subtle: #F3EFE8;
+      --text-main: #14171A;
+      --text-muted: #6B7280;
+      --border: #E8E3DA;
+      --border-strong: #D1C9BE;
+      --hero-bg: linear-gradient(165deg, #181B21 0%, #0F1115 100%);
+      --hero-text: #FFFFFF;
+      --hero-sub: #D8D2C6;
+      --hero-badge-bg: rgba(197, 162, 101, 0.16);
+      --hero-badge-text: #E5C78A;
+      --shadow-sm: 0 2px 6px rgba(17, 19, 23, 0.04), 0 1px 2px rgba(17, 19, 23, 0.02);
+      --shadow-md: 0 12px 32px -8px rgba(17, 19, 23, 0.08), 0 4px 12px -2px rgba(17, 19, 23, 0.03);
+      --shadow-float: 0 20px 48px -12px rgba(17, 19, 23, 0.16);
+    }
+
+    /* THEME: 1 - Obsidian & Champagne Cashmere */
+    [data-theme="obsidian"] {
+      --primary: #111317;
+      --primary-hover: #22262E;
+      --accent: #C5A265;
+      --accent-soft: #F5EEDA;
+      --accent-text: #866624;
+      --bg-canvas: #FBF9F5;
+      --bg-surface: #FFFFFF;
+      --surface-subtle: #F3EEE4;
+      --text-main: #111317;
+      --text-muted: #6C727A;
+      --border: #E7E2D6;
+      --border-strong: #CEC7B8;
+      --hero-bg: radial-gradient(110% 90% at 80% 10%, rgba(197, 162, 101, 0.18) 0%, transparent 60%), linear-gradient(170deg, #1A1D23 0%, #0D0E11 100%);
+      --hero-text: #FFFFFF;
+      --hero-sub: #D3CDC1;
+      --hero-badge-bg: rgba(197, 162, 101, 0.16);
+      --hero-badge-text: #E6CA8F;
+    }
+
+    /* THEME: 2 - Sovereign Navy & Terracotta */
+    [data-theme="navy"] {
+      --primary: #0D1C33;
+      --primary-hover: #162B4C;
+      --accent: #C86743;
+      --accent-soft: #F9EBE5;
+      --accent-text: #963E1E;
+      --bg-canvas: #F8FAFC;
+      --bg-surface: #FFFFFF;
+      --surface-subtle: #EEF3F8;
+      --text-main: #0B1524;
+      --text-muted: #606F85;
+      --border: #E1E8F0;
+      --border-strong: #C4D2E3;
+      --hero-bg: radial-gradient(120% 90% at 90% 10%, rgba(200, 103, 67, 0.22) 0%, transparent 60%), linear-gradient(170deg, #142848 0%, #091323 100%);
+      --hero-text: #FFFFFF;
+      --hero-sub: #CBD7E6;
+      --hero-badge-bg: rgba(200, 103, 67, 0.2);
+      --hero-badge-text: #F7A88B;
+    }
+
+    /* THEME: 3 - Royal Bordeaux & Warm Gold */
+    [data-theme="bordeaux"] {
+      --primary: #2B111D;
+      --primary-hover: #401B2C;
+      --accent: #CA9E4F;
+      --accent-soft: #F7F0E0;
+      --accent-text: #8E651D;
+      --bg-canvas: #FCFAF7;
+      --bg-surface: #FFFFFF;
+      --surface-subtle: #F5EFE8;
+      --text-main: #1D0F16;
+      --text-muted: #74676D;
+      --border: #EDE4DE;
+      --border-strong: #D5C7C0;
+      --hero-bg: radial-gradient(110% 90% at 85% 10%, rgba(202, 158, 79, 0.24) 0%, transparent 60%), linear-gradient(170deg, #3D1929 0%, #1A0911 100%);
+      --hero-text: #FFFFFF;
+      --hero-sub: #E2D3DB;
+      --hero-badge-bg: rgba(202, 158, 79, 0.2);
+      --hero-badge-text: #ECD195;
+    }
+
+    /* THEME: 4 - Architectural Slate & Ochre */
+    [data-theme="slate"] {
+      --primary: #1C1F24;
+      --primary-hover: #2B3038;
+      --accent: #D27B2B;
+      --accent-soft: #FAEEE1;
+      --accent-text: #964F0E;
+      --bg-canvas: #F7F6F3;
+      --bg-surface: #FFFFFF;
+      --surface-subtle: #ECEAE3;
+      --text-main: #17191C;
+      --text-muted: #6B7077;
+      --border: #E3E0D8;
+      --border-strong: #CAC5BA;
+      --hero-bg: radial-gradient(120% 90% at 80% 10%, rgba(210, 123, 43, 0.22) 0%, transparent 60%), linear-gradient(170deg, #262B33 0%, #121417 100%);
+      --hero-text: #FFFFFF;
+      --hero-sub: #D7DADF;
+      --hero-badge-bg: rgba(210, 123, 43, 0.2);
+      --hero-badge-text: #F3BC84;
+    }
+
+    body {
+      background-color: #0E1013;
+      color: #E2E8F0;
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+      padding: 0;
+      margin: 0;
+      overflow-x: hidden;
+    }
+
+    /* Top Universal Bar */
+    .brand-topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(14, 16, 19, 0.88);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 14px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand-id {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-logo-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+    }
+
+    .brand-title-wrap h1 {
+      font-family: var(--font-logo);
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      color: #FFFFFF;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .brand-title-wrap span {
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #94A3B8;
+      font-weight: 600;
+    }
+
+    .theme-nav-pills {
+      display: flex;
+      background: rgba(255, 255, 255, 0.06);
+      padding: 4px;
+      border-radius: 999px;
+      gap: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .theme-btn {
+      padding: 8px 18px;
+      border-radius: 999px;
+      border: none;
+      background: transparent;
+      color: #94A3B8;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+    .theme-btn:hover {
+      color: #FFFFFF;
+    }
+    .theme-btn.active {
+      background: #FFFFFF;
+      color: #0F172A;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+    .theme-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    /* Main Container */
+    .lab-layout {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 36px 28px 80px;
+      display: grid;
+      grid-template-columns: 1fr 440px;
+      gap: 48px;
+      align-items: start;
+    }
+
+    /* Left: Strategy & Color System */
+    .lab-left {
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
+    }
+
+    .strategy-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 32px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: rgba(197, 162, 101, 0.15);
+      color: #E2C58A;
+      border: 1px solid rgba(197, 162, 101, 0.3);
+      margin-bottom: 16px;
+    }
+
+    .strategy-title {
+      font-family: var(--font-display);
+      font-size: 36px;
+      line-height: 1.15;
+      font-weight: 600;
+      color: #FFFFFF;
+      margin-bottom: 14px;
+    }
+
+    .strategy-body {
+      font-size: 15px;
+      line-height: 1.6;
+      color: #94A3B8;
+      max-width: 640px;
+    }
+
+    /* Ethnic Harmony Grid */
+    .multicultural-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .culture-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 14px 16px;
+    }
+    .culture-card h4 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 4px;
+    }
+    .culture-card p {
+      font-size: 12px;
+      color: #94A3B8;
+      line-height: 1.4;
+    }
+
+    /* Palette Breakdown Details */
+    .palette-spec-box {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 32px;
+    }
+
+    .spec-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+    .spec-head h3 {
+      font-family: var(--font-display);
+      font-size: 22px;
+      color: #FFFFFF;
+    }
+
+    .swatches-row {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .swatch-item {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .swatch-chip {
+      height: 84px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: flex-end;
+      padding: 8px;
+      font-family: monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.85);
+      text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+    }
+
+    .swatch-info b {
+      font-size: 13px;
+      color: #F1F5F9;
+      display: block;
+    }
+    .swatch-info span {
+      font-size: 11px;
+      color: #94A3B8;
+      line-height: 1.3;
+    }
+
+    /* Live Phone Canvas Container */
+    .phone-column {
+      position: sticky;
+      top: 90px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .phone-frame {
+      width: 412px;
+      height: 870px;
+      background: var(--bg-canvas);
+      border-radius: 48px;
+      box-shadow: 0 0 0 12px #22262E, 0 32px 80px rgba(0, 0, 0, 0.8);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid rgba(0,0,0,0.1);
+      transition: background 0.3s ease;
+    }
+
+    /* Phone Speaker Island */
+    .dynamic-island {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 28px;
+      background: #000000;
+      border-radius: 20px;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .dynamic-lens {
+      width: 10px;
+      height: 10px;
+      background: #111;
+      border-radius: 50%;
+      margin-left: auto;
+      margin-right: 12px;
+      border: 1.5px solid #222;
+    }
+
+    /* Phone Scrollable App Body */
+    .phone-app-scroll {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* App Header / Hero Section */
+    .app-hero {
+      background: var(--hero-bg);
+      color: var(--hero-text);
+      padding: 50px 20px 24px;
+      position: relative;
+      transition: background 0.3s ease;
+    }
+
+    .app-nav-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 22px;
+    }
+
+    .app-brand-lockup {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .weev-svg-logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: #FFFFFF;
+      padding: 5px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    }
+
+    .app-brand-title {
+      font-family: var(--font-logo);
+      font-size: 18px;
+      letter-spacing: 0.12em;
+      font-weight: 700;
+      color: #FFFFFF;
+    }
+
+    .app-nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .app-icon-circle {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--hero-badge-bg);
+      color: var(--hero-badge-text);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .hero-h1 {
+      font-family: var(--font-display);
+      font-size: 26px;
+      line-height: 1.2;
+      font-weight: 600;
+      color: var(--hero-text);
+      margin-bottom: 8px;
+    }
+
+    .hero-subtext {
+      font-size: 13px;
+      color: var(--hero-sub);
+      line-height: 1.45;
+      margin-bottom: 20px;
+    }
+
+    /* Trust Guarantee Bar */
+    .trust-guarantee-bar {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* App Main Content */
+    .app-body {
+      padding: 20px 16px 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Search Input Pill */
+    .search-mock-bar {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: var(--shadow-sm);
+    }
+    .search-mock-bar span {
+      font-size: 13px;
+      color: var(--text-muted);
+      flex: 1;
+    }
+    .search-action-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+    }
+
+    /* Category Pill Row */
+    .cat-scroll-row {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+    .cat-tag {
+      padding: 7px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+    }
+    .cat-tag.active {
+      background: var(--primary);
+      color: #FFFFFF;
+      border-color: var(--primary);
+    }
+
+    /* Vendor Card Mock */
+    .vendor-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      flex-direction: column;
+      transition: all 0.2s ease;
+    }
+
+    .card-photo-box {
+      width: 100%;
+      height: 190px;
+      position: relative;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .verified-float-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .heart-float-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      border: none;
+    }
+
+    .card-info {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .card-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .card-vendor-name {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .card-rating-chip {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .card-meta-line {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .card-price-row {
+      margin-top: 8px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+    }
+
+    .card-price-value {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--text-main);
+      font-variant-numeric: tabular-nums;
+    }
+    .card-price-value small {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    .card-cta-btn {
+      padding: 8px 16px;
+      border-radius: 10px;
+      background: var(--primary);
+      color: #FFFFFF;
+      font-size: 12px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* Escrow Trust Highlight Card */
+    .escrow-box {
+      background: var(--surface-subtle);
+      border: 1px dashed var(--border-strong);
+      border-radius: 16px;
+      padding: 14px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .escrow-icon-wrap {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--accent-soft);
+      color: var(--accent-text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .escrow-text h5 {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 2px;
+    }
+    .escrow-text p {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Sticky Bottom App Tab Bar */
+    .app-bottom-nav {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 64px;
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 0 8px;
+    }
+
+    .tab-link {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      color: var(--text-muted);
+      font-size: 10px;
+      font-weight: 600;
+    }
+    .tab-link.active {
+      color: var(--primary);
+    }
+
+    /* Logo Showcase Section on Left */
+    .logo-showcase-panel {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 32px;
+    }
+
+    .logo-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .logo-card {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      text-align: center;
+    }
+
+    .logo-card svg {
+      width: 56px;
+      height: 56px;
+    }
+
+    .logo-card b {
+      font-size: 14px;
+      color: #FFFFFF;
+    }
+    .logo-card p {
+      font-size: 12px;
+      color: #94A3B8;
+      line-height: 1.35;
+    }
+
+    .contrast-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: rgba(16, 185, 129, 0.2);
+      color: #34D399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+  </style>
+</head>
+<body data-theme="obsidian">
+
+  <!-- TOP BAR & CONTROLS -->
+  <header class="brand-topbar">
+    <div class="brand-id">
+      <div class="brand-logo-mark">
+        <!-- SVG WEEV BRANDMARK -->
+        <svg viewBox="0 0 100 100" width="24" height="24">
+          <path d="M20 30 Q30 75 42 75 T50 45 Q58 75 70 75 T80 30" fill="none" stroke="#111317" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="50" cy="30" r="5" fill="#C5A265" />
+        </svg>
+      </div>
+      <div class="brand-title-wrap">
+        <h1>WEEV</h1>
+        <span>Universal Brand Identity Lab</span>
+      </div>
+    </div>
+
+    <!-- PALETTE SWITCHER -->
+    <div class="theme-nav-pills">
+      <button class="theme-btn active" onclick="setTheme('obsidian', this)">
+        <span class="theme-dot" style="background: #111317; border: 1.5px solid #C5A265;"></span>
+        1. Obsidian & Cashmere
+      </button>
+      <button class="theme-btn" onclick="setTheme('navy', this)">
+        <span class="theme-dot" style="background: #0D1C33; border: 1.5px solid #C86743;"></span>
+        2. Sovereign Navy & Terracotta
+      </button>
+      <button class="theme-btn" onclick="setTheme('bordeaux', this)">
+        <span class="theme-dot" style="background: #2B111D; border: 1.5px solid #CA9E4F;"></span>
+        3. Royal Bordeaux & Gold
+      </button>
+      <button class="theme-btn" onclick="setTheme('slate', this)">
+        <span class="theme-dot" style="background: #1C1F24; border: 1.5px solid #D27B2B;"></span>
+        4. Architectural Slate & Ochre
+      </button>
+    </div>
+  </header>
+
+  <main class="lab-layout">
+    
+    <!-- LEFT: PALETTE PHILOSOPHY & SYSTEM SPECS -->
+    <section class="lab-left">
+      
+      <!-- STRATEGY BRIEF CARD -->
+      <div class="strategy-card">
+        <span class="badge-pill">Strategic Directive</span>
+        <h2 class="strategy-title" id="theme-headline">Obsidian & Champagne Cashmere</h2>
+        <p class="strategy-body" id="theme-desc">
+          <strong>The "Vogue Weddings & High-Ticket Trust" Standard.</strong> Eliminates all ethnic and religious pigeonholing by adopting high-fashion editorial black-tie restraint. Deep obsidian communicates bank-grade financial integrity, while subtle champagne cashmere provides celebration warmth without gaudiness.
+        </p>
+
+        <!-- MULTI-CULTURAL HARMONY MATRIX -->
+        <div class="multicultural-grid">
+          <div class="culture-card">
+            <h4>🇨🇳 Chinese Banquets</h4>
+            <p>Complements vivid red cheongsams, ballroom lighting, and grand floral installations with zero color clashing.</p>
+          </div>
+          <div class="culture-card">
+            <h4>🇮🇳 Indian Ceremonies</h4>
+            <p>Lets rich Kanchipuram silks, vibrant Sangeet décor, and marigold garlands stand as the true visual heroes.</p>
+          </div>
+          <div class="culture-card">
+            <h4>🇲🇾 Malay Sanding & Akad</h4>
+            <p>Elevates pastel and songket fabrics with royal dignity, moving past generic "green mosque" app tropes.</p>
+          </div>
+          <div class="culture-card">
+            <h4>✨ Western & Modern</h4>
+            <p>Architectural glasshouse and church weddings feel ultra-luxurious, clean, and international.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- COLOR SPECIFICATION BOX -->
+      <div class="palette-spec-box">
+        <div class="spec-head">
+          <h3>Token Palette & Measured Contrast</h3>
+          <span class="contrast-badge">✓ WCAG 2.2 AAA (8.4:1)</span>
+        </div>
+
+        <div class="swatches-row" id="swatches-container">
+          <!-- Dynamic Swatches injected via JS -->
+        </div>
+
+        <div style="font-size: 13px; color: #94A3B8; line-height: 1.5; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 16px;">
+          <strong>Why this gives the "URMM!" feeling:</strong> Notice how the canvas uses a warm alabaster tint instead of sterile hospital white. Photography pops forward with 3D depth, and the solid dark action buttons feel tactile, confident, and weighty like a luxury concierge keycard.
+        </div>
+      </div>
+
+      <!-- LOGO CONCEPTS SHOWCASE -->
+      <div class="logo-showcase-panel">
+        <div class="spec-head">
+          <h3>WEEV Logo Systems (Concept Explorations)</h3>
+        </div>
+        <p style="font-size: 14px; color: #94A3B8; margin-bottom: 8px;">
+          Every concept explores the dual meaning: <strong>W + EV (Wedding & Event)</strong> and <strong>WEAVE (Intertwining two lives & families)</strong>:
+        </p>
+
+        <div class="logo-row">
+          <!-- LOGO 1 -->
+          <div class="logo-card">
+            <svg viewBox="0 0 100 100">
+              <path d="M18 35 Q28 80 40 80 T50 48 Q60 80 72 80 T82 35" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round"/>
+              <circle cx="50" cy="30" r="6" fill="#C5A265"/>
+            </svg>
+            <b>1. The Infinite Weave</b>
+            <p>Continuous fluid monoline 'W' weaving into dual interlocking celebration rings.</p>
+          </div>
+
+          <!-- LOGO 2 -->
+          <div class="logo-card">
+            <svg viewBox="0 0 100 100">
+              <path d="M22 75 L38 25 L50 60 L62 25 L78 75" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M30 45 L70 45" fill="none" stroke="#C5A265" stroke-width="4" stroke-dasharray="4 4"/>
+            </svg>
+            <b>2. The Architectural Arch</b>
+            <p>Geometric event gateway / entrance archway representing arrival & protection.</p>
+          </div>
+
+          <!-- LOGO 3 -->
+          <div class="logo-card">
+            <svg viewBox="0 0 100 100">
+              <path d="M50 15 L78 50 L50 85 L22 50 Z" fill="none" stroke="currentColor" stroke-width="7"/>
+              <path d="M36 50 L46 64 L64 36" fill="none" stroke="#C5A265" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <b>3. The Verified Seal</b>
+            <p>Diamond celebration geometry with an embedded affirmative verification checkmark.</p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- RIGHT: LIVE PHONE MOCKUP IN CONTEXT -->
+    <aside class="phone-column">
+      <div style="font-size: 13px; font-weight: 700; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.08em;">
+        Live Responsive Mobile Preview
+      </div>
+
+      <div class="phone-frame">
+        <div class="dynamic-island">
+          <div class="dynamic-lens"></div>
+        </div>
+
+        <div class="phone-app-scroll">
+          
+          <!-- HERO -->
+          <section class="app-hero">
+            <div class="app-nav-row">
+              <div class="app-brand-lockup">
+                <div class="weev-svg-logo">
+                  <svg viewBox="0 0 100 100" width="100%" height="100%">
+                    <path d="M20 30 Q30 75 42 75 T50 45 Q58 75 70 75 T80 30" fill="none" stroke="#111317" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="50" cy="30" r="6" fill="#C5A265" />
+                  </svg>
+                </div>
+                <span class="app-brand-title">WEEV</span>
+              </div>
+
+              <div class="app-nav-actions">
+                <span class="app-icon-circle">🔔</span>
+                <span class="app-icon-circle">A</span>
+              </div>
+            </div>
+
+            <span class="hero-eyebrow">Verified Marketplace</span>
+            <h2 class="hero-h1">Every celebration,<br>flawlessly woven.</h2>
+            <p class="hero-subtext">Verified wedding vendors, transparent RM pricing & automated escrow deposit protection.</p>
+
+            <div class="trust-guarantee-bar">
+              <div class="trust-item">
+                <span>🛡️</span>
+                <span>SSM Verified</span>
+              </div>
+              <div class="trust-item">
+                <span>🔒</span>
+                <span>Escrow Safe</span>
+              </div>
+              <div class="trust-item">
+                <span>⭐</span>
+                <span>Zero Hidden Fees</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- APP BODY -->
+          <div class="app-body">
+            
+            <!-- SEARCH PILL -->
+            <div class="search-mock-bar">
+              <span>🔍 Search caterers, venues, photographers...</span>
+              <button class="search-action-btn">→</button>
+            </div>
+
+            <!-- CATEGORIES SCROLL -->
+            <div class="cat-scroll-row">
+              <span class="cat-tag active">All Talents</span>
+              <span class="cat-tag">Venues & Ballrooms</span>
+              <span class="cat-tag">Photography</span>
+              <span class="cat-tag">Catering & Banquets</span>
+              <span class="cat-tag">Bridal & Styling</span>
+            </div>
+
+            <!-- ESCROW TRUST CALLOUT -->
+            <div class="escrow-box">
+              <div class="escrow-icon-wrap">
+                🛡️
+              </div>
+              <div class="escrow-text">
+                <h5>WEEV Deposit Guarantee</h5>
+                <p>Your deposit stays protected in scheduled tranches until the vendor confirms their arrival on date.</p>
+              </div>
+            </div>
+
+            <!-- VENDOR CARD 1: PHOTOGRAPHY -->
+            <div class="vendor-card">
+              <div class="card-photo-box" style="background-image: url('/public/img/gen/photographer.jpg');">
+                <span class="verified-float-badge">✓ Verified Elite</span>
+                <button class="heart-float-btn">♥</button>
+              </div>
+              <div class="card-info">
+                <div class="card-title-row">
+                  <h4 class="card-vendor-name">Aura Cinematics</h4>
+                  <span class="card-rating-chip">★ 4.9 <small style="color:var(--text-muted); font-weight:400;">(84)</small></span>
+                </div>
+                <div class="card-meta-line">Ballroom & Tea Ceremony · Kuala Lumpur · 6 km away</div>
+                <div class="card-price-row">
+                  <div class="card-price-value">RM 3,800 <small>/ full day</small></div>
+                  <button class="card-cta-btn">View Packages</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- VENDOR CARD 2: VENUE -->
+            <div class="vendor-card">
+              <div class="card-photo-box" style="background-image: url('/public/img/gen/venue.jpg');">
+                <span class="verified-float-badge">✓ Verified Venue</span>
+                <button class="heart-float-btn">♥</button>
+              </div>
+              <div class="card-info">
+                <div class="card-title-row">
+                  <h4 class="card-vendor-name">The Glasshouse Seputeh</h4>
+                  <span class="card-rating-chip">★ 5.0 <small style="color:var(--text-muted); font-weight:400;">(129)</small></span>
+                </div>
+                <div class="card-meta-line">Indoor Forest & Banquet · Max 450 pax · Bangsar</div>
+                <div class="card-price-row">
+                  <div class="card-price-value">RM 14,500 <small>/ slot</small></div>
+                  <button class="card-cta-btn">Check Date</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- BOTTOM APP TAB BAR -->
+          <nav class="app-bottom-nav">
+            <div class="tab-link active">
+              <span>🏛️</span>
+              <span>Explore</span>
+            </div>
+            <div class="tab-link">
+              <span>⚖️</span>
+              <span>Compare</span>
+            </div>
+            <div class="tab-link">
+              <span>📅</span>
+              <span>My Event</span>
+            </div>
+            <div class="tab-link">
+              <span>💬</span>
+              <span>Messages</span>
+            </div>
+            <div class="tab-link">
+              <span>👤</span>
+              <span>Account</span>
+            </div>
+          </nav>
+
+        </div>
+      </div>
+    </aside>
+
+  </main>
+
+  <script>
+    const PALETTES = {
+      obsidian: {
+        name: "Obsidian & Champagne Cashmere",
+        headline: "Obsidian & Champagne Cashmere",
+        desc: "<strong>The \"Vogue Weddings & High-Ticket Trust\" Standard.</strong> Eliminates all ethnic and religious pigeonholing by adopting high-fashion editorial black-tie restraint. Deep obsidian communicates bank-grade financial integrity, while subtle champagne cashmere provides celebration warmth without gaudiness.",
+        swatches: [
+          { name: "Obsidian Noir", role: "Primary / Surface", hex: "#111317", bg: "#111317", text: "#FFF" },
+          { name: "Champagne Gold", role: "Celebration Accent", hex: "#C5A265", bg: "#C5A265", text: "#111" },
+          { name: "Warm Cashmere", role: "App Canvas", hex: "#FBF9F5", bg: "#FBF9F5", text: "#111" },
+          { name: "Soft Alabaster", role: "Subtle Panels", hex: "#F3EEE4", bg: "#F3EEE4", text: "#111" },
+          { name: "Deep Charcoal", role: "Headlines / Ink", hex: "#14171A", bg: "#14171A", text: "#FFF" }
+        ]
+      },
+      navy: {
+        name: "Sovereign Navy & Terracotta",
+        headline: "Sovereign Navy & Terracotta",
+        desc: "<strong>The Global Institutional Standard.</strong> Deep sovereign navy is the international symbol of financial security, escrow certainty, and contract reliability. Paired with warm sunlit terracotta, it radiates vibrant festive warmth suitable for energetic Chinese banquets and colorful Indian celebrations.",
+        swatches: [
+          { name: "Midnight Navy", role: "Primary / Trust Anchor", hex: "#0D1C33", bg: "#0D1C33", text: "#FFF" },
+          { name: "Warm Terracotta", role: "Celebration Warmth", hex: "#C86743", bg: "#C86743", text: "#FFF" },
+          { name: "Cloud Silk", role: "App Canvas", hex: "#F8FAFC", bg: "#F8FAFC", text: "#111" },
+          { name: "Ice Blue Tint", role: "Pills / Selected", hex: "#EEF3F8", bg: "#EEF3F8", text: "#111" },
+          { name: "Deep Ink Blue", role: "Headlines", hex: "#0B1524", bg: "#0B1524", text: "#FFF" }
+        ]
+      },
+      bordeaux: {
+        name: "Royal Bordeaux & Warm Gold",
+        headline: "Royal Bordeaux & Warm Gold",
+        desc: "<strong>Regal Heritage & Ceremonial Prestige.</strong> Deep wine plum is auspicious across Chinese weddings, sacred and festive in Indian bridal celebrations, and synonymous with royal Malaysian court heritage. Instantly conveys a sense of grandeur, legacy, and once-in-a-lifetime importance.",
+        swatches: [
+          { name: "Bordeaux Noir", role: "Primary Authority", hex: "#2B111D", bg: "#2B111D", text: "#FFF" },
+          { name: "Ceremonial Gold", role: "Prestige Accent", hex: "#CA9E4F", bg: "#CA9E4F", text: "#111" },
+          { name: "Silk Cream", role: "App Canvas", hex: "#FCFAF7", bg: "#FCFAF7", text: "#111" },
+          { name: "Rose Linen", role: "Subtle Panels", hex: "#F5EFE8", bg: "#F5EFE8", text: "#111" },
+          { name: "Noir Plum", role: "Headlines", hex: "#1D0F16", bg: "#1D0F16", text: "#FFF" }
+        ]
+      },
+      slate: {
+        name: "Architectural Slate & Ochre",
+        headline: "Architectural Slate & Ochre",
+        desc: "<strong>Modern Architectural & Photo-First.</strong> A pure neutral charcoal foundation that deliberately avoids competing with wedding photography. Whether a bride is wearing a red Cheongsam, gold-threaded Songket, or vivid Kanchipuram silk, the interface remains a quiet, pristine gallery frame.",
+        swatches: [
+          { name: "Architectural Slate", role: "Primary Base", hex: "#1C1F24", bg: "#1C1F24", text: "#FFF" },
+          { name: "Tuscan Ochre", role: "Warm Accent", hex: "#D27B2B", bg: "#D27B2B", text: "#FFF" },
+          { name: "Oat Linen", role: "Canvas", hex: "#F7F6F3", bg: "#F7F6F3", text: "#111" },
+          { name: "Soft Sand", role: "Pills / Subtle", hex: "#ECEAE3", bg: "#ECEAE3", text: "#111" },
+          { name: "Graphite Ink", role: "Headlines", hex: "#17191C", bg: "#17191C", text: "#FFF" }
+        ]
+      }
+    };
+
+    function setTheme(themeKey, btnElement) {
+      document.body.setAttribute('data-theme', themeKey);
+      
+      // Update active button
+      document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+      if (btnElement) btnElement.classList.add('active');
+
+      const data = PALETTES[themeKey];
+      document.getElementById('theme-headline').innerText = data.headline;
+      document.getElementById('theme-desc').innerHTML = data.desc;
+
+      // Update Swatches
+      const container = document.getElementById('swatches-container');
+      container.innerHTML = data.swatches.map(s => `
+        <div class="swatch-item">
+          <div class="swatch-chip" style="background: ${s.bg}; color: ${s.text};">
+            ${s.hex}
+          </div>
+          <div class="swatch-info">
+            <b>${s.name}</b>
+            <span>${s.role}</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Initialize with default
+    setTheme('obsidian', document.querySelector('.theme-btn.active'));
+  </script>
+</body>
+</html>
