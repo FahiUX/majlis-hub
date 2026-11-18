@@ -170,3 +170,9 @@ Everything approved lives in `preview/logos/final/` (old/broken vectors in `prev
 * Showcase: "Logo Kit · v1" section at the top of `preview/logo-evolution.html`.
 
 **Next:** brand foundation (colour tokens + contrast, Nunito as UI font) → app rollout (palette in `src/index.css`, logos into `public/`, Tempa in `WeevLogo.tsx`, favicon/manifest) → Tempa character sheet + 11 poses.
+
+### Start here next session
+1. `git pull origin main`, open `preview/logo-evolution.html` (top section: Logo Kit v1).
+2. Brand foundation: colour tokens + contrast check, Nunito as UI font.
+3. App rollout (with UI/UX + Retro review agents): replace rejected Merlot palette in `src/index.css`, copy `preview/logos/final/` assets into `public/` with relative paths, swap the brain for Tempa in `src/components/WeevLogo.tsx`, add favicon + manifest icons.
+4. Tempa character sheet → 11 poses (pane 3 / AGY, one at a time, always from `final/weev-tempa-final-nonest.jpg` as reference; edit approved images, never regenerate for small fixes).
