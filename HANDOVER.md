@@ -66,14 +66,14 @@ All files live under `preview/logos/` on GitHub `origin/main`:
 * **Direction 3 (Platform Suite & Icons):** [`preview/logos/weev-direction-3-platform-suite.jpg`](preview/logos/weev-direction-3-platform-suite.jpg)
 
 ### Master Vector Files (Stakeholder Extraction Baseline)
-* **Master SVG:** [`preview/logos/weev-mascot-master.svg`](preview/logos/weev-mascot-master.svg)
-* **Transparent SVG:** [`preview/logos/weev-mascot-transparent.svg`](preview/logos/weev-mascot-transparent.svg)
-* **VectorCraft (.vectorcraft):** [`preview/logos/weev-mascot-master.vectorcraft`](preview/logos/weev-mascot-master.vectorcraft)
-* **Adobe Illustrator (.ai):** [`preview/logos/weev-mascot-master.ai`](preview/logos/weev-mascot-master.ai)
-* **Vector PDF (.pdf):** [`preview/logos/weev-mascot-master.pdf`](preview/logos/weev-mascot-master.pdf)
-* **Vector EPS (.eps):** [`preview/logos/weev-mascot-master.eps`](preview/logos/weev-mascot-master.eps)
-* **App Icon Mascot:** [`preview/logos/weev-app-icon-mascot.svg`](preview/logos/weev-app-icon-mascot.svg)
-* **Heart 'W' Favicon:** [`preview/logos/weev-app-icon-heart.svg`](preview/logos/weev-app-icon-heart.svg)
+* **Master SVG:** [`preview/logos/trashcan/weev-mascot-master.svg`](preview/logos/trashcan/weev-mascot-master.svg)
+* **Transparent SVG:** [`preview/logos/trashcan/weev-mascot-transparent.svg`](preview/logos/trashcan/weev-mascot-transparent.svg)
+* **VectorCraft (.vectorcraft):** [`preview/logos/trashcan/weev-mascot-master.vectorcraft`](preview/logos/trashcan/weev-mascot-master.vectorcraft)
+* **Adobe Illustrator (.ai):** [`preview/logos/trashcan/weev-mascot-master.ai`](preview/logos/trashcan/weev-mascot-master.ai)
+* **Vector PDF (.pdf):** [`preview/logos/trashcan/weev-mascot-master.pdf`](preview/logos/trashcan/weev-mascot-master.pdf)
+* **Vector EPS (.eps):** [`preview/logos/trashcan/weev-mascot-master.eps`](preview/logos/trashcan/weev-mascot-master.eps)
+* **App Icon Mascot:** [`preview/logos/trashcan/weev-app-icon-mascot.svg`](preview/logos/trashcan/weev-app-icon-mascot.svg)
+* **Heart 'W' Favicon:** [`preview/logos/trashcan/weev-app-icon-heart.svg`](preview/logos/trashcan/weev-app-icon-heart.svg)
 
 ### Code & Components
 * **React Component:** [`src/components/WeevLogo.tsx`](src/components/WeevLogo.tsx) (Supports `variant="full"`, `variant="mark"`, and `variant="mascot"`).
@@ -144,8 +144,8 @@ Blocked: Antigravity image quota (`gemini-3.1-flash-image`) exhausted, resets ~0
 
 ## 7. ✅ LOGO APPROVED: 18 Nov 2026 (home PC)
 
-* **Final logo: `preview/logos/weev-tempa-final.jpg`** (1024×1024). Tempa exactly as in `mascot-6-tempua.jpg` (bird + layout unchanged) with the **Direction 1 heart-ribbon W**, same height and baseline as "eev". Made by swapping only the W (cut from `weev-direction-1-vector-mascot.jpg`, masked, scaled to eev height); no new generation. Includes the nest = hero version.
-* **App icon approved: `preview/logos/weev-app-icon-tempa.png`** (1024×1024, Tempa head on #2E1741, full-bleed square; OS rounds corners).
+* **Final logo: `preview/logos/final/weev-tempa-final.jpg`** (1024×1024). Tempa exactly as in `mascot-6-tempua.jpg` (bird + layout unchanged) with the **Direction 1 heart-ribbon W**, same height and baseline as "eev". Made by swapping only the W (cut from `weev-direction-1-vector-mascot.jpg`, masked, scaled to eev height); no new generation. Includes the nest = hero version.
+* **App icon approved: `preview/logos/final/weev-app-icon-tempa.png`** (1024×1024, Tempa head on #2E1741, full-bleed square; OS rounds corners).
 * Lockup v2 from AGY rejected (W still ~1.5× eev height, new bird). Lesson: for small fixes, edit the approved image; don't regenerate. AI can't hit exact letter proportions.
 * User asked me (Claude) to act as **brand designer** for the full rollout.
 

@@ -124,14 +124,14 @@ The official brand identity for **WEEV** is **Concept B: The Eternal Swash Serif
   - Accent Hairlines: Silk White (`#FAF7F4`)
 
 ### 6.2 Master Deliverable Files
-* **Native VectorCraft**: `preview/logos/weev-concept-b-lockup-dark.vectorcraft`
-* **Adobe Illustrator**: `preview/logos/weev-concept-b-lockup-dark.ai`
-* **Print Master**: `preview/logos/weev-concept-b-lockup-dark.eps`
-* **Vector PDF**: `preview/logos/weev-concept-b-lockup-dark.pdf`
+* **Native VectorCraft**: `preview/logos/trashcan/weev-concept-b-lockup-dark.vectorcraft`
+* **Adobe Illustrator**: `preview/logos/trashcan/weev-concept-b-lockup-dark.ai`
+* **Print Master**: `preview/logos/trashcan/weev-concept-b-lockup-dark.eps`
+* **Vector PDF**: `preview/logos/trashcan/weev-concept-b-lockup-dark.pdf`
 * **Web Vectors**:
-  - `preview/logos/weev-concept-b-symbol-dark.svg`
-  - `preview/logos/weev-concept-b-symbol-light.svg`
-  - `preview/logos/weev-concept-b-symbol-mono.svg`
-  - `preview/logos/weev-concept-b-lockup-dark.svg`
-  - `preview/logos/weev-concept-b-lockup-light.svg`
+  - `preview/logos/trashcan/weev-concept-b-symbol-dark.svg`
+  - `preview/logos/trashcan/weev-concept-b-symbol-light.svg`
+  - `preview/logos/trashcan/weev-concept-b-symbol-mono.svg`
+  - `preview/logos/trashcan/weev-concept-b-lockup-dark.svg`
+  - `preview/logos/trashcan/weev-concept-b-lockup-light.svg`
 * **React Component**: `<WeevLogo size={32} variant="full" />` in `src/components/WeevLogo.tsx`
