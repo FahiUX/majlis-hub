@@ -2448,3 +2448,11 @@ Checked in the browser: 22 customer screens at 430px, 0 console errors. Not yet 
 * AGY hit image quota (resets ~02:24) and fell back to PIL compositing (broken output). Claude stopped it, deleted the scripts, hand-built the W as SVG + favicon (`weev-w-mark.svg`, `weev-favicon-w.svg/.png/.ico`).
 * Next: lockup v2 + Tempa app icon after quota reset; then move app to new palette, fix logo paths, swap brain for Tempa.
 * User on the hand-built SVG W: "Heart-Ribbon W looks bad, it's ok, we wait tomorrow." Marked as rejected draft in HANDOVER + logo-evolution.html. Continue at the office on 17 Nov: lockup v2 + Tempa app icon (after quota reset), proper vector W.
+
+---
+
+## Sync 18 Nov 2026 (Claude-1 home PC + Antigravity pane 3)
+
+* AGY lockup v2 (fresh generation): no legs and nest on a twig worked, app icon good, but W still ~1.5× "eev" height. User: "why you create new, just take the bird from mascot-6 and change to the latest W."
+* Claude swapped only the W in `mascot-6-tempua.jpg` (Direction 1 heart-ribbon W, masked and scaled to eev height, same baseline) → `weev-tempa-final.jpg`. User: "yess!!!! like this". **Logo + app icon approved.**
+* User: Claude acts as brand designer for the full kit (11 mascot poses, SVG logo set, guidelines, app rollout). Plan in HANDOVER §7.

@@ -139,3 +139,19 @@ Blocked: Antigravity image quota (`gemini-3.1-flash-image`) exhausted, resets ~0
 3. Redo the Direction 1 heart-ribbon W as a proper vector (VectorCraft port 7979 or Illustrator), trace close to `weev-direction-1-vector-mascot.jpg`; then rebuild favicon/app icons from it. The current `weev-w-mark.svg` / `weev-favicon-*` are rejected drafts.
 4. Tempa app icon (head/bust on aubergine squircle).
 5. Then app: new palette in `src/index.css`, move logos into `public/` with relative paths, swap brain for Tempa in `WeevLogo.tsx`.
+
+---
+
+## 7. ✅ LOGO APPROVED: 18 Nov 2026 (home PC)
+
+* **Final logo: `preview/logos/weev-tempa-final.jpg`** (1024×1024). Tempa exactly as in `mascot-6-tempua.jpg` (bird + layout unchanged) with the **Direction 1 heart-ribbon W**, same height and baseline as "eev". Made by swapping only the W (cut from `weev-direction-1-vector-mascot.jpg`, masked, scaled to eev height); no new generation. Includes the nest = hero version.
+* **App icon approved: `preview/logos/weev-app-icon-tempa.png`** (1024×1024, Tempa head on #2E1741, full-bleed square; OS rounds corners).
+* Lockup v2 from AGY rejected (W still ~1.5× eev height, new bird). Lesson: for small fixes, edit the approved image; don't regenerate. AI can't hit exact letter proportions.
+* User asked me (Claude) to act as **brand designer** for the full rollout.
+
+### Next (brand designer plan)
+1. No-nest primary version of the final logo (erase nest, rebuild wing edge), plus wordmark-only and W-only crops.
+2. Vector master: auto-trace the final logo (flat colours) in VectorCraft/potrace, clean up, set exact W/eev proportions. Favicon from the traced W (replaces rejected hand-built `weev-w-mark.svg`).
+3. Tempa character sheet (front/side/back/¾) → 11 poses: wave (onboarding), binoculars (search/loading), checklist (planner), thumbs up (booking confirmed), party popper (success), sleeping in nest (empty), head scratch (error), pointing (tips), chat bubble (chat), money jar (Tabung), envelope (Kad & RSVP). Plus expression sheet and swappable event props.
+4. Brand kit: logo variants (colour/white/mono, horizontal/stacked), app icon sizes, palette tokens + contrast, rounded heading font + BM-friendly body, `BRAND_GUIDELINES.md` update, share card, "Verified on WEEV" badge, IG templates.
+5. App rollout: palette in `src/index.css`, logos into `public/` with relative paths, Tempa in `WeevLogo.tsx`, mascot in empty/success states (with UI/UX + Retro review agents).
