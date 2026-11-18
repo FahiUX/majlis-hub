@@ -150,7 +150,7 @@ Blocked: Antigravity image quota (`gemini-3.1-flash-image`) exhausted, resets ~0
 * User asked me (Claude) to act as **brand designer** for the full rollout.
 
 ### Next (brand designer plan)
-1. No-nest primary version of the final logo (erase nest, rebuild wing edge), plus wordmark-only and W-only crops.
+1. ✅ No-nest primary: `weev-tempa-final-nonest.jpg` (nest erased, head/notepad contour redrawn). Known issue: pencil cap / wing junction slightly heavy → fix in the vector redraw (user agreed).
 2. Vector master: auto-trace the final logo (flat colours) in VectorCraft/potrace, clean up, set exact W/eev proportions. Favicon from the traced W (replaces rejected hand-built `weev-w-mark.svg`).
 3. Tempa character sheet (front/side/back/¾) → 11 poses: wave (onboarding), binoculars (search/loading), checklist (planner), thumbs up (booking confirmed), party popper (success), sleeping in nest (empty), head scratch (error), pointing (tips), chat bubble (chat), money jar (Tabung), envelope (Kad & RSVP). Plus expression sheet and swappable event props.
 4. Brand kit: logo variants (colour/white/mono, horizontal/stacked), app icon sizes, palette tokens + contrast, rounded heading font + BM-friendly body, `BRAND_GUIDELINES.md` update, share card, "Verified on WEEV" badge, IG templates.

@@ -2456,3 +2456,4 @@ Checked in the browser: 22 customer screens at 430px, 0 console errors. Not yet 
 * AGY lockup v2 (fresh generation): no legs and nest on a twig worked, app icon good, but W still ~1.5× "eev" height. User: "why you create new, just take the bird from mascot-6 and change to the latest W."
 * Claude swapped only the W in `mascot-6-tempua.jpg` (Direction 1 heart-ribbon W, masked and scaled to eev height, same baseline) → `weev-tempa-final.jpg`. User: "yess!!!! like this". **Logo + app icon approved.**
 * User: Claude acts as brand designer for the full kit (11 mascot poses, SVG logo set, guidelines, app rollout). Plan in HANDOVER §7.
+* No-nest primary made by erasing the nest and redrawing the contour (`weev-tempa-final-nonest.jpg`). Two rounds of user fixes (crown lump, pencil blob); a third patch made it worse and was reverted. Pencil cap / wing junction left for the vector step.
