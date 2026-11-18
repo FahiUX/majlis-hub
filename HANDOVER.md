@@ -155,3 +155,18 @@ Blocked: Antigravity image quota (`gemini-3.1-flash-image`) exhausted, resets ~0
 3. Tempa character sheet (front/side/back/¾) → 11 poses: wave (onboarding), binoculars (search/loading), checklist (planner), thumbs up (booking confirmed), party popper (success), sleeping in nest (empty), head scratch (error), pointing (tips), chat bubble (chat), money jar (Tabung), envelope (Kad & RSVP). Plus expression sheet and swappable event props.
 4. Brand kit: logo variants (colour/white/mono, horizontal/stacked), app icon sizes, palette tokens + contrast, rounded heading font + BM-friendly body, `BRAND_GUIDELINES.md` update, share card, "Verified on WEEV" badge, IG templates.
 5. App rollout: palette in `src/index.css`, logos into `public/` with relative paths, Tempa in `WeevLogo.tsx`, mascot in empty/success states (with UI/UX + Retro review agents).
+
+---
+
+## 8. Logo kit v1 (19 Nov 2026, home PC)
+
+Everything approved lives in `preview/logos/final/` (old/broken vectors in `preview/logos/trashcan/`).
+
+* **Masters:** `weev-logo-primary.svg` (no nest), `weev-logo-hero.svg` (nest). Pipeline: Real-ESRGAN x4 anime upscale (`~/tools/realesrgan`) → background keyed → VectorCraft Image Trace (20 colours, paths 15, overlapping) → Simplify → ink/pink snapped to `#2E1741`/`#DB619B` → "eev" rebuilt as geometry, text set in **Nunito** (ExtraBold / Bold, OFL) as outlines, heart-ribbon W rebuilt (45 nodes). Tempa is still auto-traced: a hand redraw by an illustrator is the remaining upgrade.
+* **`svg/`** (cropped): primary, hero, wordmark, wordmark+tagline, W mark, Tempa, Tempa+nest, each with a `-white` version for dark backgrounds.
+* **`png/`**: transparent PNG of every SVG variant.
+* **`favicon/`**: `favicon.svg`, `.ico` (16/32/48), PNG 16–512 (white heart-ribbon W on aubergine rounded square).
+* **`app-icons/`**: iOS (20–1024), Android (mdpi–xxxhdpi + Play Store 512), web (192, 512, apple-touch-icon) from the approved Tempa icon.
+* Showcase: "Logo Kit · v1" section at the top of `preview/logo-evolution.html`.
+
+**Next:** brand foundation (colour tokens + contrast, Nunito as UI font) → app rollout (palette in `src/index.css`, logos into `public/`, Tempa in `WeevLogo.tsx`, favicon/manifest) → Tempa character sheet + 11 poses.

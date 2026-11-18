@@ -2457,3 +2457,12 @@ Checked in the browser: 22 customer screens at 430px, 0 console errors. Not yet 
 * Claude swapped only the W in `mascot-6-tempua.jpg` (Direction 1 heart-ribbon W, masked and scaled to eev height, same baseline) → `weev-tempa-final.jpg`. User: "yess!!!! like this". **Logo + app icon approved.**
 * User: Claude acts as brand designer for the full kit (11 mascot poses, SVG logo set, guidelines, app rollout). Plan in HANDOVER §7.
 * No-nest primary made by erasing the nest and redrawing the contour (`weev-tempa-final-nonest.jpg`). Two rounds of user fixes (crown lump, pencil blob); a third patch made it worse and was reverted. Pencil cap / wing junction left for the vector step.
+
+---
+
+## Sync 18–19 Nov 2026 night (Claude-1 home PC)
+
+* No-nest primary made from the approved logo (nest erased, contour redrawn).
+* Vector master: auto-trace attempts (potrace, neplex vectorizer, Gemini hand-written SVG = "potato", VectorCraft Smooth) not smooth enough. Winner: Real-ESRGAN 4x upscale → VectorCraft trace → text in Nunito, geometric "eev", rebuilt W. Bugs found by user and fixed: tagline letters deleted by W cleanup, W teardrop hole filled in hero.
+* Logos organised: `final/` (approved) and `trashcan/` (broken/old vectors).
+* Logo kit v1 built: 12 SVG variants + PNGs, favicon set, iOS/Android/web app icons (HANDOVER §8).
