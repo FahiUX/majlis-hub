@@ -221,9 +221,11 @@ Everything approved lives in `preview/logos/final/` (old/broken vectors in `prev
 
 ### ▶ Start here next session (latest — supersedes all earlier lists)
 1. `git pull`, read `CLAUDE.md` → `docs/brand/LOGO.md`, run the sha256 check; `sh scripts/brand/sync-public.sh --check`.
-1b. **User rule: never repeat a photo.** 40 vendors (5 per category) each need their own cover; galleries no dupes; no borrowing other categories' photos. Only `photo` and `decor` have ≥5 fitting photos. **Generate ~18 more** (3 each for makeup, band, mc, bride, kompang, inai; MC ones in a Malay dewan) via AGY after its quota resets or Qwen-Image 3.0, check each visually, then give `IMG` in `src/data/mock.ts` one unique cover per vendor.
 2. User sign-off on photos + reels, then move `preview/rerender/` off-repo.
 3. Nice-to-haves from UI/UX round 2: re-pad category icons to equal visual size (guitar/mic look ~20% smaller than camera); 1–2 Malay dewan MC photos (all MC vendors share `mc.jpg`).
 4. Tempa 11 poses following `LOGO.md` §6.
 5. Work Mac, once: `git config core.hooksPath .githooks` + the global "WEEV brand lock" rule.
 6. Optional: extra logo MP4 formats (1080×1080, 1080×1920).
+
+### Side task (run in parallel, not blocking)
+* **User rule: never repeat a photo.** 40 vendors (5 per category) each need their own cover; galleries no dupes; no borrowing other categories' photos. Only `photo` and `decor` have ≥5 fitting photos. **Generate ~18 more** (3 each for makeup, band, mc, bride, kompang, inai; MC ones in a Malay dewan) via AGY after its quota resets or Qwen-Image 3.0, check each visually, then give `IMG` in `src/data/mock.ts` one unique cover per vendor.
