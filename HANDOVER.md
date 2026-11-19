@@ -192,3 +192,18 @@ Everything approved lives in `preview/logos/final/` (old/broken vectors in `prev
 4. App rollout (with UI/UX + Retro agents): replace the rejected Merlot palette in `src/index.css`, copy `final/` assets into `public/` with relative paths, Tempa + wordmark in `src/components/WeevLogo.tsx` (still loads the old brain PNGs), favicon + manifest icons, logo animation as splash.
 5. Tempa 11 poses, following `LOGO.md` §6.
 * **Locks (19 Nov):** `.githooks/pre-commit` blocks commits touching `final/` (unlock: `WEEV_BRAND_UNLOCK=1`, only with approval + fresh sha256); GitHub Action `brand-lock.yml` verifies fingerprints on every push. **On the work Mac do once:** `git config core.hooksPath .githooks`, and add the "WEEV brand lock" block from `docs/brand/LOGO.md` to `~/.claude/CLAUDE.md`.
+
+---
+
+## 10. Brand lock enforced (19 Nov 2026, evening) — current state
+
+* **Done and verified:** pre-commit lock blocks changes to `preview/logos/final/` (tested: blocked when locked, blocked when unlocked with stale fingerprints); GitHub Action `brand-lock.yml` is **green** on `79f1b41`; `.gitattributes` stores `final/**` byte-for-byte so `LOGO.sha256` matches on Windows, Mac and GitHub (8 SVGs re-stored, artwork unchanged, logged in `LOGO.md` §9); global "WEEV brand lock" rule added to `~/.claude/CLAUDE.md` on the home PC.
+* **Unlocking is the user's job:** `WEEV_BRAND_UNLOCK=1 git commit ...` — agents must not run it (Claude's auto mode refused, as intended). Give the user one-line `!` commands; long pasted commands wrap and break.
+
+### ▶ Start here next session (latest — supersedes all earlier lists)
+1. `git pull`, read `CLAUDE.md` → `docs/brand/LOGO.md`, run `cd preview/logos/final && sha256sum -c ../../../docs/brand/LOGO.sha256`.
+2. **Work Mac, once:** `git config core.hooksPath .githooks` in the repo + add the "WEEV brand lock" block to `~/.claude/CLAUDE.md`.
+3. Optional: extra MP4 formats (1080×1080, 1080×1920, dark bg) via `scripts/brand/record.js`.
+4. Brand foundation: colour tokens + contrast check, Nunito as UI font.
+5. App rollout (UI/UX + Retro agents): new palette in `src/index.css`, `final/` assets into `public/` with relative paths, Tempa + wordmark in `src/components/WeevLogo.tsx` (still the old brain PNGs), favicon + manifest, logo animation as splash.
+6. Tempa 11 poses following `LOGO.md` §6.

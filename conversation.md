@@ -2474,3 +2474,11 @@ Checked in the browser: 22 customer screens at 430px, 0 console errors. Not yet 
 
 * User: "animate the logo, start with W then eev, the W twists with flow". v1: W spins in, outline draws, ribbon wipes, eev writes. User drew the stroke order on a screenshot (①left lobe ②loop ③right lobe ④ribbon); v2 reveals the W with a pen along its computed centre-line. User: "like this but more smooth, then convert to mp4" → overlapping phases, softer easing, 1080p60 MP4 (`final/animation/`).
 * User worried new conversations will break the logo/bird. Added the brand lock: `docs/brand/LOGO.md` (rules + spec), `LOGO.sha256`, `CLAUDE.md`/`GEMINI.md` pointers, `scripts/brand/`. See HANDOVER §9.
+
+---
+
+## Sync 19 Nov 2026 evening (Claude-1 home PC): brand lock enforced
+
+* User asked if Claude was 100% sure the logo is safe in new sessions. Claude: no, ~80–85% (rules can be ignored, repo CLAUDE.md only loads inside the repo, memory is per-PC). Proposed a real lock + global rule.
+* Added `.githooks/pre-commit` (blocks commits touching `final/`), GitHub Action `brand-lock.yml`, global rule in `~/.claude/CLAUDE.md`. Lock tested both ways.
+* First CI run failed: Windows line endings made 8 SVG fingerprints differ on Linux. Fixed with `.gitattributes` (`final/** -text`). Claude's auto mode refused to run the unlock itself; the user ran it (`79f1b41`), CI green. Confidence now ~95% on the home PC; work Mac needs the 2 one-time setup steps (HANDOVER §10).
