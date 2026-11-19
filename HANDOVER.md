@@ -176,3 +176,18 @@ Everything approved lives in `preview/logos/final/` (old/broken vectors in `prev
 2. Brand foundation: colour tokens + contrast check, Nunito as UI font.
 3. App rollout (with UI/UX + Retro review agents): replace rejected Merlot palette in `src/index.css`, copy `preview/logos/final/` assets into `public/` with relative paths, swap the brain for Tempa in `src/components/WeevLogo.tsx`, add favicon + manifest icons.
 4. Tempa character sheet → 11 poses (pane 3 / AGY, one at a time, always from `final/weev-tempa-final-nonest.jpg` as reference; edit approved images, never regenerate for small fixes).
+
+---
+
+## 9. Logo animation + 🔒 Brand lock (19 Nov 2026)
+
+* **Animation:** `preview/weev-logo-animation.html` (Replay + Slow motion) → `preview/logos/final/animation/weev-logo-animation-1080p.mp4` (1920×1080, 60 fps, 5.5 s, 290 KB). The W is written in one pen stroke along the user's flow (left curl → left lobe → up through the loop → right lobe → right curl) with a soft twist, then the ribbon flows, `eev` writes itself, the tagline rises. Frame-exact export with Playwright + Edge + ffmpeg.
+* **Brand lock:** **`docs/brand/LOGO.md`** is the rulebook for the logo, W and Tempa (rules, exact colours, W/eev geometry, Tempa spec, allowed/not allowed, how to make poses, build pipeline, change log). `docs/brand/LOGO.sha256` fingerprints all 61 files in `final/`. `CLAUDE.md` + `GEMINI.md` (auto-loaded by Claude Code / Antigravity) and `AI-AGENT.md` point to it. Build scripts saved in `scripts/brand/`.
+* **Why:** new sessions/agents kept redrawing the logo wrong (W too big, "meev", potato bird). Rule: use the final files, never redraw; small fixes = edit the approved file.
+
+### ▶ Start here next session (supersedes the earlier lists)
+1. `git pull`, read `CLAUDE.md` → `docs/brand/LOGO.md`, run the sha256 check.
+2. Optional: extra MP4 formats (square 1080×1080, vertical 1080×1920, dark background) with `scripts/brand/record.js`.
+3. Brand foundation: colour tokens + contrast check, Nunito as UI font.
+4. App rollout (with UI/UX + Retro agents): replace the rejected Merlot palette in `src/index.css`, copy `final/` assets into `public/` with relative paths, Tempa + wordmark in `src/components/WeevLogo.tsx` (still loads the old brain PNGs), favicon + manifest icons, logo animation as splash.
+5. Tempa 11 poses, following `LOGO.md` §6.

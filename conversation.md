@@ -2467,3 +2467,10 @@ Checked in the browser: 22 customer screens at 430px, 0 console errors. Not yet 
 * Logos organised: `final/` (approved) and `trashcan/` (broken/old vectors).
 * Logo kit v1 built: 12 SVG variants + PNGs, favicon set, iOS/Android/web app icons (HANDOVER §8).
 * Session closed 19 Nov ~00:10. Next: brand foundation → app rollout → Tempa poses (HANDOVER "Start here next session").
+
+---
+
+## Sync 19 Nov 2026 (Claude-1 home PC): logo animation + brand lock
+
+* User: "animate the logo, start with W then eev, the W twists with flow". v1: W spins in, outline draws, ribbon wipes, eev writes. User drew the stroke order on a screenshot (①left lobe ②loop ③right lobe ④ribbon); v2 reveals the W with a pen along its computed centre-line. User: "like this but more smooth, then convert to mp4" → overlapping phases, softer easing, 1080p60 MP4 (`final/animation/`).
+* User worried new conversations will break the logo/bird. Added the brand lock: `docs/brand/LOGO.md` (rules + spec), `LOGO.sha256`, `CLAUDE.md`/`GEMINI.md` pointers, `scripts/brand/`. See HANDOVER §9.

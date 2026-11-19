@@ -4,6 +4,8 @@
 **Orchestration Paradigm:** Hierarchical Multi-Agent with Human-in-the-Loop (HITL) Gateways  
 **Project:** WEEV (Verified Wedding & Event Marketplace)
 
+> 🔒 **Brand lock:** the WEEV logo, heart-ribbon W and Tempa mascot are final. Read [`docs/brand/LOGO.md`](docs/brand/LOGO.md) before any brand work. Use `preview/logos/final/` files only; never redraw or AI-generate the logo.
+
 ---
 
 ## 1. Multi-Agent Team Structure

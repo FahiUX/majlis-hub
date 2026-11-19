@@ -1,0 +1,3 @@
+[{"command":"file.new","params":{"width":4096,"height":4096,"units":"Pixels"}},
+ {"command":"file.place","params":{"path":"C:/Users/fahi/AppData/Local/Temp/claude/66ccc46e57b5be70/a3667924-83fc-4764-a21f-243d1a3cad6c/scratchpad/up4_key2.png","link":false,"rect":[0,0,4096,4096]}},
+ {"command":"imageTrace.makeAndExpand","params":{"params":{"mode":"color","palette":"limited","colors":20,"paths":15,"corners":25,"noise":30,"method":"overlapping","ignoreWhite":true,"ignoreColor":"#00ff00","ignoreBackground":false,"fills":true,"strokes":false,"snapCurvesToLines":false,"shapes":false,"autoGrouping":false,"gradients":false}}}]
