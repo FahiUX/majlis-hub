@@ -1,0 +1,33 @@
+#!/bin/sh
+# WEEV brand lock: block commits that touch the approved logo files.
+# Unlock deliberately (only with the user's approval):  WEEV_BRAND_UNLOCK=1 git commit ...
+# Read docs/brand/LOGO.md first.
+
+LOCKED='^(preview/logos/final/|docs/brand/LOGO\.sha256$)'
+touched=$(git diff --cached --name-only --diff-filter=ACDMRT | grep -E "$LOCKED")
+[ -z "$touched" ] && exit 0
+
+if [ "$WEEV_BRAND_UNLOCK" != "1" ]; then
+  echo ""
+  echo "🔒 WEEV BRAND LOCK: this commit changes approved logo files:"
+  echo "$touched" | sed 's/^/   - /'
+  echo ""
+  echo "The logo, W and Tempa are final (docs/brand/LOGO.md)."
+  echo "Undo:   git restore --staged --worktree <file>"
+  echo "Only if the user approved the change:"
+  echo "   1. cd preview/logos/final && find . -type f | sort | sed 's#^\./##' | xargs sha256sum > ../../../docs/brand/LOGO.sha256"
+  echo "   2. add a line to the change log in docs/brand/LOGO.md (§9)"
+  echo "   3. WEEV_BRAND_UNLOCK=1 git commit ..."
+  exit 1
+fi
+
+# Unlocked: the fingerprints must match the staged final files.
+tmp=$(mktemp -d)
+git checkout-index --prefix="$tmp/" -a 2>/dev/null
+if ! (cd "$tmp/preview/logos/final" && sha256sum -c --quiet "$tmp/docs/brand/LOGO.sha256" >/dev/null 2>&1); then
+  echo "🔒 WEEV BRAND LOCK: unlocked, but docs/brand/LOGO.sha256 does not match the staged final/ files. Regenerate it (see step 1 above)."
+  rm -rf "$tmp"; exit 1
+fi
+rm -rf "$tmp"
+echo "🔓 WEEV brand lock: approved change to final/ (fingerprints match)."
+exit 0

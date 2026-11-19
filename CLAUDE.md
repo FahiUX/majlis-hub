@@ -5,6 +5,7 @@ The WEEV logo, the heart-ribbon W and Tempa the mascot are **final and locked**.
 Before ANY brand, logo, mascot, icon, splash or animation work, read **`docs/brand/LOGO.md`**.
 - Use the files in `preview/logos/final/`. Never redraw, re-trace or AI-generate the logo or the W.
 - Small fixes = edit the approved file, never regenerate.
+- Fresh clone: run `git config core.hooksPath .githooks` once (enables the brand pre-commit lock).
 - Verify: `cd preview/logos/final && sha256sum -c ../../../docs/brand/LOGO.sha256`
 - Changing a final file needs the user's explicit approval.
 

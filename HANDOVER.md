@@ -191,3 +191,4 @@ Everything approved lives in `preview/logos/final/` (old/broken vectors in `prev
 3. Brand foundation: colour tokens + contrast check, Nunito as UI font.
 4. App rollout (with UI/UX + Retro agents): replace the rejected Merlot palette in `src/index.css`, copy `final/` assets into `public/` with relative paths, Tempa + wordmark in `src/components/WeevLogo.tsx` (still loads the old brain PNGs), favicon + manifest icons, logo animation as splash.
 5. Tempa 11 poses, following `LOGO.md` §6.
+* **Locks (19 Nov):** `.githooks/pre-commit` blocks commits touching `final/` (unlock: `WEEV_BRAND_UNLOCK=1`, only with approval + fresh sha256); GitHub Action `brand-lock.yml` verifies fingerprints on every push. **On the work Mac do once:** `git config core.hooksPath .githooks`, and add the "WEEV brand lock" block from `docs/brand/LOGO.md` to `~/.claude/CLAUDE.md`.

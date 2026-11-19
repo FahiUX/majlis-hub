@@ -20,6 +20,13 @@
 5. **Changes need the user's approval.** If a final file must change, show before/after, get a yes,
    then update the file, regenerate `LOGO.sha256`, and log it in §9.
 
+### Locks in place
+- **Pre-commit lock** (`.githooks/pre-commit`): blocks any commit that touches `preview/logos/final/` or `LOGO.sha256`.
+  Approved change: regenerate `LOGO.sha256`, log it in §9, then `WEEV_BRAND_UNLOCK=1 git commit ...` (the hook also checks the fingerprints match).
+- **GitHub check** (`.github/workflows/brand-lock.yml`): every push verifies `final/` against `LOGO.sha256`; a red ✗ means a logo file changed.
+- **New machine / fresh clone (do once):** `git config core.hooksPath .githooks`
+- **Global Claude rule:** add the "WEEV brand lock" block to `~/.claude/CLAUDE.md` on every computer (done on the home PC 19 Nov; **todo on the work Mac**).
+
 ---
 
 ## 1. Where everything is

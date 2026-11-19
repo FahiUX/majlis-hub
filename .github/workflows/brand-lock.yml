@@ -1,0 +1,12 @@
+name: Brand lock
+on: [push, pull_request]
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Logo files match docs/brand/LOGO.sha256
+        run: |
+          cd preview/logos/final
+          sed 's/\r$//' ../../../docs/brand/LOGO.sha256 | sha256sum -c --quiet -
+          echo "All approved WEEV logo files are unchanged."
