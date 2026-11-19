@@ -194,3 +194,4 @@ Scripts expect their inputs (upscaled PNGs) in the working folder; regenerate th
 | 2026-11-18 | Logo approved: mascot-6 Tempa + Direction 1 heart-ribbon W at eev height | user ("yess!!!! like this") |
 | 2026-11-18 | App icon (Tempa head) approved | user |
 | 2026-11-19 | Vector masters, logo kit v1, animation + MP4 | user |
+| 2026-11-19 | Storage only: 8 SVGs in final/ stored byte-for-byte (.gitattributes -text) so fingerprints match on every OS. Artwork unchanged. | user |
