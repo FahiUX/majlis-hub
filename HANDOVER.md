@@ -215,6 +215,7 @@ Everything approved lives in `preview/logos/final/` (old/broken vectors in `prev
 * **Rebrand live in the app:** `src/index.css` tokens = WEEV palette (legacy names kept: `hijau` = aubergine; mapping table in `DESIGN-SYSTEM.md` §1). Nunito everywhere, headings 800; Fraunces only as `font-kad` on Kad names. Brand pink is accent-only (3.2:1); pink text = `pink-teks`.
 * **Logo in the app:** `WeevLogo.tsx` (`full | mark | mascot`) loads `public/brand/`, byte copies made by `scripts/brand/sync-public.sh` (checks `LOGO.sha256`; `--check` runs in the pre-commit hook and Brand lock CI). Favicon, apple-touch, `public/manifest.webmanifest`. Splash = logo MP4 once per session on Home (`src/components/Splash.tsx`).
 * **New art:** 10 category icons (WEEV palette 3D, AGY/Gemini), 15 photoreal photos with real varied colours (3 AGY + 12 Qwen-Image 3.0), 5 Bahasa Melayu reels (Google Flow, Veo 3.1 Lite, 10 credits per 8 s clip). Reels 4–5 added (Akustik Rindu, Kak Long Emcee). Feed-wide **Senyap/Bunyi** sound toggle in reels.
+* **Earlier photo set kept:** `public/img/gen/v1/` (15 photos, compressed) mixed into vendor galleries + vendor-app picker (`IMG` in `src/data/mock.ts`), so portfolios don't repeat.
 * **Raw renders:** `preview/rerender/` (54 MB, gitignored). Move off-repo after the user signs off.
 * **Credits left:** Qwen ~4 (free), Flow 6 (resets 5 Dec). Dia must be started with debugging via `Start-Process "shell:AppsFolder\TheBrowserCompany.Dia_ttt1ap7aakyb4!Dia" -ArgumentList "--remote-debugging-port=9222"`. Flow downloads = by hand.
 
