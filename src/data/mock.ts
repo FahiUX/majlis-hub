@@ -120,15 +120,17 @@ const SEEDS: Seed[] = [
   [48, 'inai', 'Henna Puteri', 'Petaling Jaya', 'Selangor', 19, 4.6, 12, '2 jam', 280, true],
 ];
 
+/** portfolio photos per category: the 19 Nov re-renders + the earlier set (img/gen/v1), so galleries don't repeat */
+const g = (...n: string[]) => n.map(x => `img/gen/${x}.jpg`);
 const IMG: Record<CategoryId, string[]> = {
-  photo: ['img/gen/photographer.jpg', 'img/gen/couple.jpg', 'img/gen/planning.jpg'],
-  decor: ['img/gen/pelamin.jpg', 'img/gen/venue.jpg', 'img/gen/pelamin.jpg'],
-  makeup: ['img/gen/makeup.jpg', 'img/gen/makeup.jpg', 'img/gen/couple.jpg'],
-  band: ['img/gen/band.jpg', 'img/gen/band.jpg', 'img/gen/band.jpg'],
-  mc: ['img/gen/mc.jpg', 'img/gen/mc.jpg', 'img/gen/mc.jpg'],
-  bride: ['img/gen/bride-assistant.jpg', 'img/gen/bride-assistant.jpg', 'img/gen/bride-assistant.jpg'],
-  kompang: ['img/gen/kompang.jpg', 'img/gen/kompang.jpg', 'img/gen/kompang.jpg'],
-  inai: ['img/gen/inai.jpg', 'img/gen/inai.jpg', 'img/gen/inai.jpg'],
+  photo: g('photographer', 'couple', 'v1/photographer', 'planning', 'v1/couple'),
+  decor: g('pelamin', 'venue', 'v1/pelamin', 'v1/venue', 'catering-2'),
+  makeup: g('makeup', 'v1/makeup', 'couple', 'v1/bride-assistant'),
+  band: g('band', 'v1/band', 'v1/venue'),
+  mc: g('mc', 'v1/mc', 'catering-4'),
+  bride: g('bride-assistant', 'v1/bride-assistant', 'v1/makeup'),
+  kompang: g('kompang', 'v1/kompang', 'v1/couple'),
+  inai: g('inai', 'v1/inai', 'bride-assistant'),
 };
 
 const PKG_ITEMS: Record<CategoryId, [string, number, string[]][]> = {
@@ -148,7 +150,7 @@ const ALL_VENDORS: Vendor[] = SEEDS.map(([id, cat, name, area, state, km, rating
   return {
     id, cat, name, area, state, km, rating, reviews, reply, freelancer,
     img: imgs[k % imgs.length],
-    gallery: [imgs[k % imgs.length], ...imgs.filter((_, j) => j !== k % imgs.length), FALLBACK_IMG[cat]],
+    gallery: [...new Set([imgs[k % imgs.length], ...imgs, FALLBACK_IMG[cat]])],
     lat: AREAS[area][0] + (k - 1) * 0.004, lng: AREAS[area][1] + (k - 1) * 0.004,
     halal: cat === 'makeup' || cat === 'inai' ? k !== 2 : undefined,
     capacity: [1500, 800, 300][k] ?? 500,

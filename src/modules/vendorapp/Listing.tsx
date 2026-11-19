@@ -11,7 +11,8 @@ import { Card, Field, inputCls, useRows } from './kit';
 import { DEFAULT_DAYS, depositStatus, docError, makePlan } from './logic';
 import { DepositPill } from './Bookings';
 
-const IMAGES = ['makeup', 'couple', 'bride-assistant', 'inai', 'pelamin', 'photographer', 'venue', 'planning', 'catering', 'kompang', 'mc', 'band'].map(n => `img/gen/${n}.jpg`);
+const NEW = ['makeup', 'couple', 'bride-assistant', 'inai', 'pelamin', 'photographer', 'venue', 'planning', 'catering', 'catering-2', 'catering-3', 'catering-4', 'kompang', 'mc', 'band'];
+const IMAGES = [...NEW, ...NEW.map(n => 'v1/' + n)].map(n => `img/gen/${n}.jpg`);
 
 function PendingNote({ text }: { text: string }) {
   return (
