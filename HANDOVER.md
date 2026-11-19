@@ -229,3 +229,13 @@ Everything approved lives in `preview/logos/final/` (old/broken vectors in `prev
 
 ### Side task (run in parallel, not blocking)
 * **User rule: never repeat a photo.** 40 vendors (5 per category) each need their own cover; galleries no dupes; no borrowing other categories' photos. Only `photo` and `decor` have ≥5 fitting photos. **Generate ~18 more** (3 each for makeup, band, mc, bride, kompang, inai; MC ones in a Malay dewan) via AGY after its quota resets or Qwen-Image 3.0, check each visually, then give `IMG` in `src/data/mock.ts` one unique cover per vendor.
+
+---
+
+## 12. Branding phase — plan (agreed 19 Nov 2026, late)
+
+**Parked (do after the brand book is planned):** layered-vector standard for all 12 SVGs (logo + Tempa): Sketch → Silhouette (thick filled outline) → Base colours → Shadows → Highlights → Line art; body parts as separate groups. Method from the 3 user-shared tutorials (Dom Designs cute character, Spoon Graphics retro mascot, Rotoscopula short). Restructure the approved files (no redraw), prove pixel-identical, work folder first, `final/` only after user yes. AGY makes raster poses; Claude traces + sorts into the layers.
+
+**Brand guidelines book (user request):** PDF style, **built in VectorCraft**. User will share an example to match. Sections so far: introduction, why the logo (story), logo + variants, **invert logo**, colour, typography + font sizes, mockups. Claude's proposed additions: clear space + min size, misuse (don'ts), Tempa mascot rules + poses, icon style (3D clay), photography style (real, varied colour, Malaysian, no repeats), motion (logo animation, splash), voice & tone (BM-first), app UI examples.
+
+**Other branding-phase deliverables (proposed, user to confirm):** BM tagline; name/trademark (MYIPO) + domain + social handle check; "Disahkan WEEV" verified-vendor badge kit; social kit (profile pics, post/reel templates, square + vertical logo MP4); app-store assets; WEEV weave pattern (replace the generic diamond lattice); stationery/email signature.
