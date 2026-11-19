@@ -248,7 +248,7 @@ Original plan this session: ✅ colour tokens + contrast (pink accent-only) · �
 2. Branding phase: name/trademark/domain/handle check, BM tagline, brand book in VectorCraft (wait for user's example), badge kit, weave pattern, social + app-store kit (§12).
 3. Tempa 11 poses → put Tempa into the app's empty/error/success states.
 4. Layered-vector standard for the 12 SVGs ("train Claude to do vector", §12).
-5. **Missed:** the **live site is out of date**: GitHub Pages serves the `gh-pages` branch, last built 15 Nov — none of today's rebrand is live. Deploy = build + push `dist/` to `gh-pages` (ask the user first, it's public).
+5. ✅ **Deployed 19 Nov:** `gh-pages` @ `1ec7bab` (built from `a3ad298`), live at https://fahiux.github.io/majlis-hub/ — verified Nunito, new favicon, reel-5 serves. Deploy = `npm run build`, copy `dist/` into a `gh-pages` worktree (keep `prototype.html` + `.nojekyll`), commit, push.
 6. **Missed:** user sign-off on photos + reels, then move `preview/rerender/` (54 MB) off-repo.
 7. **Missed:** re-pad category icons (guitar/mic ~20% smaller).
 8. **Missed:** work Mac one-time setup (hooks path + global brand-lock rule).
