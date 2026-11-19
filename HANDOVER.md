@@ -239,3 +239,17 @@ Everything approved lives in `preview/logos/final/` (old/broken vectors in `prev
 **Brand guidelines book (user request):** PDF style, **built in VectorCraft**. User will share an example to match. Sections so far: introduction, why the logo (story), logo + variants, **invert logo**, colour, typography + font sizes, mockups. Claude's proposed additions: clear space + min size, misuse (don'ts), Tempa mascot rules + poses, icon style (3D clay), photography style (real, varied colour, Malaysian, no repeats), motion (logo animation, splash), voice & tone (BM-first), app UI examples.
 
 **Other branding-phase deliverables (proposed, user to confirm):** BM tagline; name/trademark (MYIPO) + domain + social handle check; "Disahkan WEEV" verified-vendor badge kit; social kit (profile pics, post/reel templates, square + vertical logo MP4); app-store assets; WEEV weave pattern (replace the generic diamond lattice); stationery/email signature.
+
+### Checkpoint audit (19 Nov 2026, end of night)
+Original plan this session: ✅ colour tokens + contrast (pink accent-only) · ✅ Nunito · ✅ wordmark, favicon, manifest, splash · ✅ UI/UX + Retro agents (2 rounds) · ⚠️ **Tempa is supported (`WeevLogo variant="mascot"`) but not shown anywhere in the app yet** (lands with the poses: empty/error/success states).
+
+**Pending (user's list + missed items):**
+1. Generated photos: ~18 more so no photo repeats (side task, incl. Malay dewan MC).
+2. Branding phase: name/trademark/domain/handle check, BM tagline, brand book in VectorCraft (wait for user's example), badge kit, weave pattern, social + app-store kit (§12).
+3. Tempa 11 poses → put Tempa into the app's empty/error/success states.
+4. Layered-vector standard for the 12 SVGs ("train Claude to do vector", §12).
+5. **Missed:** the **live site is out of date**: GitHub Pages serves the `gh-pages` branch, last built 15 Nov — none of today's rebrand is live. Deploy = build + push `dist/` to `gh-pages` (ask the user first, it's public).
+6. **Missed:** user sign-off on photos + reels, then move `preview/rerender/` (54 MB) off-repo.
+7. **Missed:** re-pad category icons (guitar/mic ~20% smaller).
+8. **Missed:** work Mac one-time setup (hooks path + global brand-lock rule).
+9. Optional: logo MP4 in 1080×1080 and 1080×1920.
