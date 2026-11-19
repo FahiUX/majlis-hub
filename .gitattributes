@@ -1,4 +1,6 @@
 # WEEV brand lock: approved logo files are stored byte-for-byte (fingerprints must match on every OS)
 preview/logos/final/** -text
+public/brand/** -text
 docs/brand/LOGO.sha256 text eol=lf
 .githooks/* text eol=lf
+scripts/brand/*.sh text eol=lf

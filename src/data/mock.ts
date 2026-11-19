@@ -12,10 +12,10 @@ export const CATS: Category[] = [
 ];
 export const catById = (id: CategoryId) => CATS.find(c => c.id === id)!;
 
-/** shown until AGY's new category photos land */
+/** one dedicated photo per category (re-rendered 19 Nov 2026) */
 export const FALLBACK_IMG: Record<CategoryId, string> = {
-  photo: 'img/gen/photographer.jpg', decor: 'img/gen/pelamin.jpg', makeup: 'img/gen/makeup.jpg', band: 'img/gen/venue.jpg',
-  mc: 'img/gen/mc.jpg', bride: 'img/gen/makeup.jpg', kompang: 'img/gen/couple.jpg', inai: 'img/gen/makeup.jpg',
+  photo: 'img/gen/photographer.jpg', decor: 'img/gen/pelamin.jpg', makeup: 'img/gen/makeup.jpg', band: 'img/gen/band.jpg',
+  mc: 'img/gen/mc.jpg', bride: 'img/gen/bride-assistant.jpg', kompang: 'img/gen/kompang.jpg', inai: 'img/gen/inai.jpg',
 };
 
 const PLAN3: Instalment[] = [
@@ -175,11 +175,14 @@ export const vendorById = (id: number) => ALL_VENDORS.find(v => v.id === id);
 export const fromPrice = (v: Vendor) => Math.min(...v.packages.map(p => p.price));
 
 export const REELS: Reel[] = [
-  { id: 1, vendorId: 10, video: 'video/reel-2.mp4', poster: 'video/reel-2.jpg', title: 'Pelamin minimalis cream & hijau, setup 4 jam', loc: 'Puchong', desc: 'Konsep moden untuk majlis dalam dewan hotel. Bunga segar, kusyen songket emas dan lampu tanglung. Pakej termasuk pelamin, meja beradab dan laluan pengantin.', tags: '#pelamin #pelaminmoden #weddingmalaysia', likes: 8950, shares: 1210, views: '97K',
+  { id: 1, vendorId: 10, video: 'video/reel-2.mp4', poster: 'video/reel-2.jpg', title: 'Pelamin cream & dusty rose, setup 4 jam', loc: 'Puchong', desc: 'Konsep moden untuk majlis dalam dewan hotel. Panel ukiran cream, bunga ros segar dan lampu pari-pari. Pakej termasuk pelamin, meja beradab dan laluan pengantin.', tags: '#pelamin #pelaminmoden #weddingmalaysia', likes: 8950, shares: 1210, views: '97K',
     comments: [{ name: 'Aisyah Z.', text: 'Cantiknya warna dia, tak serabut. Berapa harga pakej ni?', time: '5j', likes: 22 }, { name: 'Teratak Pelamin', vendor: true, text: 'Salam Aisyah, pakej ini bermula RM 6,500. Boleh mesej kami untuk tarikh.', time: '4j', likes: 9 }] },
   { id: 2, vendorId: 11, video: 'video/reel-3.mp4', poster: 'video/reel-3.jpg', title: 'Solekan akad natural, tahan 12 jam', loc: 'Bangi', desc: 'Untuk pengantin yang mahu nampak macam diri sendiri, cuma lebih berseri. Solekan kalis peluh, sesuai untuk majlis siang di luar. Termasuk gubahan tudung dan veil.', tags: '#makandam #solekanakad #bridalmakeup', likes: 21300, shares: 2400, views: '302K', comments: [] },
   { id: 3, vendorId: 7, video: 'video/reel-1.mp4', poster: 'video/reel-1.jpg', title: 'Di sebalik tabir: liputan kenduri kampung', loc: 'Shah Alam', desc: 'Kami rakam setiap detik dari dapur ke pelamin. Video highlight 3 minit siap dalam 2 minggu.', tags: '#weddingvideo #kenduri #jurugambar', likes: 12400, shares: 860, views: '184K',
     comments: [{ name: 'Hafiz Rahman', text: 'Video highlight dia memang buat menangis. Recommended!', time: '2j', likes: 48 }, { name: 'Lensa Kasih Studio', vendor: true, text: 'Terima kasih Encik Hafiz!', time: '1j', likes: 12 }] },
+  { id: 4, vendorId: 18, video: 'video/reel-4.mp4', poster: 'video/reel-4.jpg', title: 'Akustik live di majlis taman', loc: 'Kuala Lumpur', desc: 'Set akustik 2 jam untuk resepsi malam: lagu pengantin, lagu permintaan tetamu dan lagu masuk pelamin. Sistem bunyi kami bawa sendiri.', tags: '#bandkahwin #akustik #weddingmalaysia', likes: 6420, shares: 540, views: '71K',
+    comments: [{ name: 'Nurul Huda', text: 'Suara dia sedap sangat, boleh request lagu lama?', time: '3j', likes: 15 }, { name: 'Akustik Rindu', vendor: true, text: 'Boleh! Hantar senarai lagu, kami siapkan.', time: '2j', likes: 6 }] },
+  { id: 5, vendorId: 21, video: 'video/reel-5.mp4', poster: 'video/reel-5.jpg', title: 'Sambut raja sehari, meriah sampai habis', loc: 'Shah Alam', desc: 'Emcee dwibahasa untuk majlis di dewan dan rumah. Atur cara ikut masa, gamatkan tetamu tanpa melampau.', tags: '#emcee #mcmajlis #kenduri', likes: 9870, shares: 1120, views: '133K', comments: [] },
 ];
 
 export const CHATS: Record<number, ChatMsg[]> = {

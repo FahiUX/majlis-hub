@@ -23,3 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 .playwright-cli/
+
+# raw AI renders (sources for public/img + public/video); keep locally, move off-repo after sign-off
+preview/rerender/

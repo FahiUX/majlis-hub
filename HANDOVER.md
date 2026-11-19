@@ -207,3 +207,21 @@ Everything approved lives in `preview/logos/final/` (old/broken vectors in `prev
 4. Brand foundation: colour tokens + contrast check, Nunito as UI font.
 5. App rollout (UI/UX + Retro agents): new palette in `src/index.css`, `final/` assets into `public/` with relative paths, Tempa + wordmark in `src/components/WeevLogo.tsx` (still the old brain PNGs), favicon + manifest, logo animation as splash.
 6. Tempa 11 poses following `LOGO.md` §6.
+
+---
+
+## 11. App rebrand + new art + BM reels (19 Nov 2026, night) — current state
+
+* **Rebrand live in the app:** `src/index.css` tokens = WEEV palette (legacy names kept: `hijau` = aubergine; mapping table in `DESIGN-SYSTEM.md` §1). Nunito everywhere, headings 800; Fraunces only as `font-kad` on Kad names. Brand pink is accent-only (3.2:1); pink text = `pink-teks`.
+* **Logo in the app:** `WeevLogo.tsx` (`full | mark | mascot`) loads `public/brand/`, byte copies made by `scripts/brand/sync-public.sh` (checks `LOGO.sha256`; `--check` runs in the pre-commit hook and Brand lock CI). Favicon, apple-touch, `public/manifest.webmanifest`. Splash = logo MP4 once per session on Home (`src/components/Splash.tsx`).
+* **New art:** 10 category icons (WEEV palette 3D, AGY/Gemini), 15 photoreal photos with real varied colours (3 AGY + 12 Qwen-Image 3.0), 5 Bahasa Melayu reels (Google Flow, Veo 3.1 Lite, 10 credits per 8 s clip). Reels 4–5 added (Akustik Rindu, Kak Long Emcee). Feed-wide **Senyap/Bunyi** sound toggle in reels.
+* **Raw renders:** `preview/rerender/` (54 MB, gitignored). Move off-repo after the user signs off.
+* **Credits left:** Qwen ~4 (free), Flow 6 (resets 5 Dec). Dia must be started with debugging via `Start-Process "shell:AppsFolder\TheBrowserCompany.Dia_ttt1ap7aakyb4!Dia" -ArgumentList "--remote-debugging-port=9222"`. Flow downloads = by hand.
+
+### ▶ Start here next session (latest — supersedes all earlier lists)
+1. `git pull`, read `CLAUDE.md` → `docs/brand/LOGO.md`, run the sha256 check; `sh scripts/brand/sync-public.sh --check`.
+2. User sign-off on photos + reels, then move `preview/rerender/` off-repo.
+3. Nice-to-haves from UI/UX round 2: re-pad category icons to equal visual size (guitar/mic look ~20% smaller than camera); 1–2 Malay dewan MC photos (all MC vendors share `mc.jpg`).
+4. Tempa 11 poses following `LOGO.md` §6.
+5. Work Mac, once: `git config core.hooksPath .githooks` + the global "WEEV brand lock" rule.
+6. Optional: extra logo MP4 formats (1080×1080, 1080×1920).

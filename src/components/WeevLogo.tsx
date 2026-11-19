@@ -1,58 +1,34 @@
 interface WeevLogoProps {
   className?: string;
+  /** height in px */
   size?: number;
-  variant?: "mark" | "full" | "lockup" | "mascot";
+  /** full = `weev` wordmark · mark = heart-ribbon W · mascot = Tempa */
+  variant?: 'full' | 'mark' | 'mascot';
+  /** white ink, for dark backgrounds */
   light?: boolean;
 }
 
 /**
- * WEEV Official Brandmark & Wordmark (Official Stakeholder-Approved Mascot & Heart Direction)
- * Vibrant, modern, friendly tech platform identity:
- * - Smart Cool Brain Mascot with Sunglasses, Golden Rings & Star Calendar
- * - Custom Heart "weev" Wordmark in Royal Aubergine (#2E1741) & Bubblegum Pink (#DB619B)
+ * WEEV logo. 🔒 Brand lock: these are the approved files from preview/logos/final/,
+ * copied byte-for-byte into public/brand/ by scripts/brand/sync-public.sh.
+ * Never redraw, recolour or inline the artwork here (docs/brand/LOGO.md).
+ * Min sizes: wordmark 80px wide (size ≥ 24), W mark 16px.
  */
-export function WeevLogo({
-  className = "",
-  size = 36,
-  variant = "full",
-  light = false,
-}: WeevLogoProps) {
-  // Standalone Heart 'W' Mark
-  if (variant === "mark") {
-    return (
-      <img
-        src="/preview/logos/weev-app-icon-heart.png"
-        alt="WEEV Mark"
-        width={size}
-        height={size}
-        className={`shrink-0 rounded-xl object-contain ${light ? "brightness-110" : ""} ${className}`}
-      />
-    );
-  }
+const SRC = {
+  full: ['brand/weev-wordmark.svg', 'brand/weev-wordmark-white.svg'],
+  mark: ['brand/weev-w-mark.svg', 'brand/weev-w-mark-white.svg'],
+  mascot: ['brand/weev-tempa.png', 'brand/weev-tempa.png'],
+} as const;
 
-  // Standalone Mascot Mark
-  if (variant === "mascot") {
-    return (
-      <img
-        src="/preview/logos/weev-app-icon-mascot.png"
-        alt="WEEV Mascot"
-        width={size}
-        height={size}
-        className={`shrink-0 rounded-2xl object-contain ${light ? "brightness-110" : ""} ${className}`}
-      />
-    );
-  }
-
-  // Full Brand Lockup
+export function WeevLogo({ className = '', size = 32, variant = 'full', light = false }: WeevLogoProps) {
   return (
-    <div className={`inline-flex items-center gap-2 select-none ${className}`}>
-      <img
-        src="/preview/logos/weev-mascot-transparent.png"
-        alt="WEEV"
-        style={{ height: size, width: "auto" }}
-        className={`shrink-0 object-contain ${light ? "brightness-110" : ""}`}
-      />
-    </div>
+    <img
+      src={SRC[variant][light ? 1 : 0]}
+      alt={variant === 'mascot' ? 'Tempa, maskot WEEV' : 'WEEV'}
+      style={{ height: size, width: 'auto' }}
+      className={`shrink-0 object-contain select-none ${className}`}
+      draggable={false}
+    />
   );
 }
 

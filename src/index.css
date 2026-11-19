@@ -1,49 +1,56 @@
 @import "tailwindcss";
 
-/* WEEV Brand Design Tokens: 3A + 3B Imperial Merlot & Champagne Gold (v2.0) */
+/* WEEV Brand Design Tokens v3 (19 Nov 2026), source: docs/brand/LOGO.md §2.
+   Token names kept (hijau, emas, kertas...) so every screen switches at once.
+   Contrast on Warm Linen #FAF7EF: aubergine 14.9, body 9.6, muted 5.5, pink-teks 5.9.
+   Brand pink #DB619B = 3.2 on linen: accents, icons, large display only, never small text. */
 @theme {
-  --font-sans: "Figtree", system-ui, -apple-system, sans-serif;
-  --font-display: "Fraunces", Georgia, serif;
+  --font-sans: "Nunito", system-ui, -apple-system, sans-serif;
+  --font-display: "Nunito", system-ui, -apple-system, sans-serif;
+  /* invitation cards (Kad) only: the couple's card keeps a classic serif */
+  --font-kad: "Fraunces", Georgia, serif;
 
-  /* Primary Brand: Imperial Merlot (3A Pop + 3B Depth) */
-  --color-hijau: #481226;
-  --color-pekat: #320B1A;
-  --color-malam: #1E0711;
+  /* Primary: Royal Aubergine */
+  --color-hijau: #2E1741;
+  --color-pekat: #22102F;
+  --color-malam: #170A20;
 
-  /* Subtle Silk Washes (replaces mint) */
-  --color-pucuk-50: #FAF2F4;
-  --color-pucuk-100: #F3E2E7;
-  --color-pucuk-200: #DEC2CC;
+  /* Aubergine washes */
+  --color-pucuk-50: #F6F2F8;
+  --color-pucuk-100: #ECE5F1;
+  --color-pucuk-200: #D9CCE4;
 
-  /* Celebration Accent: Champagne Gold */
-  --color-emas: #E5BE64;
-  --color-emas-teks: #8C6918;
-  --color-emas-50: #FAF2DF;
+  /* Celebration accent: Sunshine Gold (gold text uses emas-teks) */
+  --color-emas: #E8B536;
+  --color-emas-teks: #7E5A0C;
+  --color-emas-50: #FBF3DC;
 
-  /* Surfaces & Typography */
-  --color-kertas: #FAF7F4;
-  --color-ink: #1C0912;
-  --color-body: #3D2731;
-  --color-muted: #6F6167;
-  --color-line: #ECE3DC;
-  --color-line2: #DAC9BF;
+  /* Bubblegum Pink: accent; pink-teks for text on light */
+  --color-pink: #DB619B;
+  --color-pink-teks: #A8336C;
+  --color-pink-50: #FCEFF5;
 
-  /* Status Colors */
+  /* Surfaces & typography */
+  --color-kertas: #FAF7EF;
+  --color-ink: #2E1741;
+  --color-body: #4A3A57;
+  --color-muted: #6B6075;
+  --color-line: #ECE6E8;
+  --color-line2: #DCD2DA;
+
+  /* Status */
   --color-bahaya: #B42318;
   --color-bahaya-50: #FEF3F2;
   --color-amaran: #A15C07;
   --color-amaran-50: #FEF6E7;
-  --color-skeleton: #F1E9E4;
+  --color-skeleton: #F0EAE6;
   --color-info: #1F5FA8;
 
-  /* Modern Semantic Aliases */
-  --color-merlot: #481226;
-  --color-bordeaux: #360E1E;
-  --color-champagne: #E5BE64;
-  --color-champagne-soft: #FAF2DF;
-  --color-linen: #FAF7F4;
+  /* Brand names */
+  --color-aubergine: #2E1741;
+  --color-linen: #FAF7EF;
 
-  --shadow-float: 0 0 0 1px rgba(28,9,18,.05), 0 2px 6px rgba(28,9,18,.06), 0 8px 24px rgba(28,9,18,.08);
+  --shadow-float: 0 0 0 1px rgba(46,23,65,.05), 0 2px 6px rgba(46,23,65,.06), 0 8px 24px rgba(46,23,65,.08);
 }
 
 @layer base {

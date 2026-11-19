@@ -10,3 +10,5 @@ jobs:
           cd preview/logos/final
           sed 's/\r$//' ../../../docs/brand/LOGO.sha256 | sha256sum -c --quiet -
           echo "All approved WEEV logo files are unchanged."
+      - name: public/brand copies match the approved files
+        run: sh scripts/brand/sync-public.sh --check

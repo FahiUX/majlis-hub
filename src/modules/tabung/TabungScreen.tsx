@@ -51,7 +51,7 @@ export default function TabungScreen() {
             <span className="flex-1 min-w-0 text-sm font-semibold text-hijau">Simpan setiap bulan</span>
             {p.remaining === 0 ? <Pill>Cukup</Pill> : p.short > 0 ? <Pill tone="amaran"><TriangleAlert className="w-3.5 h-3.5 shrink-0" />Kurang {rm(p.short)}</Pill> : <Pill>Ikut rancangan</Pill>}
           </div>
-          <p className="w-full font-display text-[48px] leading-[52px] font-semibold num">{rm(p.monthly)}<span className="text-lg font-sans font-semibold text-muted">/bulan</span></p>
+          <p className="w-full font-display text-[48px] leading-[52px] font-extrabold num">{rm(p.monthly)}<span className="text-lg font-sans font-semibold text-muted">/bulan</span></p>
           <p className="w-full text-sm text-body">Untuk {p.dues.length} bayaran belum dibayar ({rm(p.owed)}) dalam {p.months} bulan.</p>
           <div className="w-full flex flex-row items-stretch gap-3">
             <div className="flex-1 min-w-0 flex flex-col gap-0.5 p-3 rounded-xl bg-white">

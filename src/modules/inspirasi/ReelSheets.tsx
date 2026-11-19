@@ -79,7 +79,7 @@ export function CommentsSheet({ reel, comments, loading, onClose, onSend, onRetr
                 <div className="w-fit shrink-0 flex flex-col items-center">
                   <button aria-label={on ? 'Batal suka komen' : 'Suka komen'} aria-pressed={on} onClick={() => (s.authed ? setLiked(l => (on ? l.filter(x => x !== k) : [...l, k])) : nav('/masuk?next=' + encodeURIComponent('/inspirasi?v=' + (reel?.id ?? ''))))}
                     className="w-11 h-11 shrink-0 flex flex-col items-center justify-center gap-0.5 text-xs text-muted">
-                    <Heart className={cx('w-4 h-4 shrink-0', on && 'fill-emas text-emas')} /><span className="num">{c.likes + (on ? 1 : 0)}</span>
+                    <Heart className={cx('w-4 h-4 shrink-0', on && 'fill-pink text-pink')} /><span className="num">{c.likes + (on ? 1 : 0)}</span>
                   </button>
                   {!c.vendor && <button aria-label={`Laporkan komen ${c.name}`} onClick={() => setReport(i)} className="w-11 h-11 shrink-0 flex items-center justify-center text-muted"><Ellipsis className="w-4 h-4 shrink-0" /></button>}
                 </div>

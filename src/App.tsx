@@ -3,6 +3,7 @@ import { CircleCheckBig, Lock, Clapperboard, Home, MessageCircle, Search, Calend
 import { StoreProvider, useStore } from './store';
 import { nav, useRoute, type Route } from './router';
 import { Button, EmptyState, cx } from './components/ui';
+import { Splash } from './components/Splash';
 import HomeScreen from './modules/home/HomeScreen';
 import SearchScreen from './modules/search/SearchScreen';
 import CompareScreen from './modules/search/CompareScreen';
@@ -117,11 +118,12 @@ function Shell() {
   if (r.parts[0] === 'admin') return <div className="relative w-full h-dvh flex flex-col bg-kertas"><Fragment key={r.path}><AdminApp r={r} /></Fragment><Toast desk /></div>;
   return (
     // phone-sized app; on desktop it sits centred like a device so stakeholders see the mobile layout
-    <div className="w-full h-dvh flex flex-row justify-center bg-[#E9E6DF]">
+    <div className="w-full h-dvh flex flex-row justify-center bg-[#ECE6EC]">
       <div className="relative w-full sm:w-[430px] h-full flex flex-col bg-kertas overflow-hidden sm:shadow-float">
         <main ref={main} className="w-full flex-1 min-h-0 flex flex-col overflow-y-auto overflow-x-hidden"><Fragment key={r.path}>{screenFor(r, s.authed)}</Fragment></main>
         {!hideNav(r) && <BottomNav r={r} />}
         <Toast />
+        <Splash />
       </div>
     </div>
   );

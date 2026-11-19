@@ -1,4 +1,4 @@
-import { ArrowLeft, CalendarCheck, ClipboardCheck, Flag, LayoutDashboard, MessageSquareWarning, ScrollText, Settings, ShieldCheck, Store, type LucideIcon } from 'lucide-react';
+import { ArrowLeft, CalendarCheck, ClipboardCheck, Flag, LayoutDashboard, MessageSquareWarning, ScrollText, Settings, Store, type LucideIcon } from 'lucide-react';
 import { nav, type Route } from '../../router';
 import { useStore } from '../../store';
 import { cx, Divider } from '../../components/ui';
@@ -48,8 +48,8 @@ export default function AdminApp({ r }: { r: Route }) {
       <aside className="w-[260px] shrink-0 h-full flex flex-col justify-between gap-6 p-6 bg-white border-r border-line overflow-y-auto">
         <div className="w-full flex flex-col gap-6">
           <div className="w-full flex flex-row items-center gap-3">
-            <span className="w-9 h-9 shrink-0 rounded-[10px] bg-hijau text-white flex items-center justify-center"><ShieldCheck className="w-5 h-5 shrink-0" /></span>
-            <span className="flex-1 min-w-0 font-display text-[17px] font-semibold">WEEV · Admin</span>
+            <img src="brand/favicon.svg" alt="" className="w-9 h-9 shrink-0" />
+            <span className="flex-1 min-w-0 font-display text-[17px] font-extrabold">WEEV · Admin</span>
           </div>
           <nav aria-label="Navigasi admin" className="w-full flex flex-col gap-1">
             {NAV.map(({ k, label, Icon }) => {

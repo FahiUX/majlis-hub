@@ -33,7 +33,7 @@ export default function CompareShare() {
         <span className="w-fit flex flex-row items-center gap-2">
           <WeevLogo size={26} variant="full" />
         </span>
-        <h1 className="w-full font-display text-[28px] leading-[34px] font-semibold">{s.userName} minta pendapat anda</h1>
+        <h1 className="w-full font-display text-[28px] leading-[34px] font-extrabold">{s.userName} minta pendapat anda</h1>
         <p className="w-full text-sm text-body">Pilih {catById(vs[0].cat).name} untuk {s.event?.name ?? 'majlis'}. Tak perlu log masuk.</p>
       </header>
 

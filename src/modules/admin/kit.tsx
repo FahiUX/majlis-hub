@@ -59,7 +59,7 @@ export function PageHead({ title, sub, right, backTo }: { title: string; sub?: s
     <header className="w-full flex flex-row items-center gap-4">
       {backTo && <IconBtn label="Kembali" onClick={() => back(backTo)}><ChevronLeft className="w-5 h-5 shrink-0" /></IconBtn>}
       <div className="flex-1 min-w-0 flex flex-col gap-1">
-        <h1 className="w-full font-display text-[28px] leading-9 font-semibold">{title}</h1>
+        <h1 className="w-full font-display text-[28px] leading-9 font-extrabold">{title}</h1>
         {sub && <p className="w-full text-sm text-body">{sub}</p>}
       </div>
       {right}

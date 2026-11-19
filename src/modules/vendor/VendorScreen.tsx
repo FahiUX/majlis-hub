@@ -95,7 +95,7 @@ export default function VendorScreen({ id }: { id?: number | string }) {
           <p className="w-full text-sm text-body">Belum ada ulasan. Vendor baru disahkan, jadi jadilah antara yang pertama menempah.</p>
         ) : (
           <div className="w-full flex flex-row items-center gap-4">
-            <span className="w-fit font-display text-5xl leading-[52px] font-semibold num">{score.rating.toFixed(1)}</span>
+            <span className="w-fit font-display text-5xl leading-[52px] font-extrabold num">{score.rating.toFixed(1)}</span>
             <div className="flex-1 min-w-0 flex flex-col gap-1">
               <Stars n={score.rating} size={16} />
               <span className="w-full text-sm text-body">{score.reviews} ulasan sebenar</span>

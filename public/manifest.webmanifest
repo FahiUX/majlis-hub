@@ -1,0 +1,13 @@
+{
+  "name": "WEEV · Wedding & Event",
+  "short_name": "WEEV",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#FAF7EF",
+  "theme_color": "#2E1741",
+  "icons": [
+    { "src": "brand/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "brand/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

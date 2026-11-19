@@ -2482,3 +2482,13 @@ Checked in the browser: 22 customer screens at 430px, 0 console errors. Not yet 
 * User asked if Claude was 100% sure the logo is safe in new sessions. Claude: no, ~80–85% (rules can be ignored, repo CLAUDE.md only loads inside the repo, memory is per-PC). Proposed a real lock + global rule.
 * Added `.githooks/pre-commit` (blocks commits touching `final/`), GitHub Action `brand-lock.yml`, global rule in `~/.claude/CLAUDE.md`. Lock tested both ways.
 * First CI run failed: Windows line endings made 8 SVG fingerprints differ on Linux. Fixed with `.gitattributes` (`final/** -text`). Claude's auto mode refused to run the unlock itself; the user ran it (`79f1b41`), CI green. Confidence now ~95% on the home PC; work Mac needs the 2 one-time setup steps (HANDOVER §10).
+
+---
+
+## Sync 19 Nov 2026 night (Claude-1 home PC + AGY pane 0): app rebrand, new art, BM reels
+
+* Claude rolled the app to the WEEV brand: palette tokens (contrast-checked; pink accent-only), Nunito, logo files via a hash-checked copy into `public/brand/`, favicon/manifest, logo-animation splash. UI/UX + Retro agents ran; their fixes applied (lock now covers `public/brand/`, docs updated).
+* User: "re-render the category icons, photo also (random colour also ok i want to feel the real). ask pane 0 to help." AGY made 10 icons (style locked on 2) + 3 photos, then hit its quota.
+* User: "open debugging dia browser… we can use chatgpt free… qwen." ChatGPT logged out (Sora sunset); Claude drove Qwen Create for the other 12 photos (venue fixed after a wrong-file bug; makeup bride redone as Malay).
+* User: "i need a short video ai… bahasa melayu. 3 video", then "make it two more". Google Flow: user stopped Omni (24 credits): "use the cheap one". Veo 3.1 Lite (10 each) made 5 BM reels; one false "prominent people" flag was refunded and reworded. User downloaded the MP4s by hand. Sound toggle added since reels were always muted.
+* Wrap-up: round-2 UI/UX fixes (fallback photos, poster = frame 0, sound button moved top-right, a11y label), LESSONS entry, raw renders gitignored. See HANDOVER §11.

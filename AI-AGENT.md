@@ -46,7 +46,8 @@ flowchart TD
 ### 03 Brand & Design System Agent
 * **Role:** Visual craft and design token authority.
 * **Responsibilities:**
-  - Curates the **3A + 3B Imperial Merlot & Champagne Gold** token palette in `src/index.css`.
+  - Curates the **WEEV palette** (Aubergine, Bubblegum Pink, Sunshine Gold, Warm Linen; `docs/brand/LOGO.md` §2) in `src/index.css`. Brand pink is accent-only on light; pink text uses `pink-teks`.
+  - Logo files in `public/brand/` come only from `scripts/brand/sync-public.sh` (byte copies of `preview/logos/final/`).
   - Enforces WCAG 2.2 contrast compliance (AAA for primary CTA, AA for celebration gold).
   - Maintains `docs/BRAND_GUIDELINES.md` and `DESIGN-SYSTEM.md`.
 
@@ -78,7 +79,7 @@ flowchart TD
 | Gate | Name | Deliverable Evaluated | Approver |
 | :--- | :--- | :--- | :--- |
 | **Gate 1** | Requirement & Matrix Sign-off | `PRD.md` & `docs/MODULE_FEATURE_SPEC.md` | Human User |
-| **Gate 2** | Brand & Token Lock | Color palette, logo, and `DESIGN-SYSTEM.md` | Human User |
+| **Gate 2** | Brand & Token Lock | Palette, `DESIGN-SYSTEM.md`; logo per `docs/brand/LOGO.md` (locked) | Human User |
 | **Gate 3** | Pre-Flight Gap Audit | 100% green audit against layout & accessibility | Human User |
 | **Gate 4** | Live UI Interactive Testing | Live interactive prototype on Vite dev server | Human User |
 | **Gate 5** | Code Review & Quality | TSX multi-axis review and build verification | Human User |

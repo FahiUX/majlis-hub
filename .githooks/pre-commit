@@ -4,6 +4,15 @@
 # Read docs/brand/LOGO.md first.
 
 LOCKED='^(preview/logos/final/|docs/brand/LOGO\.sha256$)'
+
+# public/brand/ holds byte copies of final/ files: allowed only if every staged copy matches LOGO.sha256.
+if git diff --cached --name-only | grep -q '^public/brand/'; then
+  ptmp=$(mktemp -d)
+  git checkout-index --prefix="$ptmp/" -a 2>/dev/null
+  if ! sh "$ptmp/scripts/brand/sync-public.sh" --check "$ptmp"; then rm -rf "$ptmp"; exit 1; fi
+  rm -rf "$ptmp"
+fi
+
 touched=$(git diff --cached --name-only --diff-filter=ACDMRT | grep -E "$LOCKED")
 [ -z "$touched" ] && exit 0
 

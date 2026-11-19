@@ -93,7 +93,7 @@ export default function LoginScreen() {
       {step === 'phone' ? (
         <div className="w-full flex flex-col gap-5 p-5">
           <div className="w-full flex flex-col gap-1">
-            <h1 className="w-full font-display text-[28px] leading-[34px] font-semibold">Selamat datang</h1>
+            <h1 className="w-full font-display text-[28px] leading-[34px] font-extrabold">Selamat datang</h1>
             <p className="w-full text-[15px] text-body">Log masuk dengan nombor telefon. Kami hantar kod 6 digit melalui SMS.</p>
           </div>
           <div role="radiogroup" aria-label="Saya" className="w-full flex flex-row gap-3">

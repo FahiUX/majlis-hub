@@ -49,7 +49,7 @@ export default function PlannerScreen() {
         <div className="w-full flex flex-row items-center gap-3">
           <div className="flex-1 min-w-0 flex flex-col gap-1">
             <p className="w-full text-xs font-semibold text-hijau">{e.type}</p>
-            <h2 className="w-full font-display text-[28px] leading-[34px] font-semibold">{e.name}</h2>
+            <h2 className="w-full font-display text-[28px] leading-[34px] font-extrabold">{e.name}</h2>
           </div>
           <div className="w-[72px] h-[72px] shrink-0 rounded-full bg-white flex flex-col items-center justify-center border-2 border-emas">
             <span className="text-2xl leading-7 font-bold num">{days}</span>

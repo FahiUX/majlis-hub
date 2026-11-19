@@ -138,7 +138,7 @@ export default function WizardScreen() {
 function Q({ title, children }: { title: string; children: ReactNode }) {
   return (
     <section className="w-full flex flex-col gap-4">
-      <h2 className="w-full font-display text-[28px] leading-[34px] font-semibold">{title}</h2>
+      <h2 className="w-full font-display text-[28px] leading-[34px] font-extrabold">{title}</h2>
       {children}
     </section>
   );

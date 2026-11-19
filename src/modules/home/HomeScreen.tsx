@@ -7,7 +7,7 @@ import { notices } from './reminders';
 import { MiniVendorCard } from '../search/VendorCard';
 import { WeevLogo } from '../../components/WeevLogo';
 
-const WEAVE_PATTERN = "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 44 44'%3E%3Cpath d='M22 4L40 22L22 40L4 22Z' fill='none' stroke='rgba(255,255,255,0.12)' stroke-width='1.2'/%3E%3Ccircle cx='22' cy='22' r='4' fill='none' stroke='%23E5BE64' stroke-width='1.2'/%3E%3C/svg%3E\")";
+const WEAVE_PATTERN = "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 44 44'%3E%3Cpath d='M22 4L40 22L22 40L4 22Z' fill='none' stroke='rgba(255,255,255,0.12)' stroke-width='1.2'/%3E%3Ccircle cx='22' cy='22' r='4' fill='none' stroke='%23E8B536' stroke-width='1.2'/%3E%3C/svg%3E\")";
 
 /** countdown ring: gold arc = share of categories with a confirmed vendor */
 function Ring({ days, pct }: { days: number; pct: number }) {
@@ -19,7 +19,7 @@ function Ring({ days, pct }: { days: number; pct: number }) {
         <circle cx="32" cy="32" r={r} fill="none" stroke="var(--color-emas)" strokeWidth="5" strokeLinecap="round" strokeDasharray={`${(pct / 100) * c} ${c}`} />
       </svg>
       <span className="relative w-fit flex flex-col items-center">
-        <b className="w-fit font-display text-xl leading-5 font-semibold num">{days}</b>
+        <b className="w-fit font-display text-xl leading-5 font-extrabold num">{days}</b>
         <small className="w-fit text-xs leading-3 font-semibold tracking-wider uppercase text-pucuk-200">Hari</small>
       </span>
     </span>
@@ -43,13 +43,13 @@ function Hero() {
   const urgent = s.authed ? notices(s.bookings, s.invitation, s.rsvps).filter(n => n.urgent).length : 0;
   return (
     <section className="relative w-full flex flex-col overflow-hidden text-white"
-      style={{ background: 'radial-gradient(110% 90% at 85% 10%, rgba(229, 190, 100, 0.26) 0%, transparent 60%), linear-gradient(170deg, #52142E 0%, #360E1E 100%)' }}>
+      style={{ background: 'radial-gradient(110% 90% at 85% 10%, rgba(232, 181, 54, 0.24) 0%, transparent 60%), linear-gradient(170deg, #3D2056 0%, #2E1741 100%)' }}>
       {/* celebratory weave pattern layer, fading out downward */}
       <div aria-hidden="true" className="absolute inset-0 pointer-events-none opacity-[.18]"
         style={{ backgroundImage: WEAVE_PATTERN, maskImage: 'linear-gradient(180deg,#000 30%,transparent 100%)', WebkitMaskImage: 'linear-gradient(180deg,#000 30%,transparent 100%)' }} />
       {/* soft linen fade transition to canvas */}
-      <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-[150px] pointer-events-none"
-        style={{ background: 'linear-gradient(180deg, rgba(250,247,244,0) 0%, rgba(250,247,244,.08) 20%, rgba(250,247,244,.25) 40%, rgba(250,247,244,.5) 60%, rgba(250,247,244,.8) 80%, var(--color-kertas) 100%)' }} />
+      <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-[96px] pointer-events-none"
+        style={{ background: 'linear-gradient(180deg, rgba(250,247,239,0) 0%, rgba(250,247,239,.08) 20%, rgba(250,247,239,.25) 40%, rgba(250,247,239,.5) 60%, rgba(250,247,239,.8) 80%, var(--color-kertas) 100%)' }} />
       <div className="relative w-full flex flex-col gap-5 px-4 pt-5 pb-[104px]">
         <div className="w-full flex flex-row items-center gap-2">
           <span className="flex-1 min-w-0 flex flex-row items-center gap-2 text-base font-bold">
@@ -61,13 +61,13 @@ function Hero() {
                   <Bell className="w-5 h-5 shrink-0" />
                   {urgent > 0 && <span className="absolute -top-0.5 -right-0.5 w-5 h-5 rounded-full bg-bahaya text-white text-[11px] font-bold flex items-center justify-center num">{urgent}</span>}
                 </button>
-                <button aria-label="Akaun" onClick={() => nav('/akaun')} className="w-11 h-11 shrink-0 rounded-full bg-white/[.12] text-white font-display text-lg font-semibold flex items-center justify-center">{s.userName.charAt(0)}</button>
+                <button aria-label="Akaun" onClick={() => nav('/akaun')} className="w-11 h-11 shrink-0 rounded-full bg-white/[.12] text-white font-display text-lg font-extrabold flex items-center justify-center">{s.userName.charAt(0)}</button>
               </span>
             : <button onClick={() => nav('/masuk?next=' + encodeURIComponent('/'))} className="w-fit shrink-0 inline-flex flex-row items-center gap-1.5 px-3.5 py-2 leading-5 rounded-full bg-white text-hijau text-sm font-semibold whitespace-nowrap"><LogIn className="w-4 h-4 shrink-0" />Log masuk</button>}
         </div>
         <div className="w-full flex flex-col gap-1">
           <p className="w-full text-sm text-pucuk-200">{s.authed ? `Hai, ${s.userName}` : 'Selamat datang ke WEEV'}</p>
-          <h1 className="w-full font-display text-[28px] leading-[34px] font-semibold">Apa yang anda perlukan untuk majlis?</h1>
+          <h1 className="w-full font-display text-[28px] leading-[34px] font-extrabold">Apa yang anda perlukan untuk majlis?</h1>
         </div>
         <div className="w-full flex flex-row items-center gap-2 py-1.5 pl-[18px] pr-1.5 rounded-full bg-white text-ink shadow-float">
           <button onClick={() => nav('/cari?focus=1')} className="flex-1 min-w-0 flex flex-row items-center gap-2 py-2.5 text-left">
@@ -85,7 +85,7 @@ function Hero() {
           <button onClick={() => nav('/majlis')} className="w-full flex flex-row items-center gap-3.5 p-4 rounded-2xl bg-white/[.06] text-left" aria-label={`${ev.name}, ${daysBetween(TODAY, ev.date)} hari lagi`}>
             <Ring days={Math.max(0, daysBetween(TODAY, ev.date))} pct={total ? (confirmed / total) * 100 : 0} />
             <span className="flex-1 min-w-0 flex flex-col gap-0.5">
-              <span className="w-full font-display text-lg leading-6 font-semibold">{ev.name}</span>
+              <span className="w-full font-display text-lg leading-6 font-extrabold">{ev.name}</span>
               <span className="w-full text-[13px] text-pucuk-200">{new Date(ev.date + 'T00:00:00').toLocaleDateString('ms-MY', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })} · {ev.pax} pax</span>
               <span className="w-full text-[13px] text-pucuk-200">{confirmed}/{total} vendor disahkan</span>
             </span>
@@ -163,7 +163,7 @@ export default function HomeScreen() {
           <div className="w-full grid grid-cols-4 gap-2">
             {CATS.map(c => (
               <button key={c.id} onClick={() => nav('/cari?cat=' + c.id)} className="w-full flex flex-col items-center gap-1 p-2 rounded-2xl bg-white border border-line text-center">
-                <img src={`img/cat/${c.art}.png`} alt="" className="w-14 h-14 shrink-0 object-contain" style={{ filter: 'drop-shadow(0 6px 6px rgba(14,94,75,.28))' }}
+                <img src={`img/cat/${c.art}.png`} alt="" className="w-14 h-14 shrink-0 object-contain" style={{ filter: 'drop-shadow(0 6px 6px rgba(46,23,65,.22))' }}
                   onError={e => { e.currentTarget.style.visibility = 'hidden'; }} />
                 <span className="w-full text-xs leading-4 font-semibold">{c.name}</span>
               </button>

@@ -128,7 +128,7 @@ export function ReviewsTab({ v, score }: { v: Vendor; score: { rating: number; r
     <>
       <div className="w-full flex flex-row items-center gap-5 p-5 rounded-2xl bg-white border border-line">
         <div className="w-fit flex flex-col items-center gap-1">
-          <span className="w-fit font-display text-5xl leading-[52px] font-semibold num">{score.rating.toFixed(1)}</span>
+          <span className="w-fit font-display text-5xl leading-[52px] font-extrabold num">{score.rating.toFixed(1)}</span>
           <Stars n={score.rating} />
           <span className="w-fit text-xs text-muted num">{score.reviews} ulasan</span>
         </div>

@@ -85,7 +85,7 @@ export function SuggestStep({ d, set }: { d: Draft; set: (p: Partial<Draft>) => 
 
   return (
     <section className="w-full flex flex-col gap-5">
-      <h2 className="w-full font-display text-[28px] leading-[34px] font-semibold">Bajet dan pakej dicadangkan</h2>
+      <h2 className="w-full font-display text-[28px] leading-[34px] font-extrabold">Bajet dan pakej dicadangkan</h2>
 
       <div className="w-full flex flex-col gap-3 p-4 rounded-2xl bg-white border border-line">
         <label htmlFor="bajet" className="w-full text-[13px] leading-4 font-semibold">Jumlah bajet</label>

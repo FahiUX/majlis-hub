@@ -1,7 +1,7 @@
-# 🎨 WEEV Design System Specification (v2.0)
+# 🎨 WEEV Design System Specification (v3.0)
 
 **Project:** WEEV  
-**Palette:** 3A + 3B Imperial Merlot & Champagne Gold  
+**Palette:** WEEV brand v3 (Royal Aubergine · Bubblegum Pink · Sunshine Gold · Warm Linen), source `docs/brand/LOGO.md` §2  
 **Reference Philosophy:** *Quiet Confidence, Celebratory Aristocracy, High-Ticket Escrow Trust.*  
 **Standard:** WCAG 2.2 Level AA / AAA Compliant
 
@@ -13,56 +13,91 @@ The WEEV color system is codified in `src/index.css` via Tailwind CSS v4 `@theme
 
 ```css
 @theme {
-  /* Primary Identity: Imperial Merlot */
-  --color-hijau: #481226;          /* Primary CTA, Active Tabs, Verification Marks */
-  --color-pekat: #320B1A;          /* Primary Pressed / Hover State */
-  --color-malam: #1E0711;          /* Wine Noir: Footers, Dark Hero Overlays */
+  --font-sans: "Nunito", system-ui, -apple-system, sans-serif;
+  --font-display: "Nunito", system-ui, -apple-system, sans-serif;
+  /* invitation cards (Kad) only: the couple's card keeps a classic serif */
+  --font-kad: "Fraunces", Georgia, serif;
 
-  /* Surface Washes: Rosé Silk (replaces mint) */
-  --color-pucuk-50: #FAF2F4;       /* Subtle Panel Wash, Working Surfaces */
-  --color-pucuk-100: #F3E2E7;      /* Selected Filter Pill Fill, Chip Backgrounds */
-  --color-pucuk-200: #DEC2CC;      /* Focus Rings, Progress Tracks */
+  /* Primary: Royal Aubergine */
+  --color-hijau: #2E1741;
+  --color-pekat: #22102F;
+  --color-malam: #170A20;
 
-  /* Celebration Accent: Champagne Gold */
-  --color-emas: #E5BE64;           /* Countdown Arc, Milestone Laurels, Wedding Rings */
-  --color-emas-teks: #8C6918;      /* Gold Text on Light Surfaces (5.4:1 contrast) */
-  --color-emas-50: #FAF2DF;        /* Ambient Glow Wash, Highlight Moments */
+  /* Aubergine washes */
+  --color-pucuk-50: #F6F2F8;
+  --color-pucuk-100: #ECE5F1;
+  --color-pucuk-200: #D9CCE4;
 
-  /* Canvas & Inks */
-  --color-kertas: #FAF7F4;         /* Alabaster Linen App Canvas */
-  --color-ink: #1C0912;            /* Velvet Wine Noir: Headings, Prices, Star Ratings */
-  --color-body: #3D2731;           /* Deep Espresso Plum: Running Text */
-  --color-muted: #6F6167;          /* Velvet Taupe: Timestamps, Captions, Meta Lines */
-  --color-line: #ECE3DC;           /* Hairline Dividers (1px) */
-  --color-line2: #DAC9BF;          /* Input Borders, Strong Framing */
+  /* Celebration accent: Sunshine Gold (gold text uses emas-teks) */
+  --color-emas: #E8B536;
+  --color-emas-teks: #7E5A0C;
+  --color-emas-50: #FBF3DC;
 
-  /* Alerts & System */
-  --color-bahaya: #B42318;         /* Danger / Errors */
-  --color-bahaya-50: #FEF3F2;      /* Danger Banner Background */
-  --color-amaran: #A15C07;         /* Warning / Approaching Deadlines */
-  --color-amaran-50: #FEF6E7;      /* Warning Banner Background */
-  --color-skeleton: #F1E9E4;       /* Skeleton Shimmer Base */
-  --color-info: #1F5FA8;           /* Neutral Information / Legal */
+  /* Bubblegum Pink: accent; pink-teks for text on light */
+  --color-pink: #DB619B;
+  --color-pink-teks: #A8336C;
+  --color-pink-50: #FCEFF5;
+
+  /* Surfaces & typography */
+  --color-kertas: #FAF7EF;
+  --color-ink: #2E1741;
+  --color-body: #4A3A57;
+  --color-muted: #6B6075;
+  --color-line: #ECE6E8;
+  --color-line2: #DCD2DA;
+
+  /* Status */
+  --color-bahaya: #B42318;
+  --color-bahaya-50: #FEF3F2;
+  --color-amaran: #A15C07;
+  --color-amaran-50: #FEF6E7;
+  --color-skeleton: #F0EAE6;
+  --color-info: #1F5FA8;
+
+  /* Brand names */
+  --color-aubergine: #2E1741;
+  --color-linen: #FAF7EF;
+
+  --shadow-float: 0 0 0 1px rgba(46,23,65,.05), 0 2px 6px rgba(46,23,65,.06), 0 8px 24px rgba(46,23,65,.08);
 }
 ```
+
+| Token (legacy name) | Hex | Brand name · use |
+| :--- | :--- | :--- |
+| `hijau` / `aubergine` | `#2E1741` | **Royal Aubergine.** Primary CTA, active nav, links, verified badges. White on it 16:1. |
+| `pekat` | `#22102F` | Pressed / hover of primary. |
+| `malam` | `#170A20` | Deepest surfaces (dark Kad template, overlays). |
+| `pucuk-50 / 100 / 200` | `#F6F2F8` `#ECE5F1` `#D9CCE4` | Aubergine washes: panels, selected pills, focus halos, disabled fills. |
+| `emas` | `#E8B536` | **Sunshine Gold.** Countdown arc, likes, stars, celebration. Never text on light (1.8:1). |
+| `emas-teks` | `#7E5A0C` | Gold-family text on light (5.6:1). |
+| `emas-50` | `#FBF3DC` | Gold wash. |
+| `pink` | `#DB619B` | **Bubblegum Pink.** Accents, icons, large display only (3.2:1 on linen, never small text). |
+| `pink-teks` | `#A8336C` | Pink-family text on light (5.9:1). |
+| `pink-50` | `#FCEFF5` | Pink wash. |
+| `kertas` / `linen` | `#FAF7EF` | **Warm Linen.** App canvas. |
+| `ink` | `#2E1741` | Headings, prices (= brand ink). |
+| `body` | `#4A3A57` | Running text (9.6:1). |
+| `muted` | `#6B6075` | Meta, captions (5.5:1). |
+| `line` / `line2` | `#ECE6E8` / `#DCD2DA` | Hairlines / input borders. |
+| `bahaya` `amaran` `info` (+`-50`) | unchanged | Status colours. |
+
+> Legacy names (`hijau` = "green", `emas`, `kertas`) are kept so the v3 rebrand switched every screen at once. Read them by this table, not by their Malay meaning.
 
 ---
 
 ## 2. Typography Hierarchy
 
-WEEV employs a dual-font typographic spine:
-1. **Fraunces (Serif):** Expresses heritage, luxury editorial quality, and celebratory warmth.
-2. **Figtree (Geometric Sans):** Provides modern legibility, structured forms, and tabular numeric alignment.
+WEEV uses **Nunito** for the whole interface (the logo tagline font). Headings (`font-display`) are Nunito ExtraBold 800 to echo the wordmark. **Fraunces** survives only as `font-kad`, for the couple's names on Kad invitations.
 
 | Role | Font Family | Size / Line-height | Weight | Letter-spacing | Use Case |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Hero Title** | Fraunces | 28px / 34px | 600 Semi-Bold | -0.01em | Home hero question, landing titles |
-| **Section Header** | Figtree | 20px / 26px | 600 Semi-Bold | Normal | Category headers, sheet headers |
-| **Vendor Name** | Fraunces | 22px / 28px | 600 Semi-Bold | Normal | Vendor detail header |
-| **Price / Number** | Figtree | 18px / 22px | 700 Bold | Tabular (`num`) | Package pricing ("RM 2,500") |
-| **Body Running** | Figtree | 15px / 22px | 400 Regular | Normal | Package details, review bodies |
-| **Metadata** | Figtree | 13px / 18px | 400 Regular | Normal | Distance, categories, dates |
-| **Micro Caption** | Figtree | 11px / 14px | 600 Semi-Bold | +0.06em | Status badges, pills, tabs |
+| **Hero Title** | Nunito | 28px / 34px | 800 ExtraBold | Normal | Home hero question, page titles |
+| **Section Header** | Nunito | 20px / 26px | 600 Semi-Bold | Normal | Category headers, sheet headers |
+| **Vendor Name** | Nunito | 22px / 28px | 800 ExtraBold | Normal | Vendor detail header |
+| **Price / Number** | Nunito | 18px / 22px | 700 Bold | Tabular (`num`) | Package pricing ("RM 2,500") |
+| **Body Running** | Nunito | 15px / 22px | 400 Regular | Normal | Package details, review bodies |
+| **Metadata** | Nunito | 13px / 18px | 400 Regular | Normal | Distance, categories, dates |
+| **Micro Caption** | Nunito | 11px / 14px | 600 Semi-Bold | +0.06em | Status badges, pills, tabs |
 
 ---
 
@@ -93,11 +128,11 @@ WEEV employs a dual-font typographic spine:
 * **On-Photo Badge:** `bg-white/95 text-ink shadow-float backdrop-blur-sm` for high contrast against dynamic image fills.
 
 ### 4.3 Search Pill & Filters
-* **Floating Search Pill:** Rounded-full container `py-1.5 pl-[18px] pr-1.5 bg-white text-ink shadow-float flex items-center gap-2`. Right trigger action orb is a 44px circle in Imperial Merlot.
+* **Floating Search Pill:** Rounded-full container `py-1.5 pl-[18px] pr-1.5 bg-white text-ink shadow-float flex items-center gap-2`. Right trigger action orb is a 44px circle in Royal Aubergine.
 * **Filter Chips:** `rounded-full border border-line bg-white text-ink text-sm px-3.5 py-2 font-medium active:bg-pucuk-100 active:border-hijau active:text-hijau`.
 
 ### 4.4 Cards & Modals
-* **Outer Cards:** `rounded-2xl` (16px) with 1px border in `border-line` (`#ECE3DC`) and white surface fill.
+* **Outer Cards:** `rounded-2xl` (16px) with 1px border in `border-line` (`#ECE6E8`) and white surface fill.
 * **Bottom Sheets:** `rounded-t-[24px]` with smooth spring entrance animation and drag handle indicator.
 
 ---
@@ -105,33 +140,17 @@ WEEV employs a dual-font typographic spine:
 ## 5. Motion & Interaction
 
 * **Ken Burns Hero Animation:** Subtle zoom transition on featured image carousels (`@keyframes kenburns`).
-* **Micro Shimmer:** Loading skeletons employ linear gradient shimmer transitioning from `#F1E9E4` to Alabaster Linen (`#FAF7F4`) and back.
+* **Micro Shimmer:** Loading skeletons employ linear gradient shimmer transitioning from `#F0EAE6` to Warm Linen (`#FAF7EF`) and back.
+* **Launch splash:** `src/components/Splash.tsx` plays the approved logo MP4 once per session on a cold open of Home; tap to skip, 7 s fallback, off under reduced motion.
 * **Reduced Motion Compliance:** `@media (prefers-reduced-motion: reduce)` disables all transforms and animations for user accessibility.
 
 ---
 
-## 6. Official Brandmark & Master Assets (Concept B: The Eternal Swash Serif)
+## 6. Official Brandmark (🔒 locked)
 
-The official brand identity for **WEEV** is **Concept B: The Eternal Swash Serif**, approved and finalized in the 3A + 3B Imperial Merlot & Champagne Gold palette.
+The logo, heart-ribbon W and Tempa the weaver bird are final. **`docs/brand/LOGO.md` is the only spec**; files live in `preview/logos/final/`.
 
-### 6.1 Design Anatomy
-* **Lettermark**: Haute couture Didot Roman Serif 'W' with dramatic thick-and-thin stroke contrast.
-* **The Eternal Weave Swash**: An unbroken, calligraphic Champagne Gold infinity ribbon looping underneath the baseline and interweaving through the letterform stems.
-* **Matrimonial Spark**: A pearl-and-ring celebratory spark set into the central vertex.
-* **Color Specifications**:
-  - Primary Identity Base: Imperial Merlot (`#481226`)
-  - Accent Ribbon Swash: Champagne Gold (`#E5BE64`)
-  - Accent Hairlines: Silk White (`#FAF7F4`)
-
-### 6.2 Master Deliverable Files
-* **Native VectorCraft**: `preview/logos/trashcan/weev-concept-b-lockup-dark.vectorcraft`
-* **Adobe Illustrator**: `preview/logos/trashcan/weev-concept-b-lockup-dark.ai`
-* **Print Master**: `preview/logos/trashcan/weev-concept-b-lockup-dark.eps`
-* **Vector PDF**: `preview/logos/trashcan/weev-concept-b-lockup-dark.pdf`
-* **Web Vectors**:
-  - `preview/logos/trashcan/weev-concept-b-symbol-dark.svg`
-  - `preview/logos/trashcan/weev-concept-b-symbol-light.svg`
-  - `preview/logos/trashcan/weev-concept-b-symbol-mono.svg`
-  - `preview/logos/trashcan/weev-concept-b-lockup-dark.svg`
-  - `preview/logos/trashcan/weev-concept-b-lockup-light.svg`
-* **React Component**: `<WeevLogo size={32} variant="full" />` in `src/components/WeevLogo.tsx`
+* **In the app:** `<WeevLogo variant="full" | "mark" | "mascot" light size />` (`src/components/WeevLogo.tsx`) loads `public/brand/` files.
+* **`public/brand/`** = byte copies made by `scripts/brand/sync-public.sh`; the pre-commit hook and the Brand lock CI run `--check`, so a copy can never drift from `LOGO.sha256`.
+* Favicon, apple-touch icon and `public/manifest.webmanifest` icons come from the same folder.
+* The old Concept B serif logo and the brain mascot are retired (`preview/logos/trashcan/`): never use.

@@ -82,3 +82,30 @@ This file records real-world lessons, gotchas, friction points, and edge cases d
 - **Rule Going Forward:**
   - When a stakeholder says "like WhatsApp" (or any named app), list that app's behaviours up front and agree the list before building, not a minimal first pass.
   - Never put two width (or other same-property) Tailwind classes on one element; pick one, and check the rendered size.
+
+### 2026-11-19 — App rebrand to the locked WEEV palette (home PC)
+- **What Worked Well:**
+  - Kept the legacy token names (`hijau`, `emas`, `kertas`) and remapped their values, so every screen switched in one `index.css` change; mapping table added to `DESIGN-SYSTEM.md` the same day.
+  - Logo files reach the app only as byte copies (`scripts/brand/sync-public.sh`), checked against `LOGO.sha256` by the script, the pre-commit hook and the Brand lock CI.
+  - Contrast checked before choosing roles: brand pink is 3.2:1 on linen, so pink text uses `pink-teks` (#A8336C, 5.9:1).
+- **Friction Points / Human Corrections:**
+  - UI/UX agent caught leftovers the token swap can't reach: green 3D category icons (`public/img/cat`), a hard-coded green shadow, and pink defined but unused.
+  - Splash first filled ~85% of the width and broke the logo clear-space rule; the video edge showed because the bg colour was sampled from the file, not the rendered page.
+- **Rule Going Forward:**
+  - Any copy of a locked brand file outside `final/` is made by a hash-checking script and sits under the same `-text` rule, hook and CI check.
+  - A rebrand updates `DESIGN-SYSTEM.md` and `BRAND_GUIDELINES.md` in the same change; after a token swap, grep for hard-coded rgba/hex and check raster art.
+  - Splash pattern: cold open of Home only, tap to skip, reduced motion off, timeout fallback, logo keeps its clear space.
+
+### 2026-11-19 — New art + BM reels (home PC, Claude + AGY)
+- **What Worked Well:**
+  - 10 category icons in the WEEV palette (AGY/Gemini, style locked on 2 before the other 8), 15 photoreal photos with varied real colour themes (3 AGY + 12 Qwen-Image 3.0 driven over Dia CDP), 5 Bahasa Melayu reels (Google Flow, Veo 3.1 Lite). Photos 13 MB → 2.7 MB; reels ~1.5 MB each with audio.
+  - Reels were always `muted`; added a feed-wide Senyap/Bunyi toggle so the BM speech can be heard.
+- **Friction Points / Human Corrections:**
+  - A script saved the kompang photo as `venue.jpg`; one bride came out European and was regenerated as Malay.
+  - Flow's Omni 1.2 Flash quoted 24 credits per clip; the user stopped it: "use the cheap one". Veo 3.1 Lite = 10.
+  - One prompt was falsely flagged "prominent people" (refunded). Flow downloads only worked by hand.
+- **Rule Going Forward:**
+  - After any scripted download, look at the file before shipping (right subject, people match the brief).
+  - Before a paid run, write credits per output + budget and use the cheapest model that meets the brief; ask before anything pricier.
+  - Video prompts with people say "fictional everyday people"; plan Flow downloads as a manual user step.
+  - Raw renders live in `preview/rerender/` (gitignored); move them off-repo after the user signs off.

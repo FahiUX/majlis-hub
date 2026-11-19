@@ -20,7 +20,7 @@ const accentCls = (t: Invitation['template'], a: Accent) =>
 
 type T = Invitation['template'];
 export const TEMPLATES: { id: T; name: string }[] = [
-  { id: 'songket', name: 'Songket Hijau' },
+  { id: 'songket', name: 'Songket Malam' },
   { id: 'krim', name: 'Klasik Krim' },
   { id: 'moden', name: 'Moden Minimal' },
   { id: 'emas', name: 'Bunga Emas' },
@@ -89,7 +89,7 @@ export function KadCard({ inv }: { inv: Invitation }) {
         {inv.template === 'krim' ? <LineArt /> : <div className={cx('w-16 h-px shrink-0', k.rule)} />}
         <p className={cx('w-full self-stretch text-sm italic', k.soft)}>{inv.ayat}</p>
         <p className={cx('w-full self-stretch text-sm', k.soft)}>Dengan segala hormatnya kami {inv.parents || '…'} menjemput ke majlis perkahwinan anakanda kami</p>
-        <h2 className={cx('w-full self-stretch font-display font-semibold', nameSize(couple), k.ink)}>{inv.bride || 'Pengantin perempuan'}<span className={cx('block text-lg', k.accent)}>&amp;</span>{inv.groom || 'Pengantin lelaki'}</h2>
+        <h2 className={cx('w-full self-stretch font-kad font-semibold', nameSize(couple), k.ink)}>{inv.bride || 'Pengantin perempuan'}<span className={cx('block text-lg', k.accent)}>&amp;</span>{inv.groom || 'Pengantin lelaki'}</h2>
         <div className={cx('w-16 h-px shrink-0', k.rule)} />
         <div className="w-full self-stretch flex flex-col gap-1">
           <p className={cx('w-full text-base font-semibold num', k.ink)}>{inv.date ? fmtDate(inv.date, true) : 'Tarikh'}</p>
